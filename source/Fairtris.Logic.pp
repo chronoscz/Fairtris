@@ -101,7 +101,9 @@ var
 implementation
 
 uses
+  Windows,
   Math,
+  Forms,
   Fairtris.Clock,
   Fairtris.Input,
   Fairtris.Sounds,
@@ -305,14 +307,18 @@ begin
       ITEM_MENU_PLAY:    FScene.Current := SCENE_PLAY;
       ITEM_MENU_OPTIONS: FScene.Current := SCENE_OPTIONS;
       ITEM_MENU_QUIT:    FScene.Current := SCENE_QUIT;
-    otherwise
-      // odpalić przeglądarkę ze stroną repozytorium
     end;
 
     if Memory.Menu.ItemIndex <> ITEM_MENU_QUIT then
       Sounds.PlaySound(SOUND_START, Memory.Play.Region)
     else
       Sounds.PlaySound(SOUND_TOP_OUT, Memory.Play.Region);
+
+    if Memory.Menu.ItemIndex = ITEM_MENU_HELP then
+    begin
+      ShellExecute(0, 'open', 'https://github.com/furious-programming/Fairtris', nil, nil, SW_SHOWNORMAL);
+      Application.Minimize();
+    end;
   end;
 end;
 
