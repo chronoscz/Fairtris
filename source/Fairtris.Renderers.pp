@@ -529,8 +529,24 @@ end;
 
 
 procedure TModernRenderer.RenderKeyboardParameters();
+var
+  Index: Integer;
 begin
-
+  for Index := ITEM_KEYBOARD_SCANCODE_FIRST to ITEM_KEYBOARD_SCANCODE_LAST do
+    RenderText(
+      ITEM_X_KEYBOARD_SCANCODE,
+      ITEM_Y_KEYBOARD_KEY[Index],
+      ITEM_TEXT_KEYBOARD_SCANCODE[Input.Keyboard.ScanCode[Index]],
+      IfThen(
+        Memory.Keyboard.Changing,
+        IfThen(
+          Memory.Keyboard.KeyIndex = Index,
+          IfThen(Memory.Keyboard.SettingUp, COLOR_ORANGE, COLOR_WHITE),
+          COLOR_GRAY
+        ),
+        COLOR_GRAY
+      )
+    );
 end;
 
 
