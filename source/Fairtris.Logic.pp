@@ -991,7 +991,7 @@ procedure TLogic.UpdateLegal();
 begin
   Memory.Legal.FrameIndex := Memory.Legal.FrameIndex + 1;
 
-  if Memory.Legal.FrameIndex = 5 * 60 then
+  if Memory.Legal.FrameIndex = 5 * Clock.FrameRateLimit then
     FScene.Current := SCENE_MENU;
 end;
 
