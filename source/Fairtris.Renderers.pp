@@ -48,11 +48,11 @@ type
   private
     procedure RenderKeyboardItemSelection();
     procedure RenderKeyboardKeySelection();
-    procedure RenderKeyboardParameters();
+    procedure RenderKeyboardKeyScanCodes();
   private
     procedure RenderControllerItemSelection();
     procedure RenderControllerButtonSelection();
-    procedure RenderControllerParameters();
+    procedure RenderControllerButtonScanCodes();
   private
     procedure RenderLegal();
     procedure RenderMenu();
@@ -528,7 +528,7 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderKeyboardParameters();
+procedure TModernRenderer.RenderKeyboardKeyScanCodes();
 var
   Index: Integer;
 begin
@@ -586,7 +586,7 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderControllerParameters();
+procedure TModernRenderer.RenderControllerButtonScanCodes();
 begin
 
 end;
@@ -646,7 +646,7 @@ procedure TModernRenderer.RenderKeyboard();
 begin
   RenderKeyboardItemSelection();
   RenderKeyboardKeySelection();
-  RenderKeyboardParameters();
+  RenderKeyboardKeyScanCodes();
 end;
 
 
@@ -654,7 +654,7 @@ procedure TModernRenderer.RenderController();
 begin
   RenderControllerItemSelection();
   RenderControllerButtonSelection();
-  RenderControllerParameters();
+  RenderControllerButtonScanCodes();
 end;
 
 
