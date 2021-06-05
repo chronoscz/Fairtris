@@ -68,7 +68,7 @@ type
 type
   TController = class(TInterfacedObject, IControllable)
   private type
-    TScanCodes = array [0 .. 7] of UInt8;
+    TScanCodes = array [CONTROLLER_BUTTON_FIRST .. CONTROLLER_BUTTON_LAST] of UInt8;
   private
     FDevice: TDevice;
     FScanCodes: TScanCodes;

@@ -45,7 +45,7 @@ type
 type
   TKeyboard = class(TInterfacedObject, IControllable)
   private type
-    TScanCodes = array [0 .. 7] of UInt8;
+    TScanCodes = array [KEYBOARD_KEY_FIRST .. KEYBOARD_KEY_LAST] of UInt8;
   private
     FDevice: TDevice;
     FScanCodes: TScanCodes;
