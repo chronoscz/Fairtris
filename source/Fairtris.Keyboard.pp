@@ -48,10 +48,13 @@ type
     TScanCodes = array [KEYBOARD_KEY_FIRST .. KEYBOARD_KEY_LAST] of UInt8;
   private
     FDevice: TDevice;
-    FScanCodes: TScanCodes;
+  private
+    FScanCodesDefault: TScanCodes;
+    FScanCodesUsed: TScanCodes;
   private
     procedure InitDevice();
-    procedure InitScanCodes();
+    procedure InitScanCodesDefault();
+    procedure InitScanCodesUsed();
   private
     procedure DoneDevice();
   private
@@ -181,7 +184,8 @@ end;
 constructor TKeyboard.Create();
 begin
   InitDevice();
-  InitScanCodes();
+  InitScanCodesDefault();
+  InitScanCodesUsed();
 end;
 
 
@@ -198,7 +202,20 @@ begin
 end;
 
 
-procedure TKeyboard.InitScanCodes();
+procedure TKeyboard.InitScanCodesDefault();
+begin
+  FScanCodesDefault[KEYBOARD_KEY_UP]     := VK_UP;
+  FScanCodesDefault[KEYBOARD_KEY_DOWN]   := VK_DOWN;
+  FScanCodesDefault[KEYBOARD_KEY_LEFT]   := VK_LEFT;
+  FScanCodesDefault[KEYBOARD_KEY_RIGHT]  := VK_RIGHT;
+  FScanCodesDefault[KEYBOARD_KEY_SELECT] := VK_A;
+  FScanCodesDefault[KEYBOARD_KEY_START]  := VK_S;
+  FScanCodesDefault[KEYBOARD_KEY_B]      := VK_Z;
+  FScanCodesDefault[KEYBOARD_KEY_A]      := VK_X;
+end;
+
+
+procedure TKeyboard.InitScanCodesUsed();
 begin
   Restore();
 end;
@@ -212,13 +229,13 @@ end;
 
 function TKeyboard.GetSwitch(AIndex: Integer): TSwitch;
 begin
-  Result := FDevice.Key[FScanCodes[AIndex]];
+  Result := FDevice.Key[FScanCodesUsed[AIndex]];
 end;
 
 
 function TKeyboard.GetScanCode(AIndex: Integer): UInt8;
 begin
-  Result := FScanCodes[AIndex];
+  Result := FScanCodesUsed[AIndex];
 end;
 
 
@@ -230,7 +247,7 @@ end;
 
 procedure TKeyboard.Initialize();
 begin
-  // załadować kody klawiszy z "Settings" i wpisać je do FScanCodes
+  // załadować kody klawiszy z "Settings" i wpisać je do FScanCodesUsed
 end;
 
 
@@ -247,15 +264,13 @@ end;
 
 
 procedure TKeyboard.Restore();
+var
+  Index: Integer;
 begin
-  FScanCodes[KEYBOARD_KEY_UP]     := VK_UP;
-  FScanCodes[KEYBOARD_KEY_DOWN]   := VK_DOWN;
-  FScanCodes[KEYBOARD_KEY_LEFT]   := VK_LEFT;
-  FScanCodes[KEYBOARD_KEY_RIGHT]  := VK_RIGHT;
-  FScanCodes[KEYBOARD_KEY_SELECT] := VK_A;
-  FScanCodes[KEYBOARD_KEY_START]  := VK_S;
-  FScanCodes[KEYBOARD_KEY_B]      := VK_Z;
-  FScanCodes[KEYBOARD_KEY_A]      := VK_X;
+  for Index := Low(FScanCodesUsed) to High(FScanCodesUsed) do
+    FScanCodesUsed[Index] := FScanCodesDefault[Index];
+
+  Reset();
 end;
 
 
