@@ -273,11 +273,9 @@ end;
 
 
 procedure TKeyboard.Introduce();
-var
-  Index: Integer;
 begin
-  for Index := Low(FScanCodesUsed) to High(FScanCodesUsed) do
-    FScanCodesUsed[Index] := Memory.Keyboard.ScanCodes[Index];
+  FScanCodesUsed := Memory.Keyboard.ScanCodes;
+  Reset();
 end;
 
 
