@@ -416,6 +416,51 @@ const
   );
 
 
+const
+  KEYBOARD_SCANCODE_TEXT: array [KEYBOARD_SCANCODE_KEY_FIRST .. KEYBOARD_SCANCODE_KEY_LAST] of String = (
+    'NONE'   , 'L BTN'  , 'R BTN'  , 'CANCEL' , 'M BTN'  , 'X BTN1' , 'X BTN2' , '?'      ,
+    'BACK'   , 'TAB'    , '?'      , '?'      , 'CLEAR'  , 'RETURN' , '?'      , '?'      ,
+    'SHIFT'  , 'CTRL'   , 'MENU'   , 'PAUSE'  , 'CAP'    , 'KANA'   , '?'      , 'JUNJA'  ,
+    'FINAL'  , 'HANJA'  , '?'      , 'ESCAPE' , 'CONV'   , 'NOCONV' , 'ACCEPT' , 'MODCHG' ,
+    'SPACE'  , 'PRIOR'  , 'NEXT'   , 'END'    , 'HOME'   , 'LEFT'   , 'UP'     , 'RIGHT'  ,
+    'DOWN'   , 'SELECT' , 'PRINT'  , 'EXEC'   , 'SNPSHT' , 'INSERT' , 'DELETE' , 'HELP'   ,
+    '0'      , '1'      , '2'      , '3'      , '4'      , '5'      , '6'      , '7'      ,
+    '8'      , '9'      , '?'      , '?'      , '?'      , '?'      , '?'      , '?'      ,
+    '?'      , 'A'      , 'B'      , 'C'      , 'D'      , 'E'      , 'F'      , 'G'      ,
+    'H'      , 'I'      , 'J'      , 'K'      , 'L'      , 'M'      , 'N'      , 'O'      ,
+    'P'      , 'Q'      , 'R'      , 'S'      , 'T'      , 'U'      , 'V'      , 'W'      ,
+    'X'      , 'Y'      , 'Z'      , 'L WIN'  , 'R WIN'  , 'APPS'   , '?'      , 'SLEEP'  ,
+    'NUM 0'  , 'NUM 1'  , 'NUM 2'  , 'NUM 3'  , 'NUM 4'  , 'NUM 5'  , 'NUM 6'  , 'NUM 7'  ,
+    'NUM 8'  , 'NUM 9'  , 'MUL'    , 'ADD'    , 'SEP'    , 'SUB'    , 'DEC'    , 'DIV'    ,
+    'F1'     , 'F2'     , 'F3'     , 'F4'     , 'F5'     , 'F6'     , 'F7'     , 'F8'     ,
+    'F9'     , 'F10'    , 'F11'    , 'F12'    , 'F13'    , 'F14'    , 'F15'    , 'F16'    ,
+    'F17'    , 'F18'    , 'F19'    , 'F20'    , 'F21'    , 'F22'    , 'F23'    , 'F24'    ,
+    '?'      , '?'      , '?'      , '?'      , '?'      , '?'      , '?'      , '?'      ,
+    'NUMLCK' , 'SCROLL' , 'OEM JI' , 'OEM MA' , 'OEM TO' , 'OEM LO' , 'OEM RO' , '?'      ,
+    '?'      , '?'      , '?'      , '?'      , '?'      , '?'      , '?'      , '?'      ,
+    'L SHIFT', 'R SHIFT', 'L CTRL' , 'R CTRL' , 'L MENU' , 'R MENU' , 'BR BACK', 'BR FORW',
+    'BR REFR', 'BR STOP', 'BR SRCH', 'BR FAV' , 'BR HOME', 'VO MUTE', 'VO DOWN', 'VO UP'  ,
+    'MD NEXT', 'MD PREV', 'MD STOP', 'MD PLAY', 'LN MAIL', 'LN MED' , 'LN APP1', 'LN APP2',
+    '?'      , '?'      , 'OEM 1'  , 'OEM PLS', 'OEM COM', 'OEM MIN', 'OEM PER', 'OEM 2'  ,
+    'OEM 3'  , '?'      , '?'      , '?'      , '?'      , '?'      , '?'      , '?'      ,
+    '?'      , '?'      , '?'      , '?'      , '?'      , '?'      , '?'      , '?'      ,
+    '?'      , '?'      , '?'      , '?'      , '?'      , '?'      , '?'      , '?'      ,
+    '?'      , '?'      , '?'      , 'OEM 4'  , 'OEM 5'  , 'OEM 6'  , 'OEM 7'  , 'OEM 8'  ,
+    '?'      , 'OEM AX' , 'OEM 102', 'ICO HLP', 'ICO 00' , 'PROCKEY', 'ICO CLR', 'PACKET' ,
+    '?'      , 'OEM RST', 'OEM JMP', 'OEM PA1', 'OEM PA2', 'OEM PA3', 'OEM WSC', 'OEM CSL',
+    'OEM ATN', 'OEM FIN', 'OEM CPY', 'OEM AUT', 'OEM ENL', 'OEM BTB', 'ATTN'   , 'CRSEL'  ,
+    'EXSEL'  , 'EREOF'  , 'PLAY'   , 'ZOOM'   , 'NONAME' , 'PA1'    , 'OEM CLR', '?'
+  );
+
+const
+  CONTROLLER_SCANCODE_TEXT: array [CONTROLLER_SCANCODE_FIRST .. CONTROLLER_SCANCODE_LAST] of String = (
+    'BTN 0' , 'BTN 1' , 'BTN 2' , 'BTN 3' , 'BTN 4' , 'BTN 5' , 'BTN 6' , 'BTN 7' ,
+    'BTN 8' , 'BTN 9' , 'BTN 10', 'BTN 11', 'BTN 12', 'BTN 13', 'BTN 14', 'BTN 15',
+    'BTN 16', 'BTN 17', 'BTN 18', 'BTN 19', 'BTN 20', 'BTN 21', 'BTN 22', 'BTN 23',
+    'BTN 24', 'BTN 25', 'BTN 26', 'BTN 27', 'BTN 28', 'BTN 29', 'BTN 30', 'BTN 31'
+  );
+
+
 implementation
 
 end.
