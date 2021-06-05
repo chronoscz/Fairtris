@@ -70,6 +70,7 @@ type
     procedure Reset();
     procedure Update();
     procedure Restore();
+    procedure Introduce();
   public
     procedure Validate();
     procedure Invalidate();
@@ -93,7 +94,8 @@ type
 implementation
 
 uses
-  Windows;
+  Windows,
+  Fairtris.Memory;
 
 
 constructor TDevice.Create();
@@ -264,13 +266,18 @@ end;
 
 
 procedure TKeyboard.Restore();
+begin
+  FScanCodesUsed := FScanCodesDefault;
+  Reset();
+end;
+
+
+procedure TKeyboard.Introduce();
 var
   Index: Integer;
 begin
   for Index := Low(FScanCodesUsed) to High(FScanCodesUsed) do
-    FScanCodesUsed[Index] := FScanCodesDefault[Index];
-
-  Reset();
+    FScanCodesUsed[Index] := Memory.Keyboard.ScanCodes[Index];
 end;
 
 

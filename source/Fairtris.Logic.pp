@@ -178,17 +178,11 @@ end;
 
 
 procedure TLogic.PrepareKeyboardScanCodes();
+var
+  Index: Integer;
 begin
-  Memory.Keyboard.Up := Input.Keyboard.ScanCode[KEYBOARD_KEY_UP];
-  Memory.Keyboard.Down := Input.Keyboard.ScanCode[KEYBOARD_KEY_DOWN];
-  Memory.Keyboard.Left := Input.Keyboard.ScanCode[KEYBOARD_KEY_LEFT];
-  Memory.Keyboard.Right := Input.Keyboard.ScanCode[KEYBOARD_KEY_RIGHT];
-
-  Memory.Keyboard.Select := Input.Keyboard.ScanCode[KEYBOARD_KEY_SELECT];
-  Memory.Keyboard.Start := Input.Keyboard.ScanCode[KEYBOARD_KEY_START];
-
-  Memory.Keyboard.B := Input.Keyboard.ScanCode[KEYBOARD_KEY_B];
-  Memory.Keyboard.A := Input.Keyboard.ScanCode[KEYBOARD_KEY_A];
+  for Index := Low(Memory.Keyboard.ScanCodes) to High(Memory.Keyboard.ScanCodes) do
+    Memory.Keyboard.ScanCodes[Index] := Input.Keyboard.ScanCode[Index];
 end;
 
 
@@ -795,16 +789,14 @@ begin
     ITEM_KEYBOARD_RESTORE:
     if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
     begin
-      // tutaj wywołać metodę z "Input.Keyboard", przywracającą aktualne skan-kody
+      Input.Keyboard.Restore();
       PrepareKeyboardScanCodes();
 
       Sounds.PlaySound(SOUND_TOP_OUT, Memory.Play.Region);
     end;
     ITEM_KEYBOARD_SAVE:
     if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
-    begin
-      // tutaj wywołać metodę z "Input.Keyboard" aktualizującą skan-kody
-    end;
+      Input.Keyboard.Introduce();
   end;
 end;
 

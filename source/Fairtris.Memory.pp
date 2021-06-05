@@ -4,6 +4,9 @@ unit Fairtris.Memory;
 
 interface
 
+uses
+  Fairtris.Constants;
+
 
 type
   TLegalMemory = class(TObject)
@@ -98,14 +101,7 @@ type
     Changing: Boolean;
     SettingUp: Boolean;
   public
-    Up: UInt8;
-    Down: UInt8;
-    Left: UInt8;
-    Right: UInt8;
-    Select: UInt8;
-    Start: UInt8;
-    B: UInt8;
-    A: UInt8;
+    ScanCodes: array [KEYBOARD_KEY_FIRST .. KEYBOARD_KEY_LAST] of UInt8;
   end;
 
 
@@ -166,9 +162,6 @@ var
 
 
 implementation
-
-uses
-  Fairtris.Constants;
 
 
 procedure TLegalMemory.Initialize();
