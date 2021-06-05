@@ -71,10 +71,12 @@ type
     TScanCodes = array [CONTROLLER_BUTTON_FIRST .. CONTROLLER_BUTTON_LAST] of UInt8;
   private
     FDevice: TDevice;
-    FScanCodes: TScanCodes;
+    FScanCodesUsed: TScanCodes;
+    FScanCodesDefault: TScanCodes;
   private
     procedure InitDevice();
-    procedure InitScanCodes();
+    procedure InitScanCodesDefault();
+    procedure InitScanCodesUsed();
   private
     procedure DoneDevice();
   private
@@ -258,7 +260,8 @@ end;
 constructor TController.Create();
 begin
   InitDevice();
-  InitScanCodes();
+  InitScanCodesDefault();
+  InitScanCodesUsed();
 end;
 
 
@@ -275,7 +278,21 @@ begin
 end;
 
 
-procedure TController.InitScanCodes();
+procedure TController.InitScanCodesDefault();
+begin
+  FScanCodesDefault[CONTROLLER_BUTTON_UP]     := CONTROLLER_SCANCODE_ARROW_UP;
+  FScanCodesDefault[CONTROLLER_BUTTON_DOWN]   := CONTROLLER_SCANCODE_ARROW_DOWN;
+  FScanCodesDefault[CONTROLLER_BUTTON_LEFT]   := CONTROLLER_SCANCODE_ARROW_LEFT;
+  FScanCodesDefault[CONTROLLER_BUTTON_RIGHT]  := CONTROLLER_SCANCODE_ARROW_RIGHT;
+
+  FScanCodesDefault[CONTROLLER_BUTTON_SELECT] := CONTROLLER_SCANCODE_BUTTON_0;
+  FScanCodesDefault[CONTROLLER_BUTTON_START]  := CONTROLLER_SCANCODE_BUTTON_1;
+  FScanCodesDefault[CONTROLLER_BUTTON_B]      := CONTROLLER_SCANCODE_BUTTON_2;
+  FScanCodesDefault[CONTROLLER_BUTTON_A]      := CONTROLLER_SCANCODE_BUTTON_3;
+end;
+
+
+procedure TController.InitScanCodesUsed();
 begin
   Restore();
 end;
@@ -289,13 +306,13 @@ end;
 
 function TController.GetSwitch(AIndex: Integer): TSwitch;
 begin
-  Result := FDevice.Button[FScanCodes[AIndex]];
+  Result := FDevice.Button[FScanCodesUsed[AIndex]];
 end;
 
 
 function TController.GetScanCode(AIndex: Integer): UInt8;
 begin
-  Result := FScanCodes[AIndex];
+  Result := FScanCodesUsed[AIndex];
 end;
 
 
@@ -307,7 +324,7 @@ end;
 
 procedure TController.Initialize();
 begin
-  // załadować kody przycisków z "Settings" i wpisać je do FScanCodes
+  // załadować kody przycisków z "Settings" i wpisać je do FScanCodesUsed
 end;
 
 
@@ -324,16 +341,11 @@ end;
 
 
 procedure TController.Restore();
+var
+  Index: Integer;
 begin
-  FScanCodes[CONTROLLER_BUTTON_UP]     := CONTROLLER_SCANCODE_ARROW_UP;
-  FScanCodes[CONTROLLER_BUTTON_DOWN]   := CONTROLLER_SCANCODE_ARROW_DOWN;
-  FScanCodes[CONTROLLER_BUTTON_LEFT]   := CONTROLLER_SCANCODE_ARROW_LEFT;
-  FScanCodes[CONTROLLER_BUTTON_RIGHT]  := CONTROLLER_SCANCODE_ARROW_RIGHT;
-
-  FScanCodes[CONTROLLER_BUTTON_SELECT] := CONTROLLER_SCANCODE_BUTTON_0;
-  FScanCodes[CONTROLLER_BUTTON_START]  := CONTROLLER_SCANCODE_BUTTON_1;
-  FScanCodes[CONTROLLER_BUTTON_B]      := CONTROLLER_SCANCODE_BUTTON_2;
-  FScanCodes[CONTROLLER_BUTTON_A]      := CONTROLLER_SCANCODE_BUTTON_3;
+  for Index := Low(FScanCodesUsed) to High(FScanCodesUsed) do
+    FScanCodesUsed[Index] := FScanCodesDefault[Index];
 end;
 
 
