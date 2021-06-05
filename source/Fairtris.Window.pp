@@ -65,7 +65,6 @@ end;
 procedure TGameForm.FormClose(ASender: TObject; var ACloseAction: TCloseAction);
 begin
   Game.Stop();
-  Sleep(SOUND_LENGTH_NTSC[SOUND_TOP_OUT]);
 end;
 
 
