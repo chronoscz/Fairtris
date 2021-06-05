@@ -38,7 +38,6 @@ type
     procedure Invalidate();
   public
     property Key[AIndex: UInt8]: TSwitch read GetKey; default;
-  public
     property Connected: Boolean read FConnected;
   end;
 

@@ -199,6 +199,11 @@ end;
 
 procedure TLogic.PrepareControllerScanCodes();
 begin
+  Memory.Controller.Up := Input.Controller.ScanCode[CONTROLLER_BUTTON_UP];
+  Memory.Controller.Down := Input.Controller.ScanCode[CONTROLLER_BUTTON_DOWN];
+  Memory.Controller.Left := Input.Controller.ScanCode[CONTROLLER_BUTTON_LEFT];
+  Memory.Controller.Right := Input.Controller.ScanCode[CONTROLLER_BUTTON_RIGHT];
+
   Memory.Controller.Select := Input.Controller.ScanCode[CONTROLLER_BUTTON_SELECT];
   Memory.Controller.Start := Input.Controller.ScanCode[CONTROLLER_BUTTON_START];
 

@@ -32,29 +32,23 @@ type
 type
   TDevice = class(TObject)
   private type
-    TArrows = array [0 .. 3] of TSwitch;
-    TButtons = array [0 .. 31] of TSwitch;
+    TButtons = array [0 .. CONTROLLER_BUTTONS_COUNT + CONTROLLER_ARROWS_COUNT - 1] of TSwitch;
   private
     FUpdater: TDeviceUpdater;
   private
     FStatus: JOYINFOEX;
     FConnected: Boolean;
   private
-    FArrows: TArrows;
     FButtons: TButtons;
   private
-    procedure InitArrows();
     procedure InitButtons();
     procedure InitUpdater();
   private
     procedure DoneUpdater();
-    procedure DoneArrows();
     procedure DoneButtons();
   private
-    procedure UpdateArrows();
     procedure UpdateButtons();
   private
-    function GetArrow(AIndex: Integer): TSwitch;
     function GetButton(AIndex: Integer): TSwitch;
   public
     constructor Create();
@@ -66,9 +60,7 @@ type
     procedure Validate();
     procedure Invalidate();
   public
-    property Arrow[AIndex: Integer]: TSwitch read GetArrow;
     property Button[AIndex: Integer]: TSwitch read GetButton;
-  public
     property Connected: Boolean read FConnected;
   end;
 
@@ -155,7 +147,6 @@ end;
 
 constructor TDevice.Create();
 begin
-  InitArrows();
   InitButtons();
   InitUpdater();
 end;
@@ -164,19 +155,9 @@ end;
 destructor TDevice.Destroy();
 begin
   DoneUpdater();
-  DoneArrows();
   DoneButtons();
 
   inherited Destroy();
-end;
-
-
-procedure TDevice.InitArrows();
-var
-  Index: Integer;
-begin
-  for Index := Low(FArrows) to High(FArrows) do
-    FArrows[Index] := TSwitch.Create(False);
 end;
 
 
@@ -203,15 +184,6 @@ begin
 end;
 
 
-procedure TDevice.DoneArrows();
-var
-  Index: Integer;
-begin
-  for Index := Low(FArrows) to High(FArrows) do
-    FArrows[Index].Free();
-end;
-
-
 procedure TDevice.DoneButtons();
 var
   Index: Integer;
@@ -221,31 +193,21 @@ begin
 end;
 
 
-procedure TDevice.UpdateArrows();
-begin
-  FArrows[CONTROLLER_BUTTON_UP].Pressed    := FStatus.wYpos = $0000;
-  FArrows[CONTROLLER_BUTTON_DOWN].Pressed  := FStatus.wYpos = $FFFF;
-  FArrows[CONTROLLER_BUTTON_LEFT].Pressed  := FStatus.wXpos = $0000;
-  FArrows[CONTROLLER_BUTTON_RIGHT].Pressed := FStatus.wXpos = $FFFF;
-end;
-
-
 procedure TDevice.UpdateButtons();
 var
   Index: Integer;
   Mask: Integer = JOY_BUTTON1;
 begin
-  for Index := Low(FButtons) to High(FButtons) do
+  for Index := Low(FButtons) to CONTROLLER_BUTTONS_COUNT - 1 do
   begin
     FButtons[Index].Pressed := FStatus.wButtons and Mask <> 0;
     Mask := Mask shl 1;
   end;
-end;
 
-
-function TDevice.GetArrow(AIndex: Integer): TSwitch;
-begin
-  Result := FArrows[AIndex];
+  FButtons[CONTROLLER_ARROWS_OFFSET + CONTROLLER_BUTTON_UP].Pressed    := FStatus.wYpos = $0000;
+  FButtons[CONTROLLER_ARROWS_OFFSET + CONTROLLER_BUTTON_DOWN].Pressed  := FStatus.wYpos = $FFFF;
+  FButtons[CONTROLLER_ARROWS_OFFSET + CONTROLLER_BUTTON_LEFT].Pressed  := FStatus.wXpos = $0000;
+  FButtons[CONTROLLER_ARROWS_OFFSET + CONTROLLER_BUTTON_RIGHT].Pressed := FStatus.wXpos = $FFFF;
 end;
 
 
@@ -261,9 +223,6 @@ var
 begin
   FStatus := Default(JOYINFOEX);
 
-  for Index := Low(FArrows) to High(FArrows) do
-    FArrows[Index].Reset();
-
   for Index := Low(FButtons) to High(FButtons) do
     FButtons[Index].Reset();
 end;
@@ -272,10 +231,7 @@ end;
 procedure TDevice.Update();
 begin
   if FConnected then
-  begin
-    UpdateArrows();
-    UpdateButtons();
-  end
+    UpdateButtons()
   else
     Reset();
 end;
@@ -285,9 +241,6 @@ procedure TDevice.Validate();
 var
   Index: Integer;
 begin
-  for Index := Low(FArrows) to High(FArrows) do
-    FArrows[Index].Validate();
-
   for Index := Low(FButtons) to High(FButtons) do
     FButtons[Index].Validate();
 end;
@@ -297,9 +250,6 @@ procedure TDevice.Invalidate();
 var
   Index: Integer;
 begin
-  for Index := Low(FArrows) to High(FArrows) do
-    FArrows[Index].Invalidate();
-
   for Index := Low(FButtons) to High(FButtons) do
     FButtons[Index].Invalidate();
 end;
@@ -339,10 +289,7 @@ end;
 
 function TController.GetSwitch(AIndex: Integer): TSwitch;
 begin
-  if AIndex in [CONTROLLER_BUTTON_UP .. CONTROLLER_BUTTON_RIGHT] then
-    Result := FDevice.Arrow[FScanCodes[AIndex]]
-  else
-    Result := FDevice.Button[FScanCodes[AIndex]];
+  Result := FDevice.Button[FScanCodes[AIndex]];
 end;
 
 
@@ -378,10 +325,10 @@ end;
 
 procedure TController.Restore();
 begin
-  FScanCodes[CONTROLLER_BUTTON_UP]     := CONTROLLER_BUTTON_UP;
-  FScanCodes[CONTROLLER_BUTTON_DOWN]   := CONTROLLER_BUTTON_DOWN;
-  FScanCodes[CONTROLLER_BUTTON_LEFT]   := CONTROLLER_BUTTON_LEFT;
-  FScanCodes[CONTROLLER_BUTTON_RIGHT]  := CONTROLLER_BUTTON_RIGHT;
+  FScanCodes[CONTROLLER_BUTTON_UP]     := CONTROLLER_ARROWS_OFFSET + CONTROLLER_BUTTON_UP;
+  FScanCodes[CONTROLLER_BUTTON_DOWN]   := CONTROLLER_ARROWS_OFFSET + CONTROLLER_BUTTON_DOWN;
+  FScanCodes[CONTROLLER_BUTTON_LEFT]   := CONTROLLER_ARROWS_OFFSET + CONTROLLER_BUTTON_LEFT;
+  FScanCodes[CONTROLLER_BUTTON_RIGHT]  := CONTROLLER_ARROWS_OFFSET + CONTROLLER_BUTTON_RIGHT;
 
   FScanCodes[CONTROLLER_BUTTON_SELECT] := 0;
   FScanCodes[CONTROLLER_BUTTON_START]  := 1;
