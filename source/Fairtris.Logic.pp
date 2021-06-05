@@ -351,7 +351,7 @@ begin
   Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.Play.Region];
 
   if Memory.Play.Region in [REGION_PAL .. REGION_LAST] then
-    Memory.Play.Level := Min(Memory.Play.Level, 19);
+    Memory.Play.Level := Min(Memory.Play.Level, LEVEL_LAST_PAL);
 end;
 
 
