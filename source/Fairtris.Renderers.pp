@@ -423,8 +423,8 @@ begin
   );
 
   RenderText(
-    ITEM_X_Options[Memory.Options.ItemIndex] - ITEM_X_MARKER,
-    ITEM_Y_Options[Memory.Options.ItemIndex],
+    ITEM_X_OPTIONS[Memory.Options.ItemIndex] - ITEM_X_MARKER,
+    ITEM_Y_OPTIONS[Memory.Options.ItemIndex],
     ITEM_TEXT_MARKER,
     IfThen(
       Memory.Options.ItemIndex in [ITEM_OPTIONS_SET_UP, ITEM_OPTIONS_BACK],
