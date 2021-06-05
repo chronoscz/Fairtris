@@ -1,0 +1,9 @@
+release/
+source/lib/
+
+*.exe
+*.dbg
+*.lps
+*.res
+
+source/grounds/desktop.ini
