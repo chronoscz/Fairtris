@@ -587,8 +587,24 @@ end;
 
 
 procedure TModernRenderer.RenderControllerButtonScanCodes();
+var
+  Index: Integer;
 begin
-
+  for Index := ITEM_KEYBOARD_SCANCODE_FIRST to ITEM_KEYBOARD_SCANCODE_LAST do
+    RenderText(
+      ITEM_X_CONTROLLER_SCANCODE,
+      ITEM_Y_CONTROLLER_BUTTON[Index],
+      ITEM_TEXT_CONTROLLER_SCANCODE[Input.Controller.ScanCode[Index]],
+      IfThen(
+        Memory.Controller.Changing,
+        IfThen(
+          Memory.Controller.ButtonIndex = Index,
+          IfThen(Memory.Controller.SettingUp, COLOR_ORANGE, COLOR_WHITE),
+          COLOR_GRAY
+        ),
+        COLOR_GRAY
+      )
+    );
 end;
 
 
