@@ -430,7 +430,6 @@ const
     'EXSEL'  , 'EREOF'  , 'PLAY'   , 'ZOOM'   , 'NONAME' , 'PA1'    , 'OEM CLR', '?'
   );
 
-
 const
   ITEM_TEXT_CONTROLLER: array [ITEM_CONTROLLER_FIRST .. ITEM_CONTROLLER_LAST] of String = (
     ITEM_TEXT_CONTROLLER_CHANGE,
