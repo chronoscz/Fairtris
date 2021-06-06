@@ -834,9 +834,9 @@ begin
       Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
     end;
 
-    if Input.Keyboard.Device.Key[KEYBOARD_KEY_SCANCODE_CLEAR_MAPPING].JustPressed then
+    if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_CLEAR_MAPPING].JustPressed then
     begin
-      Memory.Keyboard.ScanCodes[Memory.Keyboard.KeyIndex] := KEYBOARD_KEY_SCANCODE_NOT_ASSIGNED;
+      Memory.Keyboard.ScanCodes[Memory.Keyboard.KeyIndex] := KEYBOARD_SCANCODE_KEY_NOT_ASSIGNED;
       Sounds.PlaySound(SOUND_BURN, Memory.Play.Region);
     end;
   end;
@@ -1004,7 +1004,7 @@ procedure TLogic.UpdateControllerScene();
 begin
   FScene.Validate();
 
-  if Input.Keyboard.Device.Key[KEYBOARD_KEY_SCANCODE_HELP_CONTROL].JustPressed then
+  if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_HELP_CONTROL].JustPressed then
   begin
     FScene.Current := SCENE_OPTIONS;
     Exit;
@@ -1049,10 +1049,10 @@ end;
 
 procedure TLogic.UpdateCommon();
 begin
-  if Input.Keyboard.Device.Key[KEYBOARD_KEY_SCANCODE_HELP_UNDERSTAND].JustPressed then
+  if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_HELP_UNDERSTAND].JustPressed then
     HelpUnderstand();
 
-  if Input.Keyboard.Device.Key[KEYBOARD_KEY_SCANCODE_HELP_CONTROL].JustPressed then
+  if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_HELP_CONTROL].JustPressed then
     HelpControl();
 end;
 
