@@ -38,6 +38,7 @@ type
   private
     FFrameLoadTank: Integer;
   private
+    function GetFrameIndexInHalf(): Boolean;
     procedure SetFrameRateLimit(AFrameRateLimit: Integer);
   private
     function GetCounterFrequency(): Int64;
@@ -65,6 +66,7 @@ type
     procedure UpdateFrameAlign();
   public
     property FrameIndex: Integer read FFrameIndex;
+    property FrameIndexInHalf: Boolean read GetFrameIndexInHalf;
     property FrameRateLimit: Integer read FFrameRateLimit write SetFrameRateLimit;
   public
     property FrameRate: TClockFrameRate read FFrameRate;
@@ -101,6 +103,12 @@ begin
   DoneCounters();
 
   inherited Destroy();
+end;
+
+
+function TClock.GetFrameIndexInHalf(): Boolean;
+begin
+  Result := FFrameIndex mod FFrameRateLimit < FFrameRateLimit div 2;
 end;
 
 

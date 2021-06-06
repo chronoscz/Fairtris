@@ -520,7 +520,7 @@ begin
     ITEM_TEXT_KEYBOARD_KEY[Memory.Keyboard.KeyIndex],
     IfThen(
       Memory.Keyboard.SettingUp,
-      IfThen(Clock.FrameIndex mod Clock.FrameRateLimit < Clock.FrameRateLimit div 2, COLOR_DARK, COLOR_WHITE),
+      IfThen(Clock.FrameIndexInHalf, COLOR_DARK, COLOR_WHITE),
       COLOR_WHITE
     )
   );
@@ -531,7 +531,7 @@ begin
     ITEM_TEXT_MARKER,
     IfThen(
       Memory.Keyboard.SettingUp,
-      IfThen(Clock.FrameIndex mod Clock.FrameRateLimit < Clock.FrameRateLimit div 2, COLOR_DARK, COLOR_WHITE),
+      IfThen(Clock.FrameIndexInHalf, COLOR_DARK, COLOR_WHITE),
       COLOR_WHITE
     )
   );
@@ -553,7 +553,7 @@ begin
           Memory.Keyboard.KeyIndex = Index,
           IfThen(
             Memory.Keyboard.SettingUp,
-            IfThen(Clock.FrameIndex mod Clock.FrameRateLimit < Clock.FrameRateLimit div 2, COLOR_DARK, COLOR_WHITE),
+            IfThen(Clock.FrameIndexInHalf, COLOR_DARK, COLOR_WHITE),
             COLOR_WHITE
           ),
           COLOR_GRAY
