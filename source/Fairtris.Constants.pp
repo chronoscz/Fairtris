@@ -324,7 +324,6 @@ const
 
 const
   ITEM_TEXT_MARKER = '>';
-  ITEM_TEXT_PUSH   = 'PUSH';
 
 const
   ITEM_TEXT_MENU_PLAY    = 'PLAY';
