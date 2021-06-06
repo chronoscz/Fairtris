@@ -92,6 +92,7 @@ type
     procedure Reset();
     procedure Update();
     procedure Restore();
+    procedure Introduce();
   public
     procedure Validate();
     procedure Invalidate();
@@ -113,6 +114,9 @@ type
 
 
 implementation
+
+uses
+  Fairtris.Memory;
 
 
 constructor TDeviceUpdater.Create(AStatus: PJOYINFOEX; AConnected: PBoolean);
@@ -341,11 +345,14 @@ end;
 
 
 procedure TController.Restore();
-var
-  Index: Integer;
 begin
-  for Index := Low(FScanCodesUsed) to High(FScanCodesUsed) do
-    FScanCodesUsed[Index] := FScanCodesDefault[Index];
+  FScanCodesUsed := FScanCodesDefault;
+end;
+
+
+procedure TController.Introduce();
+begin
+  FScanCodesUsed := Memory.Controller.ScanCodes;
 end;
 
 

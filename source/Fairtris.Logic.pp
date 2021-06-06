@@ -194,17 +194,11 @@ end;
 
 
 procedure TLogic.PrepareControllerScanCodes();
+var
+  Index: Integer;
 begin
-  Memory.Controller.Up := Input.Controller.ScanCode[CONTROLLER_BUTTON_UP];
-  Memory.Controller.Down := Input.Controller.ScanCode[CONTROLLER_BUTTON_DOWN];
-  Memory.Controller.Left := Input.Controller.ScanCode[CONTROLLER_BUTTON_LEFT];
-  Memory.Controller.Right := Input.Controller.ScanCode[CONTROLLER_BUTTON_RIGHT];
-
-  Memory.Controller.Select := Input.Controller.ScanCode[CONTROLLER_BUTTON_SELECT];
-  Memory.Controller.Start := Input.Controller.ScanCode[CONTROLLER_BUTTON_START];
-
-  Memory.Controller.B := Input.Controller.ScanCode[CONTROLLER_BUTTON_B];
-  Memory.Controller.A := Input.Controller.ScanCode[CONTROLLER_BUTTON_A];
+  for Index := Low(Memory.Controller.ScanCodes) to High(Memory.Controller.ScanCodes) do
+    Memory.Controller.ScanCodes[Index] := Input.Controller.ScanCode[Index];
 end;
 
 
@@ -794,9 +788,6 @@ begin
 
       Sounds.PlaySound(SOUND_TOP_OUT, Memory.Play.Region);
     end;
-    ITEM_KEYBOARD_SAVE:
-    if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
-      Input.Keyboard.Introduce();
   end;
 end;
 
@@ -853,6 +844,8 @@ begin
     if Memory.Keyboard.ItemIndex = ITEM_KEYBOARD_SAVE then
       if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
       begin
+        Input.Keyboard.Introduce();
+
         FScene.Current := SCENE_OPTIONS;
         Sounds.PlaySound(SOUND_TETRIS, Memory.Play.Region);
       end;
@@ -900,15 +893,10 @@ begin
     ITEM_CONTROLLER_RESTORE:
     if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
     begin
-      // tutaj wywołać metodę z "Input.Controller", przywracającą aktualne skan-kody
+      Input.Controller.Restore();
       PrepareControllerScanCodes();
 
       Sounds.PlaySound(SOUND_TOP_OUT, Memory.Play.Region);
-    end;
-    ITEM_CONTROLLER_SAVE:
-    if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
-    begin
-      // tutaj wywołać metodę z "Input.Controller" aktualizującą skan-kody
     end;
   end;
 end;
@@ -976,6 +964,8 @@ begin
     if Memory.Controller.ItemIndex = ITEM_CONTROLLER_SAVE then
       if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
       begin
+        Input.Controller.Introduce();
+
         FScene.Current := SCENE_OPTIONS;
         Sounds.PlaySound(SOUND_TETRIS, Memory.Play.Region);
       end;

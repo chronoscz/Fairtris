@@ -116,14 +116,7 @@ type
     Changing: Boolean;
     SettingUp: Boolean;
   public
-    Up: UInt8;
-    Down: UInt8;
-    Left: UInt8;
-    Right: UInt8;
-    Select: UInt8;
-    Start: UInt8;
-    B: UInt8;
-    A: UInt8;
+    ScanCodes: array [CONTROLLER_BUTTON_FIRST .. CONTROLLER_BUTTON_LAST] of UInt8;
   end;
 
 
