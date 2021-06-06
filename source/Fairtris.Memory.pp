@@ -112,7 +112,9 @@ type
   TControllerMemory = class(TObject)
   public             
     procedure Initialize();
+  public
     function MappedCorrectly(): Boolean;
+    procedure RemoveDuplicates(AScanCode: UInt8; AProtectedButton: Integer);
   public
     ItemIndex: Integer;
     ButtonIndex: Integer;
@@ -272,6 +274,16 @@ begin
             (ScanCodes[CONTROLLER_BUTTON_RIGHT] <> CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED) and
             (ScanCodes[CONTROLLER_BUTTON_B]     <> CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED) and
             (ScanCodes[CONTROLLER_BUTTON_A]     <> CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED);
+end;
+
+
+procedure TControllerMemory.RemoveDuplicates(AScanCode: UInt8; AProtectedButton: Integer);
+var
+  Index: Integer;
+begin
+  for Index := Low(ScanCodes) to High(ScanCodes) do
+    if (Index <> AProtectedButton) and (ScanCodes[Index] = AScanCode) then
+      ScanCodes[Index] := CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED;
 end;
 
 

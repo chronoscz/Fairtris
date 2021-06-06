@@ -1038,6 +1038,7 @@ begin
   begin
     Memory.Controller.ScanCodes[Memory.Controller.ButtonIndex] := ScanCode;
     Memory.Controller.SettingUp := False;
+    Memory.Controller.RemoveDuplicates(ScanCode, Memory.Controller.ButtonIndex);
 
     Sounds.PlaySound(SOUND_START, Memory.Play.Region);
   end;
