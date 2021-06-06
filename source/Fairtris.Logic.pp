@@ -880,6 +880,7 @@ begin
   begin
     Memory.Keyboard.ScanCodes[Memory.Keyboard.KeyIndex] := ScanCode;
     Memory.Keyboard.SettingUp := False;
+    Memory.Keyboard.RemoveDuplicates(ScanCode, Memory.Keyboard.KeyIndex);
 
     Sounds.PlaySound(SOUND_START, Memory.Play.Region);
   end;

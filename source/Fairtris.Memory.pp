@@ -94,7 +94,9 @@ type
   TKeyboardMemory = class(TObject)
   public      
     procedure Initialize();
+  public
     function MappedCorrectly(): Boolean;
+    procedure RemoveDuplicates(AScanCode: UInt8; AProtectedKey: Integer);
   public
     ItemIndex: Integer;
     KeyIndex: Integer;
@@ -240,6 +242,16 @@ begin
             (ScanCodes[KEYBOARD_KEY_RIGHT] <> KEYBOARD_SCANCODE_KEY_NOT_MAPPED) and
             (ScanCodes[KEYBOARD_KEY_B]     <> KEYBOARD_SCANCODE_KEY_NOT_MAPPED) and
             (ScanCodes[KEYBOARD_KEY_A]     <> KEYBOARD_SCANCODE_KEY_NOT_MAPPED);
+end;
+
+
+procedure TKeyboardMemory.RemoveDuplicates(AScanCode: UInt8; AProtectedKey: Integer);
+var
+  Index: Integer;
+begin
+  for Index := Low(ScanCodes) to High(ScanCodes) do
+    if (Index <> AProtectedKey) and (ScanCodes[Index] = AScanCode) then
+      ScanCodes[Index] := KEYBOARD_SCANCODE_KEY_NOT_MAPPED;
 end;
 
 
