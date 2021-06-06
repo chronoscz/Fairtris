@@ -463,12 +463,12 @@ const
     ITEM_TEXT_CONTROLLER_BUTTON_BACK
   );
 
-  ITEM_TEXT_CONTROLLER_SCANCODE: array [CONTROLLER_SCANCODE_FIRST .. CONTROLLER_SCANCODE_LAST] of String = (
+  ITEM_TEXT_CONTROLLER_SCANCODE: array [CONTROLLER_SCANCODE_BUTTON_FIRST .. CONTROLLER_SCANCODE_BUTTON_LAST + 1] of String = (
     'BTN 0' , 'BTN 1' , 'BTN 2' , 'BTN 3' , 'BTN 4' , 'BTN 5' , 'BTN 6' , 'BTN 7' ,
     'BTN 8' , 'BTN 9' , 'BTN 10', 'BTN 11', 'BTN 12', 'BTN 13', 'BTN 14', 'BTN 15',
     'BTN 16', 'BTN 17', 'BTN 18', 'BTN 19', 'BTN 20', 'BTN 21', 'BTN 22', 'BTN 23',
     'BTN 24', 'BTN 25', 'BTN 26', 'BTN 27', 'BTN 28', 'BTN 29', 'BTN 30', 'BTN 31',
-    'UP'    , 'DOWN'  , 'LEFT'  , 'RIGHT'
+    'UP'    , 'DOWN'  , 'LEFT'  , 'RIGHT', ''
   );
 
 

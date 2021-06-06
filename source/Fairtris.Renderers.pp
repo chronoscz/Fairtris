@@ -52,6 +52,7 @@ type
     procedure RenderKeyboardKeyScanCodes();
   private
     procedure RenderControllerItemSelection();
+    procedure RenderControllerItems();
     procedure RenderControllerButtonSelection();
     procedure RenderControllerButtonScanCodes();
   private
@@ -541,7 +542,7 @@ begin
     ITEM_TEXT_MARKER,
     IfThen(
       Memory.Keyboard.ItemIndex = ITEM_KEYBOARD_SAVE,
-      IfThen(Memory.Keyboard.MajorKeysAssigned(), COLOR_WHITE, COLOR_DARK),
+      IfThen(Memory.Keyboard.MappedCorrectly(), COLOR_WHITE, COLOR_DARK),
       COLOR_WHITE
     )
   );
@@ -555,7 +556,7 @@ begin
     ITEM_Y_KEYBOARD_SAVE,
     ITEM_TEXT_KEYBOARD_SAVE,
     IfThen(
-      Memory.Keyboard.MajorKeysAssigned(),
+      Memory.Keyboard.MappedCorrectly(),
       IfThen(Memory.Keyboard.ItemIndex = ITEM_KEYBOARD_SAVE, COLOR_WHITE, COLOR_GRAY),
       COLOR_DARK
     )
@@ -628,7 +629,27 @@ begin
   RenderText(
     ITEM_X_CONTROLLER[Memory.Controller.ItemIndex] - ITEM_X_MARKER,
     ITEM_Y_CONTROLLER[Memory.Controller.ItemIndex],
-    ITEM_TEXT_MARKER
+    ITEM_TEXT_MARKER,
+    IfThen(
+      Memory.Controller.ItemIndex = ITEM_CONTROLLER_SAVE,
+      IfThen(Memory.Controller.MappedCorrectly(), COLOR_WHITE, COLOR_DARK),
+      COLOR_WHITE
+    )
+  );
+end;
+
+
+procedure TModernRenderer.RenderControllerItems();
+begin
+  RenderText(
+    ITEM_X_CONTROLLER_SAVE,
+    ITEM_Y_CONTROLLER_SAVE,
+    ITEM_TEXT_CONTROLLER_SAVE,
+    IfThen(
+      Memory.Controller.MappedCorrectly(),
+      IfThen(Memory.Controller.ItemIndex = ITEM_CONTROLLER_SAVE, COLOR_WHITE, COLOR_GRAY),
+      COLOR_DARK
+    )
   );
 end;
 
@@ -641,14 +662,22 @@ begin
     ITEM_X_CONTROLLER_BUTTON[Memory.Controller.ButtonIndex],
     ITEM_Y_CONTROLLER_BUTTON[Memory.Controller.ButtonIndex],
     ITEM_TEXT_CONTROLLER_BUTTON[Memory.Controller.ButtonIndex],
-    IfThen(Memory.Controller.SettingUp, COLOR_ORANGE, COLOR_WHITE)
+    IfThen(
+      Memory.Controller.SettingUp,
+      IfThen(Clock.FrameIndexInHalf, COLOR_DARK, COLOR_WHITE),
+      COLOR_WHITE
+    )
   );
 
   RenderText(
     ITEM_X_CONTROLLER_BUTTON[Memory.Controller.ButtonIndex] - ITEM_X_MARKER,
     ITEM_Y_CONTROLLER_BUTTON[Memory.Controller.ButtonIndex],
     ITEM_TEXT_MARKER,
-    IfThen(Memory.Controller.SettingUp, COLOR_ORANGE, COLOR_WHITE)
+    IfThen(
+      Memory.Controller.SettingUp,
+      IfThen(Clock.FrameIndexInHalf, COLOR_DARK, COLOR_WHITE),
+      COLOR_WHITE
+    )
   );
 end;
 
@@ -661,12 +690,16 @@ begin
     RenderText(
       ITEM_X_CONTROLLER_SCANCODE,
       ITEM_Y_CONTROLLER_BUTTON[Index],
-      ITEM_TEXT_CONTROLLER_SCANCODE[Input.Controller.ScanCode[Index]],
+      ITEM_TEXT_CONTROLLER_SCANCODE[Memory.Controller.ScanCodes[Index]],
       IfThen(
         Memory.Controller.Changing,
         IfThen(
           Memory.Controller.ButtonIndex = Index,
-          IfThen(Memory.Controller.SettingUp, COLOR_ORANGE, COLOR_WHITE),
+          IfThen(
+            Memory.Controller.SettingUp,
+            IfThen(Clock.FrameIndexInHalf, COLOR_DARK, COLOR_WHITE),
+            COLOR_WHITE
+          ),
           COLOR_GRAY
         ),
         COLOR_GRAY
@@ -737,6 +770,7 @@ end;
 procedure TModernRenderer.RenderController();
 begin
   RenderControllerItemSelection();
+  RenderControllerItems();
   RenderControllerButtonSelection();
   RenderControllerButtonScanCodes();
 end;

@@ -94,7 +94,7 @@ type
   TKeyboardMemory = class(TObject)
   public      
     procedure Initialize();
-    function MajorKeysAssigned(): Boolean;
+    function MappedCorrectly(): Boolean;
   public
     ItemIndex: Integer;
     KeyIndex: Integer;
@@ -110,6 +110,7 @@ type
   TControllerMemory = class(TObject)
   public             
     procedure Initialize();
+    function MappedCorrectly(): Boolean;
   public
     ItemIndex: Integer;
     ButtonIndex: Integer;
@@ -231,14 +232,14 @@ begin
 end;
 
 
-function TKeyboardMemory.MajorKeysAssigned(): Boolean;
+function TKeyboardMemory.MappedCorrectly(): Boolean;
 begin
-  Result := (ScanCodes[KEYBOARD_KEY_UP]    <> KEYBOARD_SCANCODE_KEY_NOT_ASSIGNED) and
-            (ScanCodes[KEYBOARD_KEY_DOWN]  <> KEYBOARD_SCANCODE_KEY_NOT_ASSIGNED) and
-            (ScanCodes[KEYBOARD_KEY_LEFT]  <> KEYBOARD_SCANCODE_KEY_NOT_ASSIGNED) and
-            (ScanCodes[KEYBOARD_KEY_RIGHT] <> KEYBOARD_SCANCODE_KEY_NOT_ASSIGNED) and
-            (ScanCodes[KEYBOARD_KEY_B]     <> KEYBOARD_SCANCODE_KEY_NOT_ASSIGNED) and
-            (ScanCodes[KEYBOARD_KEY_A]     <> KEYBOARD_SCANCODE_KEY_NOT_ASSIGNED);
+  Result := (ScanCodes[KEYBOARD_KEY_UP]    <> KEYBOARD_SCANCODE_KEY_NOT_MAPPED) and
+            (ScanCodes[KEYBOARD_KEY_DOWN]  <> KEYBOARD_SCANCODE_KEY_NOT_MAPPED) and
+            (ScanCodes[KEYBOARD_KEY_LEFT]  <> KEYBOARD_SCANCODE_KEY_NOT_MAPPED) and
+            (ScanCodes[KEYBOARD_KEY_RIGHT] <> KEYBOARD_SCANCODE_KEY_NOT_MAPPED) and
+            (ScanCodes[KEYBOARD_KEY_B]     <> KEYBOARD_SCANCODE_KEY_NOT_MAPPED) and
+            (ScanCodes[KEYBOARD_KEY_A]     <> KEYBOARD_SCANCODE_KEY_NOT_MAPPED);
 end;
 
 
@@ -248,6 +249,17 @@ begin
   ButtonIndex := ITEM_CONTROLLER_BUTTON_FIRST;
 
   // uzupełnić w dane pobrane z "Settings"
+end;
+
+
+function TControllerMemory.MappedCorrectly(): Boolean;
+begin
+  Result := (ScanCodes[CONTROLLER_BUTTON_UP]    <> CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED) and
+            (ScanCodes[CONTROLLER_BUTTON_DOWN]  <> CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED) and
+            (ScanCodes[CONTROLLER_BUTTON_LEFT]  <> CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED) and
+            (ScanCodes[CONTROLLER_BUTTON_RIGHT] <> CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED) and
+            (ScanCodes[CONTROLLER_BUTTON_B]     <> CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED) and
+            (ScanCodes[CONTROLLER_BUTTON_A]     <> CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED);
 end;
 
 

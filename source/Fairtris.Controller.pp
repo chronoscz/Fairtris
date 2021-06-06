@@ -32,7 +32,7 @@ type
 type
   TDevice = class(TObject)
   private type
-    TButtons = array [0 .. CONTROLLER_BUTTONS_COUNT + CONTROLLER_ARROWS_COUNT - 1] of TSwitch;
+    TButtons = array [0 .. CONTROLLER_BUTTONS_COUNT + CONTROLLER_ARROWS_COUNT] of TSwitch;
   private
     FUpdater: TDeviceUpdater;
   private
@@ -96,6 +96,8 @@ type
   public
     procedure Validate();
     procedure Invalidate();
+  public
+    function CatchedOneButton(out AScanCode: UInt8): Boolean;
   public
     property Device: TDevice read FDevice;
   public
@@ -365,6 +367,31 @@ end;
 procedure TController.Invalidate();
 begin
   FDevice.Invalidate();
+end;
+
+
+function TController.CatchedOneButton(out AScanCode: UInt8): Boolean;
+var
+  Index, CatchedScanCode: Integer;
+  Catched: Boolean = False;
+begin
+  Result := False;
+
+  for Index := CONTROLLER_SCANCODE_BUTTON_FIRST to CONTROLLER_SCANCODE_BUTTON_LAST do
+    if FDevice.Button[Index].JustPressed then
+      if not Catched then
+      begin
+        Catched := True;
+        CatchedScanCode := Index;
+      end
+      else
+        Exit;
+
+  if Catched then
+  begin
+    Result := True;
+    AScanCode := CatchedScanCode;
+  end;
 end;
 
 

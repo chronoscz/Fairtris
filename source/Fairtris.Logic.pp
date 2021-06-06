@@ -76,6 +76,7 @@ type
   private
     procedure UpdateControllerItemSelection();
     procedure UpdateControllerButtonSelection();
+    procedure UpdateControllerButtonScanCode();
     procedure UpdateControllerScene();
   private
     procedure UpdateCommon();
@@ -836,7 +837,7 @@ begin
 
     if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_CLEAR_MAPPING].JustPressed then
     begin
-      Memory.Keyboard.ScanCodes[Memory.Keyboard.KeyIndex] := KEYBOARD_SCANCODE_KEY_NOT_ASSIGNED;
+      Memory.Keyboard.ScanCodes[Memory.Keyboard.KeyIndex] := KEYBOARD_SCANCODE_KEY_NOT_MAPPED;
       Sounds.PlaySound(SOUND_BURN, Memory.Play.Region);
     end;
   end;
@@ -871,7 +872,7 @@ end;
 
 procedure TLogic.UpdateKeyboardKeyScanCode();
 var
-  ScanCode: UInt8 = 0;
+  ScanCode: UInt8 = KEYBOARD_SCANCODE_KEY_NOT_MAPPED;
 begin
   if not Memory.Keyboard.SettingUp then Exit;
 
@@ -889,11 +890,20 @@ procedure TLogic.UpdateKeyboardScene();
 begin
   FScene.Validate();
 
+  if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_HELP_CONTROL].JustPressed then
+  begin
+    Memory.Keyboard.Changing := False;
+    Memory.Keyboard.SettingUp := False;
+
+    FScene.Current := SCENE_OPTIONS;
+    Exit;
+  end;
+
   if not Memory.Keyboard.Changing then
   begin
     if Input.Device.B.JustPressed or Input.Keyboard.B.JustPressed then
     begin
-      if Memory.Keyboard.MajorKeysAssigned() then
+      if Memory.Keyboard.MappedCorrectly() then
         FScene.Current := SCENE_OPTIONS;
 
       Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
@@ -901,7 +911,7 @@ begin
 
     if Memory.Keyboard.ItemIndex = ITEM_KEYBOARD_SAVE then
       if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
-        if Memory.Keyboard.MajorKeysAssigned() then
+        if Memory.Keyboard.MappedCorrectly() then
         begin
           Input.Keyboard.Introduce();
 
@@ -923,7 +933,7 @@ end;
 
 procedure TLogic.UpdateControllerItemSelection();
 begin
-  if Memory.Controller.Changing then Exit;
+  if Memory.Controller.Changing or Memory.Controller.SettingUp then Exit;
 
   if Memory.Controller.ItemIndex > ITEM_CONTROLLER_FIRST then
     if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
@@ -965,7 +975,7 @@ end;
 
 procedure TLogic.UpdateControllerButtonSelection();
 begin
-  if not Memory.Controller.Changing then Exit;
+  if not Memory.Controller.Changing or Memory.Controller.SettingUp then Exit;
 
   if Memory.Controller.ButtonIndex > ITEM_CONTROLLER_BUTTON_FIRST then
     if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
@@ -975,10 +985,27 @@ begin
     end;
 
   if Memory.Controller.ButtonIndex < ITEM_CONTROLLER_BUTTON_LAST then
+  begin
     if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
     begin
       Memory.Controller.ButtonIndex += 1;
       Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+    end;
+
+    if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_CLEAR_MAPPING].JustPressed then
+    begin
+      Memory.Controller.ScanCodes[Memory.Controller.ButtonIndex] := CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED;
+      Sounds.PlaySound(SOUND_BURN, Memory.Play.Region);
+    end;
+  end;
+
+  if Memory.Controller.ButtonIndex in [ITEM_CONTROLLER_SCANCODE_FIRST .. ITEM_CONTROLLER_SCANCODE_LAST] then
+    if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
+    begin
+      Memory.Controller.SettingUp := True;
+
+      Input.Controller.Validate();
+      Sounds.PlaySound(SOUND_START, Memory.Play.Region);
     end;
 
   if Memory.Controller.ButtonIndex = ITEM_CONTROLLER_BUTTON_BACK then
@@ -1000,12 +1027,31 @@ begin
 end;
 
 
+procedure TLogic.UpdateControllerButtonScanCode();
+var
+  ScanCode: UInt8 = CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED;
+begin
+  if not Memory.Controller.SettingUp then Exit;
+
+  if Input.Controller.CatchedOneButton(ScanCode) then
+  begin
+    Memory.Controller.ScanCodes[Memory.Controller.ButtonIndex] := ScanCode;
+    Memory.Controller.SettingUp := False;
+
+    Sounds.PlaySound(SOUND_START, Memory.Play.Region);
+  end;
+end;
+
+
 procedure TLogic.UpdateControllerScene();
 begin
   FScene.Validate();
 
   if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_HELP_CONTROL].JustPressed then
   begin
+    Memory.Keyboard.Changing := False;
+    Memory.Keyboard.SettingUp := False;
+
     FScene.Current := SCENE_OPTIONS;
     Exit;
   end;
@@ -1018,24 +1064,30 @@ begin
     Memory.Controller.SettingUp := False;
 
     Sounds.PlaySound(SOUND_TOP_OUT, Memory.Play.Region);
+    Exit;
   end;
 
   if not Memory.Controller.Changing then
   begin
     if Input.Device.B.JustPressed or Input.Keyboard.B.JustPressed then
     begin
-      FScene.Current := SCENE_OPTIONS;
+      if Memory.Controller.MappedCorrectly() then
+        FScene.Current := SCENE_OPTIONS;
+
       Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
     end;
 
     if Memory.Controller.ItemIndex = ITEM_CONTROLLER_SAVE then
       if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
-      begin
-        Input.Controller.Introduce();
+        if Memory.Controller.MappedCorrectly() then
+        begin
+          Input.Controller.Introduce();
 
-        FScene.Current := SCENE_OPTIONS;
-        Sounds.PlaySound(SOUND_TETRIS, Memory.Play.Region);
-      end;
+          FScene.Current := SCENE_OPTIONS;
+          Sounds.PlaySound(SOUND_TETRIS, Memory.Play.Region);
+        end
+        else
+          Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
 
     if Memory.Controller.ItemIndex = ITEM_CONTROLLER_CANCEL then
       if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
@@ -1140,6 +1192,7 @@ begin
 
   UpdateControllerItemSelection();
   UpdateControllerButtonSelection();
+  UpdateControllerButtonScanCode();
   UpdateControllerScene();
 end;
 
