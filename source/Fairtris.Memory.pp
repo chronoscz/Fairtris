@@ -94,6 +94,7 @@ type
   TKeyboardMemory = class(TObject)
   public      
     procedure Initialize();
+    function MajorKeysAssigned(): Boolean;
   public
     ItemIndex: Integer;
     KeyIndex: Integer;
@@ -227,6 +228,17 @@ begin
   KeyIndex := ITEM_KEYBOARD_KEY_FIRST;
 
   // uzupełnić w dane pobrane z "Settings"
+end;
+
+
+function TKeyboardMemory.MajorKeysAssigned(): Boolean;
+begin
+  Result := (ScanCodes[KEYBOARD_KEY_UP]    <> KEYBOARD_KEY_SCANCODE_NOT_ASSIGNED) and
+            (ScanCodes[KEYBOARD_KEY_DOWN]  <> KEYBOARD_KEY_SCANCODE_NOT_ASSIGNED) and
+            (ScanCodes[KEYBOARD_KEY_LEFT]  <> KEYBOARD_KEY_SCANCODE_NOT_ASSIGNED) and
+            (ScanCodes[KEYBOARD_KEY_RIGHT] <> KEYBOARD_KEY_SCANCODE_NOT_ASSIGNED) and
+            (ScanCodes[KEYBOARD_KEY_B]     <> KEYBOARD_KEY_SCANCODE_NOT_ASSIGNED) and
+            (ScanCodes[KEYBOARD_KEY_A]     <> KEYBOARD_KEY_SCANCODE_NOT_ASSIGNED);
 end;
 
 

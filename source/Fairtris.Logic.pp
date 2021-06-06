@@ -893,18 +893,23 @@ begin
   begin
     if Input.Device.B.JustPressed or Input.Keyboard.B.JustPressed then
     begin
-      FScene.Current := SCENE_OPTIONS;
+      if Memory.Keyboard.MajorKeysAssigned() then
+        FScene.Current := SCENE_OPTIONS;
+
       Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
     end;
 
     if Memory.Keyboard.ItemIndex = ITEM_KEYBOARD_SAVE then
       if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
-      begin
-        Input.Keyboard.Introduce();
+        if Memory.Keyboard.MajorKeysAssigned() then
+        begin
+          Input.Keyboard.Introduce();
 
-        FScene.Current := SCENE_OPTIONS;
-        Sounds.PlaySound(SOUND_TETRIS, Memory.Play.Region);
-      end;
+          FScene.Current := SCENE_OPTIONS;
+          Sounds.PlaySound(SOUND_TETRIS, Memory.Play.Region);
+        end
+        else
+          Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
 
     if Memory.Keyboard.ItemIndex = ITEM_KEYBOARD_CANCEL then
       if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then

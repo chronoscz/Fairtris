@@ -47,6 +47,7 @@ type
     procedure RenderOptionsParameters();
   private
     procedure RenderKeyboardItemSelection();
+    procedure RenderKeyboardItems();
     procedure RenderKeyboardKeySelection();
     procedure RenderKeyboardKeyScanCodes();
   private
@@ -264,7 +265,11 @@ begin
     ITEM_X_PLAY_START,
     ITEM_Y_PLAY_START,
     ITEM_TEXT_PLAY_START,
-    IfThen(Input.Device.Connected, IfThen(Memory.Play.ItemIndex = ITEM_PLAY_START, COLOR_WHITE, COLOR_GRAY), COLOR_DARK)
+    IfThen(
+      Input.Device.Connected,
+      IfThen(Memory.Play.ItemIndex = ITEM_PLAY_START, COLOR_WHITE, COLOR_GRAY),
+      COLOR_DARK
+    )
   );
 end;
 
@@ -327,14 +332,22 @@ begin
     ITEM_X_PAUSE_RESUME,
     ITEM_Y_PAUSE_RESUME,
     ITEM_TEXT_PAUSE_RESUME,
-    IfThen(Input.Device.Connected, IfThen(Memory.Pause.ItemIndex = ITEM_PAUSE_RESUME, COLOR_WHITE, COLOR_GRAY), COLOR_DARK)
+    IfThen(
+      Input.Device.Connected,
+      IfThen(Memory.Pause.ItemIndex = ITEM_PAUSE_RESUME, COLOR_WHITE, COLOR_GRAY),
+      COLOR_DARK
+    )
   );
 
   RenderText(
     ITEM_X_PAUSE_RESTART,
     ITEM_Y_PAUSE_RESTART,
     ITEM_TEXT_PAUSE_RESTART,
-    IfThen(Input.Device.Connected, IfThen(Memory.Pause.ItemIndex = ITEM_PAUSE_RESTART, COLOR_WHITE, COLOR_GRAY), COLOR_DARK)
+    IfThen(
+      Input.Device.Connected,
+      IfThen(Memory.Pause.ItemIndex = ITEM_PAUSE_RESTART, COLOR_WHITE, COLOR_GRAY),
+      COLOR_DARK
+    )
   );
 end;
 
@@ -366,7 +379,11 @@ begin
     ITEM_X_TOP_OUT_PLAY,
     ITEM_Y_TOP_OUT_PLAY,
     ITEM_TEXT_TOP_OUT_PLAY,
-    IfThen(Input.Device.Connected, IfThen(Memory.TopOut.ItemIndex = ITEM_TOP_OUT_PLAY, COLOR_WHITE, COLOR_GRAY), COLOR_DARK)
+    IfThen(
+      Input.Device.Connected,
+      IfThen(Memory.TopOut.ItemIndex = ITEM_TOP_OUT_PLAY, COLOR_WHITE, COLOR_GRAY),
+      COLOR_DARK
+    )
   );
 end;
 
@@ -421,7 +438,11 @@ begin
     ITEM_X_OPTIONS[Memory.Options.ItemIndex],
     ITEM_Y_OPTIONS[Memory.Options.ItemIndex],
     ITEM_TEXT_OPTIONS[Memory.Options.ItemIndex],
-    IfThen(Memory.Options.ItemIndex <> ITEM_OPTIONS_SET_UP, COLOR_WHITE, IfThen(Input.Device.Connected, COLOR_WHITE, COLOR_DARK))
+    IfThen(
+      Memory.Options.ItemIndex <> ITEM_OPTIONS_SET_UP,
+      COLOR_WHITE,
+      IfThen(Input.Device.Connected, COLOR_WHITE, COLOR_DARK)
+    )
   );
 
   RenderText(
@@ -443,14 +464,22 @@ begin
     ITEM_X_OPTIONS_SET_UP,
     ITEM_Y_OPTIONS_SET_UP,
     ITEM_TEXT_OPTIONS_SET_UP,
-    IfThen(Input.Device.Connected, IfThen(Memory.Options.ItemIndex = ITEM_OPTIONS_SET_UP, COLOR_WHITE, COLOR_GRAY), COLOR_DARK)
+    IfThen(
+      Input.Device.Connected,
+      IfThen(Memory.Options.ItemIndex = ITEM_OPTIONS_SET_UP, COLOR_WHITE, COLOR_GRAY),
+      COLOR_DARK
+    )
   );
 
   RenderText(
     ITEM_X_OPTIONS_BACK,
     ITEM_Y_OPTIONS_BACK,
     ITEM_TEXT_OPTIONS_BACK,
-    IfThen(Input.Device.Connected, IfThen(Memory.Options.ItemIndex = ITEM_OPTIONS_BACK, COLOR_WHITE, COLOR_GRAY), COLOR_DARK)
+    IfThen(
+      Input.Device.Connected,
+      IfThen(Memory.Options.ItemIndex = ITEM_OPTIONS_BACK, COLOR_WHITE, COLOR_GRAY),
+      COLOR_DARK
+    )
   );
 end;
 
@@ -461,7 +490,11 @@ begin
     ITEM_X_OPTIONS_PARAM,
     ITEM_Y_OPTIONS_INPUT,
     ITEM_TEXT_OPTIONS_INPUT[Memory.Options.Input],
-    IfThen(Input.Device.Connected, IfThen(Memory.Options.ItemIndex = ITEM_OPTIONS_INPUT, COLOR_WHITE, COLOR_GRAY), COLOR_DARK)
+    IfThen(
+      Input.Device.Connected,
+      IfThen(Memory.Options.ItemIndex = ITEM_OPTIONS_INPUT, COLOR_WHITE, COLOR_GRAY),
+      COLOR_DARK
+    )
   );
 
   RenderText(
@@ -505,7 +538,27 @@ begin
   RenderText(
     ITEM_X_KEYBOARD[Memory.Keyboard.ItemIndex] - ITEM_X_MARKER,
     ITEM_Y_KEYBOARD[Memory.Keyboard.ItemIndex],
-    ITEM_TEXT_MARKER
+    ITEM_TEXT_MARKER,
+    IfThen(
+      Memory.Keyboard.ItemIndex = ITEM_KEYBOARD_SAVE,
+      IfThen(Memory.Keyboard.MajorKeysAssigned(), COLOR_WHITE, COLOR_DARK),
+      COLOR_WHITE
+    )
+  );
+end;
+
+
+procedure TModernRenderer.RenderKeyboardItems();
+begin
+  RenderText(
+    ITEM_X_KEYBOARD_SAVE,
+    ITEM_Y_KEYBOARD_SAVE,
+    ITEM_TEXT_KEYBOARD_SAVE,
+    IfThen(
+      Memory.Keyboard.MajorKeysAssigned(),
+      IfThen(Memory.Keyboard.ItemIndex = ITEM_KEYBOARD_SAVE, COLOR_WHITE, COLOR_GRAY),
+      COLOR_DARK
+    )
   );
 end;
 
@@ -675,6 +728,7 @@ end;
 procedure TModernRenderer.RenderKeyboard();
 begin
   RenderKeyboardItemSelection();
+  RenderKeyboardItems();
   RenderKeyboardKeySelection();
   RenderKeyboardKeyScanCodes();
 end;
