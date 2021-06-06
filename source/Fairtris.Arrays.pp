@@ -5,6 +5,7 @@ unit Fairtris.Arrays;
 interface
 
 uses
+  Windows,
   Fairtris.Constants;
 
 
@@ -17,6 +18,19 @@ const
     CLOCK_FRAMERATE_PAL,
     CLOCK_FRAMERATE_PAL
   );
+
+
+const
+  KEYBOARD_KEY_LOCKED: set of UInt8 = [
+    VK_LBUTTON,
+    VK_RBUTTON,
+    VK_MBUTTON,
+    VK_XBUTTON1,
+    VK_XBUTTON2,
+    VK_SHIFT,
+    VK_CONTROL,
+    VK_MENU
+  ];
 
 
 const
@@ -395,38 +409,38 @@ const
   );
 
   ITEM_TEXT_KEYBOARD_SCANCODE: array [KEYBOARD_SCANCODE_KEY_FIRST .. KEYBOARD_SCANCODE_KEY_LAST] of String = (
-    'NONE'   , 'L BTN'  , 'R BTN'  , 'BREAK'  , 'M BTN'  , 'X BTN1' , 'X BTN2' , '?'      ,
-    'BACKSP' , 'TAB'    , '?'      , '?'      , 'CLEAR'  , 'RETURN' , '?'      , '?'      ,
-    'SHIFT'  , 'CTRL'   , 'ALT'    , 'PAUSE'  , 'CAP'    , 'KANA'   , '?'      , 'JUNJA'  ,
-    'FINAL'  , 'HANJA'  , '?'      , 'ESCAPE' , 'CONV'   , 'NOCONV' , 'ACCEPT' , 'MODCHG' ,
+    'NONE'   , 'L BTN'  , 'R BTN'  , 'BREAK'  , 'M BTN'  , 'X BTN1' , 'X BTN2' , ''       ,
+    'BACKSP' , 'TAB'    , ''       , ''       , 'CLEAR'  , 'RETURN' , ''       , ''       ,
+    'SHIFT'  , 'CTRL'   , 'ALT'    , 'PAUSE'  , 'CAP'    , 'KANA'   , ''       , 'JUNJA'  ,
+    'FINAL'  , 'HANJA'  , ''       , 'ESCAPE' , 'CONV'   , 'NOCONV' , 'ACCEPT' , 'MODCHG' ,
     'SPACE'  , 'PRIOR'  , 'NEXT'   , 'END'    , 'HOME'   , 'LEFT'   , 'UP'     , 'RIGHT'  ,
     'DOWN'   , 'SELECT' , 'PRINT'  , 'EXEC'   , 'PRTSCR' , 'INSERT' , 'DELETE' , 'HELP'   ,
     '0'      , '1'      , '2'      , '3'      , '4'      , '5'      , '6'      , '7'      ,
-    '8'      , '9'      , '?'      , '?'      , '?'      , '?'      , '?'      , '?'      ,
-    '?'      , 'A'      , 'B'      , 'C'      , 'D'      , 'E'      , 'F'      , 'G'      ,
+    '8'      , '9'      , ''       , ''       , ''       , ''       , ''       , ''       ,
+    ''       , 'A'      , 'B'      , 'C'      , 'D'      , 'E'      , 'F'      , 'G'      ,
     'H'      , 'I'      , 'J'      , 'K'      , 'L'      , 'M'      , 'N'      , 'O'      ,
     'P'      , 'Q'      , 'R'      , 'S'      , 'T'      , 'U'      , 'V'      , 'W'      ,
-    'X'      , 'Y'      , 'Z'      , 'L WIN'  , 'R WIN'  , 'APPS'   , '?'      , 'SLEEP'  ,
+    'X'      , 'Y'      , 'Z'      , 'L WIN'  , 'R WIN'  , 'APPS'   , ''       , 'SLEEP'  ,
     'NUM 0'  , 'NUM 1'  , 'NUM 2'  , 'NUM 3'  , 'NUM 4'  , 'NUM 5'  , 'NUM 6'  , 'NUM 7'  ,
     'NUM 8'  , 'NUM 9'  , 'MUL'    , 'ADD'    , 'SEP'    , 'SUB'    , 'DEC'    , 'DIV'    ,
     'F1'     , 'F2'     , 'F3'     , 'F4'     , 'F5'     , 'F6'     , 'F7'     , 'F8'     ,
     'F9'     , 'F10'    , 'F11'    , 'F12'    , 'F13'    , 'F14'    , 'F15'    , 'F16'    ,
     'F17'    , 'F18'    , 'F19'    , 'F20'    , 'F21'    , 'F22'    , 'F23'    , 'F24'    ,
-    '?'      , '?'      , '?'      , '?'      , '?'      , '?'      , '?'      , '?'      ,
-    'NUMLCK' , 'SCRLOCK', 'OEM JI' , 'OEM MA' , 'OEM TO' , 'OEM LO' , 'OEM RO' , '?'      ,
-    '?'      , '?'      , '?'      , '?'      , '?'      , '?'      , '?'      , '?'      ,
+    ''       , ''       , ''       , ''       , ''       , ''       , ''       , ''       ,
+    'NUMLCK' , 'SCRLOCK', 'OEM JI' , 'OEM MA' , 'OEM TO' , 'OEM LO' , 'OEM RO' , ''       ,
+    ''       , ''       , ''       , ''       , ''       , ''       , ''       , ''       ,
     'L SHIFT', 'R SHIFT', 'L CTRL' , 'R CTRL' , 'L ALT'  , 'R ALT'  , 'BR BACK', 'BR FWD' ,
     'BR REFR', 'BR STOP', 'BR SRCH', 'BR FAV' , 'BR HOME', 'VO MUTE', 'VO DOWN', 'VO UP'  ,
     'MD NEXT', 'MD PREV', 'MD STOP', 'MD PLAY', 'LN MAIL', 'LN MED' , 'LN APP1', 'LN APP2',
-    '?'      , '?'      , 'SCOLON' , 'PLUS'   , 'COMMA'  , 'MINUS'  , 'PERIOD' , 'SLASH'  ,
-    'TILDE'  , '?'      , '?'      , '?'      , '?'      , '?'      , '?'      , '?'      ,
-    '?'      , '?'      , '?'      , '?'      , '?'      , '?'      , '?'      , '?'      ,
-    '?'      , '?'      , '?'      , '?'      , '?'      , '?'      , '?'      , '?'      ,
-    '?'      , '?'      , '?'      , 'L BRACK', 'BSLASH' , 'R BRACK', 'QUOTE'  , 'OEM 8'  ,
-    '?'      , 'OEM AX' , 'OEM 102', 'ICO HLP', 'ICO 00' , 'PROCKEY', 'ICO CLR', 'PACKET' ,
-    '?'      , 'OEM RST', 'OEM JMP', 'OEM PA1', 'OEM PA2', 'OEM PA3', 'OEM WSC', 'OEM CSL',
+    ''       , ''       , 'SCOLON' , 'PLUS'   , 'COMMA'  , 'MINUS'  , 'PERIOD' , 'SLASH'  ,
+    'TILDE'  , ''       , ''       , ''       , ''       , ''       , ''       , ''       ,
+    ''       , ''       , ''       , ''       , ''       , ''       , ''       , ''       ,
+    ''       , ''       , ''       , ''       , ''       , ''       , ''       , ''       ,
+    ''       , ''       , ''       , 'L BRACK', 'BSLASH' , 'R BRACK', 'QUOTE'  , 'OEM 8'  ,
+    ''       , 'OEM AX' , 'OEM 102', 'ICO HLP', 'ICO 00' , 'PROCKEY', 'ICO CLR', 'PACKET' ,
+    ''       , 'OEM RST', 'OEM JMP', 'OEM PA1', 'OEM PA2', 'OEM PA3', 'OEM WSC', 'OEM CSL',
     'OEM ATN', 'OEM FIN', 'OEM CPY', 'OEM AUT', 'OEM ENL', 'OEM BTB', 'ATTN'   , 'CRSEL'  ,
-    'EXSEL'  , 'EREOF'  , 'PLAY'   , 'ZOOM'   , 'NONAME' , 'PA1'    , 'OEM CLR', '?'
+    'EXSEL'  , 'EREOF'  , 'PLAY'   , 'ZOOM'   , 'NONAME' , 'PA1'    , 'OEM CLR', ''
   );
 
 const

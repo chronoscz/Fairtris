@@ -97,7 +97,8 @@ implementation
 
 uses
   Windows,
-  Fairtris.Memory;
+  Fairtris.Memory,
+  Fairtris.Arrays;
 
 
 constructor TDevice.Create();
@@ -142,7 +143,10 @@ end;
 
 function TDevice.GetKey(AIndex: UInt8): TSwitch;
 begin
-  Result := FKeys[AIndex];
+  if AIndex in KEYBOARD_KEY_LOCKED then
+    Result := FKeys[0]
+  else
+    Result := FKeys[AIndex];
 end;
 
 
