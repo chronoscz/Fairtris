@@ -409,7 +409,7 @@ const
   );
 
   ITEM_TEXT_KEYBOARD_SCANCODE: array [KEYBOARD_SCANCODE_KEY_FIRST .. KEYBOARD_SCANCODE_KEY_LAST] of String = (
-    'NONE'   , 'L BTN'  , 'R BTN'  , 'BREAK'  , 'M BTN'  , 'X BTN1' , 'X BTN2' , ''       ,
+    ''       , 'L BTN'  , 'R BTN'  , 'BREAK'  , 'M BTN'  , 'X BTN1' , 'X BTN2' , ''       ,
     'BACKSP' , 'TAB'    , ''       , ''       , 'CLEAR'  , 'RETURN' , ''       , ''       ,
     'SHIFT'  , 'CTRL'   , 'ALT'    , 'PAUSE'  , 'CAP'    , 'KANA'   , ''       , 'JUNJA'  ,
     'FINAL'  , 'HANJA'  , ''       , 'ESCAPE' , 'CONV'   , 'NOCONV' , 'ACCEPT' , 'MODCHG' ,

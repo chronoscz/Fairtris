@@ -827,11 +827,19 @@ begin
     end;
 
   if Memory.Keyboard.KeyIndex < ITEM_KEYBOARD_KEY_LAST then
+  begin
     if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
     begin
       Memory.Keyboard.KeyIndex += 1;
       Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
     end;
+
+    if Input.Keyboard.Device.Key[KEYBOARD_KEY_SCANCODE_CLEAR_MAPPING].JustPressed then
+    begin
+      Memory.Keyboard.ScanCodes[Memory.Keyboard.KeyIndex] := KEYBOARD_KEY_SCANCODE_NOT_ASSIGNED;
+      Sounds.PlaySound(SOUND_BURN, Memory.Play.Region);
+    end;
+  end;
 
   if Memory.Keyboard.KeyIndex in [ITEM_KEYBOARD_SCANCODE_FIRST .. ITEM_KEYBOARD_SCANCODE_LAST] then
     if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
