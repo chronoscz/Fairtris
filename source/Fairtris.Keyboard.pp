@@ -26,7 +26,7 @@ type
   private
     procedure UpdateKeys();
   private
-    function GetKey(AIndex: UInt8): TSwitch;
+    function GetKey(AKeyID: UInt8): TSwitch;
   public
     constructor Create();
     destructor Destroy(); override;
@@ -37,7 +37,7 @@ type
     procedure Validate();
     procedure Invalidate();
   public
-    property Key[AIndex: UInt8]: TSwitch read GetKey; default;
+    property Key[AKeyID: UInt8]: TSwitch read GetKey; default;
     property Connected: Boolean read FConnected;
   end;
 
@@ -58,8 +58,8 @@ type
   private
     procedure DoneDevice();
   private
-    function GetSwitch(AIndex: Integer): TSwitch;
-    function GetScanCode(AIndex: Integer): UInt8;
+    function GetSwitch(AKeyID: Integer): TSwitch;
+    function GetScanCode(AKeyID: Integer): UInt8;
     function GetConnected(): Boolean;
   public
     constructor Create();
@@ -80,7 +80,7 @@ type
     property Device: TDevice read FDevice;
   public
     property Connected: Boolean read GetConnected;
-    property ScanCode[AIndex: Integer]: UInt8 read GetScanCode;
+    property ScanCode[AKeyID: Integer]: UInt8 read GetScanCode;
   public
     property Up: TSwitch index KEYBOARD_KEY_UP read GetSwitch;
     property Down: TSwitch index KEYBOARD_KEY_DOWN read GetSwitch;
@@ -141,12 +141,12 @@ begin
 end;
 
 
-function TDevice.GetKey(AIndex: UInt8): TSwitch;
+function TDevice.GetKey(AKeyID: UInt8): TSwitch;
 begin
-  if AIndex in KEYBOARD_KEY_LOCKED then
+  if AKeyID in KEYBOARD_KEY_LOCKED then
     Result := FKeys[0]
   else
-    Result := FKeys[AIndex];
+    Result := FKeys[AKeyID];
 end;
 
 
@@ -235,15 +235,15 @@ begin
 end;
 
 
-function TKeyboard.GetSwitch(AIndex: Integer): TSwitch;
+function TKeyboard.GetSwitch(AKeyID: Integer): TSwitch;
 begin
-  Result := FDevice.Key[FScanCodesUsed[AIndex]];
+  Result := FDevice.Key[FScanCodesUsed[AKeyID]];
 end;
 
 
-function TKeyboard.GetScanCode(AIndex: Integer): UInt8;
+function TKeyboard.GetScanCode(AKeyID: Integer): UInt8;
 begin
-  Result := FScanCodesUsed[AIndex];
+  Result := FScanCodesUsed[AKeyID];
 end;
 
 

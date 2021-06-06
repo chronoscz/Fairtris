@@ -49,7 +49,7 @@ type
   private
     procedure UpdateButtons();
   private
-    function GetButton(AIndex: Integer): TSwitch;
+    function GetButton(AButtonID: Integer): TSwitch;
   public
     constructor Create();
     destructor Destroy(); override;
@@ -80,8 +80,8 @@ type
   private
     procedure DoneDevice();
   private
-    function GetSwitch(AIndex: Integer): TSwitch;
-    function GetScanCode(AIndex: Integer): UInt8;
+    function GetSwitch(AButtonID: Integer): TSwitch;
+    function GetScanCode(AButtonID: Integer): UInt8;
     function GetConnected(): Boolean;
   public
     constructor Create();
@@ -102,7 +102,7 @@ type
     property Device: TDevice read FDevice;
   public
     property Connected: Boolean read GetConnected;
-    property ScanCode[AIndex: Integer]: UInt8 read GetScanCode;
+    property ScanCode[AButtonID: Integer]: UInt8 read GetScanCode;
   public
     property Up: TSwitch index CONTROLLER_BUTTON_UP read GetSwitch;
     property Down: TSwitch index CONTROLLER_BUTTON_DOWN read GetSwitch;
@@ -219,9 +219,9 @@ begin
 end;
 
 
-function TDevice.GetButton(AIndex: Integer): TSwitch;
+function TDevice.GetButton(AButtonID: Integer): TSwitch;
 begin
-  Result := FButtons[AIndex];
+  Result := FButtons[AButtonID];
 end;
 
 
@@ -310,15 +310,15 @@ begin
 end;
 
 
-function TController.GetSwitch(AIndex: Integer): TSwitch;
+function TController.GetSwitch(AButtonID: Integer): TSwitch;
 begin
-  Result := FDevice.Button[FScanCodesUsed[AIndex]];
+  Result := FDevice.Button[FScanCodesUsed[AButtonID]];
 end;
 
 
-function TController.GetScanCode(AIndex: Integer): UInt8;
+function TController.GetScanCode(AButtonID: Integer): UInt8;
 begin
-  Result := FScanCodesUsed[AIndex];
+  Result := FScanCodesUsed[AButtonID];
 end;
 
 
