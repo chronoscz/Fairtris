@@ -17,6 +17,9 @@ type
   private
     FScene: TScene;
   private
+    procedure HelpUnderstand();
+    procedure HelpControl();
+  private
     procedure PreparePlaySelection();
   private
     procedure PreparePauseSelection();
@@ -75,6 +78,7 @@ type
     procedure UpdateControllerButtonSelection();
     procedure UpdateControllerScene();
   private
+    procedure UpdateCommon();
     procedure UpdateLegal();
     procedure UpdateMenu();
     procedure UpdatePlay();
@@ -124,6 +128,27 @@ destructor TLogic.Destroy();
 begin
   FScene.Free();
   inherited Destroy();
+end;
+
+
+procedure TLogic.HelpUnderstand();
+begin
+  Sounds.PlaySound(SOUND_START, Memory.Play.Region);
+
+  ShellExecute(0, 'open', 'https://github.com/furious-programming/fairtris', nil, nil, SW_SHOWNORMAL);
+  Application.Minimize();
+end;
+
+
+procedure TLogic.HelpControl();
+begin
+  Input.Keyboard.Restore();
+  Input.DeviceID := INPUT_KEYBOARD;
+
+  Memory.Options.Input := INPUT_KEYBOARD;
+
+  PrepareKeyboardScanCodes();
+  Sounds.PlaySound(SOUND_TRANSITION, Memory.Play.Region);
 end;
 
 
@@ -304,10 +329,7 @@ begin
       Sounds.PlaySound(SOUND_TOP_OUT, Memory.Play.Region);
 
     if Memory.Menu.ItemIndex = ITEM_MENU_HELP then
-    begin
-      ShellExecute(0, 'open', 'https://github.com/furious-programming/fairtris', nil, nil, SW_SHOWNORMAL);
-      Application.Minimize();
-    end;
+      HelpUnderstand();
   end;
 end;
 
@@ -969,6 +991,12 @@ procedure TLogic.UpdateControllerScene();
 begin
   FScene.Validate();
 
+  if Input.Keyboard.Device.Key[KEYBOARD_KEY_SCANCODE_HELP_CONTROL].JustPressed then
+  begin
+    FScene.Current := SCENE_OPTIONS;
+    Exit;
+  end;
+
   if not Input.Controller.Connected then
   begin
     FScene.Current := SCENE_OPTIONS;
@@ -1003,6 +1031,16 @@ begin
         Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
       end;
   end;
+end;
+
+
+procedure TLogic.UpdateCommon();
+begin
+  if Input.Keyboard.Device.Key[KEYBOARD_KEY_SCANCODE_HELP_UNDERSTAND].JustPressed then
+    HelpUnderstand();
+
+  if Input.Keyboard.Device.Key[KEYBOARD_KEY_SCANCODE_HELP_CONTROL].JustPressed then
+    HelpControl();
 end;
 
 
@@ -1095,6 +1133,8 @@ end;
 
 procedure TLogic.Update();
 begin
+  UpdateCommon();
+
   case FScene.Current of
     SCENE_LEGAL:       UpdateLegal();
     SCENE_MENU:        UpdateMenu();
