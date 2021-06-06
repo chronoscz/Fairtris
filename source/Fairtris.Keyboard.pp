@@ -75,6 +75,8 @@ type
     procedure Validate();
     procedure Invalidate();
   public
+    function CatchedOneKey(out AScanCode: UInt8): Boolean;
+  public
     property Device: TDevice read FDevice;
   public
     property Connected: Boolean read GetConnected;
@@ -286,6 +288,31 @@ end;
 procedure TKeyboard.Invalidate();
 begin
   FDevice.Invalidate();
+end;
+
+
+function TKeyboard.CatchedOneKey(out AScanCode: UInt8): Boolean;
+var
+  Index, CatchedScanCode: Integer;
+  Catched: Boolean = False;
+begin
+  Result := False;
+
+  for Index := KEYBOARD_SCANCODE_KEY_FIRST to KEYBOARD_SCANCODE_KEY_LAST do
+    if FDevice.Key[Index].JustPressed then
+      if not Catched then
+      begin
+        Catched := True;
+        CatchedScanCode := Index;
+      end
+      else
+        Exit;
+
+  if Catched then
+  begin
+    Result := True;
+    AScanCode := CatchedScanCode;
+  end;
 end;
 
 

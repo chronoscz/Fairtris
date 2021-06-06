@@ -121,6 +121,8 @@ uses
   Math,
   Types,
   SysUtils,
+  StrUtils,
+  Fairtris.Clock,
   Fairtris.Input,
   Fairtris.Buffers,
   Fairtris.Grounds,
@@ -516,14 +518,22 @@ begin
     ITEM_X_KEYBOARD_KEY[Memory.Keyboard.KeyIndex],
     ITEM_Y_KEYBOARD_KEY[Memory.Keyboard.KeyIndex],
     ITEM_TEXT_KEYBOARD_KEY[Memory.Keyboard.KeyIndex],
-    IfThen(Memory.Keyboard.SettingUp, COLOR_ORANGE, COLOR_WHITE)
+    IfThen(
+      Memory.Keyboard.SettingUp,
+      IfThen(Clock.FrameIndex mod Clock.FrameRateLimit < Clock.FrameRateLimit div 2, COLOR_DARK, COLOR_WHITE),
+      COLOR_WHITE
+    )
   );
 
   RenderText(
     ITEM_X_KEYBOARD_KEY[Memory.Keyboard.KeyIndex] - ITEM_X_MARKER,
     ITEM_Y_KEYBOARD_KEY[Memory.Keyboard.KeyIndex],
     ITEM_TEXT_MARKER,
-    IfThen(Memory.Keyboard.SettingUp, COLOR_ORANGE, COLOR_WHITE)
+    IfThen(
+      Memory.Keyboard.SettingUp,
+      IfThen(Clock.FrameIndex mod Clock.FrameRateLimit < Clock.FrameRateLimit div 2, COLOR_DARK, COLOR_WHITE),
+      COLOR_WHITE
+    )
   );
 end;
 
@@ -536,12 +546,16 @@ begin
     RenderText(
       ITEM_X_KEYBOARD_SCANCODE,
       ITEM_Y_KEYBOARD_KEY[Index],
-      ITEM_TEXT_KEYBOARD_SCANCODE[Input.Keyboard.ScanCode[Index]],
+      ITEM_TEXT_KEYBOARD_SCANCODE[Memory.Keyboard.ScanCodes[Index]],
       IfThen(
         Memory.Keyboard.Changing,
         IfThen(
           Memory.Keyboard.KeyIndex = Index,
-          IfThen(Memory.Keyboard.SettingUp, COLOR_ORANGE, COLOR_WHITE),
+          IfThen(
+            Memory.Keyboard.SettingUp,
+            IfThen(Clock.FrameIndex mod Clock.FrameRateLimit < Clock.FrameRateLimit div 2, COLOR_DARK, COLOR_WHITE),
+            COLOR_WHITE
+          ),
           COLOR_GRAY
         ),
         COLOR_GRAY

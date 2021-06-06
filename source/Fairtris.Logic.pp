@@ -68,6 +68,7 @@ type
   private
     procedure UpdateKeyboardItemSelection();
     procedure UpdateKeyboardKeySelection();
+    procedure UpdateKeyboardKeyScanCode();
     procedure UpdateKeyboardScene();
   private
     procedure UpdateControllerItemSelection();
@@ -752,7 +753,7 @@ end;
 
 procedure TLogic.UpdateKeyboardItemSelection();
 begin
-  if Memory.Keyboard.Changing then Exit;
+  if Memory.Keyboard.Changing or Memory.Keyboard.SettingUp then Exit;
 
   if Memory.Keyboard.ItemIndex > ITEM_KEYBOARD_FIRST then
     if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
@@ -794,7 +795,7 @@ end;
 
 procedure TLogic.UpdateKeyboardKeySelection();
 begin
-  if not Memory.Keyboard.Changing then Exit;
+  if not Memory.Keyboard.Changing or Memory.Keyboard.SettingUp then Exit;
 
   if Memory.Keyboard.KeyIndex > ITEM_KEYBOARD_KEY_FIRST then
     if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
@@ -808,6 +809,15 @@ begin
     begin
       Memory.Keyboard.KeyIndex += 1;
       Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+    end;
+
+  if Memory.Keyboard.KeyIndex in [ITEM_KEYBOARD_SCANCODE_FIRST .. ITEM_KEYBOARD_SCANCODE_LAST] then
+    if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
+    begin
+      Memory.Keyboard.SettingUp := True;
+
+      Input.Keyboard.Validate();
+      Sounds.PlaySound(SOUND_START, Memory.Play.Region);
     end;
 
   if Memory.Keyboard.KeyIndex = ITEM_KEYBOARD_KEY_BACK then
@@ -826,6 +836,22 @@ begin
       Memory.Keyboard.Changing := False;
       Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
     end;
+end;
+
+
+procedure TLogic.UpdateKeyboardKeyScanCode();
+var
+  ScanCode: UInt8 = 0;
+begin
+  if not Memory.Keyboard.SettingUp then Exit;
+
+  if Input.Keyboard.CatchedOneKey(ScanCode) then
+  begin
+    Memory.Keyboard.ScanCodes[Memory.Keyboard.KeyIndex] := ScanCode;
+    Memory.Keyboard.SettingUp := False;
+
+    Sounds.PlaySound(SOUND_START, Memory.Play.Region);
+  end;
 end;
 
 
@@ -1052,6 +1078,7 @@ begin
 
   UpdateKeyboardItemSelection();
   UpdateKeyboardKeySelection();
+  UpdateKeyboardKeyScanCode();
   UpdateKeyboardScene();
 end;
 

@@ -64,6 +64,7 @@ type
     procedure UpdateFrameEnd();
     procedure UpdateFrameAlign();
   public
+    property FrameIndex: Integer read FFrameIndex;
     property FrameRateLimit: Integer read FFrameRateLimit write SetFrameRateLimit;
   public
     property FrameRate: TClockFrameRate read FFrameRate;
