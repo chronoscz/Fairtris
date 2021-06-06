@@ -268,14 +268,12 @@ end;
 procedure TKeyboard.Restore();
 begin
   FScanCodesUsed := FScanCodesDefault;
-  Reset();
 end;
 
 
 procedure TKeyboard.Introduce();
 begin
   FScanCodesUsed := Memory.Keyboard.ScanCodes;
-  Reset();
 end;
 
 
