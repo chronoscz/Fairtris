@@ -21,7 +21,7 @@ type
     procedure UpdateSounds();
     procedure UpdateBuffer();
     procedure UpdateWindow();
-    procedure UpdateStatusBar();
+    procedure UpdateTaskBar();
   public
     constructor Create();
     destructor Destroy(); override;
@@ -198,7 +198,7 @@ begin
 end;
 
 
-procedure TGame.UpdateStatusBar();
+procedure TGame.UpdateTaskBar();
 begin
   if not FTerminated then
     Taskbar.Update();
@@ -219,7 +219,7 @@ begin
       begin
         UpdateBuffer();
         UpdateWindow();
-        UpdateStatusBar();
+        UpdateTaskBar();
       end;
     CloseFrame();
   until FTerminated;
