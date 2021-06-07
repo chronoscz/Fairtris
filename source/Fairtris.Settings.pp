@@ -35,13 +35,15 @@ type
     FRNG: Integer;
     FLevel: Integer;
   private
-    function CorrectFramerate(AValue: Integer): Integer;
+    function CorrectFrameRate(AValue: Integer): Integer;
     function CorrectMonitor(AValue: Integer): Integer;
     function CorrectLeft(AValue: Integer): Integer;
     function CorrectTop(AValue: Integer): Integer;
     function CorrectLevel(AValue: Integer): Integer;
   private
     function DetermineMonitor(AHandle: THandle): Integer;
+  private
+    procedure CorrectRanges();
   public
     procedure Collect();
   public
@@ -142,7 +144,7 @@ begin
 end;
 
 
-function TGeneralSettings.CorrectFramerate(AValue: Integer): Integer;
+function TGeneralSettings.CorrectFrameRate(AValue: Integer): Integer;
 begin
   Result := AValue;
 
@@ -207,6 +209,26 @@ begin
 end;
 
 
+procedure TGeneralSettings.CorrectRanges();
+begin
+  FFrameRate := CorrectFrameRate(FFrameRate);
+
+  FMonitor := CorrectMonitor(FMonitor);
+  FLeft := CorrectLeft(FLeft);
+  FTop := CorrectTop(FTop);
+
+  FInput := CorrectRange(FInput, INPUT_FIRST, INPUT_LAST, INPUT_DEFAULT);
+  FWindow := CorrectRange(FWindow, WINDOW_FIRST, WINDOW_LAST, WINDOW_DEFAULT);
+  FTheme := CorrectRange(FTheme, THEME_FIRST, THEME_LAST, THEME_DEFAULT);
+  FSounds := CorrectRange(FSounds, SOUNDS_FIRST, SOUNDS_LAST, SOUNDS_DEFAULT);
+  FScroll := CorrectRange(FScroll, SCROLL_FIRST, SCROLL_LAST, SCROLL_DEFAULT);
+
+  FRegion := CorrectRange(FRegion, REGION_FIRST, REGION_LAST, REGION_DEFAULT);
+  FRNG := CorrectRange(FRNG, RNG_FIRST, RNG_LAST, RNG_DEFAULT);
+  FLevel := CorrectLevel(FLevel);
+end;
+
+
 procedure TGeneralSettings.Collect();
 begin
   FFrameRate := Clock.FrameRateLimit;
@@ -229,21 +251,23 @@ end;
 
 procedure TGeneralSettings.Load(AFile: TIniFile; const ASection: String);
 begin
-  FFrameRate := CorrectFramerate(AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_FRAMERATE, CLOCK_FRAMERATE_DEFAULT));
+  FFrameRate := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_FRAMERATE, CLOCK_FRAMERATE_DEFAULT);
 
-  FMonitor := CorrectMonitor(AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_MONITOR, MONITOR_DEFAULT));
-  FLeft := CorrectLeft(AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_LEFT, 0));
-  FTop := CorrectTop(AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_TOP, 0));
+  FMonitor := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_MONITOR, MONITOR_DEFAULT);
+  FLeft    := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_LEFT,    0);
+  FTop     := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_TOP,     0);
 
-  FInput := CorrectRange(AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_INPUT, INPUT_DEFAULT), INPUT_FIRST, INPUT_LAST, INPUT_DEFAULT);
-  FWindow := CorrectRange(AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_WINDOW, WINDOW_DEFAULT), WINDOW_FIRST, WINDOW_LAST, WINDOW_DEFAULT);
-  FTheme := CorrectRange(AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_THEME, THEME_DEFAULT), THEME_FIRST, THEME_LAST, THEME_DEFAULT);
-  FSounds := CorrectRange(AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_SOUNDS, SOUNDS_DEFAULT), SOUNDS_FIRST, SOUNDS_LAST, SOUNDS_DEFAULT);
-  FScroll := CorrectRange(AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_SCROLL, SCROLL_DEFAULT), SCROLL_FIRST, SCROLL_LAST, SCROLL_DEFAULT);
+  FInput  := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_INPUT,  INPUT_DEFAULT);
+  FWindow := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_WINDOW, WINDOW_DEFAULT);
+  FTheme  := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_THEME,  THEME_DEFAULT);
+  FSounds := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_SOUNDS, SOUNDS_DEFAULT);
+  FScroll := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_SCROLL, SCROLL_DEFAULT);
 
-  FRegion := CorrectRange(AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_REGION, REGION_DEFAULT), REGION_FIRST, REGION_LAST, REGION_DEFAULT);
-  FRNG := CorrectRange(AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_RNG, RNG_DEFAULT), RNG_FIRST, RNG_LAST, RNG_DEFAULT);
-  FLevel := CorrectLevel(AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_LEVEL, LEVEL_DEFAULT));
+  FRegion := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_REGION, REGION_DEFAULT);
+  FRNG    := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_RNG,    RNG_DEFAULT);
+  FLevel  := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_LEVEL,  LEVEL_DEFAULT);
+
+  CorrectRanges();
 end;
 
 
@@ -252,18 +276,18 @@ begin
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_FRAMERATE, FFrameRate);
 
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_MONITOR, FMonitor);
-  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_LEFT, FLeft);
-  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_TOP, FTop);
+  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_LEFT,    FLeft);
+  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_TOP,     FTop);
 
-  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_INPUT, FInput);
+  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_INPUT,  FInput);
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_WINDOW, FWindow);
-  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_THEME, FTheme);
+  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_THEME,  FTheme);
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_SOUNDS, FSounds);
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_SCROLL, FScroll);
 
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_REGION, FRegion);
-  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_RNG, FRNG);
-  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_LEVEL, FLevel);
+  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_RNG,    FRNG);
+  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_LEVEL,  FLevel);
 end;
 
 
