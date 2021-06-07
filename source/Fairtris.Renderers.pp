@@ -22,39 +22,39 @@ type
     procedure RenderText(AX, AY: Integer; const AText: String; AColor: TColor = COLOR_WHITE; AAlign: Integer = ALIGN_LEFT);
   protected
     procedure RenderGround(ASceneID: Integer);
+  protected
+    procedure RenderMenuSelection();
+  protected
+    procedure RenderPlaySelection();
+    procedure RenderPlayItems();
+    procedure RenderPlayParameters();
+    procedure RenderPlayBestScores();
+  protected
+    procedure RenderPauseSelection();
+    procedure RenderPauseItems();
+  protected
+    procedure RenderTopOutSelection();
+    procedure RenderTopOutItems();
+    procedure RenderTopOutResult();
+  protected
+    procedure RenderOptionsSelection();
+    procedure RenderOptionsItems();
+    procedure RenderOptionsParameters();
+  protected
+    procedure RenderKeyboardItemSelection();
+    procedure RenderKeyboardItems();
+    procedure RenderKeyboardKeySelection();
+    procedure RenderKeyboardKeyScanCodes();
+  protected
+    procedure RenderControllerItemSelection();
+    procedure RenderControllerItems();
+    procedure RenderControllerButtonSelection();
+    procedure RenderControllerButtonScanCodes();
   end;
 
 
 type
   TModernRenderer = class(TRenderer, IRenderable)
-  private
-    procedure RenderMenuSelection();
-  private
-    procedure RenderPlaySelection();
-    procedure RenderPlayItems();
-    procedure RenderPlayParameters();
-    procedure RenderPlayBestScores();
-  private
-    procedure RenderPauseSelection();
-    procedure RenderPauseItems();
-  private
-    procedure RenderTopOutSelection();
-    procedure RenderTopOutItems();
-    procedure RenderTopOutResult();
-  private
-    procedure RenderOptionsSelection();
-    procedure RenderOptionsItems();
-    procedure RenderOptionsParameters();
-  private
-    procedure RenderKeyboardItemSelection();
-    procedure RenderKeyboardItems();
-    procedure RenderKeyboardKeySelection();
-    procedure RenderKeyboardKeyScanCodes();
-  private
-    procedure RenderControllerItemSelection();
-    procedure RenderControllerItems();
-    procedure RenderControllerButtonSelection();
-    procedure RenderControllerButtonScanCodes();
   private
     procedure RenderLegal();
     procedure RenderMenu();
@@ -220,11 +220,11 @@ end;
 
 procedure TRenderer.RenderGround(ASceneID: Integer);
 begin
-  Buffers.Native.Canvas.Draw(0, 0, Grounds[THEME_MODERN][ASceneID]);
+  Buffers.Native.Canvas.Draw(0, 0, Grounds[Memory.Options.Theme][ASceneID]);
 end;
 
 
-procedure TModernRenderer.RenderMenuSelection();
+procedure TRenderer.RenderMenuSelection();
 begin
   RenderText(
     ITEM_X_MENU[Memory.Menu.ItemIndex],
@@ -240,7 +240,7 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderPlaySelection();
+procedure TRenderer.RenderPlaySelection();
 begin
   RenderText(
     ITEM_X_PLAY[Memory.Play.ItemIndex],
@@ -261,7 +261,7 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderPlayItems();
+procedure TRenderer.RenderPlayItems();
 begin
   RenderText(
     ITEM_X_PLAY_START,
@@ -276,7 +276,7 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderPlayParameters();
+procedure TRenderer.RenderPlayParameters();
 begin
   RenderText(
     ITEM_X_PLAY_PARAM,
@@ -301,13 +301,13 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderPlayBestScores();
+procedure TRenderer.RenderPlayBestScores();
 begin
   // wyrenderować trzy najlepsze wyniki
 end;
 
 
-procedure TModernRenderer.RenderPauseSelection();
+procedure TRenderer.RenderPauseSelection();
 begin
   RenderText(
     ITEM_X_PAUSE[Memory.Pause.ItemIndex],
@@ -328,7 +328,7 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderPauseItems();
+procedure TRenderer.RenderPauseItems();
 begin
   RenderText(
     ITEM_X_PAUSE_RESUME,
@@ -354,7 +354,7 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderTopOutSelection();
+procedure TRenderer.RenderTopOutSelection();
 begin
   RenderText(
     ITEM_X_TOP_OUT[Memory.TopOut.ItemIndex],
@@ -375,7 +375,7 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderTopOutItems();
+procedure TRenderer.RenderTopOutItems();
 begin
   RenderText(
     ITEM_X_TOP_OUT_PLAY,
@@ -390,7 +390,7 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderTopOutResult();
+procedure TRenderer.RenderTopOutResult();
 begin
   RenderText(
     ITEM_X_TOP_OUT_RESULT_TOTAL_SCORE,
@@ -434,7 +434,7 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderOptionsSelection();
+procedure TRenderer.RenderOptionsSelection();
 begin
   RenderText(
     ITEM_X_OPTIONS[Memory.Options.ItemIndex],
@@ -460,7 +460,7 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderOptionsItems();
+procedure TRenderer.RenderOptionsItems();
 begin
   RenderText(
     ITEM_X_OPTIONS_SET_UP,
@@ -486,7 +486,7 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderOptionsParameters();
+procedure TRenderer.RenderOptionsParameters();
 begin
   RenderText(
     ITEM_X_OPTIONS_PARAM,
@@ -529,7 +529,7 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderKeyboardItemSelection();
+procedure TRenderer.RenderKeyboardItemSelection();
 begin
   RenderText(
     ITEM_X_KEYBOARD[Memory.Keyboard.ItemIndex],
@@ -550,7 +550,7 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderKeyboardItems();
+procedure TRenderer.RenderKeyboardItems();
 begin
   RenderText(
     ITEM_X_KEYBOARD_SAVE,
@@ -565,7 +565,7 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderKeyboardKeySelection();
+procedure TRenderer.RenderKeyboardKeySelection();
 begin
   if not Memory.Keyboard.Changing then Exit;
 
@@ -593,7 +593,7 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderKeyboardKeyScanCodes();
+procedure TRenderer.RenderKeyboardKeyScanCodes();
 var
   Index: Integer;
 begin
@@ -619,7 +619,7 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderControllerItemSelection();
+procedure TRenderer.RenderControllerItemSelection();
 begin
   RenderText(
     ITEM_X_CONTROLLER[Memory.Controller.ItemIndex],
@@ -640,7 +640,7 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderControllerItems();
+procedure TRenderer.RenderControllerItems();
 begin
   RenderText(
     ITEM_X_CONTROLLER_SAVE,
@@ -655,7 +655,7 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderControllerButtonSelection();
+procedure TRenderer.RenderControllerButtonSelection();
 begin
   if not Memory.Controller.Changing then Exit;
 
@@ -683,7 +683,7 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderControllerButtonScanCodes();
+procedure TRenderer.RenderControllerButtonScanCodes();
 var
   Index: Integer;
 begin
@@ -804,13 +804,16 @@ end;
 
 procedure TClassicRenderer.RenderMenu();
 begin
-
+  RenderMenuSelection();
 end;
 
 
 procedure TClassicRenderer.RenderPlay();
 begin
-
+  RenderPlaySelection();
+  RenderPlayItems();
+  RenderPlayParameters();
+  RenderPlayBestScores();
 end;
 
 
@@ -822,31 +825,42 @@ end;
 
 procedure TClassicRenderer.RenderPause();
 begin
-
+  RenderPauseSelection();
+  RenderPauseItems();
 end;
 
 
 procedure TClassicRenderer.RenderTopOut();
 begin
-
+  RenderTopOutSelection();
+  RenderTopOutItems();
+  RenderTopOutResult();
 end;
 
 
 procedure TClassicRenderer.RenderOptions();
 begin
-
+  RenderOptionsSelection();
+  RenderOptionsItems();
+  RenderOptionsParameters();
 end;
 
 
 procedure TClassicRenderer.RenderKeyboard();
 begin
-
+  RenderKeyboardItemSelection();
+  RenderKeyboardItems();
+  RenderKeyboardKeySelection();
+  RenderKeyboardKeyScanCodes();
 end;
 
 
 procedure TClassicRenderer.RenderController();
 begin
-
+  RenderControllerItemSelection();
+  RenderControllerItems();
+  RenderControllerButtonSelection();
+  RenderControllerButtonScanCodes();
 end;
 
 

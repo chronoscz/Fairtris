@@ -114,6 +114,7 @@ uses
   Fairtris.Input,
   Fairtris.Memory,
   Fairtris.Placement,
+  Fairtris.Renderers,
   Fairtris.Sounds,
   Fairtris.Arrays,
   Fairtris.Constants;
@@ -675,8 +676,7 @@ begin
       Sounds.PlaySound(SOUND_SHIFT, Memory.Play.Region);
     end;
 
-  // po implementacji klasycznego renderera, odblokować:
-  //Renderers.ThemeID := Memory.Options.Theme;
+  Renderers.ThemeID := Memory.Options.Theme;
 end;
 
 
