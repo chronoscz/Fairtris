@@ -13,6 +13,8 @@ uses
 type
   TPlacement = class(TObject)
   private
+    FInitialized: Boolean;
+  private
     FMonitor: TMonitor;
   private
     FWindowSize: Integer;
@@ -87,8 +89,16 @@ begin
   FWindowSize := Settings.General.Window;
   FScroll := Settings.General.Scroll;
 
+  if FWindowSize <> WINDOW_FULLSCREEN then
+  begin
+    FWindowBounds.Left := Settings.General.Left;
+    FWindowBounds.Top := Settings.General.Top;
+  end;
+
   UpdateWindow();
   UpdateBuffer();
+
+  FInitialized := True;
 end;
 
 
@@ -134,8 +144,11 @@ begin
       NewWidth := Ord(FWindowSize) * BUFFER_WIDTH + BUFFER_WIDTH;
       NewHeight := Ord(FWindowSize) * BUFFER_HEIGHT + BUFFER_HEIGHT;
 
-      FWindowBounds.Left := FMonitor.WorkareaRect.Left + (FMonitor.WorkareaRect.Width - NewWidth) div 2;
-      FWindowBounds.Top := FMonitor.WorkareaRect.Top + (FMonitor.WorkareaRect.Height - NewHeight) div 2;
+      if FInitialized then
+      begin
+        FWindowBounds.Left := FMonitor.WorkareaRect.Left + (FMonitor.WorkareaRect.Width - NewWidth) div 2;
+        FWindowBounds.Top := FMonitor.WorkareaRect.Top + (FMonitor.WorkareaRect.Height - NewHeight) div 2;
+      end;
 
       FWindowBounds.Width := NewWidth;
       FWindowBounds.Height := NewHeight;
