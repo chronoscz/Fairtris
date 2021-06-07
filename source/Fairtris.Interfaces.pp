@@ -12,7 +12,10 @@ uses
 type
   IControllable = interface(IInterface)
     function GetSwitch(AIndex: Integer): TSwitch;
+    function GetScanCode(AIndex: Integer): UInt8;
     function GetConnected(): Boolean;
+
+    property ScanCode[AIndex: Integer]: UInt8 read GetScanCode;
 
     property Up: TSwitch index DEVICE_UP read GetSwitch;
     property Down: TSwitch index DEVICE_DOWN read GetSwitch;

@@ -64,7 +64,7 @@ end;
 
 function TSounds.GetSoundPath(): WideString;
 begin
-  Result := SOUND_PATH[FRegion] + SOUND_NAME[FSound];
+  Result := SOUND_PATH[FRegion] + SOUND_FILENAME[FSound];
 end;
 
 

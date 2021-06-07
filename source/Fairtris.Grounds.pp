@@ -105,7 +105,7 @@ var
   Index: Integer;
 begin
   for Index := Low(FGrounds) to High(FGrounds) do
-    FGrounds[Index].LoadFromFile(FGroundsPath + GROUND_NAME[Index]);
+    FGrounds[Index].LoadFromFile(FGroundsPath + GROUND_FILENAME[Index]);
 end;
 
 

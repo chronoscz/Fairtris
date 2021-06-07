@@ -89,7 +89,7 @@ var
 begin
   for Index := Low(FCollections) to High(FCollections) do
   begin
-    FCollections[Index].LoadFromFile(SPRITE_PATH + SPRITE_NAME[Index]);
+    FCollections[Index].LoadFromFile(SPRITE_PATH + SPRITE_FILENAME[Index]);
     FCollections[Index].BeginUpdate();
   end;
 end;

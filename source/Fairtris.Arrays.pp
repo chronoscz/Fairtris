@@ -34,7 +34,7 @@ const
 
 
 const
-  GROUND_NAME: array [SCENE_FIRST .. SCENE_LAST] of String = (
+  GROUND_FILENAME: array [SCENE_FIRST .. SCENE_LAST] of String = (
     'legal.bmp',
     'menu.bmp',
     'play.bmp',
@@ -55,7 +55,7 @@ const
 
 
 const
-  SPRITE_NAME: array [SPRITE_FIRST .. SPRITE_LAST] of String = (
+  SPRITE_FILENAME: array [SPRITE_FIRST .. SPRITE_LAST] of String = (
     'charset.bmp',
     'bricks.bmp',
     'pieces.bmp',
@@ -68,7 +68,7 @@ const
 
 
 const
-  SOUND_NAME: array [SOUND_FIRST .. SOUND_LAST] of WideString = (
+  SOUND_FILENAME: array [SOUND_FIRST .. SOUND_LAST] of WideString = (
     '',
     'blip.wav',
     'start.wav',
@@ -469,6 +469,19 @@ const
     'BTN 16', 'BTN 17', 'BTN 18', 'BTN 19', 'BTN 20', 'BTN 21', 'BTN 22', 'BTN 23',
     'BTN 24', 'BTN 25', 'BTN 26', 'BTN 27', 'BTN 28', 'BTN 29', 'BTN 30', 'BTN 31',
     'UP'    , 'DOWN'  , 'LEFT'  , 'RIGHT', ''
+  );
+
+
+const
+  SETTINGS_KEY_MAPPING: array [DEVICE_FIRST .. DEVICE_LAST] of String = (
+    SETTINGS_KEY_MAPPING_UP,
+    SETTINGS_KEY_MAPPING_DOWN,
+    SETTINGS_KEY_MAPPING_LEFT,
+    SETTINGS_KEY_MAPPING_RIGHT,
+    SETTINGS_KEY_MAPPING_SELECT,
+    SETTINGS_KEY_MAPPING_START,
+    SETTINGS_KEY_MAPPING_B,
+    SETTINGS_KEY_MAPPING_A
   );
 
 
