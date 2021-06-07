@@ -127,9 +127,10 @@ uses
   Fairtris.Clock,
   Fairtris.Input,
   Fairtris.Buffers,
+  Fairtris.Memory,
   Fairtris.Grounds,
   Fairtris.Sprites,
-  Fairtris.Memory,
+  Fairtris.Settings,
   Fairtris.Arrays;
 
 
@@ -903,7 +904,7 @@ end;
 
 procedure TRenderers.Initialize();
 begin
-  // ustawić odpowiedni renderer według danych z "Settings"
+  SetThemeID(Settings.General.Theme);
 end;
 
 

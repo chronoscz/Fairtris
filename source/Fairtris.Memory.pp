@@ -162,6 +162,9 @@ var
 
 implementation
 
+uses
+  Fairtris.Settings;
+
 
 procedure TLegalMemory.Initialize();
 begin
@@ -179,7 +182,9 @@ procedure TPlayMemory.Initialize();
 begin
   ItemIndex := ITEM_PLAY_FIRST;
 
-  // uzupełnić w dane pobrane z "Settings"
+  Region := Settings.General.Region;
+  RNG := Settings.General.RNG;
+  Level := Settings.General.Level;
 end;
 
 
@@ -222,8 +227,11 @@ begin
   ItemIndex := ITEM_OPTIONS_FIRST;
   FromScene := SCENE_MENU;
 
-  // uzupełnić w dane pobrane z "Settings"
-  Window := WINDOW_FULLSCREEN; // a to wywalić
+  Input := Settings.General.Input;
+  Window := Settings.General.Window;
+  Theme := Settings.General.Theme;
+  Sounds := Settings.General.Sounds;
+  Scroll := Settings.General.Scroll;
 end;
 
 
@@ -232,7 +240,7 @@ begin
   ItemIndex := ITEM_KEYBOARD_FIRST;
   KeyIndex := ITEM_KEYBOARD_KEY_FIRST;
 
-  // uzupełnić w dane pobrane z "Settings"
+  ScanCodes := Settings.Keyboard.ScanCodes;
 end;
 
 
@@ -262,7 +270,7 @@ begin
   ItemIndex := ITEM_CONTROLLER_FIRST;
   ButtonIndex := ITEM_CONTROLLER_BUTTON_FIRST;
 
-  // uzupełnić w dane pobrane z "Settings"
+  ScanCodes := Settings.Controller.ScanCodes;
 end;
 
 

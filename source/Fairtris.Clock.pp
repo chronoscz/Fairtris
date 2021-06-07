@@ -84,6 +84,7 @@ uses
   Math,
   SysUtils,
   DateUtils,
+  Fairtris.Settings,
   Fairtris.Constants;
 
 
@@ -214,7 +215,7 @@ end;
 
 procedure TClock.Initialize();
 begin
-  // ustawić framerate według danych z "Settings"
+  SetFrameRateLimit(Settings.General.FrameRate);
 end;
 
 

@@ -46,6 +46,7 @@ uses
   MMSystem,
   SysUtils,
   DateUtils,
+  Fairtris.Settings,
   Fairtris.Arrays,
   Fairtris.Constants;
 
@@ -105,7 +106,7 @@ end;
 
 procedure TSounds.Initilize();
 begin
-  // tu odczytać stan dźwięków z "Settings"
+  FEnabled := Settings.General.Sounds;
 end;
 
 

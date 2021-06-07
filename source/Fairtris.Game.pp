@@ -49,6 +49,7 @@ uses
   Fairtris.Clock,
   Fairtris.Buffers,
   Fairtris.Input,
+  Fairtris.Memory,
   Fairtris.Placement,
   Fairtris.Renderers,
   Fairtris.Grounds,
@@ -57,7 +58,6 @@ uses
   Fairtris.Settings,
   Fairtris.BestScores,
   Fairtris.Logic,
-  Fairtris.Memory,
   Fairtris.Constants;
 
 
@@ -122,11 +122,13 @@ begin
   Settings.Load();
   BestScores.Load();
 
-  Taskbar.Initialize();
-
   Clock.Initialize();
-  Placement.Initialize();
+  Input.Initialize();
   Memory.Initialize();
+  Placement.Initialize();
+  Renderers.Initialize();
+
+  Taskbar.Initialize();
 end;
 
 

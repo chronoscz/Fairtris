@@ -112,10 +112,10 @@ uses
   Forms,
   Fairtris.Clock,
   Fairtris.Input,
-  Fairtris.Sounds,
   Fairtris.Memory,
-  Fairtris.Arrays,
   Fairtris.Placement,
+  Fairtris.Sounds,
+  Fairtris.Arrays,
   Fairtris.Constants;
 
 

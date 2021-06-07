@@ -51,6 +51,7 @@ var
 implementation
 
 uses
+  Fairtris.Settings,
   Fairtris.Constants;
 
 
@@ -66,7 +67,10 @@ end;
 
 procedure TInput.Initialize();
 begin
-  // ustawić domyślne urządzenie według danych z "Settings"
+  SetDeviceID(Settings.General.Input);
+
+  GetKeyboard().Initialize();
+  GetController().Initialize();
 end;
 
 

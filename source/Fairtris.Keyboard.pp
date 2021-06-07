@@ -98,6 +98,7 @@ implementation
 uses
   Windows,
   Fairtris.Memory,
+  Fairtris.Settings,
   Fairtris.Arrays;
 
 
@@ -255,7 +256,7 @@ end;
 
 procedure TKeyboard.Initialize();
 begin
-  // załadować kody klawiszy z "Settings" i wpisać je do FScanCodesUsed
+  FScanCodesUsed := Settings.Keyboard.ScanCodes;
 end;
 
 

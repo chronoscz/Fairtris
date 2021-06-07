@@ -6,7 +6,8 @@ interface
 
 uses
   Types,
-  Forms, Fairtris.Arrays;
+  Forms,
+  Fairtris.Arrays;
 
 
 type
@@ -66,6 +67,7 @@ uses
   Controls,
   Fairtris.Window,
   Fairtris.Buffers,
+  Fairtris.Settings,
   Fairtris.Constants;
 
 
@@ -81,9 +83,10 @@ end;
 
 procedure TPlacement.Initialize();
 begin
-  // ustawić według danych z "Settings"
+  FMonitor := Screen.Monitors[Settings.General.Monitor];
+  FWindowSize := Settings.General.Window;
+  FScroll := Settings.General.Scroll;
 
-  UpdateMonitor();
   UpdateWindow();
   UpdateBuffer();
 end;

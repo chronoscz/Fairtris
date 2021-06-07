@@ -118,7 +118,8 @@ type
 implementation
 
 uses
-  Fairtris.Memory;
+  Fairtris.Memory,
+  Fairtris.Settings;
 
 
 constructor TDeviceUpdater.Create(AStatus: PJOYINFOEX; AConnected: PBoolean);
@@ -330,7 +331,7 @@ end;
 
 procedure TController.Initialize();
 begin
-  // załadować kody przycisków z "Settings" i wpisać je do FScanCodesUsed
+  FScanCodesUsed := Settings.Controller.ScanCodes;
 end;
 
 
