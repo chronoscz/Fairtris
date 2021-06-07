@@ -130,6 +130,7 @@ uses
   Fairtris.Clock,
   Fairtris.Input,
   Fairtris.Memory,
+  Fairtris.Placement,
   Fairtris.Arrays;
 
 
@@ -210,12 +211,13 @@ end;
 procedure TGeneralSettings.Collect();
 begin
   FFrameRate := Clock.FrameRateLimit;
+  FWindow := Placement.WindowSize;
 
   FMonitor := DetermineMonitor(GameForm.Handle);
   FLeft := GameForm.Left;
   FTop := GameForm.Top;
 
-  FWindow := Memory.Options.Window;
+  FInput := Memory.Options.Input;
   FTheme := Memory.Options.Theme;
   FSounds := Memory.Options.Sounds;
   FScroll := Memory.Options.Scroll;
