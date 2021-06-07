@@ -7,7 +7,7 @@ object GameForm: TGameForm
   BorderIcons = []
   BorderStyle = bsNone
   Caption = 'Fair implementation of Classic Tetris®'
-  Color = 657930
+  Color = clBlack
   Icon.Data = {
     7E04000000000100010010100000010020006804000016000000280000001000
     0000200000000100200000000000000400006400000064000000000000000000
