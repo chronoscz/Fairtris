@@ -127,6 +127,7 @@ begin
   Memory.Initialize();
   Placement.Initialize();
   Renderers.Initialize();
+  Sounds.Initilize();
 
   Taskbar.Initialize();
 end;
