@@ -241,7 +241,9 @@ end;
 
 procedure TLogic.PreparePause();
 begin
-  if FScene.Changed then
+  if not FScene.Changed then Exit;
+
+  if FScene.Previous <> SCENE_OPTIONS then
   begin
     PreparePauseSelection();
     PreparePauseScene();
