@@ -269,7 +269,11 @@ begin
     ITEM_TEXT_PLAY_START,
     IfThen(
       Input.Device.Connected,
-      IfThen(Memory.Play.ItemIndex = ITEM_PLAY_START, COLOR_WHITE, COLOR_GRAY),
+      IfThen(
+        Memory.Play.ItemIndex = ITEM_PLAY_START,
+        COLOR_WHITE,
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      ),
       COLOR_DARK
     )
   );
@@ -282,21 +286,33 @@ begin
     ITEM_X_PLAY_PARAM,
     ITEM_Y_PLAY_REGION,
     ITEM_TEXT_PLAY_REGION[Memory.Play.Region],
-    IfThen(Memory.Play.ItemIndex = ITEM_PLAY_REGION, COLOR_WHITE, COLOR_GRAY)
+    IfThen(
+      Memory.Play.ItemIndex = ITEM_PLAY_REGION,
+      COLOR_WHITE,
+      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+    )
   );
 
   RenderText(
     ITEM_X_PLAY_PARAM,
     ITEM_Y_PLAY_RNG,
     ITEM_TEXT_PLAY_RNG[Memory.Play.RNG],
-    IfThen(Memory.Play.ItemIndex = ITEM_PLAY_RNG, COLOR_WHITE, COLOR_GRAY)
+    IfThen(
+      Memory.Play.ItemIndex = ITEM_PLAY_RNG,
+      COLOR_WHITE,
+      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+    )
   );
 
   RenderText(
     ITEM_X_PLAY_PARAM,
     ITEM_Y_PLAY_LEVEL,
     Memory.Play.Level.ToString(),
-    IfThen(Memory.Play.ItemIndex = ITEM_PLAY_LEVEL, COLOR_WHITE, COLOR_GRAY)
+    IfThen(
+      Memory.Play.ItemIndex = ITEM_PLAY_LEVEL,
+      COLOR_WHITE,
+      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+    )
   );
 end;
 
@@ -336,7 +352,11 @@ begin
     ITEM_TEXT_PAUSE_RESUME,
     IfThen(
       Input.Device.Connected,
-      IfThen(Memory.Pause.ItemIndex = ITEM_PAUSE_RESUME, COLOR_WHITE, COLOR_GRAY),
+      IfThen(
+        Memory.Pause.ItemIndex = ITEM_PAUSE_RESUME,
+        COLOR_WHITE,
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      ),
       COLOR_DARK
     )
   );
@@ -347,7 +367,11 @@ begin
     ITEM_TEXT_PAUSE_RESTART,
     IfThen(
       Input.Device.Connected,
-      IfThen(Memory.Pause.ItemIndex = ITEM_PAUSE_RESTART, COLOR_WHITE, COLOR_GRAY),
+      IfThen(
+        Memory.Pause.ItemIndex = ITEM_PAUSE_RESTART,
+        COLOR_WHITE,
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      ),
       COLOR_DARK
     )
   );
@@ -383,7 +407,11 @@ begin
     ITEM_TEXT_TOP_OUT_PLAY,
     IfThen(
       Input.Device.Connected,
-      IfThen(Memory.TopOut.ItemIndex = ITEM_TOP_OUT_PLAY, COLOR_WHITE, COLOR_GRAY),
+      IfThen(
+        Memory.TopOut.ItemIndex = ITEM_TOP_OUT_PLAY,
+        COLOR_WHITE,
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      ),
       COLOR_DARK
     )
   );
@@ -468,7 +496,11 @@ begin
     ITEM_TEXT_OPTIONS_SET_UP,
     IfThen(
       Input.Device.Connected,
-      IfThen(Memory.Options.ItemIndex = ITEM_OPTIONS_SET_UP, COLOR_WHITE, COLOR_GRAY),
+      IfThen(
+        Memory.Options.ItemIndex = ITEM_OPTIONS_SET_UP,
+        COLOR_WHITE,
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      ),
       COLOR_DARK
     )
   );
@@ -479,7 +511,11 @@ begin
     ITEM_TEXT_OPTIONS_BACK,
     IfThen(
       Input.Device.Connected,
-      IfThen(Memory.Options.ItemIndex = ITEM_OPTIONS_BACK, COLOR_WHITE, COLOR_GRAY),
+      IfThen(
+        Memory.Options.ItemIndex = ITEM_OPTIONS_BACK,
+        COLOR_WHITE,
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      ),
       COLOR_DARK
     )
   );
@@ -494,7 +530,11 @@ begin
     ITEM_TEXT_OPTIONS_INPUT[Memory.Options.Input],
     IfThen(
       Input.Device.Connected,
-      IfThen(Memory.Options.ItemIndex = ITEM_OPTIONS_INPUT, COLOR_WHITE, COLOR_GRAY),
+      IfThen(
+        Memory.Options.ItemIndex = ITEM_OPTIONS_INPUT,
+        COLOR_WHITE,
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      ),
       COLOR_DARK
     )
   );
@@ -503,28 +543,44 @@ begin
     ITEM_X_OPTIONS_PARAM,
     ITEM_Y_OPTIONS_WINDOW,
     ITEM_TEXT_OPTIONS_WINDOW[Memory.Options.Window],
-    IfThen(Memory.Options.ItemIndex = ITEM_OPTIONS_WINDOW, COLOR_WHITE, COLOR_GRAY)
+    IfThen(
+      Memory.Options.ItemIndex = ITEM_OPTIONS_WINDOW,
+      COLOR_WHITE,
+      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+    )
   );
 
   RenderText(
     ITEM_X_OPTIONS_PARAM,
     ITEM_Y_OPTIONS_THEME,
     ITEM_TEXT_OPTIONS_THEME[Memory.Options.Theme],
-    IfThen(Memory.Options.ItemIndex = ITEM_OPTIONS_THEME, COLOR_WHITE, COLOR_GRAY)
+    IfThen(
+      Memory.Options.ItemIndex = ITEM_OPTIONS_THEME,
+      COLOR_WHITE,
+      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+    )
   );
 
   RenderText(
     ITEM_X_OPTIONS_PARAM,
     ITEM_Y_OPTIONS_SOUNDS,
     ITEM_TEXT_OPTIONS_SOUNDS[Memory.Options.Sounds],
-    IfThen(Memory.Options.ItemIndex = ITEM_OPTIONS_SOUNDS, COLOR_WHITE, COLOR_GRAY)
+    IfThen(
+      Memory.Options.ItemIndex = ITEM_OPTIONS_SOUNDS,
+      COLOR_WHITE,
+      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+    )
   );
 
   RenderText(
     ITEM_X_OPTIONS_PARAM,
     ITEM_Y_OPTIONS_SCROLL,
     ITEM_TEXT_OPTIONS_SCROLL[Memory.Options.Scroll],
-    IfThen(Memory.Options.ItemIndex = ITEM_OPTIONS_SCROLL, COLOR_WHITE, COLOR_GRAY)
+    IfThen(
+      Memory.Options.ItemIndex = ITEM_OPTIONS_SCROLL,
+      COLOR_WHITE,
+      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+    )
   );
 end;
 
@@ -558,7 +614,11 @@ begin
     ITEM_TEXT_KEYBOARD_SAVE,
     IfThen(
       Memory.Keyboard.MappedCorrectly(),
-      IfThen(Memory.Keyboard.ItemIndex = ITEM_KEYBOARD_SAVE, COLOR_WHITE, COLOR_GRAY),
+      IfThen(
+        Memory.Keyboard.ItemIndex = ITEM_KEYBOARD_SAVE,
+        COLOR_WHITE,
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      ),
       COLOR_DARK
     )
   );
@@ -611,9 +671,9 @@ begin
             IfThen(Clock.FrameIndexInHalf, COLOR_DARK, COLOR_WHITE),
             COLOR_WHITE
           ),
-          COLOR_GRAY
+          IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
         ),
-        COLOR_GRAY
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
       )
     );
 end;
@@ -648,7 +708,11 @@ begin
     ITEM_TEXT_CONTROLLER_SAVE,
     IfThen(
       Memory.Controller.MappedCorrectly(),
-      IfThen(Memory.Controller.ItemIndex = ITEM_CONTROLLER_SAVE, COLOR_WHITE, COLOR_GRAY),
+      IfThen(
+        Memory.Controller.ItemIndex = ITEM_CONTROLLER_SAVE,
+        COLOR_WHITE,
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      ),
       COLOR_DARK
     )
   );
@@ -701,9 +765,9 @@ begin
             IfThen(Clock.FrameIndexInHalf, COLOR_DARK, COLOR_WHITE),
             COLOR_WHITE
           ),
-          COLOR_GRAY
+          IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
         ),
-        COLOR_GRAY
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
       )
     );
 end;
