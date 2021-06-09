@@ -26,9 +26,6 @@ type
     procedure RenderPiece(AX, AY, APiece, ALevel: Integer);
     procedure RenderBrick(AX, AY, ABrick, ALevel: Integer);
     procedure RenderMiniature(AX, AY, APiece, ALevel: Integer);
-    procedure RenderButton(AX, AY, AButton: Integer);
-  protected
-    procedure RenderInput(ADevice: IControllable);
   protected
     procedure RenderGround(ASceneID: Integer);
   protected
@@ -64,6 +61,10 @@ type
 
 type
   TModernRenderer = class(TRenderer, IRenderable)
+  private
+    procedure RenderButton(AX, AY, AButton: Integer);
+  private
+    procedure RenderGameInput(ADevice: IControllable);
   private
     procedure RenderLegal();
     procedure RenderMenu();
@@ -340,46 +341,6 @@ begin
 
     Buffers.Native.EndUpdate();
   end;
-end;
-
-
-procedure TRenderer.RenderButton(AX, AY, AButton: Integer);
-begin
-  Buffers.Native.BeginUpdate();
-
-  RenderSprite(
-    Buffers.Native,
-    Sprites.Controller,
-    Bounds(
-      AX,
-      AY,
-      BUTTON_WIDTH[AButton],
-      BUTTON_HEIGHT[AButton]
-    ),
-    Bounds(
-      BUTTON_X[AButton],
-      BUTTON_Y[AButton],
-      BUTTON_WIDTH[AButton],
-      BUTTON_HEIGHT[AButton]
-    ),
-    False
-  );
-
-  Buffers.Native.EndUpdate();
-end;
-
-
-procedure TRenderer.RenderInput(ADevice: IControllable);
-var
-  Index: Integer;
-begin
-  for Index := DEVICE_FIRST to DEVICE_LAST do
-    if ADevice.Switch[Index].Pressed then
-      RenderButton(
-        GAME_CONTROLLER_X + BUTTON_X[Index],
-        GAME_CONTROLLER_Y + BUTTON_Y[Index],
-        Index
-      );
 end;
 
 
@@ -941,6 +902,46 @@ begin
 end;
 
 
+procedure TModernRenderer.RenderButton(AX, AY, AButton: Integer);
+begin
+  Buffers.Native.BeginUpdate();
+
+  RenderSprite(
+    Buffers.Native,
+    Sprites.Controller,
+    Bounds(
+      AX,
+      AY,
+      BUTTON_WIDTH[AButton],
+      BUTTON_HEIGHT[AButton]
+    ),
+    Bounds(
+      BUTTON_X[AButton],
+      BUTTON_Y[AButton],
+      BUTTON_WIDTH[AButton],
+      BUTTON_HEIGHT[AButton]
+    ),
+    False
+  );
+
+  Buffers.Native.EndUpdate();
+end;
+
+
+procedure TModernRenderer.RenderGameInput(ADevice: IControllable);
+var
+  Index: Integer;
+begin
+  for Index := DEVICE_FIRST to DEVICE_LAST do
+    if ADevice.Switch[Index].Pressed then
+      RenderButton(
+        GAME_CONTROLLER_X + BUTTON_X[Index],
+        GAME_CONTROLLER_Y + BUTTON_Y[Index],
+        Index
+      );
+end;
+
+
 procedure TModernRenderer.RenderLegal();
 begin
 
@@ -964,7 +965,7 @@ end;
 
 procedure TModernRenderer.RenderGame();
 begin
-  RenderInput(Input.Device);
+  RenderGameInput(Input.Device);
 end;
 
 
