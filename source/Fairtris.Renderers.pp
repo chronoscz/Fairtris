@@ -65,6 +65,7 @@ type
     procedure RenderOptions();
     procedure RenderKeyboard();
     procedure RenderController();
+    procedure RenderQuit();
   public
     procedure RenderScene(ASceneID: Integer);
   end;
@@ -82,6 +83,7 @@ type
     procedure RenderOptions();
     procedure RenderKeyboard();
     procedure RenderController();
+    procedure RenderQuit();
   public
     procedure RenderScene(ASceneID: Integer);
   end;
@@ -220,7 +222,10 @@ end;
 
 procedure TRenderer.RenderGround(ASceneID: Integer);
 begin
-  Buffers.Native.Canvas.Draw(0, 0, Grounds[Memory.Options.Theme][ASceneID]);
+  if ASceneID = SCENE_QUIT then
+    Buffers.Native.Canvas.Draw(0, 0, Memory.Quit.Buffer)
+  else
+    Buffers.Native.Canvas.Draw(0, 0, Grounds[Memory.Options.Theme][ASceneID]);
 end;
 
 
@@ -841,6 +846,12 @@ begin
 end;
 
 
+procedure TModernRenderer.RenderQuit();
+begin
+
+end;
+
+
 procedure TModernRenderer.RenderScene(ASceneID: Integer);
 begin
   RenderGround(ASceneID);
@@ -856,6 +867,7 @@ begin
     SCENE_OPTIONS:     RenderOptions();
     SCENE_KEYBOARD:    RenderKeyboard();
     SCENE_CONTROLLER:  RenderController();
+    SCENE_QUIT:        RenderQuit();
   end;
 end;
 
@@ -928,6 +940,12 @@ begin
 end;
 
 
+procedure TClassicRenderer.RenderQuit();
+begin
+
+end;
+
+
 procedure TClassicRenderer.RenderScene(ASceneID: Integer);
 begin
   RenderGround(ASceneID);
@@ -943,6 +961,7 @@ begin
     SCENE_OPTIONS:     RenderOptions();
     SCENE_KEYBOARD:    RenderKeyboard();
     SCENE_CONTROLLER:  RenderController();
+    SCENE_QUIT:        RenderQuit();
   end;
 end;
 

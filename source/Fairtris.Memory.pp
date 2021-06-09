@@ -5,6 +5,7 @@ unit Fairtris.Memory;
 interface
 
 uses
+  Graphics,
   Fairtris.Constants;
 
 
@@ -127,6 +128,19 @@ type
 
 
 type
+  TQuitMemory = class(TObject)
+  public
+    constructor Create();
+    destructor Destroy(); override;
+  public
+    procedure Initialize();
+  public
+    FrameIndex: Integer;
+    Buffer: TBitmap;
+  end;
+
+
+type
   TMemory = class(TObject)
   private
     FLegal: TLegalMemory;
@@ -138,6 +152,7 @@ type
     FOptions: TOptionsMemory;
     FKeyboard: TKeyboardMemory;
     FController: TControllerMemory;
+    FQuit: TQuitMemory;
   public
     constructor Create();
     destructor Destroy(); override;
@@ -153,6 +168,7 @@ type
     property Options: TOptionsMemory read FOptions;
     property Keyboard: TKeyboardMemory read FKeyboard;
     property Controller: TControllerMemory read FController;
+    property Quit: TQuitMemory read FQuit;
   end;
 
 
@@ -295,6 +311,27 @@ begin
 end;
 
 
+constructor TQuitMemory.Create();
+begin
+  Buffer := TBitmap.Create();
+  Buffer.PixelFormat := pf24bit;
+  Buffer.SetSize(BUFFER_WIDTH, BUFFER_HEIGHT);
+end;
+
+
+destructor TQuitMemory.Destroy();
+begin
+  Buffer.Free();
+  inherited Destroy();
+end;
+
+
+procedure TQuitMemory.Initialize();
+begin
+  FrameIndex := 0;
+end;
+
+
 constructor TMemory.Create();
 begin
   FLegal := TLegalMemory.Create();
@@ -306,6 +343,7 @@ begin
   FOptions := TOptionsMemory.Create();
   FKeyboard := TKeyboardMemory.Create();
   FController := TControllerMemory.Create();
+  FQuit := TQuitMemory.Create();
 end;
 
 
@@ -320,6 +358,7 @@ begin
   FOptions.Free();
   FKeyboard.Free();
   FController.Free();
+  FQuit.Free();
 
   inherited Destroy();
 end;
@@ -336,6 +375,7 @@ begin
   FOptions.Initialize();
   FKeyboard.Initialize();
   FController.Initialize();
+  FQuit.Initialize();
 end;
 
 

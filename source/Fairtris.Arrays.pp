@@ -44,7 +44,8 @@ const
     'top out.bmp',
     'options.bmp',
     'keyboard.bmp',
-    'controller.bmp'
+    'controller.bmp',
+    'quit.bmp'
   );
 
 const

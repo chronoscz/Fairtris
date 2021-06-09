@@ -46,6 +46,7 @@ type
     procedure RenderOptions();
     procedure RenderKeyboard();
     procedure RenderController();
+    procedure RenderQuit();
 
     procedure RenderScene(ASceneID: Integer);
   end;

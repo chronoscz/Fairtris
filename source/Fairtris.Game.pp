@@ -8,8 +8,6 @@ interface
 type
   TGame = class(TObject)
   private
-    FTerminated: Boolean;
-  private
     procedure Initialize();
     procedure Finalize();
   private
@@ -29,8 +27,6 @@ type
     procedure Run();
     procedure Start();
     procedure Stop();
-  public
-    property Terminated: Boolean read FTerminated;
   end;
 
 
@@ -170,7 +166,7 @@ procedure TGame.UpdateLogic();
 begin
   Logic.Update();
 
-  if Logic.Scene.Current = SCENE_QUIT then
+  if Logic.Scene.Current = SCENE_STOP then
     Stop();
 end;
 
@@ -183,14 +179,14 @@ end;
 
 procedure TGame.UpdateBuffer();
 begin
-  if not FTerminated then
+  if not Logic.Stopped then
     Renderers.Theme.RenderScene(Logic.Scene.Current);
 end;
 
 
 procedure TGame.UpdateWindow();
 begin
-  if not FTerminated then
+  if not Logic.Stopped then
   begin
     GameForm.Invalidate();
     Application.ProcessMessages();
@@ -200,7 +196,7 @@ end;
 
 procedure TGame.UpdateTaskBar();
 begin
-  if not FTerminated then
+  if not Logic.Stopped then
     Taskbar.Update();
 end;
 
@@ -222,7 +218,7 @@ begin
         UpdateTaskBar();
       end;
     CloseFrame();
-  until FTerminated;
+  until Logic.Stopped;
 
   Finalize();
 end;
@@ -230,7 +226,7 @@ end;
 
 procedure TGame.Stop();
 begin
-  FTerminated := True;
+  Logic.Stop();
 end;
 
 

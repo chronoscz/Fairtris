@@ -16,6 +16,7 @@ type
   TLogic = class(TObject)
   private
     FScene: TScene;
+    FStopped: Boolean;
   private
     procedure HelpUnderstand();
     procedure HelpControl();
@@ -43,6 +44,10 @@ type
     procedure PreapreOptions();
     procedure PrepareKeyboard();
     procedure PrepareController();
+    procedure PrepareQuit();
+  private
+    procedure UpdateLegalHang();
+    procedure UpdateLegalScene();
   private
     procedure UpdateMenuSelection();
     procedure UpdateMenuScene();
@@ -79,6 +84,9 @@ type
     procedure UpdateControllerButtonScanCode();
     procedure UpdateControllerScene();
   private
+    procedure UpdateQuitHang();
+    procedure UpdateQuitScene();
+  private
     procedure UpdateCommon();
     procedure UpdateLegal();
     procedure UpdateMenu();
@@ -89,14 +97,17 @@ type
     procedure UpdateOptions();
     procedure UpdateKeyboard();
     procedure UpdateController();
+    procedure UpdateQuit();
   public
     constructor Create();
     destructor Destroy(); override;
   public
     procedure Update();
     procedure Reset();
+    procedure Stop();
   public
     property Scene: TScene read FScene;
+    property Stopped: Boolean read FStopped;
   end;
 
 
@@ -111,10 +122,12 @@ uses
   Math,
   Forms,
   Fairtris.Clock,
+  Fairtris.Buffers,
   Fairtris.Input,
   Fairtris.Memory,
   Fairtris.Placement,
   Fairtris.Renderers,
+  Fairtris.Grounds,
   Fairtris.Sounds,
   Fairtris.Arrays,
   Fairtris.Constants;
@@ -294,6 +307,30 @@ begin
     PrepareControllerSelection();
     PrepareControllerScanCodes();
   end;
+end;
+
+
+procedure TLogic.PrepareQuit();
+begin
+  if not FScene.Changed then Exit;
+
+  Memory.Quit.Buffer.Canvas.Draw(0, 0, Buffers.Native);
+  Memory.Quit.Buffer.Canvas.Draw(0, 0, Grounds[Memory.Options.Theme][SCENE_QUIT]);
+end;
+
+
+procedure TLogic.UpdateLegalHang();
+begin
+  Memory.Legal.FrameIndex := Memory.Legal.FrameIndex + 1;
+end;
+
+
+procedure TLogic.UpdateLegalScene();
+begin
+  FScene.Validate();
+
+  if Memory.Legal.FrameIndex = 5 * Clock.FrameRateLimit then
+    FScene.Current := SCENE_MENU;
 end;
 
 
@@ -1103,6 +1140,21 @@ begin
 end;
 
 
+procedure TLogic.UpdateQuitHang();
+begin
+  Memory.Quit.FrameIndex := Memory.Quit.FrameIndex + 1;
+end;
+
+
+procedure TLogic.UpdateQuitScene();
+begin
+  FScene.Validate();
+
+  if Memory.Quit.FrameIndex = Round(1.5 * Clock.FrameRateLimit) then
+    FStopped := True;
+end;
+
+
 procedure TLogic.UpdateCommon();
 begin
   if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_HELP_UNDERSTAND].JustPressed then
@@ -1115,10 +1167,8 @@ end;
 
 procedure TLogic.UpdateLegal();
 begin
-  Memory.Legal.FrameIndex := Memory.Legal.FrameIndex + 1;
-
-  if Memory.Legal.FrameIndex = 5 * Clock.FrameRateLimit then
-    FScene.Current := SCENE_MENU;
+  UpdateLegalHang();
+  UpdateLegalScene();
 end;
 
 
@@ -1201,6 +1251,15 @@ begin
 end;
 
 
+procedure TLogic.UpdateQuit();
+begin
+  PrepareQuit();
+
+  UpdateQuitHang();
+  UpdateQuitScene();
+end;
+
+
 procedure TLogic.Update();
 begin
   UpdateCommon();
@@ -1216,6 +1275,7 @@ begin
     SCENE_OPTIONS:     UpdateOptions();
     SCENE_KEYBOARD:    UpdateKeyboard();
     SCENE_CONTROLLER:  UpdateController();
+    SCENE_QUIT:        UpdateQuit();
   end;
 end;
 
@@ -1223,6 +1283,16 @@ end;
 procedure TLogic.Reset();
 begin
   FScene.Reset();
+end;
+
+
+procedure TLogic.Stop();
+begin
+  if FScene.Current <> SCENE_QUIT then
+  begin
+    FScene.Current := SCENE_QUIT;
+    Sounds.PlaySound(SOUND_TOP_OUT, Memory.Play.Region);
+  end;
 end;
 
 
