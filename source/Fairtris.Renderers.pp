@@ -5,6 +5,7 @@ unit Fairtris.Renderers;
 interface
 
 uses
+  Types,
   Graphics,
   Fairtris.Interfaces,
   Fairtris.Constants;
@@ -17,9 +18,14 @@ type
     TPixels = array [UInt16] of record B, G, R: UInt8 end;
   private
     function CharToIndex(AChar: Char): Integer;
+  private
+    procedure RenderSprite(ABuffer, ASprite: TBitmap; ABufferRect, ASpriteRect: TRect; AExcludeFuchsia: Boolean = True); inline;
+    procedure RenderChar(ABuffer, ASprite: TBitmap; ABufferRect, ASpriteRect: TRect; AColor: TColor); inline;
   protected
-    procedure RenderCharacter(AX, AY: Integer; AChar: Char; AColor: TColor);
     procedure RenderText(AX, AY: Integer; const AText: String; AColor: TColor = COLOR_WHITE; AAlign: Integer = ALIGN_LEFT);
+    procedure RenderPiece(AX, AY, APiece, ALevel: Integer);
+    procedure RenderBrick(AX, AY, ABrick, ALevel: Integer);
+    procedure RenderMiniature(AX, AY, APiece, ALevel: Integer);
   protected
     procedure RenderGround(ASceneID: Integer);
   protected
@@ -123,7 +129,6 @@ implementation
 
 uses
   Math,
-  Types,
   SysUtils,
   StrUtils,
   Fairtris.Clock,
@@ -156,46 +161,75 @@ begin
 end;
 
 
-procedure TRenderer.RenderCharacter(AX, AY: Integer; AChar: Char; AColor: TColor);
+procedure TRenderer.RenderSprite(ABuffer, ASprite: TBitmap; ABufferRect, ASpriteRect: TRect; AExcludeFuchsia: Boolean);
 var
-  CharIndex: Integer;
-  CharRect: TRect;
-var
-  PixelsChar, PixelsBuffer: PPixels;
-  CharX, CharY, BufferX, BufferY: Integer;
-var
-  R, G, B: UInt8;
+  SpriteX, SpriteY, BufferX, BufferY: Integer;
+  SpritePixels, BufferPixels: PPixels;
 begin
-  CharIndex := CharToIndex(UpCase(AChar));
-  CharRect := Bounds(CharIndex * CHAR_WIDTH, 0, CHAR_WIDTH, CHAR_HEIGHT);
+  SpriteY := ASpriteRect.Top;
+  BufferY := ABufferRect.Top;
 
-  RedGreenBlue(AColor, R, G, B);
-
-  CharY := CharRect.Top;
-  BufferY := AY;
-
-  while CharY < CharRect.Bottom do
+  while SpriteY < ASpriteRect.Bottom do
   begin
-    PixelsChar := Sprites.Charset.ScanLine[CharY];
-    PixelsBuffer := Buffers.Native.ScanLine[BufferY];
+    SpritePixels := ASprite.ScanLine[SpriteY];
+    BufferPixels := ABuffer.ScanLine[BufferY];
 
-    CharX := CharRect.Left;
-    BufferX := AX;
+    SpriteX := ASpriteRect.Left;
+    BufferX := ABufferRect.Left;
 
-    while CharX < CharRect.Right do
+    while SpriteX < ASpriteRect.Right do
     begin
-      if PixelsChar^[CharX].R <> 255 then
+      if (not AExcludeFuchsia) or (AExcludeFuchsia and (SpritePixels^[SpriteX].R <> 255)) then
       begin
-        PixelsBuffer^[BufferX].R := R;
-        PixelsBuffer^[BufferX].G := G;
-        PixelsBuffer^[BufferX].B := B;
+        BufferPixels^[BufferX].R := SpritePixels^[SpriteX].R;
+        BufferPixels^[BufferX].G := SpritePixels^[SpriteX].G;
+        BufferPixels^[BufferX].B := SpritePixels^[SpriteX].B;
       end;
 
-      CharX += 1;
+      SpriteX += 1;
       BufferX += 1;
     end;
 
-    CharY += 1;
+    SpriteY += 1;
+    BufferY += 1;
+  end;
+end;
+
+
+procedure TRenderer.RenderChar(ABuffer, ASprite: TBitmap; ABufferRect, ASpriteRect: TRect; AColor: TColor);
+var
+  SpritePixels, BufferPixels: PPixels;
+  SpriteX, SpriteY, BufferX, BufferY: Integer;
+var
+  R, G, B: UInt8;
+begin
+  RedGreenBlue(AColor, R, G, B);
+
+  SpriteY := ASpriteRect.Top;
+  BufferY := ABufferRect.Top;
+
+  while SpriteY < ASpriteRect.Bottom do
+  begin
+    SpritePixels := ASprite.ScanLine[SpriteY];
+    BufferPixels := ABuffer.ScanLine[BufferY];
+
+    SpriteX := ASpriteRect.Left;
+    BufferX := ABufferRect.Left;
+
+    while SpriteX < ASpriteRect.Right do
+    begin
+      if SpritePixels^[SpriteX].R <> 255 then
+      begin
+        BufferPixels^[BufferX].R := R;
+        BufferPixels^[BufferX].G := G;
+        BufferPixels^[BufferX].B := B;
+      end;
+
+      SpriteX += 1;
+      BufferX += 1;
+    end;
+
+    SpriteY += 1;
     BufferY += 1;
   end;
 end;
@@ -204,19 +238,99 @@ end;
 procedure TRenderer.RenderText(AX, AY: Integer; const AText: String; AColor: TColor; AAlign: Integer);
 var
   Character: Char;
+  CharIndex: Integer;
+var
+  BufferRect, CharRect: TRect;
 begin
   Buffers.Native.BeginUpdate();
+  BufferRect := Bounds(AX, AY, CHAR_WIDTH, CHAR_HEIGHT);
 
   if AAlign = ALIGN_RIGHT then
-    AX -= AText.Length * CHAR_WIDTH;
+    BufferRect.Offset(-(AText.Length * CHAR_WIDTH), 0);
 
   for Character in AText do
   begin
-    RenderCharacter(AX, AY, Character, AColor);
-    AX += CHAR_WIDTH;
+    CharIndex := CharToIndex(UpCase(Character));
+    CharRect := Bounds(CharIndex * CHAR_WIDTH, 0, CHAR_WIDTH, CHAR_HEIGHT);
+
+    RenderChar(Buffers.Native, Sprites.Charset, BufferRect, CharRect, AColor);
+    BufferRect.Offset(CHAR_WIDTH, 0);
   end;
 
   Buffers.Native.EndUpdate();
+end;
+
+
+procedure TRenderer.RenderPiece(AX, AY, APiece, ALevel: Integer);
+begin
+  if APiece <> PIECE_UNKNOWN then
+  begin
+    Buffers.Native.BeginUpdate();
+
+    RenderSprite(
+      Buffers.Native,
+      Sprites.Pieces,
+      Bounds(
+        AX,
+        AY,
+        PIECE_WIDTH,
+        PIECE_HEIGHT
+      ),
+      Bounds(
+        APiece * PIECE_WIDTH,
+        ALevel * PIECE_HEIGHT,
+        PIECE_WIDTH,
+        PIECE_HEIGHT
+      )
+    );
+
+    Buffers.Native.EndUpdate();
+  end;
+end;
+
+
+procedure TRenderer.RenderBrick(AX, AY, ABrick, ALevel: Integer);
+begin
+  if ABrick = BRICK_EMPTY then Exit;
+    RenderSprite(
+      Buffers.Native,
+      Sprites.Bricks,
+      Bounds(
+        AX,
+        AY,
+        BRICK_WIDTH,
+        BRICK_HEIGHT
+      ),
+      Bounds(
+        ABrick * BRICK_WIDTH,
+        ALevel * BRICK_HEIGHT,
+        BRICK_WIDTH,
+        BRICK_HEIGHT
+      ),
+      False
+    );
+end;
+
+
+procedure TRenderer.RenderMiniature(AX, AY, APiece, ALevel: Integer);
+begin
+  if APiece <> MINIATURE_UNKNOWN then
+    RenderSprite(
+      Buffers.Native,
+      Sprites.Miniatures,
+      Bounds(
+        AX,
+        AY,
+        MINIATURE_WIDTH,
+        MINIATURE_HEIGHT
+      ),
+      Bounds(
+        APiece * MINIATURE_WIDTH,
+        ALevel * MINIATURE_HEIGHT,
+        MINIATURE_WIDTH,
+        MINIATURE_HEIGHT
+      )
+    );
 end;
 
 

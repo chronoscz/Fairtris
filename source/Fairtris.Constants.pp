@@ -620,6 +620,23 @@ const
   PIECE_L       = 6;
   PIECE_I       = 7;
 
+  PIECE_WIDTH  = 31;
+  PIECE_HEIGHT = 15;
+
+
+const
+  MINIATURE_UNKNOWN = PIECE_UNKNOWN;
+  MINIATURE_T       = PIECE_T;
+  MINIATURE_J       = PIECE_J;
+  MINIATURE_Z       = PIECE_Z;
+  MINIATURE_O       = PIECE_O;
+  MINIATURE_S       = PIECE_S;
+  MINIATURE_L       = PIECE_L;
+  MINIATURE_I       = PIECE_I;
+
+  MINIATURE_WIDTH  = 23;
+  MINIATURE_HEIGHT = 11;
+
 
 const
   BRICK_UNKNOWN = 0;
@@ -628,6 +645,12 @@ const
   BRICK_COLOR_B = 2;
   BRICK_COLOR_C = 3;
 
+  BRICK_WIDTH  = 7;
+  BRICK_HEIGHT = 7;
+
+  BRICK_SPACING_X = 1;
+  BRICK_SPACING_Y = 1;
+
 
 const
   COLOR_WINDOW = $00000000;
@@ -635,6 +658,7 @@ const
   COLOR_GRAY   = $007F7F7F;
   COLOR_DARK   = $003F3F3F;
   COLOR_ORANGE = $003898FC;
+  COLOR_RED    = $000028D8;
 
 
 const
