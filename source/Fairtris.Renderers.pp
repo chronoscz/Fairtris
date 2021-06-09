@@ -64,7 +64,7 @@ type
   private
     procedure RenderButton(AX, AY, AButton: Integer);
   private
-    procedure RenderGameInput(ADevice: IControllable);
+    procedure RenderGameInput();
   private
     procedure RenderLegal();
     procedure RenderMenu();
@@ -930,12 +930,12 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderGameInput(ADevice: IControllable);
+procedure TModernRenderer.RenderGameInput();
 var
   Index: Integer;
 begin
   for Index := DEVICE_FIRST to DEVICE_LAST do
-    if ADevice.Switch[Index].Pressed then
+    if Input.Device.Switch[Index].Pressed then
       RenderButton(
         CONTROLLER_X + THUMBNAIL_BUTTON_X[Index],
         CONTROLLER_Y + THUMBNAIL_BUTTON_Y[Index],
@@ -967,7 +967,7 @@ end;
 
 procedure TModernRenderer.RenderGame();
 begin
-  RenderGameInput(Input.Device);
+  RenderGameInput();
 end;
 
 
