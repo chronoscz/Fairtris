@@ -318,6 +318,9 @@ end;
 procedure TRenderer.RenderMiniature(AX, AY, APiece, ALevel: Integer);
 begin
   if APiece <> MINIATURE_UNKNOWN then
+  begin
+    Buffers.Native.BeginUpdate();
+
     RenderSprite(
       Buffers.Native,
       Sprites.Miniatures,
@@ -334,11 +337,16 @@ begin
         MINIATURE_HEIGHT
       )
     );
+
+    Buffers.Native.EndUpdate();
+  end;
 end;
 
 
 procedure TRenderer.RenderButton(AX, AY, AButton: Integer);
 begin
+  Buffers.Native.BeginUpdate();
+
   RenderSprite(
     Buffers.Native,
     Sprites.Controller,
@@ -353,8 +361,11 @@ begin
       BUTTON_Y[AButton],
       BUTTON_WIDTH[AButton],
       BUTTON_HEIGHT[AButton]
-    )
+    ),
+    False
   );
+
+  Buffers.Native.EndUpdate();
 end;
 
 
@@ -953,7 +964,7 @@ end;
 
 procedure TModernRenderer.RenderGame();
 begin
-
+  RenderInput(Input.Device);
 end;
 
 
