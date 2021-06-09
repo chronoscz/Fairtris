@@ -26,6 +26,7 @@ type
     procedure RenderPiece(AX, AY, APiece, ALevel: Integer);
     procedure RenderBrick(AX, AY, ABrick, ALevel: Integer);
     procedure RenderMiniature(AX, AY, APiece, ALevel: Integer);
+    procedure RenderButton(AX, AY, AButton: Integer);
   protected
     procedure RenderGround(ASceneID: Integer);
   protected
@@ -331,6 +332,27 @@ begin
         MINIATURE_HEIGHT
       )
     );
+end;
+
+
+procedure TRenderer.RenderButton(AX, AY, AButton: Integer);
+begin
+  RenderSprite(
+    Buffers.Native,
+    Sprites.Controller,
+    Bounds(
+      AX,
+      AY,
+      BUTTON_WIDTH[AButton],
+      BUTTON_HEIGHT[AButton]
+    ),
+    Bounds(
+      BUTTON_X[AButton],
+      BUTTON_Y[AButton],
+      BUTTON_WIDTH[AButton],
+      BUTTON_HEIGHT[AButton]
+    )
+  );
 end;
 
 

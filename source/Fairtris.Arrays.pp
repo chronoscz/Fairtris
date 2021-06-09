@@ -474,6 +474,14 @@ const
 
 
 const
+  BUTTON_X: array [DEVICE_FIRST .. DEVICE_LAST] of Integer = (5, 5,  1, 12, 22, 29, 42, 49);
+  BUTTON_Y: array [DEVICE_FIRST .. DEVICE_LAST] of Integer = (4, 15, 8, 8,  14, 14, 13, 13);
+
+  BUTTON_WIDTH:  array [DEVICE_FIRST .. DEVICE_LAST] of Integer = (7, 7, 4, 4, 6, 6, 6, 6);
+  BUTTON_HEIGHT: array [DEVICE_FIRST .. DEVICE_LAST] of Integer = (4, 4, 7, 7, 4, 4, 6, 6);
+
+
+const
   SETTINGS_KEY_MAPPING: array [DEVICE_FIRST .. DEVICE_LAST] of String = (
     SETTINGS_KEY_MAPPING_UP,
     SETTINGS_KEY_MAPPING_DOWN,
