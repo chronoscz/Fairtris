@@ -474,6 +474,11 @@ const
 
 
 const
+  GAME_CONTROLLER_X = 15;
+  GAME_CONTROLLER_Y = 176;
+
+
+const
   BUTTON_X: array [DEVICE_FIRST .. DEVICE_LAST] of Integer = (5, 5,  1, 12, 22, 29, 42, 49);
   BUTTON_Y: array [DEVICE_FIRST .. DEVICE_LAST] of Integer = (4, 15, 8, 8,  14, 14, 13, 13);
 

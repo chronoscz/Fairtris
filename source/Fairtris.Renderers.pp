@@ -28,6 +28,8 @@ type
     procedure RenderMiniature(AX, AY, APiece, ALevel: Integer);
     procedure RenderButton(AX, AY, AButton: Integer);
   protected
+    procedure RenderInput(ADevice: IControllable);
+  protected
     procedure RenderGround(ASceneID: Integer);
   protected
     procedure RenderMenuSelection();
@@ -353,6 +355,20 @@ begin
       BUTTON_HEIGHT[AButton]
     )
   );
+end;
+
+
+procedure TRenderer.RenderInput(ADevice: IControllable);
+var
+  Index: Integer;
+begin
+  for Index := DEVICE_FIRST to DEVICE_LAST do
+    if ADevice.Switch[Index].Pressed then
+      RenderButton(
+        GAME_CONTROLLER_X + BUTTON_X[Index],
+        GAME_CONTROLLER_Y + BUTTON_Y[Index],
+        Index
+      );
 end;
 
 
