@@ -72,6 +72,7 @@ end;
 function TSounds.CanPlaySound(ASound: Integer): Boolean;
 begin
   if not FStillPlaying then Exit(True);
+  if FSound = SOUND_GLASS then Exit(True);
 
   if FSound in [SOUND_START, SOUND_TRANSITION, SOUND_TOP_OUT, SOUND_PAUSE] then
     Exit(False);

@@ -1295,7 +1295,7 @@ begin
   if FScene.Current <> SCENE_QUIT then
   begin
     FScene.Current := SCENE_QUIT;
-    Sounds.PlaySound(SOUND_TOP_OUT, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_GLASS, Memory.Play.Region);
   end;
 end;
 

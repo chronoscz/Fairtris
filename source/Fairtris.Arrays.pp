@@ -80,7 +80,8 @@ const
     'tetris.wav',
     'transition.wav',
     'top out.wav',
-    'pause.wav'
+    'pause.wav',
+    'glass.wav'
   );
 
 const
@@ -95,9 +96,9 @@ const
 
 
 const
-  SOUND_LENGTH_NTSC: array [SOUND_FIRST .. SOUND_LAST] of Integer = (0, 170 ,190, 110, 280, 210, 770, 960, 1040, 1100, 330);
-  SOUND_LENGTH_PAL:  array [SOUND_FIRST .. SOUND_LAST] of Integer = (0, 160, 210, 100, 320, 250, 760, 950, 1070, 1280, 380);
-  SOUND_LENGTH_EUR:  array [SOUND_FIRST .. SOUND_LAST] of Integer = (0, 160, 210, 100, 320, 250, 760, 950, 1070, 1280, 380);
+  SOUND_LENGTH_NTSC: array [SOUND_FIRST .. SOUND_LAST] of Integer = (0, 170 ,190, 110, 280, 210, 770, 960, 1040, 1100, 330, 720);
+  SOUND_LENGTH_PAL:  array [SOUND_FIRST .. SOUND_LAST] of Integer = (0, 160, 210, 100, 320, 250, 760, 950, 1070, 1280, 380, 720);
+  SOUND_LENGTH_EUR:  array [SOUND_FIRST .. SOUND_LAST] of Integer = (0, 160, 210, 100, 320, 250, 760, 950, 1070, 1280, 380, 720);
 
 
 const
