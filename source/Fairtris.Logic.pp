@@ -559,7 +559,7 @@ begin
     if Input.Device.Start.JustPressed or Input.Keyboard.Start.JustPressed then
       FScene.Current := Memory.Pause.FromScene;
 
-  if Input.Device.Start.JustPressed or Input.Device.A.JustPressed or Input.Keyboard.Start.JustPressed or Input.Keyboard.A.JustPressed then
+  if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
   case Memory.Pause.ItemIndex of
     ITEM_PAUSE_RESUME:
       FScene.Current := Memory.Pause.FromScene;
@@ -570,10 +570,6 @@ begin
       FScene.Current := SCENE_GAME_NORMAL;
       Sounds.PlaySound(SOUND_START, Memory.Play.Region);
     end;
-  end;
-
-  if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
-  case Memory.Pause.ItemIndex of
     ITEM_PAUSE_OPTIONS:
     begin
       FScene.Current := SCENE_OPTIONS;
