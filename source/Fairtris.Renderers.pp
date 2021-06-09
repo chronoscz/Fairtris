@@ -84,6 +84,8 @@ type
 type
   TClassicRenderer = class(TRenderer, IRenderable)
   private
+    procedure RenderGameStats();
+  private
     procedure RenderLegal();
     procedure RenderMenu();
     procedure RenderPlay();
@@ -912,14 +914,14 @@ begin
     Bounds(
       AX,
       AY,
-      BUTTON_WIDTH[AButton],
-      BUTTON_HEIGHT[AButton]
+      THUMBNAIL_BUTTON_WIDTH[AButton],
+      THUMBNAIL_BUTTON_HEIGHT[AButton]
     ),
     Bounds(
-      BUTTON_X[AButton],
-      BUTTON_Y[AButton],
-      BUTTON_WIDTH[AButton],
-      BUTTON_HEIGHT[AButton]
+      THUMBNAIL_BUTTON_X[AButton],
+      THUMBNAIL_BUTTON_Y[AButton],
+      THUMBNAIL_BUTTON_WIDTH[AButton],
+      THUMBNAIL_BUTTON_HEIGHT[AButton]
     ),
     False
   );
@@ -935,8 +937,8 @@ begin
   for Index := DEVICE_FIRST to DEVICE_LAST do
     if ADevice.Switch[Index].Pressed then
       RenderButton(
-        GAME_CONTROLLER_X + BUTTON_X[Index],
-        GAME_CONTROLLER_Y + BUTTON_Y[Index],
+        CONTROLLER_X + THUMBNAIL_BUTTON_X[Index],
+        CONTROLLER_Y + THUMBNAIL_BUTTON_Y[Index],
         Index
       );
 end;
@@ -1036,6 +1038,18 @@ begin
 end;
 
 
+procedure TClassicRenderer.RenderGameStats();
+var
+  Index: Integer;
+begin
+  for Index := PIECE_FIRST to PIECE_LAST do
+  begin
+    RenderMiniature(MINIATURE_X[Index], MINIATURE_Y[Index], Index, 9);
+    RenderText(STATISTIC_X[Index], STATISTIC_Y[Index], '999', COLOR_RED);
+  end;
+end;
+
+
 procedure TClassicRenderer.RenderLegal();
 begin
 
@@ -1059,7 +1073,7 @@ end;
 
 procedure TClassicRenderer.RenderGame();
 begin
-
+  RenderGameStats();
 end;
 
 

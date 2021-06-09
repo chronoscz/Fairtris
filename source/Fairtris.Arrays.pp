@@ -475,16 +475,55 @@ const
 
 
 const
-  GAME_CONTROLLER_X = 15;
-  GAME_CONTROLLER_Y = 176;
+  MINIATURE_X: array [PIECE_FIRST .. PIECE_LAST] of Integer = (
+    MINIATURE_X_T,
+    MINIATURE_X_J,
+    MINIATURE_X_Z,
+    MINIATURE_X_O,
+    MINIATURE_X_S,
+    MINIATURE_X_L,
+    MINIATURE_X_I
+  );
+
+  MINIATURE_Y: array [PIECE_FIRST .. PIECE_LAST] of Integer = (
+    MINIATURE_Y_T,
+    MINIATURE_Y_J,
+    MINIATURE_Y_Z,
+    MINIATURE_Y_O,
+    MINIATURE_Y_S,
+    MINIATURE_Y_L,
+    MINIATURE_Y_I
+  );
 
 
 const
-  BUTTON_X: array [DEVICE_FIRST .. DEVICE_LAST] of Integer = (5, 5,  1, 12, 22, 29, 42, 49);
-  BUTTON_Y: array [DEVICE_FIRST .. DEVICE_LAST] of Integer = (4, 15, 8, 8,  14, 14, 13, 13);
+  STATISTIC_X: array [PIECE_FIRST .. PIECE_LAST] of Integer = (
+    STATISTIC_X_T,
+    STATISTIC_X_J,
+    STATISTIC_X_Z,
+    STATISTIC_X_O,
+    STATISTIC_X_S,
+    STATISTIC_X_L,
+    STATISTIC_X_I
+  );
 
-  BUTTON_WIDTH:  array [DEVICE_FIRST .. DEVICE_LAST] of Integer = (7, 7, 4, 4, 6, 6, 6, 6);
-  BUTTON_HEIGHT: array [DEVICE_FIRST .. DEVICE_LAST] of Integer = (4, 4, 7, 7, 4, 4, 6, 6);
+  STATISTIC_Y: array [PIECE_FIRST .. PIECE_LAST] of Integer = (
+    STATISTIC_Y_T,
+    STATISTIC_Y_J,
+    STATISTIC_Y_Z,
+    STATISTIC_Y_O,
+    STATISTIC_Y_S,
+    STATISTIC_Y_L,
+    STATISTIC_Y_I
+  );
+
+
+const
+  THUMBNAIL_BUTTON_X: array [DEVICE_FIRST .. DEVICE_LAST] of Integer = (5, 5,  1, 12, 22, 29, 42, 49);
+  THUMBNAIL_BUTTON_Y: array [DEVICE_FIRST .. DEVICE_LAST] of Integer = (4, 15, 8, 8,  14, 14, 13, 13);
+
+  THUMBNAIL_BUTTON_WIDTH:  array [DEVICE_FIRST .. DEVICE_LAST] of Integer = (7, 7, 4, 4, 6, 6, 6, 6);
+  THUMBNAIL_BUTTON_HEIGHT: array [DEVICE_FIRST .. DEVICE_LAST] of Integer = (4, 4, 7, 7, 4, 4, 6, 6);
 
 
 const
