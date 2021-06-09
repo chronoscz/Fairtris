@@ -100,8 +100,9 @@ type
     function CatchedOneButton(out AScanCode: UInt8): Boolean;
   public
     property Device: TDevice read FDevice;
-  public
     property Connected: Boolean read GetConnected;
+  public
+    property Switch[AButtonID: Integer]: TSwitch read GetSwitch;
     property ScanCode[AButtonID: Integer]: UInt8 read GetScanCode;
   public
     property Up: TSwitch index CONTROLLER_BUTTON_UP read GetSwitch;

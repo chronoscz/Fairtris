@@ -78,8 +78,9 @@ type
     function CatchedOneKey(out AScanCode: UInt8): Boolean;
   public
     property Device: TDevice read FDevice;
-  public
     property Connected: Boolean read GetConnected;
+  public
+    property Switch[AKeyID: Integer]: TSwitch read GetSwitch;
     property ScanCode[AKeyID: Integer]: UInt8 read GetScanCode;
   public
     property Up: TSwitch index KEYBOARD_KEY_UP read GetSwitch;

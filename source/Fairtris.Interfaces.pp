@@ -15,6 +15,7 @@ type
     function GetScanCode(AIndex: Integer): UInt8;
     function GetConnected(): Boolean;
 
+    property Switch[AIndex: Integer]: TSwitch read GetSwitch;
     property ScanCode[AIndex: Integer]: UInt8 read GetScanCode;
 
     property Up: TSwitch index DEVICE_UP read GetSwitch;
