@@ -367,7 +367,7 @@ begin
     if Memory.Menu.ItemIndex <> ITEM_MENU_QUIT then
       Sounds.PlaySound(SOUND_START, Memory.Play.Region)
     else
-      Sounds.PlaySound(SOUND_TOP_OUT, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_GLASS, Memory.Play.Region);
 
     if Memory.Menu.ItemIndex = ITEM_MENU_HELP then
       HelpUnderstand();
