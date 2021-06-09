@@ -329,7 +329,7 @@ procedure TLogic.UpdateLegalScene();
 begin
   FScene.Validate();
 
-  if Memory.Legal.FrameIndex = 5 * Clock.FrameRateLimit then
+  if Memory.Legal.FrameIndex = DURATION_HANG_LEGAL * Clock.FrameRateLimit then
     FScene.Current := SCENE_MENU;
 end;
 
@@ -1150,7 +1150,7 @@ procedure TLogic.UpdateQuitScene();
 begin
   FScene.Validate();
 
-  if Memory.Quit.FrameIndex = Round(1.5 * Clock.FrameRateLimit) then
+  if Memory.Quit.FrameIndex = Round(DURATION_HANG_QUIT * Clock.FrameRateLimit) then
     FStopped := True;
 end;
 

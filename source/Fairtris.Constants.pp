@@ -83,6 +83,11 @@ const
 
 
 const
+  DURATION_HANG_LEGAL = 5;
+  DURATION_HANG_QUIT  = 1.5;
+
+
+const
   ITEM_MENU_PLAY    = 0;
   ITEM_MENU_OPTIONS = 1;
   ITEM_MENU_HELP    = 2;
