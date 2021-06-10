@@ -629,6 +629,21 @@ const
 
 
 const
+  BURNED_X = 48;
+  BURNED_Y = 82;
+
+
+const
+  TETRISES_X = 40;
+  TETRISES_Y = 106;
+
+
+const
+  GAIN_X = 32;
+  GAIN_Y = 138;
+
+
+const
   MINIATURE_UNKNOWN = PIECE_UNKNOWN;
   MINIATURE_T       = PIECE_T;
   MINIATURE_J       = PIECE_J;

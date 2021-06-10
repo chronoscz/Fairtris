@@ -70,6 +70,9 @@ type
   private
     procedure RenderButton(AX, AY, AButton: Integer);
   private
+    procedure RenderGameBurned();
+    procedure RenderGameTetrises();
+    procedure RenderGameGain();
     procedure RenderGameInput();
   private
     procedure RenderLegal();
@@ -993,6 +996,24 @@ begin
 end;
 
 
+procedure TModernRenderer.RenderGameBurned();
+begin
+  RenderText(BURNED_X, BURNED_Y, '999');
+end;
+
+
+procedure TModernRenderer.RenderGameTetrises();
+begin
+  RenderText(TETRISES_X, TETRISES_Y, '100%');
+end;
+
+
+procedure TModernRenderer.RenderGameGain();
+begin
+  RenderText(GAIN_X, GAIN_Y, '99999');
+end;
+
+
 procedure TModernRenderer.RenderGameInput();
 var
   Index: Integer;
@@ -1036,6 +1057,9 @@ begin
   RenderGameLevel();
   RenderGameNext();
 
+  RenderGameBurned();
+  RenderGameTetrises();
+  RenderGameGain();
   RenderGameInput();
 end;
 
