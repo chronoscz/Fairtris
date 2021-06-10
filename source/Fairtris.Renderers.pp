@@ -511,6 +511,8 @@ end;
 
 procedure TRenderer.RenderGameNext();
 begin
+  // jeśli klocek to PIECE_UNKNOWN, to Exit
+
   RenderNext(
     NEXT_X[Memory.Options.Theme],
     NEXT_Y[Memory.Options.Theme],
