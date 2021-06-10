@@ -497,7 +497,14 @@ procedure TLogic.UpdateGameScene();
 begin
   FScene.Validate();
 
-  // tylko do testu scen SCENE_PAUSE:
+  // tylko do testu sceny SCENE_GAME_FLASH:
+  //
+  {} if Input.Device.Up.JustPressed  then FScene.Current := SCENE_GAME_FLASH;
+  {} if Input.Device.Up.JustReleased then FScene.Current := SCENE_GAME_NORMAL;
+  //
+  // później wywalić.
+
+  // tylko do testu scen SCENE_PAUSE i SCENE_TOP_OUT:
   //
   {} if Input.Device.Start.JustPressed then
   {} begin
