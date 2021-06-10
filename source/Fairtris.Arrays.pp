@@ -527,6 +527,31 @@ const
 
 
 const
+  TOP_X: array [THEME_FIRST .. THEME_LAST] of Integer = (16, 192);
+  TOP_Y: array [THEME_FIRST .. THEME_LAST] of Integer = (50, 40);
+
+
+const
+  SCORES_X: array [THEME_FIRST .. THEME_LAST] of Integer = (184, 192);
+  SCORES_Y: array [THEME_FIRST .. THEME_LAST] of Integer = (50,  64);
+
+
+const
+  LINES_X: array [THEME_FIRST .. THEME_LAST] of Integer = (184, 152);
+  LINES_Y: array [THEME_FIRST .. THEME_LAST] of Integer = (82,  24);
+
+
+const
+  LEVEL_X: array [THEME_FIRST .. THEME_LAST] of Integer = (184, 208);
+  LEVEL_Y: array [THEME_FIRST .. THEME_LAST] of Integer = (106, 168);
+
+
+const
+  NEXT_X: array [THEME_FIRST .. THEME_LAST] of Integer = (184, 192);
+  NEXT_Y: array [THEME_FIRST .. THEME_LAST] of Integer = (144, 120);
+
+
+const
   SETTINGS_KEY_MAPPING: array [DEVICE_FIRST .. DEVICE_LAST] of String = (
     SETTINGS_KEY_MAPPING_UP,
     SETTINGS_KEY_MAPPING_DOWN,

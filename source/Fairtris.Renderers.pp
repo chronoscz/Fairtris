@@ -23,7 +23,7 @@ type
     procedure RenderChar(ABuffer, ASprite: TBitmap; ABufferRect, ASpriteRect: TRect; AColor: TColor); inline;
   protected
     procedure RenderText(AX, AY: Integer; const AText: String; AColor: TColor = COLOR_WHITE; AAlign: Integer = ALIGN_LEFT);
-    procedure RenderPiece(AX, AY, APiece, ALevel: Integer);
+    procedure RenderNext(AX, AY, APiece, ALevel: Integer);
     procedure RenderBrick(AX, AY, ABrick, ALevel: Integer);
     procedure RenderMiniature(AX, AY, APiece, ALevel: Integer);
   protected
@@ -35,6 +35,12 @@ type
     procedure RenderPlayItems();
     procedure RenderPlayParameters();
     procedure RenderPlayBestScores();
+  protected
+    procedure RenderGameTop();
+    procedure RenderGameScore();
+    procedure RenderGameLines();
+    procedure RenderGameLevel();
+    procedure RenderGameNext();
   protected
     procedure RenderPauseSelection();
     procedure RenderPauseItems();
@@ -267,10 +273,11 @@ begin
 end;
 
 
-procedure TRenderer.RenderPiece(AX, AY, APiece, ALevel: Integer);
+procedure TRenderer.RenderNext(AX, AY, APiece, ALevel: Integer);
 begin
   if APiece <> PIECE_UNKNOWN then
   begin
+    ALevel := ALevel mod 10;
     Buffers.Native.BeginUpdate();
 
     RenderSprite(
@@ -298,6 +305,9 @@ end;
 procedure TRenderer.RenderBrick(AX, AY, ABrick, ALevel: Integer);
 begin
   if ABrick = BRICK_EMPTY then Exit;
+  begin
+    ALevel := ALevel mod 10;
+
     RenderSprite(
       Buffers.Native,
       Sprites.Bricks,
@@ -315,6 +325,7 @@ begin
       ),
       False
     );
+  end;
 end;
 
 
@@ -322,6 +333,7 @@ procedure TRenderer.RenderMiniature(AX, AY, APiece, ALevel: Integer);
 begin
   if APiece <> MINIATURE_UNKNOWN then
   begin
+    ALevel := ALevel mod 10;
     Buffers.Native.BeginUpdate();
 
     RenderSprite(
@@ -451,6 +463,57 @@ end;
 procedure TRenderer.RenderPlayBestScores();
 begin
   // wyrenderować trzy najlepsze wyniki
+end;
+
+
+procedure TRenderer.RenderGameTop();
+begin
+  RenderText(
+    TOP_X[Memory.Options.Theme],
+    TOP_Y[Memory.Options.Theme],
+    IfThen(Memory.Options.Theme = THEME_MODERN, '9999999', '999999')
+  );
+end;
+
+
+procedure TRenderer.RenderGameScore();
+begin
+  RenderText(
+    SCORES_X[Memory.Options.Theme],
+    SCORES_Y[Memory.Options.Theme],
+    IfThen(Memory.Options.Theme = THEME_MODERN, '9999999', '999999')
+  );
+end;
+
+
+procedure TRenderer.RenderGameLines();
+begin
+  RenderText(
+    LINES_X[Memory.Options.Theme],
+    LINES_Y[Memory.Options.Theme],
+    '999'
+  );
+end;
+
+
+procedure TRenderer.RenderGameLevel();
+begin
+  RenderText(
+    LEVEL_X[Memory.Options.Theme],
+    LEVEL_Y[Memory.Options.Theme],
+    '99'
+  );
+end;
+
+
+procedure TRenderer.RenderGameNext();
+begin
+  RenderNext(
+    NEXT_X[Memory.Options.Theme],
+    NEXT_Y[Memory.Options.Theme],
+    PIECE_L,
+    99
+  );
 end;
 
 
@@ -967,6 +1030,12 @@ end;
 
 procedure TModernRenderer.RenderGame();
 begin
+  RenderGameTop();
+  RenderGameScore();
+  RenderGameLines();
+  RenderGameLevel();
+  RenderGameNext();
+
   RenderGameInput();
 end;
 
@@ -1044,7 +1113,7 @@ var
 begin
   for Index := PIECE_FIRST to PIECE_LAST do
   begin
-    RenderMiniature(MINIATURE_X[Index], MINIATURE_Y[Index], Index, 9);
+    RenderMiniature(MINIATURE_X[Index], MINIATURE_Y[Index], Index, 99);
     RenderText(STATISTIC_X[Index], STATISTIC_Y[Index], '999', COLOR_RED);
   end;
 end;
@@ -1073,6 +1142,12 @@ end;
 
 procedure TClassicRenderer.RenderGame();
 begin
+  RenderGameTop();
+  RenderGameScore();
+  RenderGameLines();
+  RenderGameLevel();
+  RenderGameNext();
+
   RenderGameStats();
 end;
 
