@@ -1175,6 +1175,9 @@ begin
 
   if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_HELP_CONTROL].JustPressed then
     HelpControl();
+
+  if Input.Keyboard.Device.Key[VK_F10].JustPressed then
+    Renderers.ClipFrame := not Renderers.ClipFrame;
 end;
 
 
