@@ -121,6 +121,16 @@ const
     LEVEL_LAST_PAL
   );
 
+const
+  LEVEL_COUNT: array [REGION_FIRST .. REGION_LAST] of Integer = (
+    LEVEL_COUNT_NTSC,
+    LEVEL_COUNT_NTSC,
+    LEVEL_COUNT_PAL,
+    LEVEL_COUNT_PAL,
+    LEVEL_COUNT_PAL,
+    LEVEL_COUNT_PAL
+  );
+
 
 const
   ITEM_X_MENU: array [ITEM_MENU_FIRST .. ITEM_MENU_LAST] of Integer = (
