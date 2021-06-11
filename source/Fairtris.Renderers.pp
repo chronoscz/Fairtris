@@ -989,7 +989,7 @@ procedure TRenderer.RenderClipping();
 begin
   if FClipFrame then
   begin
-    Buffers.Native.Canvas.Brush.Color := COLOR_RED;
+    Buffers.Native.Canvas.Brush.Color := COLOR_WINDOW;
 
     Buffers.Native.Canvas.FillRect(0, 0, BUFFER_WIDTH, BUFFER_CLIPPING);
     Buffers.Native.Canvas.FillRect(0, BUFFER_HEIGHT - BUFFER_CLIPPING, BUFFER_WIDTH, BUFFER_HEIGHT);
