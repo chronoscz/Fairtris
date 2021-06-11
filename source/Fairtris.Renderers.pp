@@ -17,6 +17,8 @@ type
     PPixels = ^TPixels;
     TPixels = array [UInt16] of record B, G, R: UInt8 end;
   private
+    FClipFrame: Boolean;
+  private
     function CharToIndex(AChar: Char): Integer;
   private
     procedure RenderSprite(ABuffer, ASprite: TBitmap; ABufferRect, ASpriteRect: TRect; AExcludeFuchsia: Boolean = True); inline;
@@ -62,6 +64,10 @@ type
     procedure RenderControllerItems();
     procedure RenderControllerButtonSelection();
     procedure RenderControllerButtonScanCodes();
+  protected
+    procedure RenderClipping();
+  protected
+    property ClipFrame: Boolean read FClipFrame write FClipFrame;
   end;
 
 
@@ -119,7 +125,12 @@ type
     FModern: IRenderable;
     FClassic: IRenderable;
   private
+    FClipFrame: Boolean;
+  private
+    function GetClipFrame(): Boolean;
+  private
     procedure SetThemeID(AThemeID: Integer);
+    procedure SetClipFrame(AClipFrame: Boolean);
   private
     function GetModern(): TModernRenderer;
     function GetClassic(): TClassicRenderer;
@@ -133,6 +144,8 @@ type
   public
     property Modern: TModernRenderer read GetModern;
     property Classic: TClassicRenderer read GetClassic;
+  public
+    property ClipFrame: Boolean read GetClipFrame write SetClipFrame;
   end;
 
 
@@ -972,6 +985,18 @@ begin
 end;
 
 
+procedure TRenderer.RenderClipping();
+begin
+  if FClipFrame then
+  begin
+    Buffers.Native.Canvas.Brush.Color := COLOR_RED;
+
+    Buffers.Native.Canvas.FillRect(0, 0, BUFFER_WIDTH, BUFFER_CLIPPING);
+    Buffers.Native.Canvas.FillRect(0, BUFFER_HEIGHT - BUFFER_CLIPPING, BUFFER_WIDTH, BUFFER_HEIGHT);
+  end;
+end;
+
+
 procedure TModernRenderer.RenderButton(AX, AY, AButton: Integer);
 begin
   Buffers.Native.BeginUpdate();
@@ -1130,6 +1155,8 @@ begin
     SCENE_CONTROLLER:  RenderController();
     SCENE_QUIT:        RenderQuit();
   end;
+
+  RenderClipping();
 end;
 
 
@@ -1242,6 +1269,8 @@ begin
     SCENE_CONTROLLER:  RenderController();
     SCENE_QUIT:        RenderQuit();
   end;
+
+  RenderClipping();
 end;
 
 
@@ -1255,6 +1284,12 @@ begin
 end;
 
 
+function TRenderers.GetClipFrame(): Boolean;
+begin
+  Result := FClipFrame;
+end;
+
+
 procedure TRenderers.SetThemeID(AThemeID: Integer);
 begin
   FThemeID := AThemeID;
@@ -1263,6 +1298,15 @@ begin
     THEME_MODERN:  FTheme := FModern;
     THEME_CLASSIC: FTheme := FClassic;
   end;
+end;
+
+
+procedure TRenderers.SetClipFrame(AClipFrame: Boolean);
+begin
+  FClipFrame := AClipFrame;
+
+  GetModern().ClipFrame := FClipFrame;
+  GetClassic().ClipFrame := FClipFrame;
 end;
 
 

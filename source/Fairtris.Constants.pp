@@ -23,6 +23,8 @@ const
   BUFFER_WIDTH  = 256;
   BUFFER_HEIGHT = 240;
 
+  BUFFER_CLIPPING = 8;
+
 
 const
   CLIENT_RATIO_LANDSCAPE = 4 / 3;
