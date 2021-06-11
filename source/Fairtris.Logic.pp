@@ -18,6 +18,8 @@ type
     FScene: TScene;
     FStopped: Boolean;
   private
+    procedure UpdateItemIndex(var AItemIndex: Integer; ACount, AStep: Integer);
+  private
     procedure HelpUnderstand();
     procedure HelpControl();
   private
@@ -143,6 +145,12 @@ destructor TLogic.Destroy();
 begin
   FScene.Free();
   inherited Destroy();
+end;
+
+
+procedure TLogic.UpdateItemIndex(var AItemIndex: Integer; ACount, AStep: Integer);
+begin
+  AItemIndex := (AItemIndex + ACount + AStep) mod ACount;
 end;
 
 
@@ -336,19 +344,17 @@ end;
 
 procedure TLogic.UpdateMenuSelection();
 begin
-  if Memory.Menu.ItemIndex > ITEM_MENU_FIRST then
-    if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
-    begin
-      Memory.Menu.ItemIndex -= 1;
-      Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
-    end;
+  if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
+  begin
+    UpdateItemIndex(Memory.Menu.ItemIndex, ITEM_MENU_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+  end;
 
-  if Memory.Menu.ItemIndex < ITEM_MENU_LAST then
-    if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
-    begin
-      Memory.Menu.ItemIndex += 1;
-      Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
-    end;
+  if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
+  begin
+    UpdateItemIndex(Memory.Menu.ItemIndex, ITEM_MENU_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+  end;
 end;
 
 
@@ -377,19 +383,17 @@ end;
 
 procedure TLogic.UpdatePlaySelection();
 begin
-  if Memory.Play.ItemIndex > ITEM_PLAY_FIRST then
-    if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
-    begin
-      Memory.Play.ItemIndex -= 1;
-      Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
-    end;
+  if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
+  begin
+    UpdateItemIndex(Memory.Play.ItemIndex, ITEM_PLAY_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+  end;
 
-  if Memory.Play.ItemIndex < ITEM_PLAY_LAST then
-    if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
-    begin
-      Memory.Play.ItemIndex += 1;
-      Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
-    end;
+  if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
+  begin
+    UpdateItemIndex(Memory.Play.ItemIndex, ITEM_PLAY_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+  end;
 end;
 
 
@@ -530,19 +534,17 @@ end;
 
 procedure TLogic.UpdatePauseSelection();
 begin
-  if Memory.Pause.ItemIndex > ITEM_PAUSE_FIRST then
-    if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
-    begin
-      Memory.Pause.ItemIndex -= 1;
-      Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
-    end;
+  if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
+  begin
+    UpdateItemIndex(Memory.Pause.ItemIndex, ITEM_PAUSE_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+  end;
 
-  if Memory.Pause.ItemIndex < ITEM_PAUSE_LAST then
-    if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
-    begin
-      Memory.Pause.ItemIndex += 1;
-      Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
-    end;
+  if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
+  begin
+    UpdateItemIndex(Memory.Pause.ItemIndex, ITEM_PAUSE_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+  end;
 end;
 
 
@@ -597,19 +599,17 @@ end;
 
 procedure TLogic.UpdateTopOutSelection();
 begin
-  if Memory.TopOut.ItemIndex > ITEM_TOP_OUT_FIRST then
-    if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
-    begin
-      Memory.TopOut.ItemIndex -= 1;
-      Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
-    end;
+  if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
+  begin
+    UpdateItemIndex(Memory.TopOut.ItemIndex, ITEM_TOP_OUT_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+  end;
 
-  if Memory.TopOut.ItemIndex < ITEM_TOP_OUT_LAST then
-    if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
-    begin
-      Memory.TopOut.ItemIndex += 1;
-      Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
-    end;
+  if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
+  begin
+    UpdateItemIndex(Memory.TopOut.ItemIndex, ITEM_TOP_OUT_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+  end;
 end;
 
 
@@ -646,19 +646,17 @@ end;
 
 procedure TLogic.UpdateOptionsSelection();
 begin
-  if Memory.Options.ItemIndex > ITEM_OPTIONS_FIRST then
-    if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
-    begin
-      Memory.Options.ItemIndex -= 1;
-      Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
-    end;
+  if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
+  begin
+    UpdateItemIndex(Memory.Options.ItemIndex, ITEM_OPTIONS_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+  end;
 
-  if Memory.Options.ItemIndex < ITEM_OPTIONS_LAST then
-    if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
-    begin
-      Memory.Options.ItemIndex += 1;
-      Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
-    end;
+  if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
+  begin
+    UpdateItemIndex(Memory.Options.ItemIndex, ITEM_OPTIONS_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+  end;
 end;
 
 
@@ -828,19 +826,17 @@ procedure TLogic.UpdateKeyboardItemSelection();
 begin
   if Memory.Keyboard.Changing or Memory.Keyboard.SettingUp then Exit;
 
-  if Memory.Keyboard.ItemIndex > ITEM_KEYBOARD_FIRST then
-    if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
-    begin
-      Memory.Keyboard.ItemIndex -= 1;
-      Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
-    end;
+  if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
+  begin
+    UpdateItemIndex(Memory.Keyboard.ItemIndex, ITEM_KEYBOARD_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+  end;
 
-  if Memory.Keyboard.ItemIndex < ITEM_KEYBOARD_LAST then
-    if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
-    begin
-      Memory.Keyboard.ItemIndex += 1;
-      Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
-    end;
+  if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
+  begin
+    UpdateItemIndex(Memory.Keyboard.ItemIndex, ITEM_KEYBOARD_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+  end;
 
   case Memory.Keyboard.ItemIndex of
     ITEM_KEYBOARD_CHANGE:
@@ -870,27 +866,24 @@ procedure TLogic.UpdateKeyboardKeySelection();
 begin
   if not Memory.Keyboard.Changing or Memory.Keyboard.SettingUp then Exit;
 
-  if Memory.Keyboard.KeyIndex > ITEM_KEYBOARD_KEY_FIRST then
-    if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
-    begin
-      Memory.Keyboard.KeyIndex -= 1;
-      Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
-    end;
+  if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
+  begin
+    UpdateItemIndex(Memory.Keyboard.KeyIndex, ITEM_KEYBOARD_KEY_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+  end;
+
+  if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
+  begin
+    UpdateItemIndex(Memory.Keyboard.KeyIndex, ITEM_KEYBOARD_KEY_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+  end;
 
   if Memory.Keyboard.KeyIndex < ITEM_KEYBOARD_KEY_LAST then
-  begin
-    if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
-    begin
-      Memory.Keyboard.KeyIndex += 1;
-      Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
-    end;
-
     if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_CLEAR_MAPPING].JustPressed then
     begin
       Memory.Keyboard.ScanCodes[Memory.Keyboard.KeyIndex] := KEYBOARD_SCANCODE_KEY_NOT_MAPPED;
       Sounds.PlaySound(SOUND_BURN, Memory.Play.Region);
     end;
-  end;
 
   if Memory.Keyboard.KeyIndex in [ITEM_KEYBOARD_SCANCODE_FIRST .. ITEM_KEYBOARD_SCANCODE_LAST] then
     if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
@@ -986,19 +979,17 @@ procedure TLogic.UpdateControllerItemSelection();
 begin
   if Memory.Controller.Changing or Memory.Controller.SettingUp then Exit;
 
-  if Memory.Controller.ItemIndex > ITEM_CONTROLLER_FIRST then
-    if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
-    begin
-      Memory.Controller.ItemIndex -= 1;
-      Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
-    end;
+  if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
+  begin
+    UpdateItemIndex(Memory.Controller.ItemIndex, ITEM_CONTROLLER_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+  end;
 
-  if Memory.Controller.ItemIndex < ITEM_CONTROLLER_LAST then
-    if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
-    begin
-      Memory.Controller.ItemIndex += 1;
-      Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
-    end;
+  if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
+  begin
+    UpdateItemIndex(Memory.Controller.ItemIndex, ITEM_CONTROLLER_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+  end;
 
   case Memory.Controller.ItemIndex of
     ITEM_CONTROLLER_CHANGE:
@@ -1028,27 +1019,24 @@ procedure TLogic.UpdateControllerButtonSelection();
 begin
   if not Memory.Controller.Changing or Memory.Controller.SettingUp then Exit;
 
-  if Memory.Controller.ButtonIndex > ITEM_CONTROLLER_BUTTON_FIRST then
-    if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
-    begin
-      Memory.Controller.ButtonIndex -= 1;
-      Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
-    end;
+  if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
+  begin
+    UpdateItemIndex(Memory.Controller.ButtonIndex, ITEM_CONTROLLER_BUTTON_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+  end;
+
+  if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
+  begin
+    UpdateItemIndex(Memory.Controller.ButtonIndex, ITEM_CONTROLLER_BUTTON_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+  end;
 
   if Memory.Controller.ButtonIndex < ITEM_CONTROLLER_BUTTON_LAST then
-  begin
-    if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
-    begin
-      Memory.Controller.ButtonIndex += 1;
-      Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
-    end;
-
     if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_CLEAR_MAPPING].JustPressed then
     begin
       Memory.Controller.ScanCodes[Memory.Controller.ButtonIndex] := CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED;
       Sounds.PlaySound(SOUND_BURN, Memory.Play.Region);
     end;
-  end;
 
   if Memory.Controller.ButtonIndex in [ITEM_CONTROLLER_SCANCODE_FIRST .. ITEM_CONTROLLER_SCANCODE_LAST] then
     if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
