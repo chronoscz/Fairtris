@@ -27,7 +27,6 @@ type
     procedure RenderText(AX, AY: Integer; const AText: String; AColor: TColor = COLOR_WHITE; AAlign: Integer = ALIGN_LEFT);
     procedure RenderNext(AX, AY, APiece, ALevel: Integer);
     procedure RenderBrick(AX, AY, ABrick, ALevel: Integer);
-    procedure RenderMiniature(AX, AY, APiece, ALevel: Integer);
   protected
     procedure RenderGround(ASceneID: Integer);
   protected
@@ -98,6 +97,8 @@ type
 
 type
   TClassicRenderer = class(TRenderer, IRenderable)
+  private
+    procedure RenderMiniature(AX, AY, APiece, ALevel: Integer);
   private
     procedure RenderGameStats();
   private
@@ -341,35 +342,6 @@ begin
       ),
       False
     );
-  end;
-end;
-
-
-procedure TRenderer.RenderMiniature(AX, AY, APiece, ALevel: Integer);
-begin
-  if APiece <> MINIATURE_UNKNOWN then
-  begin
-    ALevel := ALevel mod 10;
-    Buffers.Native.BeginUpdate();
-
-    RenderSprite(
-      Buffers.Native,
-      Sprites.Miniatures,
-      Bounds(
-        AX,
-        AY,
-        MINIATURE_WIDTH,
-        MINIATURE_HEIGHT
-      ),
-      Bounds(
-        APiece * MINIATURE_WIDTH,
-        ALevel * MINIATURE_HEIGHT,
-        MINIATURE_WIDTH,
-        MINIATURE_HEIGHT
-      )
-    );
-
-    Buffers.Native.EndUpdate();
   end;
 end;
 
@@ -1157,6 +1129,35 @@ begin
   end;
 
   RenderClipping();
+end;
+
+
+procedure TClassicRenderer.RenderMiniature(AX, AY, APiece, ALevel: Integer);
+begin
+  if APiece <> MINIATURE_UNKNOWN then
+  begin
+    ALevel := ALevel mod 10;
+    Buffers.Native.BeginUpdate();
+
+    RenderSprite(
+      Buffers.Native,
+      Sprites.Miniatures,
+      Bounds(
+        AX,
+        AY,
+        MINIATURE_WIDTH,
+        MINIATURE_HEIGHT
+      ),
+      Bounds(
+        APiece * MINIATURE_WIDTH,
+        ALevel * MINIATURE_HEIGHT,
+        MINIATURE_WIDTH,
+        MINIATURE_HEIGHT
+      )
+    );
+
+    Buffers.Native.EndUpdate();
+  end;
 end;
 
 
