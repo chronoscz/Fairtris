@@ -827,9 +827,9 @@ const
 const
   BRICK_UNKNOWN = 0;
   BRICK_EMPTY   = 0;
-  BRICK_COLOR_A = 1;
-  BRICK_COLOR_B = 2;
-  BRICK_COLOR_C = 3;
+  BRICK_A       = 1;
+  BRICK_B       = 2;
+  BRICK_C       = 3;
 
   BRICK_WIDTH  = 7;
   BRICK_HEIGHT = 7;
