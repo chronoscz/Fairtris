@@ -751,6 +751,41 @@ const
 
 
 const
+  PIECE_ROTATION_X_MIN: array [PIECE_FIRST .. PIECE_LAST, PIECE_ORIENTATION_FIRST .. PIECE_ORIENTATION_LAST] of Integer =
+  (
+    (1, 1, 1, 1),
+    (1, 1, 1, 1),
+    (1, 1, 1, 1),
+    (1, 1, 1, 1),
+    (1, 1, 1, 1),
+    (1, 1, 1, 1),
+    (2, 2, 2, 2)
+  );
+
+  PIECE_ROTATION_X_MAX: array [PIECE_FIRST .. PIECE_LAST, PIECE_ORIENTATION_FIRST .. PIECE_ORIENTATION_LAST] of Integer =
+  (
+    (8, 8, 8, 8),
+    (8, 8, 8, 8),
+    (8, 8, 8, 8),
+    (8, 8, 8, 8),
+    (8, 8, 8, 8),
+    (8, 8, 8, 8),
+    (8, 8, 8, 8)
+  );
+
+  PIECE_ROTATION_Y_MAX: array [PIECE_FIRST .. PIECE_LAST, PIECE_ORIENTATION_FIRST .. PIECE_ORIENTATION_LAST] of Integer =
+  (
+    (18, 18, 18, 18),
+    (18, 18, 18, 18),
+    (18, 18, 18, 18),
+    (18, 18, 18, 18),
+    (18, 18, 18, 18),
+    (18, 18, 18, 18),
+    (18, 18, 18, 18)
+  );
+
+
+const
   SETTINGS_KEY_MAPPING: array [DEVICE_FIRST .. DEVICE_LAST] of String = (
     SETTINGS_KEY_MAPPING_UP,
     SETTINGS_KEY_MAPPING_DOWN,
