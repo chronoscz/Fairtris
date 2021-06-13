@@ -475,6 +475,9 @@ const
 
 
 const
+  LEVEL_FIRST = 0;
+  LEVEL_LAST  = 29;
+
   LEVEL_FIRST_NTSC = 0;
   LEVEL_FIRST_PAL  = 0;
 
