@@ -751,6 +751,30 @@ const
 
 
 const
+  PIECE_SHIFT_X_MIN: array [PIECE_FIRST .. PIECE_LAST, PIECE_ORIENTATION_FIRST .. PIECE_ORIENTATION_LAST] of Integer =
+  (
+    (1, 1, 1, 0),
+    (1, 1, 1, 0),
+    (1, 0, 1, 0),
+    (1, 1, 1, 1),
+    (1, 0, 1, 0),
+    (1, 1, 1, 0),
+    (2, 0, 2, 0)
+  );
+
+  PIECE_SHIFT_X_MAX: array [PIECE_FIRST .. PIECE_LAST, PIECE_ORIENTATION_FIRST .. PIECE_ORIENTATION_LAST] of Integer =
+  (
+    (8, 9, 8, 8),
+    (8, 9, 8, 8),
+    (8, 8, 8, 8),
+    (9, 9, 9, 9),
+    (8, 8, 8, 8),
+    (8, 9, 8, 8),
+    (8, 9, 8, 9)
+  );
+
+
+const
   PIECE_ROTATION_X_MIN: array [PIECE_FIRST .. PIECE_LAST, PIECE_ORIENTATION_FIRST .. PIECE_ORIENTATION_LAST] of Integer =
   (
     (1, 1, 1, 1),
