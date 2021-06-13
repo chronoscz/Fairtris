@@ -817,7 +817,7 @@ const
 
 
 const
-  GRAVITY_FRAMES: array [REGION_FIRST .. REGION_LAST, GRAVITY_LEVEL_FIRST .. GRAVITY_LEVEL_LAST] of Integer = (
+  GRAVITY_FRAMES: array [REGION_FIRST .. REGION_LAST, GRAVITY_FIRST .. GRAVITY_LAST] of Integer = (
     (48, 43, 38, 33, 28, 23, 18, 13, 8, 6, 5, 5, 5, 4, 4, 4, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1),
     (48, 43, 38, 33, 28, 23, 18, 13, 8, 6, 5, 5, 5, 4, 4, 4, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1),
     (36, 32, 29, 25, 22, 18, 15, 11, 7, 5, 4, 4, 4, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
