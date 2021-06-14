@@ -164,6 +164,7 @@ uses
   Fairtris.Input,
   Fairtris.Buffers,
   Fairtris.Memory,
+  Fairtris.Converter,
   Fairtris.Grounds,
   Fairtris.Sprites,
   Fairtris.Settings,
@@ -459,7 +460,7 @@ begin
   RenderText(
     TOP_X[Memory.Options.Theme],
     TOP_Y[Memory.Options.Theme],
-    IfThen(Memory.Options.Theme = THEME_MODERN, '9999999', '999999')
+    Converter.ScoreToString(Memory.Game.Top.Current)
   );
 end;
 
@@ -469,7 +470,7 @@ begin
   RenderText(
     SCORES_X[Memory.Options.Theme],
     SCORES_Y[Memory.Options.Theme],
-    IfThen(Memory.Options.Theme = THEME_MODERN, '9999999', '999999')
+    Converter.ScoreToString(Memory.Game.Score.Current)
   );
 end;
 
