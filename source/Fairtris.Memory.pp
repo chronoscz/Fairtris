@@ -6,6 +6,7 @@ interface
 
 uses
   Graphics,
+  Fairtris.Classes,
   Fairtris.Constants;
 
 
@@ -41,10 +42,32 @@ type
 
 
 type
+  TGameStack = array [0 .. 9, -2 .. 19] of Integer;
+  TGameStats = array [PIECE_FIRST .. PIECE_LAST] of Integer;
+
+type
+  TGameMeter = specialize TCustomState<Integer>;
+
+type
   TGameMemory = class(TObject)
+  public
+    constructor Create();
+    destructor Destroy(); override;
   public     
     procedure Initialize();
     procedure Reset();
+  public
+    Stack: TGameStack;
+    Stats: TGameStats;
+  public
+    Top: TGameMeter;
+    Score: TGameMeter;
+    Lines: TGameMeter;
+    Level: TGameMeter;
+    Next: TGameMeter;
+    Burned: TGameMeter;
+    Tetrises: TGameMeter;
+    Gain: TGameMeter;
   end;
 
 
@@ -201,6 +224,34 @@ begin
   Region := Settings.General.Region;
   RNG := Settings.General.RNG;
   Level := Settings.General.Level;
+end;
+
+
+constructor TGameMemory.Create();
+begin
+  Top := TGameMeter.Create(0);
+  Score := TGameMeter.Create(0);
+  Lines := TGameMeter.Create(0);
+  Level := TGameMeter.Create(0);
+  Next := TGameMeter.Create(0);
+  Burned := TGameMeter.Create(0);
+  Tetrises := TGameMeter.Create(0);
+  Gain := TGameMeter.Create(0);
+end;
+
+
+destructor TGameMemory.Destroy();
+begin
+  Top.Free();
+  Score.Free();
+  Lines.Free();
+  Level.Free();
+  Next.Free();
+  Burned.Free();
+  Tetrises.Free();
+  Gain.Free();
+
+  inherited Destroy();
 end;
 
 
