@@ -263,7 +263,17 @@ end;
 
 procedure TGameMemory.Reset();
 begin
+  Stack := Default(TGameStack);
+  Stats := Default(TGameStats);
 
+  Top.Reset();
+  Score.Reset();
+  Lines.Reset();
+  Level.Reset();
+  Next.Reset();
+  Burned.Reset();
+  Tetrises.Reset();
+  Gain.Reset();
 end;
 
 
