@@ -480,7 +480,7 @@ begin
   RenderText(
     LINES_X[Memory.Options.Theme],
     LINES_Y[Memory.Options.Theme],
-    '999'
+    Converter.LinesToString(Memory.Game.Lines.Current)
   );
 end;
 
@@ -490,7 +490,7 @@ begin
   RenderText(
     LEVEL_X[Memory.Options.Theme],
     LEVEL_Y[Memory.Options.Theme],
-    '99'
+    Converter.LevelToString(Memory.Game.Level.Current)
   );
 end;
 
