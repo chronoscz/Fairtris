@@ -79,7 +79,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="22">
+    <Units Count="23">
       <Unit0>
         <Filename Value="Fairtris.Main.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -171,6 +171,10 @@
         <Filename Value="Fairtris.Taskbar.pp"/>
         <IsPartOfProject Value="True"/>
       </Unit21>
+      <Unit22>
+        <Filename Value="Fairtris.Converter.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit22>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
