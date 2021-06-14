@@ -497,13 +497,13 @@ end;
 
 procedure TRenderer.RenderGameNext();
 begin
-  // jeśli klocek to PIECE_UNKNOWN, to Exit
+  if Memory.Game.Next.Current = PIECE_UNKNOWN then Exit;
 
   RenderNext(
     NEXT_X[Memory.Options.Theme],
     NEXT_Y[Memory.Options.Theme],
-    PIECE_L,
-    99
+    Memory.Game.Next.Current,
+    Memory.Game.Level.Current
   );
 end;
 
