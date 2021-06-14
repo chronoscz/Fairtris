@@ -54,6 +54,7 @@ uses
   Fairtris.Settings,
   Fairtris.BestScores,
   Fairtris.Logic,
+  Fairtris.Converter,
   Fairtris.Constants;
 
 
@@ -75,6 +76,7 @@ begin
 
   Logic := TLogic.Create();
   Memory := TMemory.Create();
+  Converter := TConverter.Create();
 end;
 
 
@@ -96,6 +98,7 @@ begin
 
   Logic.Free();
   Memory.Free();
+  Converter.Free();
 
   inherited Destroy();
 end;
