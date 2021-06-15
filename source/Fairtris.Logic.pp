@@ -506,6 +506,12 @@ begin
     FScene.Current := SCENE_PAUSE;
     Sounds.PlaySound(SOUND_PAUSE, Memory.Play.Region);
   end;
+
+  if Input.Device.Start.JustPressed then
+  begin
+    FScene.Current := SCENE_PAUSE;
+    Sounds.PlaySound(SOUND_PAUSE, Memory.Play.Region);
+  end;
 end;
 
 
