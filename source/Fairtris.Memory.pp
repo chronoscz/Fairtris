@@ -53,8 +53,7 @@ type
   public
     constructor Create();
     destructor Destroy(); override;
-  public     
-    procedure Initialize();
+  public
     procedure Reset();
   public
     Stack: TGameStack;
@@ -89,8 +88,6 @@ type
 
 type
   TTopOutMemory = class(TObject)
-  public     
-    procedure Initialize();
   public
     ItemIndex: Integer;
   public
@@ -261,12 +258,6 @@ begin
 end;
 
 
-procedure TGameMemory.Initialize();
-begin
-
-end;
-
-
 procedure TGameMemory.Reset();
 begin
   Stack := Default(TGameStack);
@@ -292,22 +283,6 @@ end;
 procedure TPauseMemory.Initialize();
 begin
   ItemIndex := ITEM_PAUSE_FIRST;
-end;
-
-
-procedure TTopOutMemory.Initialize();
-begin
-  // tylko do testu SCENE_TOP_OUT
-  //
-  {} TotalScore := 9999999;
-  {} Transition := 999999;
-  {}
-  {} LinesCleared := 999;
-  {} LinesBurned := 999;
-  {}
-  {} TetrisRate := 100;
-  //
-  // później wywalić
 end;
 
 
@@ -442,9 +417,7 @@ begin
   FLegal.Initialize();
   FMenu.Initialize();
   FPlay.Initialize();
-  FGame.Initialize();
   FPause.Initialize();
-  FTopOut.Initialize();
   FOptions.Initialize();
   FKeyboard.Initialize();
   FController.Initialize();

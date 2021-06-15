@@ -501,29 +501,6 @@ procedure TLogic.UpdateGameScene();
 begin
   FScene.Validate();
 
-  // tylko do testu sceny SCENE_GAME_FLASH:
-  //
-  {} if Input.Device.Up.JustPressed  then FScene.Current := SCENE_GAME_FLASH;
-  {} if Input.Device.Up.JustReleased then FScene.Current := SCENE_GAME_NORMAL;
-  //
-  // później wywalić.
-
-  // tylko do testu scen SCENE_PAUSE i SCENE_TOP_OUT:
-  //
-  {} if Input.Device.Start.JustPressed then
-  {} begin
-  {}   FScene.Current := SCENE_PAUSE;
-  {}   Sounds.PlaySound(SOUND_PAUSE, Memory.Play.Region);
-  {} end;
-  {}
-  {} if Input.Device.Select.JustPressed then
-  {} begin
-  {}   FScene.Current := SCENE_TOP_OUT;
-  {}   Sounds.PlaySound(SOUND_TOP_OUT, Memory.Play.Region);
-  {} end;
-  //
-  // później wywalić.
-
   if not Input.Device.Connected then
   begin
     FScene.Current := SCENE_PAUSE;
