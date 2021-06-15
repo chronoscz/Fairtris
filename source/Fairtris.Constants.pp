@@ -684,17 +684,17 @@ const
 
 
 const
-  BURNED_X = 48;
+  BURNED_X = 72;
   BURNED_Y = 82;
 
 
 const
-  TETRISES_X = 40;
+  TETRISES_X = 72;
   TETRISES_Y = 106;
 
 
 const
-  GAIN_X = 32;
+  GAIN_X = 72;
   GAIN_Y = 138;
 
 

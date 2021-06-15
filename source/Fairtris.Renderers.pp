@@ -1031,19 +1031,37 @@ end;
 
 procedure TModernRenderer.RenderGameBurned();
 begin
-  RenderText(BURNED_X, BURNED_Y, '999');
+  RenderText(
+    BURNED_X,
+    BURNED_Y,
+    Converter.BurnedToString(Memory.Game.Burned.Current),
+    COLOR_WHITE,
+    ALIGN_RIGHT
+  );
 end;
 
 
 procedure TModernRenderer.RenderGameTetrises();
 begin
-  RenderText(TETRISES_X, TETRISES_Y, '100%');
+  RenderText(
+    TETRISES_X,
+    TETRISES_Y,
+    Converter.TetrisesToString(Memory.Game.Tetrises.Current),
+    COLOR_WHITE,
+    ALIGN_RIGHT
+  );
 end;
 
 
 procedure TModernRenderer.RenderGameGain();
 begin
-  RenderText(GAIN_X, GAIN_Y, '99999');
+  RenderText(
+    GAIN_X,
+    GAIN_Y,
+    Converter.GainToString(Memory.Game.Gain.Current),
+    COLOR_WHITE,
+    ALIGN_RIGHT
+  );
 end;
 
 
