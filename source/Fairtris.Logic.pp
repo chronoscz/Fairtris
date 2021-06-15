@@ -202,7 +202,13 @@ end;
 
 procedure TLogic.PrepareTopOutResult();
 begin
-  // tu ustawić dane dotyczące gry i wpisać je do pól "Memory.TopOut"
+  Memory.TopOut.TotalScore := Memory.Game.TotalScore;
+  Memory.TopOut.Transition := Memory.Game.Transition;
+
+  Memory.TopOut.LinesCleared := Memory.Game.LinesCleared;
+  Memory.TopOut.LinesBurned := Memory.Game.LinesBurned;
+
+  Memory.TopOut.TetrisRate := Memory.Game.TetrisRate;
 end;
 
 
