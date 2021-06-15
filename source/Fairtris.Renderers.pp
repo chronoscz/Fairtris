@@ -1168,8 +1168,19 @@ var
 begin
   for Index := PIECE_FIRST to PIECE_LAST do
   begin
-    RenderMiniature(MINIATURE_X[Index], MINIATURE_Y[Index], Index, 99);
-    RenderText(STATISTIC_X[Index], STATISTIC_Y[Index], '999', COLOR_RED);
+    RenderMiniature(
+      MINIATURE_X[Index],
+      MINIATURE_Y[Index],
+      Index,
+      Memory.Game.Level.Current
+    );
+
+    RenderText(
+      STATISTIC_X[Index],
+      STATISTIC_Y[Index],
+      Converter.PiecesToString(Memory.Game.Stats[Index]),
+      COLOR_RED
+    );
   end;
 end;
 
