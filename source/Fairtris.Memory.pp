@@ -68,6 +68,12 @@ type
     Burned: TGameMeter;
     Tetrises: TGameMeter;
     Gain: TGameMeter;
+  public
+    TotalScore: Integer;
+    Transition: Integer;
+    LinesCleared: Integer;
+    LinesBurned: Integer;
+    TetrisRate: Integer;
   end;
 
 
@@ -274,6 +280,12 @@ begin
   Burned.Reset();
   Tetrises.Reset();
   Gain.Reset();
+
+  TotalScore := 0;
+  Transition := 0;
+  LinesCleared := 0;
+  LinesBurned := 0;
+  TetrisRate := 0;
 end;
 
 
