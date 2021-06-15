@@ -641,7 +641,7 @@ begin
   RenderText(
     ITEM_X_TOP_OUT_RESULT_TOTAL_SCORE,
     ITEM_Y_TOP_OUT_RESULT_TOTAL_SCORE,
-    Memory.TopOut.TotalScore.ToString(),
+    Converter.ScoreToString(Memory.TopOut.TotalScore),
     COLOR_WHITE,
     ALIGN_RIGHT
   );
@@ -649,7 +649,7 @@ begin
   RenderText(
     ITEM_X_TOP_OUT_RESULT_TRANSITION,
     ITEM_Y_TOP_OUT_RESULT_TRANSITION,
-    Memory.TopOut.Transition.ToString(),
+    Converter.ScoreToString(Memory.TopOut.Transition),
     COLOR_WHITE,
     ALIGN_RIGHT
   );
@@ -657,7 +657,7 @@ begin
   RenderText(
     ITEM_X_TOP_OUT_RESULT_LINES_CLEARED,
     ITEM_Y_TOP_OUT_RESULT_LINES_CLEARED,
-    Memory.TopOut.LinesCleared.ToString(),
+    Converter.LinesToString(Memory.TopOut.LinesCleared),
     COLOR_WHITE,
     ALIGN_RIGHT
   );
@@ -665,7 +665,7 @@ begin
   RenderText(
     ITEM_X_TOP_OUT_RESULT_LINES_BURNED,
     ITEM_Y_TOP_OUT_RESULT_LINES_BURNED,
-    Memory.TopOut.LinesBurned.ToString(),
+    Converter.LinesToString(Memory.TopOut.LinesBurned),
     COLOR_WHITE,
     ALIGN_RIGHT
   );
@@ -673,7 +673,7 @@ begin
   RenderText(
     ITEM_X_TOP_OUT_RESULT_TETRIS_RATE,
     ITEM_Y_TOP_OUT_RESULT_TETRIS_RATE,
-    Memory.TopOut.TetrisRate.ToString() + '%',
+    Converter.TetrisesToString(Memory.TopOut.TetrisRate),
     COLOR_WHITE,
     ALIGN_RIGHT
   );
