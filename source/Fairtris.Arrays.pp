@@ -562,6 +562,11 @@ const
 
 
 const
+  STACK_X: array [THEME_FIRST .. THEME_LAST] of Integer = (88, 96);
+  STACK_Y: array [THEME_FIRST .. THEME_LAST] of Integer = (40, 48);
+
+
+const
   PIECE_LAYOUT: array [PIECE_FIRST .. PIECE_LAST, PIECE_ORIENTATION_FIRST .. PIECE_ORIENTATION_LAST] of array [-2 .. 2, -2 .. 2] of Integer = (
     (
       (

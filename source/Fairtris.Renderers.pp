@@ -42,6 +42,7 @@ type
     procedure RenderGameLines();
     procedure RenderGameLevel();
     procedure RenderGameNext();
+    procedure RenderGameStack();
   protected
     procedure RenderPauseSelection();
     procedure RenderPauseItems();
@@ -505,6 +506,38 @@ begin
     Memory.Game.Next.Current,
     Memory.Game.Level.Current
   );
+end;
+
+
+procedure TRenderer.RenderGameStack();
+var
+  OffsetX, OffsetY, BrickX, BrickY: Integer;
+begin
+  OffsetY := STACK_Y[Memory.Options.Theme];
+  BrickY := 0;
+
+  while BrickY <= 19 do
+  begin
+    OffsetX := STACK_X[Memory.Options.Theme];
+    BrickX := 0;
+
+    while BrickX <= 9 do
+    begin
+      if Memory.Game.Stack[BrickX, BrickY] <> BRICK_EMPTY then
+        RenderBrick(
+          OffsetX,
+          OffsetY,
+          Memory.Game.Stack[BrickX, BrickY],
+          Memory.Game.Level.Current
+        );
+
+      OffsetX += BRICK_WIDTH + BRICK_SPACING_X;
+      BrickX += 1;
+    end;
+
+    OffsetY += BRICK_HEIGHT + BRICK_SPACING_Y;
+    BrickY += 1;
+  end;
 end;
 
 
@@ -1056,6 +1089,7 @@ begin
   RenderGameLines();
   RenderGameLevel();
   RenderGameNext();
+  RenderGameStack();
 
   RenderGameBurned();
   RenderGameTetrises();
@@ -1213,6 +1247,7 @@ begin
   RenderGameLines();
   RenderGameLevel();
   RenderGameNext();
+  RenderGameStack();
 
   RenderGameStats();
 end;
