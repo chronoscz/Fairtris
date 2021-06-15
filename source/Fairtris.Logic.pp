@@ -551,7 +551,7 @@ begin
       FScene.Current := Memory.Pause.FromScene;
     ITEM_PAUSE_RESTART:
     begin
-      // tu zresetować dane gry, aby zaczynano od początku
+      Memory.Game.Reset();
 
       FScene.Current := SCENE_GAME_NORMAL;
       Sounds.PlaySound(SOUND_START, Memory.Play.Region);
@@ -607,7 +607,7 @@ begin
   case Memory.TopOut.ItemIndex of
     ITEM_TOP_OUT_PLAY:
     begin
-      // tu zresetować dane gry, tak aby zacząć od początku
+      Memory.Game.Reset();
 
       FScene.Current := SCENE_GAME_NORMAL;
       Sounds.PlaySound(SOUND_START, Memory.Play.Region);
