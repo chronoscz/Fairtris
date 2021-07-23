@@ -70,7 +70,9 @@ end;
 
 procedure TGameForm.FormMouseDown(ASender: TObject; AButton: TMouseButton; AShift: TShiftState; AX, AY: Integer);
 begin
-  if (AShift = [ssLeft]) and not Placement.FullScreen then
+  if Placement.FullScreen then Exit;
+
+  if (AShift = [ssLeft]) and (AButton = mbLeft) then
   begin
     ReleaseCapture();
     SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
