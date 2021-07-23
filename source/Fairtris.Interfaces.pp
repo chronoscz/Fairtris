@@ -32,11 +32,6 @@ type
 
 
 type
-  IGenerable = interface(IInterface)
-  end;
-
-
-type
   IRenderable = interface(IInterface)
     procedure RenderLegal();
     procedure RenderMenu();
@@ -50,6 +45,11 @@ type
     procedure RenderQuit();
 
     procedure RenderScene(ASceneID: Integer);
+  end;
+
+
+type
+  IGenerable = interface(IInterface)
   end;
 
 
