@@ -217,15 +217,15 @@ begin
   FLeft := CorrectLeft(FLeft);
   FTop := CorrectTop(FTop);
 
-  FInput := CorrectRange(FInput, INPUT_FIRST, INPUT_LAST, INPUT_DEFAULT);
+  FInput  := CorrectRange(FInput,  INPUT_FIRST,  INPUT_LAST,  INPUT_DEFAULT);
   FWindow := CorrectRange(FWindow, WINDOW_FIRST, WINDOW_LAST, WINDOW_DEFAULT);
-  FTheme := CorrectRange(FTheme, THEME_FIRST, THEME_LAST, THEME_DEFAULT);
+  FTheme  := CorrectRange(FTheme,  THEME_FIRST,  THEME_LAST,  THEME_DEFAULT);
   FSounds := CorrectRange(FSounds, SOUNDS_FIRST, SOUNDS_LAST, SOUNDS_DEFAULT);
   FScroll := CorrectRange(FScroll, SCROLL_FIRST, SCROLL_LAST, SCROLL_DEFAULT);
 
   FRegion := CorrectRange(FRegion, REGION_FIRST, REGION_LAST, REGION_DEFAULT);
-  FRNG := CorrectRange(FRNG, RNG_FIRST, RNG_LAST, RNG_DEFAULT);
-  FLevel := CorrectLevel(FLevel);
+  FRNG    := CorrectRange(FRNG,    RNG_FIRST,    RNG_LAST,    RNG_DEFAULT);
+  FLevel  := CorrectLevel(FLevel);
 end;
 
 
