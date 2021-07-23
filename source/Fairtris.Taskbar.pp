@@ -60,7 +60,7 @@ begin
   begin
     ButtonValue := Min(Clock.FrameLoad.Current, ButtonTotal);
 
-    case Clock.FrameLoad.Current of
+    case ButtonValue of
       00 .. 60: ButtonState := TBPF_NORMAL;
       61 .. 85: ButtonState := TBPF_PAUSED;
     end;
