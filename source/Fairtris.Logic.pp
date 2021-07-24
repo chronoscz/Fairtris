@@ -335,7 +335,7 @@ end;
 
 procedure TLogic.UpdateLegalHang();
 begin
-  Memory.Legal.FrameIndex := Memory.Legal.FrameIndex + 1;
+  Memory.Legal.FrameIndex += 1;
 end;
 
 
@@ -1114,7 +1114,7 @@ end;
 
 procedure TLogic.UpdateQuitHang();
 begin
-  Memory.Quit.FrameIndex := Memory.Quit.FrameIndex + 1;
+  Memory.Quit.FrameIndex += 1;
 end;
 
 
