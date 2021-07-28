@@ -13,6 +13,8 @@ const
   CLOCK_FRAMERATE_LIMIT: array [REGION_FIRST .. REGION_LAST] of Integer = (
     CLOCK_FRAMERATE_NTSC,
     CLOCK_FRAMERATE_NTSC,
+    CLOCK_FRAMERATE_NTSC,
+    CLOCK_FRAMERATE_NTSC,
     CLOCK_FRAMERATE_PAL,
     CLOCK_FRAMERATE_PAL,
     CLOCK_FRAMERATE_PAL,
@@ -88,6 +90,8 @@ const
   SOUND_PATH: array [REGION_FIRST .. REGION_LAST] of WideString = (
     'sounds\ntsc\',
     'sounds\ntsc\',
+    'sounds\ntsc\',
+    'sounds\ntsc\',
     'sounds\pal\',
     'sounds\pal\',
     'sounds\pal\',
@@ -97,12 +101,15 @@ const
 
 const
   SOUND_LENGTH_NTSC: array [SOUND_FIRST .. SOUND_LAST] of Integer = (0, 170 ,190, 110, 280, 210, 770, 960, 1040, 1100, 330, 720);
+  SOUND_LENGTH_JPN:  array [SOUND_FIRST .. SOUND_LAST] of Integer = (0, 170 ,190, 110, 280, 210, 770, 960, 1040, 1100, 330, 720);
   SOUND_LENGTH_PAL:  array [SOUND_FIRST .. SOUND_LAST] of Integer = (0, 160, 210, 100, 320, 250, 760, 950, 1070, 1280, 380, 720);
   SOUND_LENGTH_EUR:  array [SOUND_FIRST .. SOUND_LAST] of Integer = (0, 160, 210, 100, 320, 250, 760, 950, 1070, 1280, 380, 720);
 
 
 const
   LEVEL_FIRST: array [REGION_FIRST .. REGION_LAST] of Integer = (
+    LEVEL_FIRST_NTSC,
+    LEVEL_FIRST_NTSC,
     LEVEL_FIRST_NTSC,
     LEVEL_FIRST_NTSC,
     LEVEL_FIRST_PAL,
@@ -115,6 +122,8 @@ const
   LEVEL_LAST: array [REGION_FIRST .. REGION_LAST] of Integer = (
     LEVEL_LAST_NTSC,
     LEVEL_LAST_NTSC,
+    LEVEL_LAST_NTSC,
+    LEVEL_LAST_NTSC,
     LEVEL_LAST_PAL,
     LEVEL_LAST_PAL,
     LEVEL_LAST_PAL,
@@ -123,6 +132,8 @@ const
 
 const
   LEVEL_COUNT: array [REGION_FIRST .. REGION_LAST] of Integer = (
+    LEVEL_COUNT_NTSC,
+    LEVEL_COUNT_NTSC,
     LEVEL_COUNT_NTSC,
     LEVEL_COUNT_NTSC,
     LEVEL_COUNT_PAL,
@@ -334,6 +345,8 @@ const
   ITEM_TEXT_PLAY_REGION: array [REGION_FIRST .. REGION_LAST] of String = (
     ITEM_TEXT_PLAY_REGION_NTSC,
     ITEM_TEXT_PLAY_REGION_NTSC_EXTENDED,
+    ITEM_TEXT_PLAY_REGION_JPN,
+    ITEM_TEXT_PLAY_REGION_JPN_EXTENDED,
     ITEM_TEXT_PLAY_REGION_PAL,
     ITEM_TEXT_PLAY_REGION_PAL_EXTENDED,
     ITEM_TEXT_PLAY_REGION_EUR,
@@ -825,6 +838,8 @@ const
   GRAVITY_FRAMES: array [REGION_FIRST .. REGION_LAST, GRAVITY_FIRST .. GRAVITY_LAST] of Integer = (
     (48, 43, 38, 33, 28, 23, 18, 13, 8, 6, 5, 5, 5, 4, 4, 4, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1),
     (48, 43, 38, 33, 28, 23, 18, 13, 8, 6, 5, 5, 5, 4, 4, 4, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1),
+    (48, 43, 38, 33, 28, 23, 18, 13, 8, 6, 5, 5, 5, 4, 4, 4, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1),
+    (48, 43, 38, 33, 28, 23, 18, 13, 8, 6, 5, 5, 5, 4, 4, 4, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1),
     (36, 32, 29, 25, 22, 18, 15, 11, 7, 5, 4, 4, 4, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
     (36, 32, 29, 25, 22, 18, 15, 11, 7, 5, 4, 4, 4, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
     (38, 34, 30, 26, 22, 18, 14, 10, 8, 6, 5, 5, 5, 4, 4, 4, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1),
@@ -834,6 +849,8 @@ const
 
 const
   TRANSITION_LINES: array [REGION_FIRST .. REGION_LAST, GRAVITY_FIRST .. GRAVITY_LAST] of Integer = (
+    (10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 100, 100, 100, 100, 100, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240),
+    (10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300),
     (10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 100, 100, 100, 100, 100, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240),
     (10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300),
     (10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 100, 100, 100, 100, 100, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240),
