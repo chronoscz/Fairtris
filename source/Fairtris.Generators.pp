@@ -4,6 +4,9 @@ unit Fairtris.Generators;
 
 interface
 
+uses
+  Fairtris.Interfaces;
+
 
 type
   TShiftRegister = class(TObject)
@@ -20,7 +23,7 @@ type
 
 
 type
-  TCustomGenerator = class(TInterfacedObject)
+  TCustomGenerator = class(TInterfacedObject, IGenerable)
   protected
     FRegister: TShiftRegister;
   public
