@@ -51,6 +51,11 @@ type
 type
   IGenerable = interface(IInterface)
     procedure Initialize();
+
+    procedure Shuffle();
+    procedure Step();
+
+    function Pick(): Integer;
   end;
 
 

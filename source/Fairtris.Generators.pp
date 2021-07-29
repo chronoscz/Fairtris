@@ -32,6 +32,11 @@ type
     destructor Destroy(); override;
   public
     procedure Initialize(); virtual;
+  public
+    procedure Shuffle(); virtual; abstract;
+    procedure Step(); virtual; abstract;
+  public
+    function Pick(): Integer; virtual; abstract;
   end;
 
 
@@ -39,6 +44,11 @@ type
   T7BagGenerator = class(TCustomGenerator)
   public
     procedure Initialize(); override;
+  public
+    procedure Shuffle(); override;
+    procedure Step(); override;
+  public
+    function Pick(): Integer; override;
   end;
 
 
@@ -46,6 +56,11 @@ type
   TFairGenerator = class(TCustomGenerator)
   public
     procedure Initialize(); override;
+  public
+    procedure Shuffle(); override;
+    procedure Step(); override;
+  public
+    function Pick(): Integer; override;
   end;
 
 
@@ -53,6 +68,11 @@ type
   TClassicGenerator = class(TCustomGenerator)
   public
     procedure Initialize(); override;
+  public
+    procedure Shuffle(); override;
+    procedure Step(); override;
+  public
+    function Pick(): Integer; override;
   end;
 
 
@@ -60,6 +80,11 @@ type
   TRandomGenerator = class(TCustomGenerator)
   public
     procedure Initialize(); override;
+  public
+    procedure Shuffle(); override;
+    procedure Step(); override;
+  public
+    function Pick(): Integer; override;
   end;
 
 
@@ -137,9 +162,45 @@ begin
 end;
 
 
+procedure T7BagGenerator.Shuffle();
+begin
+
+end;
+
+
+procedure T7BagGenerator.Step();
+begin
+
+end;
+
+
+function T7BagGenerator.Pick(): Integer;
+begin
+
+end;
+
+
 procedure TFairGenerator.Initialize();
 begin
   inherited Initialize();
+end;
+
+
+procedure TFairGenerator.Shuffle();
+begin
+
+end;
+
+
+procedure TFairGenerator.Step();
+begin
+
+end;
+
+
+function TFairGenerator.Pick(): Integer;
+begin
+
 end;
 
 
@@ -149,9 +210,45 @@ begin
 end;
 
 
+procedure TClassicGenerator.Shuffle();
+begin
+
+end;
+
+
+procedure TClassicGenerator.Step();
+begin
+
+end;
+
+
+function TClassicGenerator.Pick(): Integer;
+begin
+
+end;
+
+
 procedure TRandomGenerator.Initialize();
 begin
   inherited Initialize();
+end;
+
+
+procedure TRandomGenerator.Shuffle();
+begin
+
+end;
+
+
+procedure TRandomGenerator.Step();
+begin
+
+end;
+
+
+function TRandomGenerator.Pick(): Integer;
+begin
+
 end;
 
 
