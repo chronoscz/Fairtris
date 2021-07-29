@@ -75,6 +75,7 @@ begin
   Settings := TSettings.Create();
   BestScores := TBestScores.Create();
 
+  Generators := TGenerators.Create();
   Logic := TLogic.Create();
   Memory := TMemory.Create();
   Converter := TConverter.Create();
@@ -97,6 +98,7 @@ begin
   Settings.Free();
   BestScores.Free();
 
+  Generators.Free();
   Logic.Free();
   Memory.Free();
   Converter.Free();
