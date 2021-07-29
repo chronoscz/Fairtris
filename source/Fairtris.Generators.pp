@@ -19,6 +19,21 @@ type
   end;
 
 
+type
+  TCustomGenerator = class(TInterfacedObject)
+  protected
+    FRegister: TShiftRegister;
+  public
+    constructor Create(); virtual;
+    destructor Destroy(); override;
+  public
+    procedure Initialize(); virtual;
+  public
+    procedure Reset(); virtual; abstract;
+    procedure Update(); virtual; abstract;
+  end;
+
+
 implementation
 
 
@@ -37,6 +52,25 @@ end;
 procedure TShiftRegister.Update();
 begin
   FSeed := ((((FSeed shr 9) and 1) xor ((FSeed shr 1) and 1)) shl 15) or (FSeed shr 1);
+end;
+
+
+constructor TCustomGenerator.Create();
+begin
+  FRegister := TShiftRegister.Create();
+end;
+
+
+destructor TCustomGenerator.Destroy();
+begin
+  FRegister.Free();
+  inherited Destroy();
+end;
+
+
+procedure TCustomGenerator.Initialize();
+begin
+  FRegister.Initialize();
 end;
 
 
