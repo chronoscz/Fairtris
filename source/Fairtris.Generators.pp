@@ -116,6 +116,7 @@ var
 implementation
 
 uses
+  Math,
   Fairtris.Settings;
 
 
@@ -236,19 +237,19 @@ end;
 
 procedure TRandomGenerator.Shuffle();
 begin
-
+  // nothing to do
 end;
 
 
 procedure TRandomGenerator.Step();
 begin
-
+  // nothing to do
 end;
 
 
 function TRandomGenerator.Pick(): Integer;
 begin
-
+  Result := RandomRange(PIECE_FIRST, PIECE_LAST + 1);
 end;
 
 
@@ -271,6 +272,11 @@ procedure TGenerators.SetGeneratorID(AGeneratorID: Integer);
 begin
   FGeneratorID := AGeneratorID;
   FGenerator := FGenerators[FGeneratorID];
+
+  // added only for testing game core logic
+  FGeneratorID := RNG_RANDOM;
+  FGenerator := FGenerators[RNG_RANDOM];
+  // remove after testing
 end;
 
 
