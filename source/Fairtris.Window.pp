@@ -18,8 +18,6 @@ type
     procedure FormMouseDown(ASender: TObject; AButton: TMouseButton; AShift: TShiftState; AX, AY: Integer);
     procedure FormMouseWheelUp(ASender: TObject; AShift: TShiftState; AMousePos: TPoint; var AHandled: Boolean);
     procedure FormMouseWheelDown(ASender: TObject; AShift: TShiftState; AMousePos: TPoint; var AHandled: Boolean);
-  private
-    FScrollCount: Integer;
   end;
 
 
@@ -83,12 +81,7 @@ end;
 procedure TGameForm.FormMouseWheelUp(ASender: TObject; AShift: TShiftState; AMousePos: TPoint; var AHandled: Boolean);
 begin
   if AShift = [] then
-  begin
-    FScrollCount += 1;
-
-    if Odd(FScrollCount) then
-      Placement.Enlarge();
-  end;
+    Placement.Enlarge();
 
   AHandled := True;
 end;
@@ -97,12 +90,7 @@ end;
 procedure TGameForm.FormMouseWheelDown(ASender: TObject; AShift: TShiftState; AMousePos: TPoint; var AHandled: Boolean);
 begin
   if AShift = [] then
-  begin
-    FScrollCount += 1;
-
-    if Odd(FScrollCount) then
-      Placement.Reduce();
-  end;
+    Placement.Reduce();
 
   AHandled := True;
 end;
