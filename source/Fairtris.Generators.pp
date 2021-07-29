@@ -77,8 +77,6 @@ type
 type
   TRandomGenerator = class(TCustomGenerator)
   public
-    procedure Initialize(); override;
-  public
     procedure Shuffle(); override;
     procedure Step(); override;
   public
@@ -218,12 +216,6 @@ end;
 function TClassicGenerator.Pick(): Integer;
 begin
 
-end;
-
-
-procedure TRandomGenerator.Initialize();
-begin
-  inherited Initialize();
 end;
 
 
