@@ -5,7 +5,8 @@ unit Fairtris.Generators;
 interface
 
 uses
-  Fairtris.Interfaces;
+  Fairtris.Interfaces,
+  Fairtris.Constants;
 
 
 type
@@ -57,6 +58,29 @@ type
   end;
 
 
+type
+  TGenerators = class(TObject)
+  private
+    FGenerator: IGenerable;
+    FGeneratorID: Integer;
+  private
+    FGenerators: array [RNG_FIRST .. RNG_LAST] of IGenerable;
+  private
+    function GetGenerator(AGeneratorID: Integer): IGenerable;
+    procedure SetGeneratorID(AGeneratorID: Integer);
+  public
+    constructor Create();
+  public
+    property Generator: IGenerable read FGenerator;
+    property Generators[AGeneratorID: Integer]: IGenerable read GetGenerator;
+    property GeneratorID: Integer read FGeneratorID write SetGeneratorID;
+  end;
+
+
+var
+  Generators: TGenerators;
+
+
 implementation
 
 
@@ -94,6 +118,28 @@ end;
 procedure TCustomGenerator.Initialize();
 begin
   FRegister.Initialize();
+end;
+
+
+constructor TGenerators.Create();
+begin
+  FGenerators[RNG_7_BAG]   := T7BagGenerator.Create();
+  FGenerators[RNG_FAIR]    := TFairGenerator.Create();
+  FGenerators[RNG_CLASSIC] := TClassicGenerator.Create();
+  FGenerators[RNG_RANDOM]  := TRandomGenerator.Create();
+end;
+
+
+function TGenerators.GetGenerator(AGeneratorID: Integer): IGenerable;
+begin
+  Result := FGenerators[FGeneratorID];
+end;
+
+
+procedure TGenerators.SetGeneratorID(AGeneratorID: Integer);
+begin
+  FGeneratorID := AGeneratorID;
+  FGenerator := FGenerators[FGeneratorID];
 end;
 
 
