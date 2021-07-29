@@ -504,13 +504,7 @@ procedure TLogic.UpdateGameScene();
 begin
   FScene.Validate();
 
-  if not Input.Device.Connected then
-  begin
-    FScene.Current := SCENE_PAUSE;
-    Sounds.PlaySound(SOUND_PAUSE, Memory.Play.Region);
-  end;
-
-  if Input.Device.Start.JustPressed then
+  if not Input.Device.Connected or Input.Device.Start.JustPressed then
   begin
     FScene.Current := SCENE_PAUSE;
     Sounds.PlaySound(SOUND_PAUSE, Memory.Play.Region);
