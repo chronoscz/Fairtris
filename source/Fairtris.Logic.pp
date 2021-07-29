@@ -131,6 +131,7 @@ uses
   Fairtris.Renderers,
   Fairtris.Grounds,
   Fairtris.Sounds,
+  Fairtris.Generators,
   Fairtris.Arrays,
   Fairtris.Constants;
 
@@ -441,6 +442,8 @@ begin
     UpdateItemIndex(Memory.Play.RNG, RNG_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT, Memory.Play.Region);
   end;
+
+  Generators.GeneratorID := Memory.Play.RNG;
 end;
 
 
