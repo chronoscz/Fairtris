@@ -37,6 +37,26 @@ type
   end;
 
 
+type
+  T7BagGenerator = class(TCustomGenerator)
+  end;
+
+
+type
+  TFairGenerator = class(TCustomGenerator)
+  end;
+
+
+type
+  TClassicGenerator = class(TCustomGenerator)
+  end;
+
+
+type
+  TRandomGenerator = class(TCustomGenerator)
+  end;
+
+
 implementation
 
 
