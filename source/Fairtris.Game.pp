@@ -53,6 +53,7 @@ uses
   Fairtris.Sounds,
   Fairtris.Settings,
   Fairtris.BestScores,
+  Fairtris.Generators,
   Fairtris.Logic,
   Fairtris.Converter,
   Fairtris.Constants;
