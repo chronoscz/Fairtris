@@ -32,29 +32,34 @@ type
     destructor Destroy(); override;
   public
     procedure Initialize(); virtual;
-  public
-    procedure Reset(); virtual; abstract;
-    procedure Update(); virtual; abstract;
   end;
 
 
 type
   T7BagGenerator = class(TCustomGenerator)
+  public
+    procedure Initialize(); override;
   end;
 
 
 type
   TFairGenerator = class(TCustomGenerator)
+  public
+    procedure Initialize(); override;
   end;
 
 
 type
   TClassicGenerator = class(TCustomGenerator)
+  public
+    procedure Initialize(); override;
   end;
 
 
 type
   TRandomGenerator = class(TCustomGenerator)
+  public
+    procedure Initialize(); override;
   end;
 
 
@@ -70,6 +75,8 @@ type
     procedure SetGeneratorID(AGeneratorID: Integer);
   public
     constructor Create();
+  public
+    procedure Initialize();
   public
     property Generator: IGenerable read FGenerator;
     property Generators[AGeneratorID: Integer]: IGenerable read GetGenerator;
@@ -121,6 +128,30 @@ begin
 end;
 
 
+procedure T7BagGenerator.Initialize();
+begin
+  inherited Initialize();
+end;
+
+
+procedure TFairGenerator.Initialize();
+begin
+  inherited Initialize();
+end;
+
+
+procedure TClassicGenerator.Initialize();
+begin
+  inherited Initialize();
+end;
+
+
+procedure TRandomGenerator.Initialize();
+begin
+  inherited Initialize();
+end;
+
+
 constructor TGenerators.Create();
 begin
   FGenerators[RNG_7_BAG]   := T7BagGenerator.Create();
@@ -140,6 +171,15 @@ procedure TGenerators.SetGeneratorID(AGeneratorID: Integer);
 begin
   FGeneratorID := AGeneratorID;
   FGenerator := FGenerators[FGeneratorID];
+end;
+
+
+procedure TGenerators.Initialize();
+var
+  Index: Integer;
+begin
+  for Index := Low(FGenerators) to High(FGenerators) do
+    FGenerators[Index].Initialize();
 end;
 
 

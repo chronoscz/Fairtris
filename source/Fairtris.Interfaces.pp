@@ -50,6 +50,7 @@ type
 
 type
   IGenerable = interface(IInterface)
+    procedure Initialize();
   end;
 
 
