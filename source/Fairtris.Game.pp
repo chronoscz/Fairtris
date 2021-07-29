@@ -130,8 +130,9 @@ begin
   Placement.Initialize();
   Renderers.Initialize();
   Sounds.Initilize();
-
   Taskbar.Initialize();
+
+  Generators.Initialize();
 end;
 
 
