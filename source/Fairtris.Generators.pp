@@ -15,8 +15,6 @@ type
     FSeed: UInt16;
   public
     procedure Initialize();
-  public
-    procedure Reset();
     procedure Update();
   public
     property Seed: UInt16 read FSeed;
@@ -121,12 +119,6 @@ uses
 
 
 procedure TShiftRegister.Initialize();
-begin
-  Reset();
-end;
-
-
-procedure TShiftRegister.Reset();
 begin
   FSeed := $8988;
 end;
@@ -237,19 +229,19 @@ end;
 
 procedure TRandomGenerator.Shuffle();
 begin
-  // nothing to do
+  FRegister.Update();
 end;
 
 
 procedure TRandomGenerator.Step();
 begin
-  // nothing to do
+  FRegister.Update();
 end;
 
 
 function TRandomGenerator.Pick(): Integer;
 begin
-  Result := RandomRange(PIECE_FIRST, PIECE_LAST + 1);
+  Result := FRegister.Seed mod PIECE_LAST + 1;
 end;
 
 
