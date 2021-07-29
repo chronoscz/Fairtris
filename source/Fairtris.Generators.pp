@@ -241,7 +241,7 @@ end;
 
 function TRandomGenerator.Pick(): Integer;
 begin
-  Result := FRegister.Seed mod PIECE_LAST + 1;
+  Result := Hi(FRegister.Seed) mod PIECE_LAST + 1;
 end;
 
 
