@@ -90,6 +90,9 @@ var
 
 implementation
 
+uses
+  Fairtris.Settings;
+
 
 procedure TShiftRegister.Initialize();
 begin
@@ -178,6 +181,8 @@ procedure TGenerators.Initialize();
 var
   Index: Integer;
 begin
+  SetGeneratorID(Settings.General.RNG);
+
   for Index := Low(FGenerators) to High(FGenerators) do
     FGenerators[Index].Initialize();
 end;
