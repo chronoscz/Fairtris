@@ -4,6 +4,16 @@ unit Fairtris.Core;
 
 interface
 
+
+type
+  TCore = class(TObject)
+  end;
+
+
+var
+  Core: TCore;
+
+
 implementation
 
 end.
