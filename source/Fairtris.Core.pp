@@ -7,6 +7,9 @@ interface
 
 type
   TCore = class(TObject)
+  public
+    procedure Reser();
+    procedure Update();
   end;
 
 
@@ -15,6 +18,19 @@ var
 
 
 implementation
+
+
+procedure TCore.Reser();
+begin
+
+end;
+
+
+procedure TCore.Update();
+begin
+
+end;
+
 
 end.
 

@@ -60,6 +60,7 @@ type
     procedure UpdatePlayLevel();
     procedure UpdatePlayScene();
   private
+    procedure UpdateGameState();
     procedure UpdateGameScene();
   private
     procedure UpdatePauseSelection();
@@ -132,6 +133,7 @@ uses
   Fairtris.Grounds,
   Fairtris.Sounds,
   Fairtris.Generators,
+  Fairtris.Core,
   Fairtris.Arrays,
   Fairtris.Constants;
 
@@ -497,6 +499,12 @@ begin
       Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
     end;
   end;
+end;
+
+
+procedure TLogic.UpdateGameState();
+begin
+  Core.Update();
 end;
 
 
@@ -1167,6 +1175,7 @@ end;
 
 procedure TLogic.UpdateGame();
 begin
+  UpdateGameState();
   UpdateGameScene();
 end;
 
