@@ -10,13 +10,13 @@ type
   private
     function CanPlacePiece(AX, AY, AID, AOrientation: Integer): Boolean;
   private
+    function CanDropPiece(AX, AY, AID, AOrientation: Integer): Boolean;
     function CanShiftPiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
     function CanRotatePiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
-    function CanDropPiece(AX, AY, AID, AOrientation: Integer): Boolean;
   private
+    procedure PerformDrop(var AY: Integer);
     procedure PerformShift(var AX: Integer; ADirection: Integer);
     procedure PerformRotation(var AOrientation: Integer; ADirection: Integer);
-    procedure PerformDrop(var AY: Integer);
   public
     procedure Reset();
     procedure Update();
@@ -72,6 +72,15 @@ begin
 end;
 
 
+function TCore.CanDropPiece(AX, AY, AID, AOrientation: Integer): Boolean;
+begin
+  Result := AY < PIECE_DROP_Y_MAX[AID, AOrientation];
+
+  if Result then
+    Result := CanPlacePiece(AX, AY + 1, AID, AOrientation);
+end;
+
+
 function TCore.CanShiftPiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
 begin
   case ADirection of
@@ -97,12 +106,9 @@ begin
 end;
 
 
-function TCore.CanDropPiece(AX, AY, AID, AOrientation: Integer): Boolean;
+procedure TCore.PerformDrop(var AY: Integer);
 begin
-  Result := AY < PIECE_DROP_Y_MAX[AID, AOrientation];
-
-  if Result then
-    Result := CanPlacePiece(AX, AY + 1, AID, AOrientation);
+  AY += 1;
 end;
 
 
@@ -115,12 +121,6 @@ end;
 procedure TCore.PerformRotation(var AOrientation: Integer; ADirection: Integer);
 begin
   AOrientation := WrapAround(AOrientation, PIECE_ORIENTATION_COUNT, ADirection);
-end;
-
-
-procedure TCore.PerformDrop(var AY: Integer);
-begin
-  AY += 1;
 end;
 
 
