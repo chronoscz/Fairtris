@@ -12,7 +12,7 @@ type
   private
     function CanDropPiece(AX, AY, AID, AOrientation: Integer): Boolean;
     function CanShiftPiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
-    function CanRotatePiece(ADirection: Integer): Boolean;
+    function CanRotatePiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
   public
     procedure Reset();
     procedure Update();
@@ -88,9 +88,16 @@ begin
 end;
 
 
-function TCore.CanRotatePiece(ADirection: Integer): Boolean;
+function TCore.CanRotatePiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
 begin
+  AOrientation := (AOrientation + ADirection + PIECE_ORIENTATION_COUNT) mod PIECE_ORIENTATION_COUNT;
 
+  Result := (AX > PIECE_ROTATION_X_MIN[AID, AOrientation]) and
+            (AX < PIECE_ROTATION_X_MAX[AID, AOrientation]) and
+            (AY < PIECE_ROTATION_Y_MAX[AID, AOrientation]);
+
+  if Result then
+    Result := CanPlacePiece(AX, AY, AID, AOrientation);
 end;
 
 
