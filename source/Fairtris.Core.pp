@@ -10,7 +10,7 @@ type
   private
     function CanPlacePiece(AX, AY, AID, AOrientation: Integer): Boolean;
   private
-    function CanDropPiece(): Boolean;
+    function CanDropPiece(AX, AY, AID, AOrientation: Integer): Boolean;
     function CanShiftPiece(ADirection: Integer): Boolean;
     function CanRotatePiece(ADirection: Integer): Boolean;
   public
@@ -67,9 +67,12 @@ begin
 end;
 
 
-function TCore.CanDropPiece(): Boolean;
+function TCore.CanDropPiece(AX, AY, AID, AOrientation: Integer): Boolean;
 begin
+  Result := AY < PIECE_DROP_Y_MAX[AID, AOrientation];
 
+  if Result then
+    Result := CanPlacePiece(AX, AY + 1, AID, AOrientation);
 end;
 
 
