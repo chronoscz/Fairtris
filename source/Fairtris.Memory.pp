@@ -56,6 +56,14 @@ type
   public
     procedure Reset();
   public
+    PieceID: Integer;
+    PieceOrientation: Integer;
+    PieceX: Integer;
+    PieceY: Integer;
+  public
+    AutorepeatX: Integer;
+    AutorepeatY: Integer;
+  public
     Stack: TGameStack;
     Stats: TGameStats;
   public
