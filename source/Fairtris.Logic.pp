@@ -134,6 +134,7 @@ uses
   Fairtris.Sounds,
   Fairtris.Generators,
   Fairtris.Core,
+  Fairtris.Utils,
   Fairtris.Arrays,
   Fairtris.Constants;
 
@@ -153,7 +154,7 @@ end;
 
 procedure TLogic.UpdateItemIndex(var AItemIndex: Integer; ACount, AStep: Integer);
 begin
-  AItemIndex := (AItemIndex + ACount + AStep) mod ACount;
+  AItemIndex := WrapAround(AItemIndex, ACount, AStep);
 end;
 
 

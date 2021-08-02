@@ -27,6 +27,7 @@ implementation
 
 uses
   Fairtris.Memory,
+  Fairtris.Utils,
   Fairtris.Arrays,
   Fairtris.Constants;
 
@@ -90,7 +91,7 @@ end;
 
 function TCore.CanRotatePiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
 begin
-  AOrientation := (AOrientation + ADirection + PIECE_ORIENTATION_COUNT) mod PIECE_ORIENTATION_COUNT;
+  AOrientation := WrapAround(AOrientation, PIECE_ORIENTATION_COUNT, ADirection);
 
   Result := (AX > PIECE_ROTATION_X_MIN[AID, AOrientation]) and
             (AX < PIECE_ROTATION_X_MAX[AID, AOrientation]) and
