@@ -43,6 +43,7 @@ type
     procedure RenderGameLevel();
     procedure RenderGameNext();
     procedure RenderGameStack();
+    procedure RenderGamePiece();
   protected
     procedure RenderPauseSelection();
     procedure RenderPauseItems();
@@ -538,6 +539,12 @@ begin
     OffsetY += BRICK_HEIGHT + BRICK_SPACING_Y;
     BrickY += 1;
   end;
+end;
+
+
+procedure TRenderer.RenderGamePiece();
+begin
+
 end;
 
 
@@ -1108,6 +1115,7 @@ begin
   RenderGameLevel();
   RenderGameNext();
   RenderGameStack();
+  RenderGamePiece();
 
   RenderGameBurned();
   RenderGameTetrises();
@@ -1266,6 +1274,7 @@ begin
   RenderGameLevel();
   RenderGameNext();
   RenderGameStack();
+  RenderGamePiece();
 
   RenderGameStats();
 end;
