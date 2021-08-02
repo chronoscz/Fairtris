@@ -849,6 +849,8 @@ const
     (18, 18, 18, 18)
   );
 
+
+const
   PIECE_DROP_Y_MAX: array [PIECE_FIRST .. PIECE_LAST, PIECE_ORIENTATION_FIRST .. PIECE_ORIENTATION_LAST] of Integer = (
     (18, 18, 19, 18),
     (18, 18, 19, 18),
