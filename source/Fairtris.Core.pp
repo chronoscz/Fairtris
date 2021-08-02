@@ -8,7 +8,7 @@ interface
 type
   TCore = class(TObject)
   private
-    function CanPlacePiece(APieceX, APieceY: Integer): Boolean;
+    function CanPlacePiece(AX, AY, AID, AOrientation: Integer): Boolean;
   private
     function CanDropPiece(): Boolean;
     function CanShiftPiece(ADirection: Integer): Boolean;
@@ -43,22 +43,22 @@ begin
 end;
 
 
-function TCore.CanPlacePiece(APieceX, APieceY: Integer): Boolean;
+function TCore.CanPlacePiece(AX, AY, AID, AOrientation: Integer): Boolean;
 var
   LayoutX, LayoutY: Integer;
 begin
   for LayoutY := -2 to 2 do
   begin
-    if APieceY + LayoutY < -2 then Continue;
-    if APieceY + LayoutY > 19 then Continue;
+    if AY + LayoutY < -2 then Continue;
+    if AY + LayoutY > 19 then Continue;
 
     for LayoutX := -2 to 2 do
     begin
-      if APieceX + LayoutX < 0 then Continue;
-      if APieceX + LayoutX > 9 then Continue;
+      if AX + LayoutX < 0 then Continue;
+      if AX + LayoutX > 9 then Continue;
 
-      if PIECE_LAYOUT[Memory.Game.PieceID, Memory.Game.PieceOrientation][LayoutY, LayoutX] <> BRICK_EMPTY then
-        if Memory.Game.Stack[APieceX + LayoutX, APieceY + LayoutY] <> BRICK_EMPTY then
+      if PIECE_LAYOUT[AID, AOrientation][LayoutY, LayoutX] <> BRICK_EMPTY then
+        if Memory.Game.Stack[AX + LayoutX, AY + LayoutY] <> BRICK_EMPTY then
           Exit(False);
     end;
   end;
