@@ -64,7 +64,7 @@ begin
       if AX + LayoutX < 0 then Continue;
       if AX + LayoutX > 9 then Continue;
 
-      if PIECE_LAYOUT[AID, AOrientation][LayoutY, LayoutX] <> BRICK_EMPTY then
+      if PIECE_LAYOUT[AID, AOrientation, LayoutY, LayoutX] <> BRICK_EMPTY then
         if Memory.Game.Stack[AX + LayoutX, AY + LayoutY] <> BRICK_EMPTY then
           Exit(False);
     end;
@@ -122,8 +122,8 @@ begin
       if AX + LayoutX < 0 then Continue;
       if AX + LayoutX > 9 then Continue;
 
-      if PIECE_LAYOUT[AID, AOrientation][LayoutY, LayoutX] <> BRICK_EMPTY then
-        AStack[AX + LayoutX, AY + LayoutY] := PIECE_LAYOUT[AID, AOrientation][LayoutY, LayoutX];
+      if PIECE_LAYOUT[AID, AOrientation, LayoutY, LayoutX] <> BRICK_EMPTY then
+        AStack[AX + LayoutX, AY + LayoutY] := PIECE_LAYOUT[AID, AOrientation, LayoutY, LayoutX];
     end;
   end;
 end;
