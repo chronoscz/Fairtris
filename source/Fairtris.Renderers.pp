@@ -532,11 +532,11 @@ begin
           Memory.Game.Level.Current
         );
 
-      OffsetX += BRICK_WIDTH + BRICK_SPACING_X;
+      OffsetX += BRICK_CELL_WIDTH;
       BrickX += 1;
     end;
 
-    OffsetY += BRICK_HEIGHT + BRICK_SPACING_Y;
+    OffsetY += BRICK_CELL_HEIGHT;
     BrickY += 1;
   end;
 end;
