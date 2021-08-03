@@ -16,10 +16,10 @@ type
     function CanShiftPiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
     function CanRotatePiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
   private
-    procedure PerformPlace(AX, AY, AID, AOrientation: Integer; var AStack: TGameStack);
-    procedure PerformDrop(var AY: Integer);
-    procedure PerformShift(var AX: Integer; ADirection: Integer);
-    procedure PerformRotation(var AOrientation: Integer; ADirection: Integer);
+    procedure PlacePiece(AX, AY, AID, AOrientation: Integer; var AStack: TGameStack);
+    procedure DropPiece(var AY: Integer);
+    procedure ShiftPiece(var AX: Integer; ADirection: Integer);
+    procedure RotatePiece(var AOrientation: Integer; ADirection: Integer);
   public
     procedure Reset();
     procedure Update();
@@ -108,7 +108,7 @@ begin
 end;
 
 
-procedure TCore.PerformPlace(AX, AY, AID, AOrientation: Integer; var AStack: TGameStack);
+procedure TCore.PlacePiece(AX, AY, AID, AOrientation: Integer; var AStack: TGameStack);
 var
   LayoutX, LayoutY: Integer;
 begin
@@ -129,19 +129,19 @@ begin
 end;
 
 
-procedure TCore.PerformDrop(var AY: Integer);
+procedure TCore.DropPiece(var AY: Integer);
 begin
   AY += 1;
 end;
 
 
-procedure TCore.PerformShift(var AX: Integer; ADirection: Integer);
+procedure TCore.ShiftPiece(var AX: Integer; ADirection: Integer);
 begin
   AX += ADirection;
 end;
 
 
-procedure TCore.PerformRotation(var AOrientation: Integer; ADirection: Integer);
+procedure TCore.RotatePiece(var AOrientation: Integer; ADirection: Integer);
 begin
   AOrientation := WrapAround(AOrientation, PIECE_ORIENTATION_COUNT, ADirection);
 end;
