@@ -4,6 +4,9 @@ unit Fairtris.Core;
 
 interface
 
+uses
+  Fairtris.Memory;
+
 
 type
   TCore = class(TObject)
@@ -13,6 +16,7 @@ type
     function CanShiftPiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
     function CanRotatePiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
   private
+    procedure PerformPlace(AX, AY, AID, AOrientation: Integer; var AStack: TGameStack);
     procedure PerformDrop(var AY: Integer);
     procedure PerformShift(var AX: Integer; ADirection: Integer);
     procedure PerformRotation(var AOrientation: Integer; ADirection: Integer);
@@ -29,7 +33,6 @@ var
 implementation
 
 uses
-  Fairtris.Memory,
   Fairtris.Utils,
   Fairtris.Arrays,
   Fairtris.Constants;
@@ -102,6 +105,27 @@ begin
 
   if Result then
     Result := CanPlacePiece(AX, AY, AID, AOrientation);
+end;
+
+
+procedure TCore.PerformPlace(AX, AY, AID, AOrientation: Integer; var AStack: TGameStack);
+var
+  LayoutX, LayoutY: Integer;
+begin
+  for LayoutY := -2 to 2 do
+  begin
+    if AY + LayoutY < -2 then Continue;
+    if AY + LayoutY > 19 then Continue;
+
+    for LayoutX := -2 to 2 do
+    begin
+      if AX + LayoutX < 0 then Continue;
+      if AX + LayoutX > 9 then Continue;
+
+      if PIECE_LAYOUT[AID, AOrientation][LayoutY, LayoutX] <> BRICK_EMPTY then
+        AStack[AX + LayoutX, AY + LayoutY] := PIECE_LAYOUT[AID, AOrientation][LayoutY, LayoutX];
+    end;
+  end;
 end;
 
 
