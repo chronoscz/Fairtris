@@ -9,7 +9,6 @@ type
   TCore = class(TObject)
   private
     function CanPlacePiece(AX, AY, AID, AOrientation: Integer): Boolean;
-  private
     function CanDropPiece(AX, AY, AID, AOrientation: Integer): Boolean;
     function CanShiftPiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
     function CanRotatePiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
