@@ -269,7 +269,7 @@ end;
 procedure TGameMemory.Reset();
 begin
   PieceID := PIECE_UNKNOWN;
-  PieceOrientation: PIECE_ORIENTATION_SPAWN;
+  PieceOrientation := PIECE_ORIENTATION_SPAWN;
 
   PieceX := PIECE_SPAWN_X;
   PieceY := PIECE_SPAWN_Y;
