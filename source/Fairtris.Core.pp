@@ -33,6 +33,7 @@ var
 implementation
 
 uses
+  Fairtris.Input,
   Fairtris.Generators,
   Fairtris.Utils,
   Fairtris.Arrays,
@@ -54,7 +55,41 @@ end;
 
 procedure TCore.Update();
 begin
+  // added only to test collision mechanism
+  Generators.Generator.Step();
 
+  if Input.Device.Left.JustPressed then
+    if CanShiftPiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation, PIECE_SHIFT_LEFT) then
+      ShiftPiece(Memory.Game.PieceX, PIECE_SHIFT_LEFT);
+
+  if Input.Device.Right.JustPressed then
+    if CanShiftPiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation, PIECE_SHIFT_RIGHT) then
+      ShiftPiece(Memory.Game.PieceX, PIECE_SHIFT_RIGHT);
+
+  if Input.Device.B.JustPressed then
+    if CanRotatePiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation, PIECE_ROTATE_COUNTERCLOCKWISE) then
+      RotatePiece(Memory.Game.PieceOrientation, PIECE_ROTATE_COUNTERCLOCKWISE);
+
+  if Input.Device.A.JustPressed then
+    if CanRotatePiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation, PIECE_ROTATE_CLOCKWISE) then
+      RotatePiece(Memory.Game.PieceOrientation, PIECE_ROTATE_CLOCKWISE);
+
+  if Input.Device.Down.JustPressed then
+    if CanDropPiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation) then
+      DropPiece(Memory.Game.PieceY)
+    else
+    begin
+      PlacePiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation, Memory.Game.Stack);
+
+      Memory.Game.PieceID := Memory.Game.Next.Current;
+      Memory.Game.PieceOrientation := PIECE_ORIENTATION_SPAWN;
+
+      Memory.Game.Next.Current := Generators.Generator.Pick();
+
+      Memory.Game.PieceX := PIECE_SPAWN_X;
+      Memory.Game.PieceY := PIECE_SPAWN_Y;
+    end;
+  // remove after testing
 end;
 
 
