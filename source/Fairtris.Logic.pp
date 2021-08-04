@@ -25,6 +25,8 @@ type
   private
     procedure PreparePlaySelection();
   private
+    procedure PrepareGameScene();
+  private
     procedure PreparePauseSelection();
     procedure PreparePauseScene();
   private
@@ -182,6 +184,16 @@ end;
 procedure TLogic.PreparePlaySelection();
 begin
   Memory.Play.ItemIndex := ITEM_PLAY_START;
+end;
+
+
+procedure TLogic.PrepareGameScene();
+begin
+  if not (FScene.Previous in [SCENE_GAME_NORMAL, SCENE_GAME_FLASH, SCENE_PAUSE]) then
+  begin
+    Core.Reset();
+    Memory.Game.Reset();
+  end;
 end;
 
 
@@ -505,6 +517,9 @@ end;
 
 procedure TLogic.UpdateGameState();
 begin
+  if FScene.Changed then
+    PrepareGameScene();
+
   Core.Update();
 end;
 

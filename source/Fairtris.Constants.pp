@@ -684,6 +684,11 @@ const
 
 
 const
+  PIECE_SPAWN_X = 5;
+  PIECE_SPAWN_Y = 0;
+
+
+const
   PIECE_SHIFT_LEFT  = -1;
   PIECE_SHIFT_RIGHT = +1;
 
