@@ -190,10 +190,7 @@ end;
 procedure TLogic.PrepareGameScene();
 begin
   if not (FScene.Previous in [SCENE_GAME_NORMAL, SCENE_GAME_FLASH, SCENE_PAUSE]) then
-  begin
     Core.Reset();
-    Memory.Game.Reset();
-  end;
 end;
 
 
@@ -578,8 +575,7 @@ begin
       FScene.Current := Memory.Pause.FromScene;
     ITEM_PAUSE_RESTART:
     begin
-      Memory.Game.Reset();
-
+      FScene.Current := SCENE_PLAY;
       FScene.Current := SCENE_GAME_NORMAL;
       Sounds.PlaySound(SOUND_START, Memory.Play.Region);
     end;

@@ -40,7 +40,7 @@ uses
 
 procedure TCore.Reset();
 begin
-
+  Memory.Game.Reset();
 end;
 
 
