@@ -33,6 +33,7 @@ var
 implementation
 
 uses
+  Fairtris.Generators,
   Fairtris.Utils,
   Fairtris.Arrays,
   Fairtris.Constants;
@@ -41,6 +42,12 @@ uses
 procedure TCore.Reset();
 begin
   Memory.Game.Reset();
+
+  Generators.Generator.Step();
+  Memory.Game.PieceID := Generators.Generator.Pick();
+
+  Generators.Generator.Step();
+  Memory.Game.Next.Current := Generators.Generator.Pick();
 end;
 
 
