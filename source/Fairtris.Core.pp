@@ -87,6 +87,7 @@ begin
       Memory.Game.PieceOrientation := PIECE_ORIENTATION_SPAWN;
 
       Memory.Game.Next.Current := Generators.Generator.Pick();
+      Memory.Game.Stats[Memory.Game.PieceID] += 1;
 
       Memory.Game.PieceX := PIECE_SPAWN_X;
       Memory.Game.PieceY := PIECE_SPAWN_Y;
