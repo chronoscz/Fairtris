@@ -43,13 +43,15 @@ uses
 procedure TCore.Reset();
 begin
   Memory.Game.Reset();
-  Memory.Game.Level.Current := Memory.Play.Level;
 
   Generators.Generator.Step();
   Memory.Game.PieceID := Generators.Generator.Pick();
 
   Generators.Generator.Step();
   Memory.Game.Next.Current := Generators.Generator.Pick();
+
+  Memory.Game.Level.Current := Memory.Play.Level;
+  Memory.Game.Stats[Memory.Game.PieceID] += 1;
 end;
 
 
