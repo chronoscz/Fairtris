@@ -181,7 +181,7 @@ end;
 
 procedure TLogic.PreparePlaySelection();
 begin
-  Memory.Play.ItemIndex := ITEM_PLAY_FIRST;
+  Memory.Play.ItemIndex := ITEM_PLAY_START;
 end;
 
 
