@@ -14,7 +14,7 @@ type
     function CanPlacePiece(): Boolean;
     function CanDropPiece(): Boolean;
     function CanShiftPiece(ADirection: Integer): Boolean;
-    function CanRotatePiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
+    function CanRotatePiece(ADirection: Integer): Boolean;
   private
     procedure PlacePiece(AX, AY, AID, AOrientation: Integer; var AStack: TGameStack);
     procedure DropPiece(var AY: Integer);
@@ -93,16 +93,16 @@ begin
 end;
 
 
-function TCore.CanRotatePiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
+function TCore.CanRotatePiece(ADirection: Integer): Boolean;
 var
   OldOrientation: Integer;
 begin
   OldOrientation := Memory.Game.PieceOrientation;
-  Memory.Game.PieceOrientation := WrapAround(AOrientation, PIECE_ORIENTATION_COUNT, ADirection);
+  Memory.Game.PieceOrientation := WrapAround(Memory.Game.PieceOrientation, PIECE_ORIENTATION_COUNT, ADirection);
 
-  Result := (AX >= PIECE_ROTATION_X_MIN[AID, AOrientation]) and
-            (AX <= PIECE_ROTATION_X_MAX[AID, AOrientation]) and
-            (AY <= PIECE_ROTATION_Y_MAX[AID, AOrientation]);
+  Result := (Memory.Game.PieceX >= PIECE_ROTATION_X_MIN[Memory.Game.PieceID, Memory.Game.PieceOrientation]) and
+            (Memory.Game.PieceX <= PIECE_ROTATION_X_MAX[Memory.Game.PieceID, Memory.Game.PieceOrientation]) and
+            (Memory.Game.PieceY <= PIECE_ROTATION_Y_MAX[Memory.Game.PieceID, Memory.Game.PieceOrientation]);
 
   if Result then
     Result := CanPlacePiece();
@@ -179,11 +179,11 @@ begin
       ShiftPiece(Memory.Game.PieceX, PIECE_SHIFT_RIGHT);
 
   if Input.Device.B.JustPressed then
-    if CanRotatePiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation, PIECE_ROTATE_COUNTERCLOCKWISE) then
+    if CanRotatePiece(PIECE_ROTATE_COUNTERCLOCKWISE) then
       RotatePiece(Memory.Game.PieceOrientation, PIECE_ROTATE_COUNTERCLOCKWISE);
 
   if Input.Device.A.JustPressed then
-    if CanRotatePiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation, PIECE_ROTATE_CLOCKWISE) then
+    if CanRotatePiece(PIECE_ROTATE_CLOCKWISE) then
       RotatePiece(Memory.Game.PieceOrientation, PIECE_ROTATE_CLOCKWISE);
 
   if Input.Device.Down.JustPressed then
