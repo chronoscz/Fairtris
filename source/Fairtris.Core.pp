@@ -250,7 +250,7 @@ procedure TCore.UpdatePieceControlDrop();
 label
   Playing, Autorepeating, DownPressed, Drop, LookupDropSpeed, NoTableLookup, IncrementAutorepeatY;
 var
-  TempSpeed, DropSpeed: Integer;
+  DropSpeed: Integer;
 begin
   if Memory.Game.AutorepeatY > 0 then goto Autorepeating;
   if Memory.Game.AutorepeatY = 0 then goto Playing;
