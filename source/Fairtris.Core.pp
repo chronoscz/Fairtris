@@ -11,7 +11,7 @@ uses
 type
   TCore = class(TObject)
   private
-    function CanPlacePiece(AX, AY, AID, AOrientation: Integer): Boolean;
+    function CanPlacePiece(): Boolean;
     function CanDropPiece(AX, AY, AID, AOrientation: Integer): Boolean;
     function CanShiftPiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
     function CanRotatePiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
@@ -40,22 +40,22 @@ uses
   Fairtris.Constants;
 
 
-function TCore.CanPlacePiece(AX, AY, AID, AOrientation: Integer): Boolean;
+function TCore.CanPlacePiece(): Boolean;
 var
   LayoutX, LayoutY: Integer;
 begin
   for LayoutY := -2 to 2 do
   begin
-    if AY + LayoutY < -2 then Continue;
-    if AY + LayoutY > 19 then Continue;
+    if Memory.Game.PieceY + LayoutY < -2 then Continue;
+    if Memory.Game.PieceY + LayoutY > 19 then Continue;
 
     for LayoutX := -2 to 2 do
     begin
-      if AX + LayoutX < 0 then Continue;
-      if AX + LayoutX > 9 then Continue;
+      if Memory.Game.PieceX + LayoutX < 0 then Continue;
+      if Memory.Game.PieceX + LayoutX > 9 then Continue;
 
-      if PIECE_LAYOUT[AID, AOrientation, LayoutY, LayoutX] <> BRICK_EMPTY then
-        if Memory.Game.Stack[AX + LayoutX, AY + LayoutY] <> BRICK_EMPTY then
+      if PIECE_LAYOUT[Memory.Game.PieceID, Memory.Game.PieceOrientation, LayoutY, LayoutX] <> BRICK_EMPTY then
+        if Memory.Game.Stack[Memory.Game.PieceX + LayoutX, Memory.Game.PieceY + LayoutY] <> BRICK_EMPTY then
           Exit(False);
     end;
   end;
@@ -69,7 +69,11 @@ begin
   Result := AY < PIECE_DROP_Y_MAX[AID, AOrientation];
 
   if Result then
-    Result := CanPlacePiece(AX, AY + 1, AID, AOrientation);
+  begin
+    Memory.Game.PieceY += 1;
+    Result := CanPlacePiece();
+    Memory.Game.PieceY -= 1;
+  end;
 end;
 
 
@@ -81,20 +85,29 @@ begin
   end;
 
   if Result then
-    Result := CanPlacePiece(AX + ADirection, AY, AID, AOrientation);
+  begin
+    Memory.Game.PieceX += ADirection;
+    Result := CanPlacePiece();
+    Memory.Game.PieceX -= ADirection;
+  end;
 end;
 
 
 function TCore.CanRotatePiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
+var
+  OldOrientation: Integer;
 begin
-  AOrientation := WrapAround(AOrientation, PIECE_ORIENTATION_COUNT, ADirection);
+  OldOrientation := Memory.Game.PieceOrientation;
+  Memory.Game.PieceOrientation := WrapAround(AOrientation, PIECE_ORIENTATION_COUNT, ADirection);
 
   Result := (AX >= PIECE_ROTATION_X_MIN[AID, AOrientation]) and
             (AX <= PIECE_ROTATION_X_MAX[AID, AOrientation]) and
             (AY <= PIECE_ROTATION_Y_MAX[AID, AOrientation]);
 
   if Result then
-    Result := CanPlacePiece(AX, AY, AID, AOrientation);
+    Result := CanPlacePiece();
+
+  Memory.Game.PieceOrientation := OldOrientation;
 end;
 
 
