@@ -259,7 +259,7 @@ begin
       Memory.Game.State := STATE_PIECE_LOCK;
     end;
 
-  if Input.Device.Up.Pressed then
+  if Input.Device.Up.JustPressed then
   begin
     while CanDropPiece() do
       DropPiece();
@@ -281,19 +281,30 @@ end;
 
 procedure TCore.UpdatePieceLock();
 begin
+  PlacePiece();
+  Sounds.PlaySound(SOUND_DROP);
 
+  Memory.Game.State := STATE_ROWS_CHECK;
 end;
 
 
 procedure TCore.UpdatePieceSpawn();
 begin
+  SpawnPiece();
 
+  if CanPlacePiece() then
+    Memory.Game.State := STATE_PIECE_CONTROL
+  else
+  begin
+    Memory.Game.State := STATE_UPDATE_TOP_OUT;
+    Sounds.PlaySound(SOUND_TOP_OUT);
+  end;
 end;
 
 
 procedure TCore.UpdateRowsCheck();
 begin
-
+  Memory.Game.State := STATE_UPDATE_COUNTERS;
 end;
 
 
@@ -305,7 +316,7 @@ end;
 
 procedure TCore.UpdateCounters();
 begin
-
+  Memory.Game.State := STATE_PIECE_SPAWN;
 end;
 
 
