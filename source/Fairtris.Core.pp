@@ -175,6 +175,7 @@ end;
 procedure TCore.Reset();
 begin
   Memory.Game.Reset();
+  Memory.Game.Started := True;
 
   Generators.Generator.Step();
   Memory.Game.PieceID := Generators.Generator.Pick();

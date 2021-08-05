@@ -276,6 +276,8 @@ begin
 
   if FScene.Previous = SCENE_MENU then
     PreparePlaySelection();
+
+  Memory.Game.Started := False;
 end;
 
 
@@ -297,6 +299,8 @@ begin
   begin
     PrepareTopOutSelection();
     PrepareTopOutResult();
+
+    Memory.Game.Started := False;
   end;
 end;
 
@@ -1157,7 +1161,7 @@ begin
   if Input.Keyboard.Device.Key[VK_F10].JustPressed then
     Renderers.ClipFrame := not Renderers.ClipFrame;
 
-  if not (FScene.Current in [SCENE_GAME_NORMAL, SCENE_GAME_FLASH]) then
+  if not Memory.Game.Started then
     Generators.Shuffle();
 end;
 
