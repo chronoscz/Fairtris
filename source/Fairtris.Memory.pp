@@ -57,6 +57,8 @@ type
     procedure Reset();
   public
     Started: Boolean;
+    Ended: Boolean;
+  public
     State: Integer;
   public
     PieceID: Integer;
@@ -277,6 +279,8 @@ end;
 procedure TGameMemory.Reset();
 begin
   Started := False;
+  Ended := False;
+
   State := STATE_PIECE_CONTROL;
 
   PieceID := PIECE_UNKNOWN;
