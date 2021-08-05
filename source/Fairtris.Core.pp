@@ -35,6 +35,7 @@ implementation
 
 uses
   Fairtris.Input,
+  Fairtris.Sounds,
   Fairtris.Generators,
   Fairtris.Utils,
   Fairtris.Arrays,
@@ -195,19 +196,31 @@ begin
 
   if Input.Device.Left.JustPressed then
     if CanShiftPiece(PIECE_SHIFT_LEFT) then
+    begin
       ShiftPiece(PIECE_SHIFT_LEFT);
+      Sounds.PlaySound(SOUND_SHIFT, Memory.Play.Region);
+    end;
 
   if Input.Device.Right.JustPressed then
     if CanShiftPiece(PIECE_SHIFT_RIGHT) then
+    begin
       ShiftPiece(PIECE_SHIFT_RIGHT);
+      Sounds.PlaySound(SOUND_SHIFT, Memory.Play.Region);
+    end;
 
   if Input.Device.B.JustPressed then
     if CanRotatePiece(PIECE_ROTATE_COUNTERCLOCKWISE) then
+    begin
       RotatePiece(PIECE_ROTATE_COUNTERCLOCKWISE);
+      Sounds.PlaySound(SOUND_SPIN, Memory.Play.Region);
+    end;
 
   if Input.Device.A.JustPressed then
     if CanRotatePiece(PIECE_ROTATE_CLOCKWISE) then
+    begin
       RotatePiece(PIECE_ROTATE_CLOCKWISE);
+      Sounds.PlaySound(SOUND_SPIN, Memory.Play.Region);
+    end;
 
   if Input.Device.Down.JustPressed then
     if CanDropPiece() then
@@ -216,6 +229,8 @@ begin
     begin
       PlacePiece();
       SpawnPiece();
+
+      Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
     end;
   // remove after testing
 end;
