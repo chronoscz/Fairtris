@@ -64,6 +64,9 @@ type
     AutorepeatX: Integer;
     AutorepeatY: Integer;
   public
+    FallTimer: Integer;
+    FallPoints: Integer;
+  public
     Stack: TGameStack;
     Stats: TGameStats;
   public
@@ -276,6 +279,9 @@ begin
 
   AutorepeatX := 0;
   AutorepeatY := 0;
+
+  FallTimer := 0;
+  FallPoints := 0;
 
   Stack := Default(TGameStack);
   Stats := Default(TGameStats);
