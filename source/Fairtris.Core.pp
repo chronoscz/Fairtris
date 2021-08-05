@@ -12,7 +12,7 @@ type
   TCore = class(TObject)
   private
     function CanPlacePiece(): Boolean;
-    function CanDropPiece(AX, AY, AID, AOrientation: Integer): Boolean;
+    function CanDropPiece(): Boolean;
     function CanShiftPiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
     function CanRotatePiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
   private
@@ -64,9 +64,9 @@ begin
 end;
 
 
-function TCore.CanDropPiece(AX, AY, AID, AOrientation: Integer): Boolean;
+function TCore.CanDropPiece(): Boolean;
 begin
-  Result := AY < PIECE_DROP_Y_MAX[AID, AOrientation];
+  Result := Memory.Game.PieceY < PIECE_DROP_Y_MAX[Memory.Game.PieceID, Memory.Game.PieceOrientation];
 
   if Result then
   begin
@@ -187,7 +187,7 @@ begin
       RotatePiece(Memory.Game.PieceOrientation, PIECE_ROTATE_CLOCKWISE);
 
   if Input.Device.Down.JustPressed then
-    if CanDropPiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation) then
+    if CanDropPiece() then
       DropPiece(Memory.Game.PieceY)
     else
     begin
