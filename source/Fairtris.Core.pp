@@ -22,6 +22,10 @@ type
     procedure ShiftPiece(ADirection: Integer);
     procedure RotatePiece(ADirection: Integer);
   private
+    procedure UpdatePieceControlShift();
+    procedure UpdatePieceControlRotate();
+    procedure UpdatePieceControlDrop();
+  private
     procedure UpdatePieceControl();
     procedure UpdatePieceLock();
     procedure UpdatePieceSpawn();
@@ -181,9 +185,29 @@ begin
 end;
 
 
-procedure TCore.UpdatePieceControl();
+procedure TCore.UpdatePieceControlShift();
 begin
 
+end;
+
+
+procedure TCore.UpdatePieceControlRotate();
+begin
+
+end;
+
+
+procedure TCore.UpdatePieceControlDrop();
+begin
+
+end;
+
+
+procedure TCore.UpdatePieceControl();
+begin
+  UpdatePieceControlShift();
+  UpdatePieceControlRotate();
+  UpdatePieceControlDrop();
 end;
 
 
