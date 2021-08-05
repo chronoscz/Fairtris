@@ -98,6 +98,7 @@ type
     constructor Create();
   public
     procedure Initialize();
+    procedure Shuffle();
   public
     property Generator: IGenerable read FGenerator;
     property Generators[AGeneratorID: Integer]: IGenerable read GetGenerator;
@@ -272,6 +273,15 @@ begin
 
   for Index := Low(FGenerators) to High(FGenerators) do
     FGenerators[Index].Initialize();
+end;
+
+
+procedure TGenerators.Shuffle();
+var
+  Index: Integer;
+begin
+  for Index := Low(FGenerators) to High(FGenerators) do
+    FGenerators[Index].Shuffle();
 end;
 
 
