@@ -21,6 +21,14 @@ type
     procedure DropPiece();
     procedure ShiftPiece(ADirection: Integer);
     procedure RotatePiece(ADirection: Integer);
+  private
+    procedure UpdatePieceControl();
+    procedure UpdatePieceLock();
+    procedure UpdatePieceSpawn();
+    procedure UpdateRowsCheck();
+    procedure UpdateRowsClear();
+    procedure UpdateCounters();
+    procedure UpdateTopOut();
   public
     procedure Reset();
     procedure Update();
@@ -173,6 +181,48 @@ begin
 end;
 
 
+procedure TCore.UpdatePieceControl();
+begin
+
+end;
+
+
+procedure TCore.UpdatePieceLock();
+begin
+
+end;
+
+
+procedure TCore.UpdatePieceSpawn();
+begin
+
+end;
+
+
+procedure TCore.UpdateRowsCheck();
+begin
+
+end;
+
+
+procedure TCore.UpdateRowsClear();
+begin
+
+end;
+
+
+procedure TCore.UpdateCounters();
+begin
+
+end;
+
+
+procedure TCore.UpdateTopOut();
+begin
+
+end;
+
+
 procedure TCore.Reset();
 begin
   Memory.Game.Reset();
@@ -191,7 +241,17 @@ end;
 
 procedure TCore.Update();
 begin
+  Generators.Generator.Step();
 
+  case Memory.Game.State of
+    STATE_PIECE_CONTROL:   UpdatePieceControl();
+    STATE_PIECE_LOCK:      UpdatePieceLock();
+    STATE_PIECE_SPAWN:     UpdatePieceSpawn();
+    STATE_ROWS_CHECK:      UpdateRowsCheck();
+    STATE_ROWS_CLEAR:      UpdateRowsClear();
+    STATE_UPDATE_COUNTERS: UpdateCounters();
+    STATE_UPDATE_TOP_OUT:  UpdateTopOut();
+  end;
 end;
 
 
