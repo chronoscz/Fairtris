@@ -889,6 +889,16 @@ const
 
 
 const
+  ENTRY_DELAY_FRAMES: array [0 .. 19] of Integer = (
+    18, 18, 18, 18, 18, 18,
+    16, 16, 16, 16,
+    14, 14, 14, 14,
+    12, 12, 12, 12,
+    10, 10
+  );
+
+
+const
   AUTOSHIFT_FRAMES_PRECHARGE: array [REGION_FIRST .. REGION_LAST] of Integer = (10, 10, 10, 10, 08, 08, 08, 08);
   AUTOSHIFT_FRAMES_CHARGE:    array [REGION_FIRST .. REGION_LAST] of Integer = (16, 16, 15, 15, 12, 12, 12, 12);
 
