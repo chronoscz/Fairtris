@@ -16,7 +16,7 @@ type
     function CanShiftPiece(ADirection: Integer): Boolean;
     function CanRotatePiece(ADirection: Integer): Boolean;
   private
-    procedure PlacePiece(AX, AY, AID, AOrientation: Integer; var AStack: TGameStack);
+    procedure PlacePiece();
     procedure DropPiece(var AY: Integer);
     procedure ShiftPiece(var AX: Integer; ADirection: Integer);
     procedure RotatePiece(var AOrientation: Integer; ADirection: Integer);
@@ -111,22 +111,30 @@ begin
 end;
 
 
-procedure TCore.PlacePiece(AX, AY, AID, AOrientation: Integer; var AStack: TGameStack);
+procedure TCore.PlacePiece();
 var
   LayoutX, LayoutY: Integer;
 begin
   for LayoutY := -2 to 2 do
   begin
-    if AY + LayoutY < -2 then Continue;
-    if AY + LayoutY > 19 then Continue;
+    if Memory.Game.PieceY + LayoutY < -2 then Continue;
+    if Memory.Game.PieceY + LayoutY > 19 then Continue;
 
     for LayoutX := -2 to 2 do
     begin
-      if AX + LayoutX < 0 then Continue;
-      if AX + LayoutX > 9 then Continue;
+      if Memory.Game.PieceX + LayoutX < 0 then Continue;
+      if Memory.Game.PieceX + LayoutX > 9 then Continue;
 
-      if PIECE_LAYOUT[AID, AOrientation, LayoutY, LayoutX] <> BRICK_EMPTY then
-        AStack[AX + LayoutX, AY + LayoutY] := PIECE_LAYOUT[AID, AOrientation, LayoutY, LayoutX];
+      if PIECE_LAYOUT[Memory.Game.PieceID, Memory.Game.PieceOrientation, LayoutY, LayoutX] <> BRICK_EMPTY then
+        Memory.Game.Stack[
+          Memory.Game.PieceX + LayoutX,
+          Memory.Game.PieceY + LayoutY
+        ] := PIECE_LAYOUT[
+          Memory.Game.PieceID,
+          Memory.Game.PieceOrientation,
+          LayoutY,
+          LayoutX
+        ];
     end;
   end;
 end;
@@ -191,7 +199,7 @@ begin
       DropPiece(Memory.Game.PieceY)
     else
     begin
-      PlacePiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation, Memory.Game.Stack);
+      PlacePiece();
 
       Memory.Game.PieceID := Memory.Game.Next.Current;
       Memory.Game.PieceOrientation := PIECE_ORIENTATION_SPAWN;
