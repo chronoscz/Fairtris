@@ -18,7 +18,7 @@ type
   private
     procedure PlacePiece();
     procedure DropPiece();
-    procedure ShiftPiece(var AX: Integer; ADirection: Integer);
+    procedure ShiftPiece(ADirection: Integer);
     procedure RotatePiece(var AOrientation: Integer; ADirection: Integer);
   public
     procedure Reset();
@@ -146,9 +146,9 @@ begin
 end;
 
 
-procedure TCore.ShiftPiece(var AX: Integer; ADirection: Integer);
+procedure TCore.ShiftPiece(ADirection: Integer);
 begin
-  AX += ADirection;
+  Memory.Game.PieceX += ADirection;
 end;
 
 
@@ -180,11 +180,11 @@ begin
 
   if Input.Device.Left.JustPressed then
     if CanShiftPiece(PIECE_SHIFT_LEFT) then
-      ShiftPiece(Memory.Game.PieceX, PIECE_SHIFT_LEFT);
+      ShiftPiece(PIECE_SHIFT_LEFT);
 
   if Input.Device.Right.JustPressed then
     if CanShiftPiece(PIECE_SHIFT_RIGHT) then
-      ShiftPiece(Memory.Game.PieceX, PIECE_SHIFT_RIGHT);
+      ShiftPiece(PIECE_SHIFT_RIGHT);
 
   if Input.Device.B.JustPressed then
     if CanRotatePiece(PIECE_ROTATE_COUNTERCLOCKWISE) then
@@ -196,7 +196,7 @@ begin
 
   if Input.Device.Down.JustPressed then
     if CanDropPiece() then
-      DropPiece(Memory.Game.PieceY)
+      DropPiece()
     else
     begin
       PlacePiece();
