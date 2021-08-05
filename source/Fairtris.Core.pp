@@ -40,62 +40,6 @@ uses
   Fairtris.Constants;
 
 
-procedure TCore.Reset();
-begin
-  Memory.Game.Reset();
-
-  Generators.Generator.Step();
-  Memory.Game.PieceID := Generators.Generator.Pick();
-
-  Generators.Generator.Step();
-  Memory.Game.Next.Current := Generators.Generator.Pick();
-
-  Memory.Game.Level.Current := Memory.Play.Level;
-  Memory.Game.Stats[Memory.Game.PieceID] += 1;
-end;
-
-
-procedure TCore.Update();
-begin
-  // added only to test collision mechanism
-  Generators.Generator.Step();
-
-  if Input.Device.Left.JustPressed then
-    if CanShiftPiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation, PIECE_SHIFT_LEFT) then
-      ShiftPiece(Memory.Game.PieceX, PIECE_SHIFT_LEFT);
-
-  if Input.Device.Right.JustPressed then
-    if CanShiftPiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation, PIECE_SHIFT_RIGHT) then
-      ShiftPiece(Memory.Game.PieceX, PIECE_SHIFT_RIGHT);
-
-  if Input.Device.B.JustPressed then
-    if CanRotatePiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation, PIECE_ROTATE_COUNTERCLOCKWISE) then
-      RotatePiece(Memory.Game.PieceOrientation, PIECE_ROTATE_COUNTERCLOCKWISE);
-
-  if Input.Device.A.JustPressed then
-    if CanRotatePiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation, PIECE_ROTATE_CLOCKWISE) then
-      RotatePiece(Memory.Game.PieceOrientation, PIECE_ROTATE_CLOCKWISE);
-
-  if Input.Device.Down.JustPressed then
-    if CanDropPiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation) then
-      DropPiece(Memory.Game.PieceY)
-    else
-    begin
-      PlacePiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation, Memory.Game.Stack);
-
-      Memory.Game.PieceID := Memory.Game.Next.Current;
-      Memory.Game.PieceOrientation := PIECE_ORIENTATION_SPAWN;
-
-      Memory.Game.Next.Current := Generators.Generator.Pick();
-      Memory.Game.Stats[Memory.Game.PieceID] += 1;
-
-      Memory.Game.PieceX := PIECE_SPAWN_X;
-      Memory.Game.PieceY := PIECE_SPAWN_Y;
-    end;
-  // remove after testing
-end;
-
-
 function TCore.CanPlacePiece(AX, AY, AID, AOrientation: Integer): Boolean;
 var
   LayoutX, LayoutY: Integer;
@@ -190,6 +134,62 @@ end;
 procedure TCore.RotatePiece(var AOrientation: Integer; ADirection: Integer);
 begin
   AOrientation := WrapAround(AOrientation, PIECE_ORIENTATION_COUNT, ADirection);
+end;
+
+
+procedure TCore.Reset();
+begin
+  Memory.Game.Reset();
+
+  Generators.Generator.Step();
+  Memory.Game.PieceID := Generators.Generator.Pick();
+
+  Generators.Generator.Step();
+  Memory.Game.Next.Current := Generators.Generator.Pick();
+
+  Memory.Game.Level.Current := Memory.Play.Level;
+  Memory.Game.Stats[Memory.Game.PieceID] += 1;
+end;
+
+
+procedure TCore.Update();
+begin
+  // added only to test collision mechanism
+  Generators.Generator.Step();
+
+  if Input.Device.Left.JustPressed then
+    if CanShiftPiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation, PIECE_SHIFT_LEFT) then
+      ShiftPiece(Memory.Game.PieceX, PIECE_SHIFT_LEFT);
+
+  if Input.Device.Right.JustPressed then
+    if CanShiftPiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation, PIECE_SHIFT_RIGHT) then
+      ShiftPiece(Memory.Game.PieceX, PIECE_SHIFT_RIGHT);
+
+  if Input.Device.B.JustPressed then
+    if CanRotatePiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation, PIECE_ROTATE_COUNTERCLOCKWISE) then
+      RotatePiece(Memory.Game.PieceOrientation, PIECE_ROTATE_COUNTERCLOCKWISE);
+
+  if Input.Device.A.JustPressed then
+    if CanRotatePiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation, PIECE_ROTATE_CLOCKWISE) then
+      RotatePiece(Memory.Game.PieceOrientation, PIECE_ROTATE_CLOCKWISE);
+
+  if Input.Device.Down.JustPressed then
+    if CanDropPiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation) then
+      DropPiece(Memory.Game.PieceY)
+    else
+    begin
+      PlacePiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation, Memory.Game.Stack);
+
+      Memory.Game.PieceID := Memory.Game.Next.Current;
+      Memory.Game.PieceOrientation := PIECE_ORIENTATION_SPAWN;
+
+      Memory.Game.Next.Current := Generators.Generator.Pick();
+      Memory.Game.Stats[Memory.Game.PieceID] += 1;
+
+      Memory.Game.PieceX := PIECE_SPAWN_X;
+      Memory.Game.PieceY := PIECE_SPAWN_Y;
+    end;
+  // remove after testing
 end;
 
 
