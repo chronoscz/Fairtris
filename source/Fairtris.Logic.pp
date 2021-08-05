@@ -1156,6 +1156,9 @@ begin
 
   if Input.Keyboard.Device.Key[VK_F10].JustPressed then
     Renderers.ClipFrame := not Renderers.ClipFrame;
+
+  if not (FScene.Current in [SCENE_GAME_NORMAL, SCENE_GAME_FLASH]) then
+    Generators.Shuffle();
 end;
 
 
