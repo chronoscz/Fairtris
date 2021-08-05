@@ -247,27 +247,81 @@ end;
 
 
 procedure TCore.UpdatePieceControlDrop();
+label
+  Playing, Autorepeating, DownPressed, Drop, LookupDropSpeed, NoTableLookup, IncrementAutorepeatY;
+var
+  TempSpeed, DropSpeed: Integer;
 begin
-  // only to test game states
+  if Memory.Game.AutorepeatY > 0 then goto Autorepeating;
+  if Memory.Game.AutorepeatY = 0 then goto Playing;
 
+  if not Input.Device.Down.JustPressed then
+    goto IncrementAutorepeatY;
+
+  Memory.Game.AutorepeatY := 0;
+
+Playing:
+  if Input.Device.Left.Pressed or Input.Device.Right.Pressed then
+    goto LookupDropSpeed;
+
+  if Input.Device.Down.JustPressed then
+    if Input.Device.Up.Pressed or Input.Device.Left.Pressed or Input.Device.Right.Pressed then
+      goto LookupDropSpeed;
+
+  Memory.Game.AutorepeatY := 1;
+  goto LookupDropSpeed;
+
+Autorepeating:
   if Input.Device.Down.Pressed then
-    if CanDropPiece() then
-      DropPiece()
-    else
-    begin
-      PlacePiece();
-      Memory.Game.State := STATE_PIECE_LOCK;
-    end;
+    if not Input.Device.Left.Pressed and not Input.Device.Right.Pressed then
+      goto DownPressed;
 
-  if Input.Device.Up.JustPressed then
+  Memory.Game.AutorepeatY := 0;
+  Memory.Game.FallPoints := 0;
+
+  goto LookupDropSpeed;
+
+DownPressed:
+  Memory.Game.AutorepeatY += 1;
+
+  if Memory.Game.AutorepeatY < 3 then
+    goto LookupDropSpeed;
+
+  Memory.Game.AutorepeatY := 1;
+  Memory.Game.FallPoints += 1;
+
+Drop:
+  Memory.Game.FallTimer := 0;
+
+  if CanDropPiece() then
+    DropPiece()
+  else
   begin
-    while CanDropPiece() do
-      DropPiece();
-
+    PlacePiece();
     Memory.Game.State := STATE_PIECE_LOCK;
   end;
 
-  // remove after testing
+  Exit;
+
+LookupDropSpeed:
+  Memory.Game.FallTimer += 1;
+
+  if Memory.Game.Level.Current < LEVEL_LAST then
+    DropSpeed := GRAVITY_FRAMES[Memory.Play.Region, Memory.Game.Level.Current]
+  else
+  begin
+    DropSpeed := 1;
+    goto NoTableLookup;
+  end;
+
+NoTableLookup:
+  if Memory.Game.FallTimer >= DropSpeed then
+    goto Drop;
+
+  Exit;
+
+IncrementAutorepeatY:
+  Memory.Game.AutorepeatY += 1;
 end;
 
 
