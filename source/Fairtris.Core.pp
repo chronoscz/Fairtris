@@ -19,7 +19,7 @@ type
     procedure PlacePiece();
     procedure DropPiece();
     procedure ShiftPiece(ADirection: Integer);
-    procedure RotatePiece(var AOrientation: Integer; ADirection: Integer);
+    procedure RotatePiece(ADirection: Integer);
   public
     procedure Reset();
     procedure Update();
@@ -152,9 +152,9 @@ begin
 end;
 
 
-procedure TCore.RotatePiece(var AOrientation: Integer; ADirection: Integer);
+procedure TCore.RotatePiece(ADirection: Integer);
 begin
-  AOrientation := WrapAround(AOrientation, PIECE_ORIENTATION_COUNT, ADirection);
+  Memory.Game.PieceOrientation := WrapAround(Memory.Game.PieceOrientation, PIECE_ORIENTATION_COUNT, ADirection);
 end;
 
 
@@ -188,11 +188,11 @@ begin
 
   if Input.Device.B.JustPressed then
     if CanRotatePiece(PIECE_ROTATE_COUNTERCLOCKWISE) then
-      RotatePiece(Memory.Game.PieceOrientation, PIECE_ROTATE_COUNTERCLOCKWISE);
+      RotatePiece(PIECE_ROTATE_COUNTERCLOCKWISE);
 
   if Input.Device.A.JustPressed then
     if CanRotatePiece(PIECE_ROTATE_CLOCKWISE) then
-      RotatePiece(Memory.Game.PieceOrientation, PIECE_ROTATE_CLOCKWISE);
+      RotatePiece(PIECE_ROTATE_CLOCKWISE);
 
   if Input.Device.Down.JustPressed then
     if CanDropPiece() then
