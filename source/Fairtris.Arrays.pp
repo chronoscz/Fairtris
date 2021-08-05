@@ -863,7 +863,7 @@ const
 
 
 const
-  PIECE_FRAMES_HANG: array [REGION_FIRST .. REGION_LAST] of Integer = (
+  ENTRY_DELAY_FRAMES: array [REGION_FIRST .. REGION_LAST] of Integer = (
     -Round(CLOCK_FRAMERATE_NTSC * 1.6),
     -Round(CLOCK_FRAMERATE_NTSC * 1.6),
     -Round(CLOCK_FRAMERATE_NTSC * 1.6),
