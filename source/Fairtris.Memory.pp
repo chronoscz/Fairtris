@@ -70,6 +70,8 @@ type
     FallTimer: Integer;
     FallPoints: Integer;
   public
+    TopOutTimer: Integer;
+  public
     Stack: TGameStack;
     Stats: TGameStats;
   public
@@ -288,6 +290,8 @@ begin
 
   FallTimer := 0;
   FallPoints := 0;
+
+  TopOutTimer := 0;
 
   Stack := Default(TGameStack);
   Stats := Default(TGameStats);
