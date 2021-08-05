@@ -57,6 +57,7 @@ type
     procedure Reset();
   public
     Started: Boolean;
+    State: Integer;
   public
     PieceID: Integer;
     PieceOrientation: Integer;
@@ -274,6 +275,7 @@ end;
 procedure TGameMemory.Reset();
 begin
   Started := False;
+  State := STATE_PIECE_CONTROL;
 
   PieceID := PIECE_UNKNOWN;
   PieceOrientation := PIECE_ORIENTATION_SPAWN;
