@@ -248,7 +248,26 @@ end;
 
 procedure TCore.UpdatePieceControlDrop();
 begin
+  // only to test game states
 
+  if Input.Device.Down.Pressed then
+    if CanDropPiece() then
+      DropPiece()
+    else
+    begin
+      PlacePiece();
+      Memory.Game.State := STATE_PIECE_LOCK;
+    end;
+
+  if Input.Device.Up.Pressed then
+  begin
+    while CanDropPiece() do
+      DropPiece();
+
+    Memory.Game.State := STATE_PIECE_LOCK;
+  end;
+
+  // remove after testing
 end;
 
 
