@@ -187,7 +187,40 @@ end;
 
 procedure TCore.UpdatePieceControlShift();
 begin
+  if Input.Device.Down.Pressed then Exit;
 
+  if Input.Device.Left.Pressed and Input.Device.Right.Pressed then Exit;
+  if not Input.Device.Left.Pressed and not Input.Device.Right.Pressed then Exit;
+
+  if Input.Device.Left.JustPressed or Input.Device.Right.JustPressed then
+    Memory.Game.AutorepeatX := 0
+  else
+  begin
+    Memory.Game.AutorepeatX += 1;
+
+    if Memory.Game.AutorepeatX < AUTOSHIFT_FRAMES_CHARGE[Memory.Play.Region] then
+      Exit
+    else
+      Memory.Game.AutorepeatX := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Play.Region];
+  end;
+
+  if Input.Device.Left.Pressed then
+    if CanShiftPiece(PIECE_SHIFT_LEFT) then
+    begin
+      ShiftPiece(PIECE_SHIFT_LEFT);
+      Sounds.PlaySound(SOUND_SHIFT);
+    end
+    else
+      Memory.Game.AutorepeatX := AUTOSHIFT_FRAMES_CHARGE[Memory.Play.Region];
+
+  if Input.Device.Right.Pressed then
+    if CanShiftPiece(PIECE_SHIFT_RIGHT) then
+    begin
+      ShiftPiece(PIECE_SHIFT_RIGHT);
+      Sounds.PlaySound(SOUND_SHIFT);
+    end
+    else
+      Memory.Game.AutorepeatX := AUTOSHIFT_FRAMES_CHARGE[Memory.Play.Region];
 end;
 
 
