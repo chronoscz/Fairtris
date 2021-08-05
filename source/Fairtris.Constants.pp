@@ -52,6 +52,16 @@ const
 
 
 const
+  STATE_PIECE_CONTROL   = 0;
+  STATE_PIECE_LOCK      = 1;
+  STATE_PIECE_SPAWN     = 2;
+  STATE_ROWS_CHECK      = 3;
+  STATE_ROWS_CLEAR      = 4;
+  STATE_UPDATE_COUNTERS = 5;
+  STATE_UPDATE_TOP_OUT  = 6;
+
+
+const
   SPRITE_CHARSET    = 0;
   SPRITE_BRICKS     = 1;
   SPRITE_PIECES     = 2;
