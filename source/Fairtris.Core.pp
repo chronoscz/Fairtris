@@ -13,7 +13,7 @@ type
   private
     function CanPlacePiece(): Boolean;
     function CanDropPiece(): Boolean;
-    function CanShiftPiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
+    function CanShiftPiece(ADirection: Integer): Boolean;
     function CanRotatePiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
   private
     procedure PlacePiece(AX, AY, AID, AOrientation: Integer; var AStack: TGameStack);
@@ -77,11 +77,11 @@ begin
 end;
 
 
-function TCore.CanShiftPiece(AX, AY, AID, AOrientation, ADirection: Integer): Boolean;
+function TCore.CanShiftPiece(ADirection: Integer): Boolean;
 begin
   case ADirection of
-    PIECE_SHIFT_LEFT:  Result := AX > PIECE_SHIFT_X_MIN[AID, AOrientation];
-    PIECE_SHIFT_RIGHT: Result := AX < PIECE_SHIFT_X_MAX[AID, AOrientation];
+    PIECE_SHIFT_LEFT:  Result := Memory.Game.PieceX > PIECE_SHIFT_X_MIN[Memory.Game.PieceID, Memory.Game.PieceOrientation];
+    PIECE_SHIFT_RIGHT: Result := Memory.Game.PieceX < PIECE_SHIFT_X_MAX[Memory.Game.PieceID, Memory.Game.PieceOrientation];
   end;
 
   if Result then
@@ -171,11 +171,11 @@ begin
   Generators.Generator.Step();
 
   if Input.Device.Left.JustPressed then
-    if CanShiftPiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation, PIECE_SHIFT_LEFT) then
+    if CanShiftPiece(PIECE_SHIFT_LEFT) then
       ShiftPiece(Memory.Game.PieceX, PIECE_SHIFT_LEFT);
 
   if Input.Device.Right.JustPressed then
-    if CanShiftPiece(Memory.Game.PieceX, Memory.Game.PieceY, Memory.Game.PieceID, Memory.Game.PieceOrientation, PIECE_SHIFT_RIGHT) then
+    if CanShiftPiece(PIECE_SHIFT_RIGHT) then
       ShiftPiece(Memory.Game.PieceX, PIECE_SHIFT_RIGHT);
 
   if Input.Device.B.JustPressed then
