@@ -191,48 +191,7 @@ end;
 
 procedure TCore.Update();
 begin
-  // added only to test collision mechanism
-  Generators.Generator.Step();
 
-  if Input.Device.Left.JustPressed then
-    if CanShiftPiece(PIECE_SHIFT_LEFT) then
-    begin
-      ShiftPiece(PIECE_SHIFT_LEFT);
-      Sounds.PlaySound(SOUND_SHIFT);
-    end;
-
-  if Input.Device.Right.JustPressed then
-    if CanShiftPiece(PIECE_SHIFT_RIGHT) then
-    begin
-      ShiftPiece(PIECE_SHIFT_RIGHT);
-      Sounds.PlaySound(SOUND_SHIFT);
-    end;
-
-  if Input.Device.B.JustPressed then
-    if CanRotatePiece(PIECE_ROTATE_COUNTERCLOCKWISE) then
-    begin
-      RotatePiece(PIECE_ROTATE_COUNTERCLOCKWISE);
-      Sounds.PlaySound(SOUND_SPIN);
-    end;
-
-  if Input.Device.A.JustPressed then
-    if CanRotatePiece(PIECE_ROTATE_CLOCKWISE) then
-    begin
-      RotatePiece(PIECE_ROTATE_CLOCKWISE);
-      Sounds.PlaySound(SOUND_SPIN);
-    end;
-
-  if Input.Device.Down.JustPressed then
-    if CanDropPiece() then
-      DropPiece()
-    else
-    begin
-      PlacePiece();
-      SpawnPiece();
-
-      Sounds.PlaySound(SOUND_DROP);
-    end;
-  // remove after testing
 end;
 
 
