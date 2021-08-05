@@ -863,6 +863,19 @@ const
 
 
 const
+  PIECE_FRAMES_HANG: array [REGION_FIRST .. REGION_LAST] of Integer = (
+    -Round(CLOCK_FRAMERATE_NTSC * 1.6),
+    -Round(CLOCK_FRAMERATE_NTSC * 1.6),
+    -Round(CLOCK_FRAMERATE_NTSC * 1.6),
+    -Round(CLOCK_FRAMERATE_NTSC * 1.6),
+    -Round(CLOCK_FRAMERATE_PAL * 1.6),
+    -Round(CLOCK_FRAMERATE_PAL * 1.6),
+    -Round(CLOCK_FRAMERATE_PAL * 1.6),
+    -Round(CLOCK_FRAMERATE_PAL * 1.6)
+  );
+
+
+const
   GRAVITY_FRAMES: array [REGION_FIRST .. REGION_LAST, GRAVITY_FIRST .. GRAVITY_LAST] of Integer = (
     (48, 43, 38, 33, 28, 23, 18, 13, 8, 6, 5, 5, 5, 4, 4, 4, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1),
     (48, 43, 38, 33, 28, 23, 18, 13, 8, 6, 5, 5, 5, 4, 4, 4, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1),
