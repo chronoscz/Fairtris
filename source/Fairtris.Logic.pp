@@ -162,7 +162,7 @@ end;
 
 procedure TLogic.HelpUnderstand();
 begin
-  Sounds.PlaySound(SOUND_START, Memory.Play.Region);
+  Sounds.PlaySound(SOUND_START);
 
   ShellExecute(0, 'open', 'https://github.com/furious-programming/fairtris', nil, nil, SW_SHOWNORMAL);
   Application.Minimize();
@@ -177,7 +177,7 @@ begin
   Memory.Options.Input := INPUT_KEYBOARD;
 
   PrepareKeyboardScanCodes();
-  Sounds.PlaySound(SOUND_TRANSITION, Memory.Play.Region);
+  Sounds.PlaySound(SOUND_TRANSITION);
 end;
 
 
@@ -370,13 +370,13 @@ begin
   if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
   begin
     UpdateItemIndex(Memory.Menu.ItemIndex, ITEM_MENU_COUNT, ITEM_PREV);
-    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_BLIP);
   end;
 
   if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
   begin
     UpdateItemIndex(Memory.Menu.ItemIndex, ITEM_MENU_COUNT, ITEM_NEXT);
-    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_BLIP);
   end;
 end;
 
@@ -394,9 +394,9 @@ begin
     end;
 
     if Memory.Menu.ItemIndex <> ITEM_MENU_QUIT then
-      Sounds.PlaySound(SOUND_START, Memory.Play.Region)
+      Sounds.PlaySound(SOUND_START)
     else
-      Sounds.PlaySound(SOUND_GLASS, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_GLASS);
 
     if Memory.Menu.ItemIndex = ITEM_MENU_HELP then
       HelpUnderstand();
@@ -409,13 +409,13 @@ begin
   if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
   begin
     UpdateItemIndex(Memory.Play.ItemIndex, ITEM_PLAY_COUNT, ITEM_PREV);
-    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_BLIP);
   end;
 
   if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
   begin
     UpdateItemIndex(Memory.Play.ItemIndex, ITEM_PLAY_COUNT, ITEM_NEXT);
-    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_BLIP);
   end;
 end;
 
@@ -427,13 +427,13 @@ begin
   if Input.Device.Left.JustPressed or Input.Keyboard.Left.JustPressed then
   begin
     UpdateItemIndex(Memory.Play.Region, REGION_COUNT, ITEM_PREV);
-    Sounds.PlaySound(SOUND_SHIFT, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if Input.Device.Right.JustPressed or Input.Keyboard.Right.JustPressed then
   begin
     UpdateItemIndex(Memory.Play.Region, REGION_COUNT, ITEM_NEXT);
-    Sounds.PlaySound(SOUND_SHIFT, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.Play.Region];
@@ -450,13 +450,13 @@ begin
   if Input.Device.Left.JustPressed or Input.Keyboard.Left.JustPressed then
   begin
     UpdateItemIndex(Memory.Play.RNG, RNG_COUNT, ITEM_PREV);
-    Sounds.PlaySound(SOUND_SHIFT, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if Input.Device.Right.JustPressed or Input.Keyboard.Right.JustPressed then
   begin
     UpdateItemIndex(Memory.Play.RNG, RNG_COUNT, ITEM_NEXT);
-    Sounds.PlaySound(SOUND_SHIFT, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   Generators.GeneratorID := Memory.Play.RNG;
@@ -470,13 +470,13 @@ begin
   if Input.Device.Left.JustPressed or Input.Keyboard.Left.JustPressed then
   begin
     UpdateItemIndex(Memory.Play.Level, LEVEL_COUNT[Memory.Play.Region], ITEM_PREV);
-    Sounds.PlaySound(SOUND_SHIFT, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if Input.Device.Right.JustPressed or Input.Keyboard.Right.JustPressed then
   begin
     UpdateItemIndex(Memory.Play.Level, LEVEL_COUNT[Memory.Play.Region], ITEM_NEXT);
-    Sounds.PlaySound(SOUND_SHIFT, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_SHIFT);
   end;
 end;
 
@@ -489,7 +489,7 @@ begin
     if Memory.Play.ItemIndex = ITEM_PLAY_START then
     begin
       if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
-        Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
+        Sounds.PlaySound(SOUND_DROP);
 
       Exit;
     end;
@@ -497,7 +497,7 @@ begin
   if Input.Device.B.JustPressed or Input.Keyboard.B.JustPressed then
   begin
     FScene.Current := SCENE_MENU;
-    Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_DROP);
   end;
 
   if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
@@ -505,12 +505,12 @@ begin
     ITEM_PLAY_START:
     begin
       FScene.Current := SCENE_GAME_NORMAL;
-      Sounds.PlaySound(SOUND_START, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_START);
     end;
     ITEM_PLAY_BACK:
     begin
       FScene.Current := SCENE_MENU;
-      Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_DROP);
     end;
   end;
 end;
@@ -532,7 +532,7 @@ begin
   if not Input.Device.Connected or Input.Device.Start.JustPressed then
   begin
     FScene.Current := SCENE_PAUSE;
-    Sounds.PlaySound(SOUND_PAUSE, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_PAUSE);
   end;
 end;
 
@@ -542,13 +542,13 @@ begin
   if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
   begin
     UpdateItemIndex(Memory.Pause.ItemIndex, ITEM_PAUSE_COUNT, ITEM_PREV);
-    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_BLIP);
   end;
 
   if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
   begin
     UpdateItemIndex(Memory.Pause.ItemIndex, ITEM_PAUSE_COUNT, ITEM_NEXT);
-    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_BLIP);
   end;
 end;
 
@@ -561,10 +561,10 @@ begin
     if Memory.Pause.ItemIndex in [ITEM_PAUSE_RESUME, ITEM_PAUSE_RESTART] then
     begin
       if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
-        Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
+        Sounds.PlaySound(SOUND_DROP);
 
       if Input.Device.Start.JustPressed or Input.Keyboard.Start.JustPressed then
-        Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
+        Sounds.PlaySound(SOUND_DROP);
 
       Exit;
     end;
@@ -581,7 +581,7 @@ begin
     begin
       FScene.Current := SCENE_PLAY;
       FScene.Current := SCENE_GAME_NORMAL;
-      Sounds.PlaySound(SOUND_START, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_START);
     end;
   end;
 
@@ -590,12 +590,12 @@ begin
     ITEM_PAUSE_OPTIONS:
     begin
       FScene.Current := SCENE_OPTIONS;
-      Sounds.PlaySound(SOUND_START, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_START);
     end;
     ITEM_PAUSE_BACK:
     begin
       FScene.Current := SCENE_PLAY;
-      Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_DROP);
     end;
   end;
 end;
@@ -606,13 +606,13 @@ begin
   if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
   begin
     UpdateItemIndex(Memory.TopOut.ItemIndex, ITEM_TOP_OUT_COUNT, ITEM_PREV);
-    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_BLIP);
   end;
 
   if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
   begin
     UpdateItemIndex(Memory.TopOut.ItemIndex, ITEM_TOP_OUT_COUNT, ITEM_NEXT);
-    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_BLIP);
   end;
 end;
 
@@ -625,7 +625,7 @@ begin
     if Memory.TopOut.ItemIndex = ITEM_TOP_OUT_PLAY then
     begin
       if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
-        Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
+        Sounds.PlaySound(SOUND_DROP);
 
       Exit;
     end;
@@ -637,12 +637,12 @@ begin
       Memory.Game.Reset();
 
       FScene.Current := SCENE_GAME_NORMAL;
-      Sounds.PlaySound(SOUND_START, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_START);
     end;
     ITEM_TOP_OUT_BACK:
     begin
       FScene.Current := SCENE_PLAY;
-      Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_DROP);
     end;
   end;
 end;
@@ -653,13 +653,13 @@ begin
   if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
   begin
     UpdateItemIndex(Memory.Options.ItemIndex, ITEM_OPTIONS_COUNT, ITEM_PREV);
-    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_BLIP);
   end;
 
   if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
   begin
     UpdateItemIndex(Memory.Options.ItemIndex, ITEM_OPTIONS_COUNT, ITEM_NEXT);
-    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_BLIP);
   end;
 end;
 
@@ -671,13 +671,13 @@ begin
   if Input.Device.Left.JustPressed or Input.Keyboard.Left.JustPressed then
   begin
     UpdateItemIndex(Memory.Options.Input, INPUT_COUNT, ITEM_PREV);
-    Sounds.PlaySound(SOUND_SHIFT, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if Input.Device.Right.JustPressed or Input.Keyboard.Right.JustPressed then
   begin
     UpdateItemIndex(Memory.Options.Input, INPUT_COUNT, ITEM_NEXT);
-    Sounds.PlaySound(SOUND_SHIFT, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   Input.DeviceID := Memory.Options.Input;
@@ -693,13 +693,13 @@ begin
   if Input.Device.Left.JustPressed or Input.Keyboard.Left.JustPressed then
   begin
     UpdateItemIndex(Memory.Options.Window, WINDOW_COUNT, ITEM_PREV);
-    Sounds.PlaySound(SOUND_SHIFT, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if Input.Device.Right.JustPressed or Input.Keyboard.Right.JustPressed then
   begin
     UpdateItemIndex(Memory.Options.Window, WINDOW_COUNT, ITEM_NEXT);
-    Sounds.PlaySound(SOUND_SHIFT, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   Placement.WindowSize := Memory.Options.Window;
@@ -713,13 +713,13 @@ begin
   if Input.Device.Left.JustPressed or Input.Keyboard.Left.JustPressed then
   begin
     UpdateItemIndex(Memory.Options.Theme, THEME_COUNT, ITEM_PREV);
-    Sounds.PlaySound(SOUND_SHIFT, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if Input.Device.Right.JustPressed or Input.Keyboard.Right.JustPressed then
   begin
     UpdateItemIndex(Memory.Options.Theme, THEME_COUNT, ITEM_NEXT);
-    Sounds.PlaySound(SOUND_SHIFT, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   Renderers.ThemeID := Memory.Options.Theme;
@@ -735,7 +735,7 @@ begin
     UpdateItemIndex(Memory.Options.Sounds, SOUNDS_COUNT, ITEM_PREV);
 
     Sounds.Enabled := Memory.Options.Sounds;
-    Sounds.PlaySound(SOUND_SHIFT, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if Input.Device.Right.JustPressed or Input.Keyboard.Right.JustPressed then
@@ -743,7 +743,7 @@ begin
     UpdateItemIndex(Memory.Options.Sounds, SOUNDS_COUNT, ITEM_NEXT);
 
     Sounds.Enabled := Memory.Options.Sounds;
-    Sounds.PlaySound(SOUND_SHIFT, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_SHIFT);
   end;
 end;
 
@@ -755,13 +755,13 @@ begin
   if Input.Device.Left.JustPressed or Input.Keyboard.Left.JustPressed then
   begin
     UpdateItemIndex(Memory.Options.Scroll, SCROLL_COUNT, ITEM_PREV);
-    Sounds.PlaySound(SOUND_SHIFT, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if Input.Device.Right.JustPressed or Input.Keyboard.Right.JustPressed then
   begin
     UpdateItemIndex(Memory.Options.Scroll, SCROLL_COUNT, ITEM_NEXT);
-    Sounds.PlaySound(SOUND_SHIFT, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   Placement.Scroll := Memory.Options.Scroll;
@@ -775,11 +775,11 @@ begin
   if not Input.Device.Connected then
   begin
     if Input.Device.B.JustPressed or Input.Keyboard.B.JustPressed then
-      Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_DROP);
 
     if Memory.Options.ItemIndex in [ITEM_OPTIONS_SET_UP, ITEM_OPTIONS_BACK] then
       if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
-        Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
+        Sounds.PlaySound(SOUND_DROP);
 
     Exit;
   end;
@@ -787,7 +787,7 @@ begin
   if Input.Device.B.JustPressed or Input.Keyboard.B.JustPressed then
   begin
     FScene.Current := Memory.Options.FromScene;
-    Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_DROP);
   end;
 
   if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
@@ -798,19 +798,19 @@ begin
         if Input.Keyboard.Device.Connected then
         begin
           FScene.Current := SCENE_KEYBOARD;
-          Sounds.PlaySound(SOUND_START, Memory.Play.Region);
+          Sounds.PlaySound(SOUND_START);
         end;
       INPUT_CONTROLLER:
         if Input.Controller.Device.Connected then
         begin
           FScene.Current := SCENE_CONTROLLER;
-          Sounds.PlaySound(SOUND_START, Memory.Play.Region);
+          Sounds.PlaySound(SOUND_START);
         end;
       end;
     ITEM_OPTIONS_BACK:
     begin
       FScene.Current := Memory.Options.FromScene;
-      Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_DROP);
     end;
   end;
 end;
@@ -823,13 +823,13 @@ begin
   if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
   begin
     UpdateItemIndex(Memory.Keyboard.ItemIndex, ITEM_KEYBOARD_COUNT, ITEM_PREV);
-    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_BLIP);
   end;
 
   if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
   begin
     UpdateItemIndex(Memory.Keyboard.ItemIndex, ITEM_KEYBOARD_COUNT, ITEM_NEXT);
-    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_BLIP);
   end;
 
   case Memory.Keyboard.ItemIndex of
@@ -842,7 +842,7 @@ begin
       Memory.Keyboard.KeyIndex := ITEM_KEYBOARD_KEY_FIRST;
       Memory.Keyboard.Changing := True;
 
-      Sounds.PlaySound(SOUND_START, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_START);
     end;
     ITEM_KEYBOARD_RESTORE:
     if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
@@ -850,7 +850,7 @@ begin
       Input.Keyboard.Restore();
       PrepareKeyboardScanCodes();
 
-      Sounds.PlaySound(SOUND_TOP_OUT, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_TOP_OUT);
     end;
   end;
 end;
@@ -863,20 +863,20 @@ begin
   if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
   begin
     UpdateItemIndex(Memory.Keyboard.KeyIndex, ITEM_KEYBOARD_KEY_COUNT, ITEM_PREV);
-    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_BLIP);
   end;
 
   if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
   begin
     UpdateItemIndex(Memory.Keyboard.KeyIndex, ITEM_KEYBOARD_KEY_COUNT, ITEM_NEXT);
-    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_BLIP);
   end;
 
   if Memory.Keyboard.KeyIndex < ITEM_KEYBOARD_KEY_LAST then
     if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_CLEAR_MAPPING].JustPressed then
     begin
       Memory.Keyboard.ScanCodes[Memory.Keyboard.KeyIndex] := KEYBOARD_SCANCODE_KEY_NOT_MAPPED;
-      Sounds.PlaySound(SOUND_BURN, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_BURN);
     end;
 
   if Memory.Keyboard.KeyIndex in [ITEM_KEYBOARD_SCANCODE_FIRST .. ITEM_KEYBOARD_SCANCODE_LAST] then
@@ -885,14 +885,14 @@ begin
       Memory.Keyboard.SettingUp := True;
 
       Input.Keyboard.Validate();
-      Sounds.PlaySound(SOUND_START, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_START);
     end;
 
   if Memory.Keyboard.KeyIndex = ITEM_KEYBOARD_KEY_BACK then
     if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
     begin
       Memory.Keyboard.Changing := False;
-      Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_DROP);
     end;
 
   if not Memory.Keyboard.SettingUp then
@@ -902,7 +902,7 @@ begin
       Input.Keyboard.B.Validate();
 
       Memory.Keyboard.Changing := False;
-      Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_DROP);
     end;
 end;
 
@@ -919,7 +919,7 @@ begin
     Memory.Keyboard.SettingUp := False;
     Memory.Keyboard.RemoveDuplicates(ScanCode, Memory.Keyboard.KeyIndex);
 
-    Sounds.PlaySound(SOUND_START, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_START);
   end;
 end;
 
@@ -944,7 +944,7 @@ begin
       if Memory.Keyboard.MappedCorrectly() then
         FScene.Current := SCENE_OPTIONS;
 
-      Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_DROP);
     end;
 
     if Memory.Keyboard.ItemIndex = ITEM_KEYBOARD_SAVE then
@@ -954,16 +954,16 @@ begin
           Input.Keyboard.Introduce();
 
           FScene.Current := SCENE_OPTIONS;
-          Sounds.PlaySound(SOUND_TETRIS, Memory.Play.Region);
+          Sounds.PlaySound(SOUND_TETRIS);
         end
         else
-          Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
+          Sounds.PlaySound(SOUND_DROP);
 
     if Memory.Keyboard.ItemIndex = ITEM_KEYBOARD_CANCEL then
       if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
       begin
         FScene.Current := SCENE_OPTIONS;
-        Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
+        Sounds.PlaySound(SOUND_DROP);
       end;
   end;
 end;
@@ -976,13 +976,13 @@ begin
   if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
   begin
     UpdateItemIndex(Memory.Controller.ItemIndex, ITEM_CONTROLLER_COUNT, ITEM_PREV);
-    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_BLIP);
   end;
 
   if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
   begin
     UpdateItemIndex(Memory.Controller.ItemIndex, ITEM_CONTROLLER_COUNT, ITEM_NEXT);
-    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_BLIP);
   end;
 
   case Memory.Controller.ItemIndex of
@@ -995,7 +995,7 @@ begin
       Memory.Controller.ButtonIndex := ITEM_CONTROLLER_BUTTON_FIRST;
       Memory.Controller.Changing := True;
 
-      Sounds.PlaySound(SOUND_START, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_START);
     end;
     ITEM_CONTROLLER_RESTORE:
     if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
@@ -1003,7 +1003,7 @@ begin
       Input.Controller.Restore();
       PrepareControllerScanCodes();
 
-      Sounds.PlaySound(SOUND_TOP_OUT, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_TOP_OUT);
     end;
   end;
 end;
@@ -1016,20 +1016,20 @@ begin
   if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
   begin
     UpdateItemIndex(Memory.Controller.ButtonIndex, ITEM_CONTROLLER_BUTTON_COUNT, ITEM_PREV);
-    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_BLIP);
   end;
 
   if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
   begin
     UpdateItemIndex(Memory.Controller.ButtonIndex, ITEM_CONTROLLER_BUTTON_COUNT, ITEM_NEXT);
-    Sounds.PlaySound(SOUND_BLIP, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_BLIP);
   end;
 
   if Memory.Controller.ButtonIndex < ITEM_CONTROLLER_BUTTON_LAST then
     if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_CLEAR_MAPPING].JustPressed then
     begin
       Memory.Controller.ScanCodes[Memory.Controller.ButtonIndex] := CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED;
-      Sounds.PlaySound(SOUND_BURN, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_BURN);
     end;
 
   if Memory.Controller.ButtonIndex in [ITEM_CONTROLLER_SCANCODE_FIRST .. ITEM_CONTROLLER_SCANCODE_LAST] then
@@ -1038,14 +1038,14 @@ begin
       Memory.Controller.SettingUp := True;
 
       Input.Controller.Validate();
-      Sounds.PlaySound(SOUND_START, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_START);
     end;
 
   if Memory.Controller.ButtonIndex = ITEM_CONTROLLER_BUTTON_BACK then
     if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
     begin
       Memory.Controller.Changing := False;
-      Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_DROP);
     end;
 
   if not Memory.Controller.SettingUp then
@@ -1055,7 +1055,7 @@ begin
       Input.Keyboard.B.Validate();
 
       Memory.Controller.Changing := False;
-      Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_DROP);
     end;
 end;
 
@@ -1072,7 +1072,7 @@ begin
     Memory.Controller.SettingUp := False;
     Memory.Controller.RemoveDuplicates(ScanCode, Memory.Controller.ButtonIndex);
 
-    Sounds.PlaySound(SOUND_START, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_START);
   end;
 end;
 
@@ -1097,7 +1097,7 @@ begin
     Memory.Controller.Changing := False;
     Memory.Controller.SettingUp := False;
 
-    Sounds.PlaySound(SOUND_TOP_OUT, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_TOP_OUT);
     Exit;
   end;
 
@@ -1108,7 +1108,7 @@ begin
       if Memory.Controller.MappedCorrectly() then
         FScene.Current := SCENE_OPTIONS;
 
-      Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
+      Sounds.PlaySound(SOUND_DROP);
     end;
 
     if Memory.Controller.ItemIndex = ITEM_CONTROLLER_SAVE then
@@ -1118,16 +1118,16 @@ begin
           Input.Controller.Introduce();
 
           FScene.Current := SCENE_OPTIONS;
-          Sounds.PlaySound(SOUND_TETRIS, Memory.Play.Region);
+          Sounds.PlaySound(SOUND_TETRIS);
         end
         else
-          Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
+          Sounds.PlaySound(SOUND_DROP);
 
     if Memory.Controller.ItemIndex = ITEM_CONTROLLER_CANCEL then
       if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
       begin
         FScene.Current := SCENE_OPTIONS;
-        Sounds.PlaySound(SOUND_DROP, Memory.Play.Region);
+        Sounds.PlaySound(SOUND_DROP);
       end;
   end;
 end;
@@ -1293,7 +1293,7 @@ begin
   if FScene.Current <> SCENE_QUIT then
   begin
     FScene.Current := SCENE_QUIT;
-    Sounds.PlaySound(SOUND_GLASS, Memory.Play.Region);
+    Sounds.PlaySound(SOUND_GLASS);
   end;
 end;
 
