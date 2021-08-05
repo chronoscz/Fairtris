@@ -9,7 +9,6 @@ type
   TSounds = class(TObject)
   private
     FSound: Integer;
-    FRegion: Integer;
   private
     FSmart: Boolean;
     FEnabled: Integer;
@@ -24,7 +23,7 @@ type
   private
     function CanPlaySound(ASound: Integer): Boolean;
   private
-    procedure UpdateSound(ASound, ARegion: Integer);
+    procedure UpdateSound(ASound: Integer);
     procedure ExecuteSound();
   public
     procedure Initilize();
@@ -32,7 +31,7 @@ type
     procedure Update();
     procedure Reset();
   public
-    procedure PlaySound(ASound, ARegion: Integer);
+    procedure PlaySound(ASound: Integer);
   public
     property Smart: Boolean read FSmart write FSmart;
     property Enabled: Integer read FEnabled write FEnabled;
@@ -49,6 +48,7 @@ uses
   MMSystem,
   SysUtils,
   DateUtils,
+  Fairtris.Memory,
   Fairtris.Settings,
   Fairtris.Arrays,
   Fairtris.Constants;
@@ -56,7 +56,7 @@ uses
 
 function TSounds.GetSoundLength(): Integer;
 begin
-  case FRegion of
+  case Memory.Play.Region of
     REGION_NTSC, REGION_NTSC_EXTENDED: Result := SOUND_LENGTH_NTSC[FSound];
     REGION_PAL,  REGION_PAL_EXTENDED:  Result := SOUND_LENGTH_PAL[FSound];
     REGION_EUR,  REGION_EUR_EXTENDED:  Result := SOUND_LENGTH_EUR[FSound];
@@ -68,7 +68,7 @@ end;
 
 function TSounds.GetSoundPath(): WideString;
 begin
-  Result := SOUND_PATH[FRegion] + SOUND_FILENAME[FSound];
+  Result := SOUND_PATH[Memory.Play.Region] + SOUND_FILENAME[FSound];
 end;
 
 
@@ -97,10 +97,9 @@ begin
 end;
 
 
-procedure TSounds.UpdateSound(ASound, ARegion: Integer);
+procedure TSounds.UpdateSound(ASound: Integer);
 begin
   FSound := ASound;
-  FRegion := ARegion;
 
   FTimeExecute := Now();
   FTimeExpired := IncMilliSecond(FTimeExecute, GetSoundLength());
@@ -144,14 +143,14 @@ begin
 end;
 
 
-procedure TSounds.PlaySound(ASound, ARegion: Integer);
+procedure TSounds.PlaySound(ASound: Integer);
 begin
   if FEnabled = SOUNDS_DISABLED then Exit;
   if ASound = SOUND_UNKNOWN then Exit;
 
   if CanPlaySound(ASound) then
   begin
-    UpdateSound(ASound, ARegion);
+    UpdateSound(ASound);
     ExecuteSound();
   end;
 end;
