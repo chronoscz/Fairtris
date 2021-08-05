@@ -297,6 +297,8 @@ begin
   else
   begin
     Memory.Game.State := STATE_UPDATE_TOP_OUT;
+    Memory.Game.TopOutTimer := TOP_OUT_FRAMES[Memory.Play.Region];
+
     Sounds.PlaySound(SOUND_TOP_OUT);
   end;
 end;
@@ -322,7 +324,14 @@ end;
 
 procedure TCore.UpdateTopOut();
 begin
-
+  if Memory.Game.TopOutTimer > 0 then
+    Memory.Game.TopOutTimer -= 1
+  else
+    if Input.Device.Start.JustPressed then
+    begin
+      Memory.Game.Ended := True;
+      Sounds.PlaySound(SOUND_START);
+    end;
 end;
 
 

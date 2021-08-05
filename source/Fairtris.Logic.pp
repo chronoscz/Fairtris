@@ -529,11 +529,17 @@ procedure TLogic.UpdateGameScene();
 begin
   FScene.Validate();
 
-  if not Input.Device.Connected or Input.Device.Start.JustPressed then
+  if Memory.Game.State = STATE_UPDATE_TOP_OUT then
   begin
-    FScene.Current := SCENE_PAUSE;
-    Sounds.PlaySound(SOUND_PAUSE);
-  end;
+    if Memory.Game.Ended then
+      FScene.Current := SCENE_TOP_OUT;
+  end
+  else
+    if not Input.Device.Connected or Input.Device.Start.JustPressed then
+    begin
+      FScene.Current := SCENE_PAUSE;
+      Sounds.PlaySound(SOUND_PAUSE);
+    end;
 end;
 
 
