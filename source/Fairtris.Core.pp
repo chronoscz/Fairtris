@@ -17,7 +17,7 @@ type
     function CanRotatePiece(ADirection: Integer): Boolean;
   private
     procedure PlacePiece();
-    procedure DropPiece(var AY: Integer);
+    procedure DropPiece();
     procedure ShiftPiece(var AX: Integer; ADirection: Integer);
     procedure RotatePiece(var AOrientation: Integer; ADirection: Integer);
   public
@@ -140,9 +140,9 @@ begin
 end;
 
 
-procedure TCore.DropPiece(var AY: Integer);
+procedure TCore.DropPiece();
 begin
-  AY += 1;
+  Memory.Game.PieceY += 1;
 end;
 
 
