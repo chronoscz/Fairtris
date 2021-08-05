@@ -177,7 +177,7 @@ begin
   Memory.Game.Reset();
   Memory.Game.Started := True;
 
-  Generators.Generator.Step();
+  Generators.Generator.Prepare();
   Memory.Game.PieceID := Generators.Generator.Pick();
 
   Generators.Generator.Step();
