@@ -16,6 +16,7 @@ type
     function CanShiftPiece(ADirection: Integer): Boolean;
     function CanRotatePiece(ADirection: Integer): Boolean;
   private
+    procedure SpawnPiece();
     procedure PlacePiece();
     procedure DropPiece();
     procedure ShiftPiece(ADirection: Integer);
@@ -111,6 +112,19 @@ begin
 end;
 
 
+procedure TCore.SpawnPiece();
+begin
+  Memory.Game.PieceID := Memory.Game.Next.Current;
+  Memory.Game.PieceOrientation := PIECE_ORIENTATION_SPAWN;
+
+  Memory.Game.Next.Current := Generators.Generator.Pick();
+  Memory.Game.Stats[Memory.Game.PieceID] += 1;
+
+  Memory.Game.PieceX := PIECE_SPAWN_X;
+  Memory.Game.PieceY := PIECE_SPAWN_Y;
+end;
+
+
 procedure TCore.PlacePiece();
 var
   LayoutX, LayoutY: Integer;
@@ -200,15 +214,7 @@ begin
     else
     begin
       PlacePiece();
-
-      Memory.Game.PieceID := Memory.Game.Next.Current;
-      Memory.Game.PieceOrientation := PIECE_ORIENTATION_SPAWN;
-
-      Memory.Game.Next.Current := Generators.Generator.Pick();
-      Memory.Game.Stats[Memory.Game.PieceID] += 1;
-
-      Memory.Game.PieceX := PIECE_SPAWN_X;
-      Memory.Game.PieceY := PIECE_SPAWN_Y;
+      SpawnPiece();
     end;
   // remove after testing
 end;
