@@ -111,6 +111,8 @@ function TCore.CanRotatePiece(ADirection: Integer): Boolean;
 var
   OldOrientation: Integer;
 begin
+  if Memory.Game.PieceID = PIECE_O then Exit(False);
+
   OldOrientation := Memory.Game.PieceOrientation;
   Memory.Game.PieceOrientation := WrapAround(Memory.Game.PieceOrientation, PIECE_ORIENTATION_COUNT, ADirection);
 
