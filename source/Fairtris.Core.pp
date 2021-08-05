@@ -372,6 +372,7 @@ procedure TCore.Reset();
 begin
   Memory.Game.Reset();
   Memory.Game.Started := True;
+  Memory.Game.AutorepeatY := -96;
 
   Generators.Generator.Prepare();
   Memory.Game.PieceID := Generators.Generator.Pick();
