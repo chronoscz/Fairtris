@@ -393,7 +393,7 @@ procedure TCore.Reset();
 begin
   Memory.Game.Reset();
   Memory.Game.Started := True;
-  Memory.Game.AutorepeatY := ENTRY_DELAY_FRAMES[Memory.Play.Region];
+  Memory.Game.AutorepeatY := PIECE_FRAMES_HANG[Memory.Play.Region];
 
   Generators.Generator.Prepare();
   Memory.Game.PieceID := Generators.Generator.Pick();
