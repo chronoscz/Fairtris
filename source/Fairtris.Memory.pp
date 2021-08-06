@@ -46,6 +46,10 @@ type
   TGameStats = array [PIECE_FIRST .. PIECE_LAST] of Integer;
 
 type
+  TGameLineClearFlags   = array [-2 .. 1] of Boolean;
+  TGameLineClearIndexes = array [-2 .. 1] of Integer;
+
+type
   TGameMeter = specialize TCustomState<Integer>;
 
 type
@@ -74,6 +78,10 @@ type
   public
     LockRow: Integer;
     LockTimer: Integer;
+  public
+    ClearCount: Integer;
+    ClearFlags: TGameLineClearFlags;
+    ClearIndexes: TGameLineClearIndexes;
   public
     TopOutTimer: Integer;
   public
@@ -300,6 +308,10 @@ begin
 
   LockRow := 0;
   LockTimer := 0;
+
+  ClearCount := 0;
+  ClearFlags := Default(TGameLineClearFlags);
+  ClearIndexes := Default(TGameLineClearIndexes);
 
   TopOutTimer := 0;
 
