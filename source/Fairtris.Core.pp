@@ -362,10 +362,9 @@ begin
 
   if Memory.Game.LockTimer = 0 then
   begin
+    Memory.Game.State := STATE_UPDATE_COUNTERS;
     Memory.Game.ClearCount := 0;
     Memory.Game.ClearTimer := 0;
-
-    Memory.Game.State := STATE_UPDATE_COUNTERS;
   end;
 end;
 
@@ -404,7 +403,11 @@ begin
   if Memory.Game.ClearCount > 0 then
     Memory.Game.State := STATE_LINES_CLEAR
   else
+  begin
     Memory.Game.State := STATE_PIECE_LOCK;
+    Memory.Game.LockRow := Memory.Game.PieceY;
+    Memory.Game.LockTimer := PIECE_FRAMES_LOCK_DELAY[Memory.Game.LockRow];
+  end;
 end;
 
 
