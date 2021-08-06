@@ -81,6 +81,7 @@ type
   public
     ClearCount: Integer;
     ClearTimer: Integer;
+    ClearColumn: Integer;
     ClearPermits: TGameLineClearPermits;
     ClearIndexes: TGameLineClearIndexes;
   public
@@ -312,6 +313,7 @@ begin
 
   ClearCount := 0;
   ClearTimer := 0;
+  ClearColumn := 0;
   ClearPermits := Default(TGameLineClearPermits);
   ClearIndexes := Default(TGameLineClearIndexes);
 
