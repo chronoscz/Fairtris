@@ -15,6 +15,7 @@ type
     function CanDropPiece(): Boolean;
     function CanShiftPiece(ADirection: Integer): Boolean;
     function CanRotatePiece(ADirection: Integer): Boolean;
+    function CanClearLine(AIndex: Integer): Boolean;
   private
     procedure SpawnPiece();
     procedure PlacePiece();
@@ -125,6 +126,21 @@ begin
     Result := CanPlacePiece();
 
   Memory.Game.PieceOrientation := OldOrientation;
+end;
+
+
+function TCore.CanClearLine(AIndex: Integer): Boolean;
+var
+  BrickX: Integer;
+begin
+  if AIndex < 0 then Exit(False);
+  if AIndex > 19 then Exit(False);
+
+  for BrickX := 0 to 9 do
+    if Memory.Game.Stack[BrickX, AIndex] = BRICK_EMPTY then
+      Exit(False);
+
+  Result := True;
 end;
 
 
@@ -345,7 +361,12 @@ begin
     Sounds.PlaySound(SOUND_DROP);
 
   if Memory.Game.LockTimer = 0 then
+  begin
+    Memory.Game.ClearCount := 0;
+    Memory.Game.ClearTimer := 0;
+
     Memory.Game.State := STATE_LINES_CHECK;
+  end;
 end;
 
 
@@ -366,14 +387,30 @@ end;
 
 
 procedure TCore.UpdateLinesCheck();
+var
+  Index: Integer;
 begin
-  Memory.Game.State := STATE_UPDATE_COUNTERS;
+  for Index := -2 to 1 do
+  begin
+    Memory.Game.ClearPermits[Index] := CanClearLine(Memory.Game.PieceY + Index);
+
+    if Memory.Game.ClearPermits[Index] then
+    begin
+      Memory.Game.ClearIndexes[Index] := Memory.Game.PieceY + Index;
+      Memory.Game.ClearCount += 1;
+    end;
+  end;
+
+  if Memory.Game.ClearCount > 0 then
+    Memory.Game.State := STATE_LINES_CLEAR
+  else
+    Memory.Game.State := STATE_UPDATE_COUNTERS;
 end;
 
 
 procedure TCore.UpdateLinesClear();
 begin
-
+  Memory.Game.State := STATE_UPDATE_COUNTERS;
 end;
 
 
