@@ -345,7 +345,7 @@ begin
     Sounds.PlaySound(SOUND_DROP);
 
   if Memory.Game.LockTimer = 0 then
-    Memory.Game.State := STATE_ROWS_CHECK;
+    Memory.Game.State := STATE_LINES_CHECK;
 end;
 
 
@@ -427,8 +427,8 @@ begin
     STATE_PIECE_CONTROL:    UpdatePieceControl();
     STATE_PIECE_LOCK:       UpdatePieceLock();
     STATE_PIECE_SPAWN:      UpdatePieceSpawn();
-    STATE_ROWS_CHECK:       UpdateRowsCheck();
-    STATE_ROWS_CLEAR:       UpdateRowsClear();
+    STATE_LINES_CHECK:      UpdateRowsCheck();
+    STATE_LINES_CLEAR:      UpdateRowsClear();
     STATE_UPDATE_COUNTERS:  UpdateCounters();
     STATE_UPDATE_PLAYFIELD: UpdatePlayField();
     STATE_UPDATE_TOP_OUT:   UpdateTopOut();
