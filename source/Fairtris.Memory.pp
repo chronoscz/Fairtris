@@ -80,6 +80,7 @@ type
     LockTimer: Integer;
   public
     ClearCount: Integer;
+    ClearTimer: Integer;
     ClearFlags: TGameLineClearFlags;
     ClearIndexes: TGameLineClearIndexes;
   public
@@ -310,6 +311,7 @@ begin
   LockTimer := 0;
 
   ClearCount := 0;
+  ClearTimer := 0;
   ClearFlags := Default(TGameLineClearFlags);
   ClearIndexes := Default(TGameLineClearIndexes);
 
