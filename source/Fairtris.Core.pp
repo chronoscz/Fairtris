@@ -316,9 +316,9 @@ Drop:
   begin
     PlacePiece();
 
-    Memory.Game.State := STATE_PIECE_LOCK;
-    Memory.Game.LockRow := Memory.Game.PieceY;
-    Memory.Game.LockTimer := PIECE_FRAMES_LOCK_DELAY[Memory.Game.LockRow];
+    Memory.Game.State := STATE_LINES_CHECK;
+    Memory.Game.ClearCount := 0;
+    Memory.Game.ClearTimer := 0;
   end;
 
   Exit;
@@ -365,7 +365,7 @@ begin
     Memory.Game.ClearCount := 0;
     Memory.Game.ClearTimer := 0;
 
-    Memory.Game.State := STATE_LINES_CHECK;
+    Memory.Game.State := STATE_UPDATE_COUNTERS;
   end;
 end;
 
@@ -404,7 +404,7 @@ begin
   if Memory.Game.ClearCount > 0 then
     Memory.Game.State := STATE_LINES_CLEAR
   else
-    Memory.Game.State := STATE_UPDATE_COUNTERS;
+    Memory.Game.State := STATE_PIECE_LOCK;
 end;
 
 
