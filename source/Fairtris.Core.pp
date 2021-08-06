@@ -299,7 +299,10 @@ Drop:
   else
   begin
     PlacePiece();
+
     Memory.Game.State := STATE_PIECE_LOCK;
+    Memory.Game.LockRow := Memory.Game.PieceY;
+    Memory.Game.LockTimer := PIECE_FRAMES_LOCK_DELAY[Memory.Game.LockRow];
   end;
 
   Exit;
@@ -336,10 +339,13 @@ end;
 
 procedure TCore.UpdatePieceLock();
 begin
-  PlacePiece();
-  Sounds.PlaySound(SOUND_DROP);
+  Memory.Game.LockTimer -= 1;
 
-  Memory.Game.State := STATE_ROWS_CHECK;
+  if Memory.Game.LockTimer = PIECE_FRAMES_LOCK_SOUND[Memory.Game.LockRow] then
+    Sounds.PlaySound(SOUND_DROP);
+
+  if Memory.Game.LockTimer = 0 then
+    Memory.Game.State := STATE_ROWS_CHECK;
 end;
 
 
