@@ -81,7 +81,7 @@ type
   public
     ClearCount: Integer;
     ClearTimer: Integer;
-    ClearFlags: TGameLineClearPermits;
+    ClearPermits: TGameLineClearPermits;
     ClearIndexes: TGameLineClearIndexes;
   public
     TopOutTimer: Integer;
@@ -312,7 +312,7 @@ begin
 
   ClearCount := 0;
   ClearTimer := 0;
-  ClearFlags := Default(TGameLineClearPermits);
+  ClearPermits := Default(TGameLineClearPermits);
   ClearIndexes := Default(TGameLineClearIndexes);
 
   TopOutTimer := 0;
