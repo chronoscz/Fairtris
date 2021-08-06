@@ -411,7 +411,10 @@ begin
   end;
 
   if Memory.Game.ClearCount > 0 then
-    Memory.Game.State := STATE_LINES_CLEAR
+  begin
+    Memory.Game.State := STATE_LINES_CLEAR;
+    Memory.Game.PieceID := PIECE_UNKNOWN;
+  end
   else
   begin
     Memory.Game.State := STATE_PIECE_LOCK;
