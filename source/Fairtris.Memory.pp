@@ -46,7 +46,7 @@ type
   TGameStats = array [PIECE_FIRST .. PIECE_LAST] of Integer;
 
 type
-  TGameLineClearFlags   = array [-2 .. 1] of Boolean;
+  TGameLineClearPermits = array [-2 .. 1] of Boolean;
   TGameLineClearIndexes = array [-2 .. 1] of Integer;
 
 type
@@ -81,7 +81,7 @@ type
   public
     ClearCount: Integer;
     ClearTimer: Integer;
-    ClearFlags: TGameLineClearFlags;
+    ClearFlags: TGameLineClearPermits;
     ClearIndexes: TGameLineClearIndexes;
   public
     TopOutTimer: Integer;
@@ -312,7 +312,7 @@ begin
 
   ClearCount := 0;
   ClearTimer := 0;
-  ClearFlags := Default(TGameLineClearFlags);
+  ClearFlags := Default(TGameLineClearPermits);
   ClearIndexes := Default(TGameLineClearIndexes);
 
   TopOutTimer := 0;
