@@ -427,6 +427,12 @@ var
 begin
   Memory.Game.ClearTimer += 1;
 
+  if Memory.Game.ClearTimer = 8 then
+    if Memory.Game.ClearCount = 4 then
+      Sounds.PlaySound(SOUND_TETRIS)
+    else
+      Sounds.PlaySound(SOUND_BURN);
+
   if Memory.Game.ClearTimer mod 4 = 0 then
   begin
     for Index := -2 to 1 do
