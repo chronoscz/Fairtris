@@ -29,8 +29,8 @@ type
     procedure UpdatePieceControl();
     procedure UpdatePieceLock();
     procedure UpdatePieceSpawn();
-    procedure UpdateRowsCheck();
-    procedure UpdateRowsClear();
+    procedure UpdateLinesCheck();
+    procedure UpdateLinesClear();
     procedure UpdateCounters();
     procedure UpdatePlayField();
     procedure UpdateTopOut();
@@ -365,13 +365,13 @@ begin
 end;
 
 
-procedure TCore.UpdateRowsCheck();
+procedure TCore.UpdateLinesCheck();
 begin
   Memory.Game.State := STATE_UPDATE_COUNTERS;
 end;
 
 
-procedure TCore.UpdateRowsClear();
+procedure TCore.UpdateLinesClear();
 begin
 
 end;
@@ -427,8 +427,8 @@ begin
     STATE_PIECE_CONTROL:    UpdatePieceControl();
     STATE_PIECE_LOCK:       UpdatePieceLock();
     STATE_PIECE_SPAWN:      UpdatePieceSpawn();
-    STATE_LINES_CHECK:      UpdateRowsCheck();
-    STATE_LINES_CLEAR:      UpdateRowsClear();
+    STATE_LINES_CHECK:      UpdateLinesCheck();
+    STATE_LINES_CLEAR:      UpdateLinesClear();
     STATE_UPDATE_COUNTERS:  UpdateCounters();
     STATE_UPDATE_PLAYFIELD: UpdatePlayField();
     STATE_UPDATE_TOP_OUT:   UpdateTopOut();
