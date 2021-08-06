@@ -32,6 +32,7 @@ type
     procedure UpdateRowsCheck();
     procedure UpdateRowsClear();
     procedure UpdateCounters();
+    procedure UpdatePlayField();
     procedure UpdateTopOut();
   public
     procedure Reset();
@@ -372,6 +373,12 @@ end;
 
 procedure TCore.UpdateCounters();
 begin
+  Memory.Game.State := STATE_UPDATE_PLAYFIELD;
+end;
+
+
+procedure TCore.UpdatePlayField();
+begin
   Memory.Game.State := STATE_PIECE_SPAWN;
 end;
 
@@ -411,13 +418,14 @@ begin
   Generators.Generator.Step();
 
   case Memory.Game.State of
-    STATE_PIECE_CONTROL:   UpdatePieceControl();
-    STATE_PIECE_LOCK:      UpdatePieceLock();
-    STATE_PIECE_SPAWN:     UpdatePieceSpawn();
-    STATE_ROWS_CHECK:      UpdateRowsCheck();
-    STATE_ROWS_CLEAR:      UpdateRowsClear();
-    STATE_UPDATE_COUNTERS: UpdateCounters();
-    STATE_UPDATE_TOP_OUT:  UpdateTopOut();
+    STATE_PIECE_CONTROL:    UpdatePieceControl();
+    STATE_PIECE_LOCK:       UpdatePieceLock();
+    STATE_PIECE_SPAWN:      UpdatePieceSpawn();
+    STATE_ROWS_CHECK:       UpdateRowsCheck();
+    STATE_ROWS_CLEAR:       UpdateRowsClear();
+    STATE_UPDATE_COUNTERS:  UpdateCounters();
+    STATE_UPDATE_PLAYFIELD: UpdatePlayField();
+    STATE_UPDATE_TOP_OUT:   UpdateTopOut();
   end;
 end;
 
