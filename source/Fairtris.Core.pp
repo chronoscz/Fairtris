@@ -22,6 +22,7 @@ type
     procedure DropPiece();
     procedure ShiftPiece(ADirection: Integer);
     procedure RotatePiece(ADirection: Integer);
+    procedure ClearLine(AIndex: Integer);
   private
     procedure UpdatePieceControlShift();
     procedure UpdatePieceControlRotate();
@@ -204,6 +205,13 @@ begin
 end;
 
 
+procedure TCore.ClearLine(AIndex: Integer);
+begin
+  Memory.Game.Stack[Memory.Game.ClearColumn, AIndex] := BRICK_EMPTY;
+  Memory.Game.Stack[9 - Memory.Game.ClearColumn, AIndex] := BRICK_EMPTY;
+end;
+
+
 procedure TCore.UpdatePieceControlShift();
 begin
   if Input.Device.Down.Pressed then Exit;
@@ -317,8 +325,10 @@ Drop:
     PlacePiece();
 
     Memory.Game.State := STATE_LINES_CHECK;
+
     Memory.Game.ClearCount := 0;
     Memory.Game.ClearTimer := 0;
+    Memory.Game.ClearColumn := 4;
   end;
 
   Exit;
@@ -412,8 +422,22 @@ end;
 
 
 procedure TCore.UpdateLinesClear();
+var
+  Index: Integer;
 begin
-  Memory.Game.State := STATE_UPDATE_COUNTERS;
+  Memory.Game.ClearTimer += 1;
+
+  if Memory.Game.ClearTimer mod 4 = 0 then
+  begin
+    for Index := -2 to 1 do
+      if Memory.Game.ClearPermits[Index] then
+        ClearLine(Memory.Game.ClearIndexes[Index]);
+
+    Memory.Game.ClearColumn -= 1;
+
+    if Memory.Game.ClearColumn < 0 then
+      Memory.Game.State := STATE_UPDATE_COUNTERS;
+  end;
 end;
 
 
