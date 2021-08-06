@@ -72,6 +72,7 @@ type
     FallTimer: Integer;
     FallPoints: Integer;
   public
+    LockTimer: Integer;
     TopOutTimer: Integer;
   public
     Stack: TGameStack;
@@ -295,6 +296,7 @@ begin
   FallTimer := 0;
   FallPoints := 0;
 
+  LockTimer := 0;
   TopOutTimer := 0;
 
   Stack := Default(TGameStack);
