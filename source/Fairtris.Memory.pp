@@ -85,6 +85,7 @@ type
     ClearPermits: TGameLineClearPermits;
     ClearIndexes: TGameLineClearIndexes;
   public
+    LowerTimer: Integer;
     TopOutTimer: Integer;
   public
     Stack: TGameStack;
@@ -317,6 +318,7 @@ begin
   ClearPermits := Default(TGameLineClearPermits);
   ClearIndexes := Default(TGameLineClearIndexes);
 
+  LowerTimer := 0;
   TopOutTimer := 0;
 
   Stack := Default(TGameStack);
