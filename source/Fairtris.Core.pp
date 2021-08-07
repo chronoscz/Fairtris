@@ -230,6 +230,10 @@ begin
     for BrickX := 0 to 9 do
       Memory.Game.Stack[BrickX, BrickY + 1] := Memory.Game.Stack[BrickX, BrickY];
 
+  for BrickY := -2 to 0 do
+    for BrickX := 0 to 9 do
+      Memory.Game.Stack[BrickX, BrickY] := BRICK_EMPTY;
+
   for LineIndex := Memory.Game.LowerTimer - 1 downto -2 do
     if Memory.Game.ClearPermits[LineIndex] then
       Memory.Game.ClearIndexes[LineIndex] += 1;
