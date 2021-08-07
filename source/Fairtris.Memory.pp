@@ -81,6 +81,12 @@ type
     ClearPermits: TGameLineClearPermits;
     ClearIndexes: TGameLineClearIndexes;
   public
+    AfterTransition: Boolean;
+    AfterKillScreen: Boolean;
+  public
+    TransitionLines: Integer;
+    KillScreenLines: Integer;
+  public
     LowerTimer: Integer;
     TopOutTimer: Integer;
   public
@@ -289,6 +295,12 @@ begin
   ClearColumn := 0;
   ClearPermits := Default(TGameLineClearPermits);
   ClearIndexes := Default(TGameLineClearIndexes);
+
+  AfterTransition := False;
+  AfterKillScreen := False;
+
+  TransitionLines := 0;
+  KillScreenLines := 0;
 
   LowerTimer := 0;
   TopOutTimer := 0;

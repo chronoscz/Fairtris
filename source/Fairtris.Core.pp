@@ -33,7 +33,6 @@ type
     procedure UpdatePieceControlDrop();
   private
     procedure UpdateCountersLines();
-    procedure UpdateCountersLevel();
     procedure UpdateCountersScore();
   private
     procedure UpdateGenerator();
@@ -391,14 +390,49 @@ end;
 
 
 procedure TCore.UpdateCountersLines();
+var
+  HappenedKillScreen: Boolean = False;
+  HappenedAnyTransition: Boolean = False;
+  HappenedFirstTransition: Boolean = False;
 begin
+  if Memory.Game.ClearCount = 0 then Exit;
 
-end;
+  if not Memory.Game.AfterTransition then
+    if Memory.Game.Lines + Memory.Game.ClearCount >= TRANSITION_LINES[Memory.Play.Region, Memory.Play.Level] then
+      HappenedFirstTransition := True;
 
+  if Memory.Game.AfterTransition then
+  begin
+    if (Memory.Game.Lines div 10) <> ((Memory.Game.Lines + Memory.Game.ClearCount) div 10) then
+      HappenedAnyTransition := True;
 
-procedure TCore.UpdateCountersLevel();
-begin
+    if HappenedAnyTransition then
+      if Memory.Game.Lines + Memory.Game.ClearCount >= KILLSCREEN_LINES[Memory.Play.Region, Memory.Play.Level] then
+        HappenedKillScreen := True;
+  end;
 
+  if HappenedFirstTransition then
+    Memory.Game.AfterTransition := True;
+
+  if HappenedFirstTransition or HappenedAnyTransition then
+  begin
+    Memory.Game.Level += 1;
+    Sounds.PlaySound(SOUND_TRANSITION);
+  end;
+
+  Memory.Game.Lines += Memory.Game.ClearCount;
+  Memory.Game.LineClears[Memory.Game.ClearCount] += 1;
+
+  if not Memory.Game.AfterKillScreen then
+    Memory.Game.Tetrises := Round(Memory.Game.LineClears[LINES_TETRISES] * 4 / Memory.Game.Lines * 100);
+
+  if HappenedKillScreen then
+    Memory.Game.AfterKillScreen := True;
+
+  if Memory.Game.ClearCount = 4 then
+    Memory.Game.Burned := 0
+  else
+    Memory.Game.Burned += Memory.Game.ClearCount;
 end;
 
 
@@ -551,7 +585,6 @@ end;
 procedure TCore.UpdateCounters();
 begin
   UpdateCountersLines();
-  UpdateCountersLevel();
   UpdateCountersScore();
 
   Memory.Game.State := STATE_STACK_LOWER;
