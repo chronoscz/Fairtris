@@ -48,6 +48,12 @@ type
     procedure RenderPauseSelection();
     procedure RenderPauseItems();
   protected
+    procedure RenderTopOutResultScore();
+    procedure RenderTopOutResultTransition();
+    procedure RenderTopOutResultLinesCleared();
+    procedure RenderTopOutResultLinesBurned();
+    procedure RenderTopOutResultTetrisRate();
+  protected
     procedure RenderTopOutSelection();
     procedure RenderTopOutItems();
     procedure RenderTopOutResult();
@@ -634,6 +640,93 @@ begin
 end;
 
 
+procedure TRenderer.RenderTopOutResultScore();
+begin
+  RenderText(
+    ITEM_X_TOP_OUT_RESULT_TOTAL_SCORE,
+    ITEM_Y_TOP_OUT_RESULT_TOTAL_SCORE,
+    Converter.ScoreToString(Memory.TopOut.TotalScore),
+    COLOR_WHITE,
+    ALIGN_RIGHT
+  );
+end;
+
+
+procedure TRenderer.RenderTopOutResultTransition();
+begin
+  if Memory.TopOut.Transition > 0 then
+    RenderText(
+      ITEM_X_TOP_OUT_RESULT_TRANSITION,
+      ITEM_Y_TOP_OUT_RESULT_TRANSITION,
+      Converter.ScoreToString(Memory.TopOut.Transition),
+      COLOR_WHITE,
+      ALIGN_RIGHT
+    )
+  else
+    RenderText(
+      ITEM_X_TOP_OUT_RESULT_TRANSITION,
+      ITEM_Y_TOP_OUT_RESULT_TRANSITION,
+      '-',
+      COLOR_DARK,
+      ALIGN_RIGHT
+    );
+end;
+
+
+procedure TRenderer.RenderTopOutResultLinesCleared();
+begin
+  RenderText(
+    ITEM_X_TOP_OUT_RESULT_LINES_CLEARED,
+    ITEM_Y_TOP_OUT_RESULT_LINES_CLEARED,
+    Converter.LinesToString(Memory.TopOut.LinesCleared),
+    COLOR_WHITE,
+    ALIGN_RIGHT
+  );
+end;
+
+
+procedure TRenderer.RenderTopOutResultLinesBurned();
+begin
+  if Memory.TopOut.LinesBurned > 0 then
+    RenderText(
+      ITEM_X_TOP_OUT_RESULT_LINES_BURNED,
+      ITEM_Y_TOP_OUT_RESULT_LINES_BURNED,
+      Converter.LinesToString(Memory.TopOut.LinesBurned),
+      COLOR_WHITE,
+      ALIGN_RIGHT
+    )
+  else
+    RenderText(
+      ITEM_X_TOP_OUT_RESULT_LINES_BURNED,
+      ITEM_Y_TOP_OUT_RESULT_LINES_BURNED,
+      '-',
+      COLOR_DARK,
+      ALIGN_RIGHT
+    );
+end;
+
+
+procedure TRenderer.RenderTopOutResultTetrisRate();
+begin
+  if Memory.TopOut.LinesCleared > 0 then
+    RenderText(
+      ITEM_X_TOP_OUT_RESULT_TETRIS_RATE,
+      ITEM_Y_TOP_OUT_RESULT_TETRIS_RATE,
+      Converter.TetrisesToString(Memory.TopOut.TetrisRate),
+      COLOR_WHITE,
+      ALIGN_RIGHT
+    )
+  else
+    RenderText(
+      ITEM_X_TOP_OUT_RESULT_TETRIS_RATE,
+      ITEM_Y_TOP_OUT_RESULT_TETRIS_RATE,
+      '-',
+      COLOR_DARK,
+      ALIGN_RIGHT
+    );
+end;
+
+
 procedure TRenderer.RenderTopOutSelection();
 begin
   RenderText(
@@ -676,45 +769,11 @@ end;
 
 procedure TRenderer.RenderTopOutResult();
 begin
-  RenderText(
-    ITEM_X_TOP_OUT_RESULT_TOTAL_SCORE,
-    ITEM_Y_TOP_OUT_RESULT_TOTAL_SCORE,
-    Converter.ScoreToString(Memory.TopOut.TotalScore),
-    COLOR_WHITE,
-    ALIGN_RIGHT
-  );
-
-  RenderText(
-    ITEM_X_TOP_OUT_RESULT_TRANSITION,
-    ITEM_Y_TOP_OUT_RESULT_TRANSITION,
-    Converter.ScoreToString(Memory.TopOut.Transition),
-    COLOR_WHITE,
-    ALIGN_RIGHT
-  );
-
-  RenderText(
-    ITEM_X_TOP_OUT_RESULT_LINES_CLEARED,
-    ITEM_Y_TOP_OUT_RESULT_LINES_CLEARED,
-    Converter.LinesToString(Memory.TopOut.LinesCleared),
-    COLOR_WHITE,
-    ALIGN_RIGHT
-  );
-
-  RenderText(
-    ITEM_X_TOP_OUT_RESULT_LINES_BURNED,
-    ITEM_Y_TOP_OUT_RESULT_LINES_BURNED,
-    Converter.LinesToString(Memory.TopOut.LinesBurned),
-    COLOR_WHITE,
-    ALIGN_RIGHT
-  );
-
-  RenderText(
-    ITEM_X_TOP_OUT_RESULT_TETRIS_RATE,
-    ITEM_Y_TOP_OUT_RESULT_TETRIS_RATE,
-    Converter.TetrisesToString(Memory.TopOut.TetrisRate),
-    COLOR_WHITE,
-    ALIGN_RIGHT
-  );
+  RenderTopOutResultScore();
+  RenderTopOutResultTransition();
+  RenderTopOutResultLinesCleared();
+  RenderTopOutResultLinesBurned();
+  RenderTopOutResultTetrisRate();
 end;
 
 
