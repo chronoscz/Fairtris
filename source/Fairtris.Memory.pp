@@ -86,9 +86,6 @@ type
     AfterTransition: Boolean;
     AfterKillScreen: Boolean;
   public
-    TransitionLines: Integer;
-    KillScreenLines: Integer;
-  public
     LowerTimer: Integer;
     TopOutTimer: Integer;
   public
@@ -304,9 +301,6 @@ begin
 
   AfterTransition := False;
   AfterKillScreen := False;
-
-  TransitionLines := 0;
-  KillScreenLines := 0;
 
   LowerTimer := 0;
   TopOutTimer := 0;
