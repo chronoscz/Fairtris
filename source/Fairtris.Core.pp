@@ -390,7 +390,10 @@ end;
 
 procedure TCore.UpdateCountersLines();
 var
+  Gain: Integer;
+var
   HappenedKillScreen: Boolean = False;
+  HappenedHiTransition: Boolean = False;
   HappenedAnyTransition: Boolean = False;
   HappenedFirstTransition: Boolean = False;
 begin
@@ -413,17 +416,18 @@ begin
   if HappenedFirstTransition then
     Memory.Game.AfterTransition := True;
 
-  if HappenedFirstTransition or HappenedAnyTransition then
+  if HappenedAnyTransition then
   begin
     Memory.Game.Level += 1;
     Sounds.PlaySound(SOUND_TRANSITION);
   end;
 
   Memory.Game.Lines += Memory.Game.ClearCount;
+  Memory.Game.LinesCleared := Memory.Game.Lines;
   Memory.Game.LineClears[Memory.Game.ClearCount] += 1;
 
   if not Memory.Game.AfterKillScreen then
-    Memory.Game.Tetrises := Round(Memory.Game.LineClears[LINES_TETRISES] * 4 / Memory.Game.Lines * 100);
+    Memory.Game.TetrisRate := Round((Memory.Game.LinesCleared - Memory.Game.LinesBurned) / Memory.Game.Lines * 100);
 
   if HappenedKillScreen then
     Memory.Game.AfterKillScreen := True;
@@ -431,14 +435,11 @@ begin
   if Memory.Game.ClearCount = 4 then
     Memory.Game.Burned := 0
   else
+  begin
     Memory.Game.Burned += Memory.Game.ClearCount;
-end;
+    Memory.Game.LinesBurned += Memory.Game.ClearCount;
+  end;
 
-
-procedure TCore.UpdateCountersScore();
-var
-  Gain: Integer;
-begin
   Gain := Memory.Game.FallPoints;
   Gain += (Memory.Game.Level + 1) * LINECLEAR_VALUE[Memory.Game.ClearCount];
 
@@ -449,6 +450,18 @@ begin
     Memory.Game.Gain := Gain;
     Memory.Game.GainTimer := GAIN_SECONDS_VISIBLE * Clock.FrameRateLimit;
   end;
+
+  if HappenedAnyTransition then
+  begin
+    if (Memory.Play.Level < 19) and (Memory.Game.Level = 19) then Memory.Game.Transition := Memory.Game.Score;
+    if (Memory.Play.Level = 19) and (Memory.Game.Level = 20) then Memory.Game.Transition := Memory.Game.Score;
+  end;
+end;
+
+
+procedure TCore.UpdateCountersScore();
+begin
+
 end;
 
 

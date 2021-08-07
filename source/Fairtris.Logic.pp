@@ -215,7 +215,7 @@ end;
 
 procedure TLogic.PrepareTopOutResult();
 begin
-  Memory.TopOut.TotalScore := Memory.Game.TotalScore;
+  Memory.TopOut.TotalScore := Memory.Game.Score;
   Memory.TopOut.Transition := Memory.Game.Transition;
 
   Memory.TopOut.LinesCleared := Memory.Game.LinesCleared;

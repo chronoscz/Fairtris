@@ -98,9 +98,12 @@ type
     Stats: TGameStats;
     LineClears: TGameLineClears;
   public
-    Top: Integer;
+    Best: Integer;
     Score: Integer;
+    Transition: Integer;
     Lines: Integer;
+    LinesCleared: Integer;
+    LinesBurned: Integer;
     Level: Integer;
     Next: Integer;
     NextVisible: Boolean;
@@ -108,11 +111,6 @@ type
     TetrisRate: Integer;
     Gain: Integer;
     GainTimer: Integer;
-  public
-    TotalScore: Integer;
-    Transition: Integer;
-    LinesCleared: Integer;
-    LinesBurned: Integer;
   end;
 
 
@@ -319,9 +317,14 @@ begin
   Stats := Default(TGameStats);
   LineClears := Default(TGameLineClears);
 
-  Top := 0;
+  Best := 0;
   Score := 0;
+  Transition := 0;
+
   Lines := 0;
+  LinesCleared := 0;
+  LinesBurned := 0;
+
   Level := 0;
   Next  := 0;
   Burned := 0;
@@ -329,11 +332,6 @@ begin
 
   Gain := 0;
   GainTimer := 0;
-
-  TotalScore := 0;
-  Transition := 0;
-  LinesCleared := 0;
-  LinesBurned := 0;
 end;
 
 

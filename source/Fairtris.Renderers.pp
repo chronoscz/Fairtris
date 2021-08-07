@@ -37,7 +37,7 @@ type
     procedure RenderPlayParameters();
     procedure RenderPlayBestScores();
   protected
-    procedure RenderGameTop();
+    procedure RenderGameBest();
     procedure RenderGameScore();
     procedure RenderGameLines();
     procedure RenderGameLevel();
@@ -457,12 +457,12 @@ begin
 end;
 
 
-procedure TRenderer.RenderGameTop();
+procedure TRenderer.RenderGameBest();
 begin
   RenderText(
     TOP_X[Memory.Options.Theme],
     TOP_Y[Memory.Options.Theme],
-    Converter.ScoreToString(Memory.Game.Top)
+    Converter.ScoreToString(Memory.Game.Best)
   );
 end;
 
@@ -1141,7 +1141,7 @@ end;
 
 procedure TModernRenderer.RenderGame();
 begin
-  RenderGameTop();
+  RenderGameBest();
   RenderGameScore();
   RenderGameLines();
   RenderGameLevel();
@@ -1300,7 +1300,7 @@ end;
 
 procedure TClassicRenderer.RenderGame();
 begin
-  RenderGameTop();
+  RenderGameBest();
   RenderGameScore();
   RenderGameLines();
   RenderGameLevel();
