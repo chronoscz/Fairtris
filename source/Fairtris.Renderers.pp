@@ -462,7 +462,7 @@ begin
   RenderText(
     TOP_X[Memory.Options.Theme],
     TOP_Y[Memory.Options.Theme],
-    Converter.ScoreToString(Memory.Game.Top.Current)
+    Converter.ScoreToString(Memory.Game.Top)
   );
 end;
 
@@ -472,7 +472,7 @@ begin
   RenderText(
     SCORES_X[Memory.Options.Theme],
     SCORES_Y[Memory.Options.Theme],
-    Converter.ScoreToString(Memory.Game.Score.Current)
+    Converter.ScoreToString(Memory.Game.Score)
   );
 end;
 
@@ -482,7 +482,7 @@ begin
   RenderText(
     LINES_X[Memory.Options.Theme],
     LINES_Y[Memory.Options.Theme],
-    Converter.LinesToString(Memory.Game.Lines.Current)
+    Converter.LinesToString(Memory.Game.Lines)
   );
 end;
 
@@ -492,20 +492,20 @@ begin
   RenderText(
     LEVEL_X[Memory.Options.Theme],
     LEVEL_Y[Memory.Options.Theme],
-    Converter.LevelToString(Memory.Game.Level.Current)
+    Converter.LevelToString(Memory.Game.Level)
   );
 end;
 
 
 procedure TRenderer.RenderGameNext();
 begin
-  if Memory.Game.Next.Current = PIECE_UNKNOWN then Exit;
+  if Memory.Game.Next = PIECE_UNKNOWN then Exit;
 
   RenderNext(
     NEXT_X[Memory.Options.Theme],
     NEXT_Y[Memory.Options.Theme],
-    Memory.Game.Next.Current,
-    Memory.Game.Level.Current
+    Memory.Game.Next,
+    Memory.Game.Level
   );
 end;
 
@@ -529,7 +529,7 @@ begin
           OffsetX,
           OffsetY,
           Memory.Game.Stack[BrickX, BrickY],
-          Memory.Game.Level.Current
+          Memory.Game.Level
         );
 
       OffsetX += BRICK_CELL_WIDTH;
@@ -573,7 +573,7 @@ begin
           BrickY - Memory.Game.PieceY,
           BrickX - Memory.Game.PieceX
         ],
-        Memory.Game.Level.Current
+        Memory.Game.Level
       );
     end;
   end;
@@ -1073,7 +1073,7 @@ begin
   RenderText(
     BURNED_X,
     BURNED_Y,
-    Converter.BurnedToString(Memory.Game.Burned.Current),
+    Converter.BurnedToString(Memory.Game.Burned),
     COLOR_WHITE,
     ALIGN_RIGHT
   );
@@ -1085,7 +1085,7 @@ begin
   RenderText(
     TETRISES_X,
     TETRISES_Y,
-    Converter.TetrisesToString(Memory.Game.Tetrises.Current),
+    Converter.TetrisesToString(Memory.Game.Tetrises),
     COLOR_WHITE,
     ALIGN_RIGHT
   );
@@ -1097,7 +1097,7 @@ begin
   RenderText(
     GAIN_X,
     GAIN_Y,
-    Converter.GainToString(Memory.Game.Gain.Current),
+    Converter.GainToString(Memory.Game.Gain),
     COLOR_WHITE,
     ALIGN_RIGHT
   );
@@ -1264,7 +1264,7 @@ begin
       MINIATURE_X[Index],
       MINIATURE_Y[Index],
       Index,
-      Memory.Game.Level.Current
+      Memory.Game.Level
     );
 
     RenderText(
