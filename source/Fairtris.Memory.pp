@@ -88,6 +88,8 @@ type
     LowerTimer: Integer;
     TopOutTimer: Integer;
   public
+    Flashing: Boolean;
+  public
     Stack: TGameStack;
     Stats: TGameStats;
   public
@@ -320,6 +322,8 @@ begin
 
   LowerTimer := 0;
   TopOutTimer := 0;
+
+  Flashing := False;
 
   Stack := Default(TGameStack);
   Stats := Default(TGameStats);
