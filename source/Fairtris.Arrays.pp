@@ -925,6 +925,10 @@ const
 
 
 const
+  LINECLEAR_VALUE: array [LINES_UNKNOWN .. LINES_LAST] of Integer = (0, 40, 100, 300, 1200);
+
+
+const
   TOP_OUT_FRAMES: array [REGION_FIRST .. REGION_LAST] of Integer = (
     CLOCK_FRAMERATE_NTSC,
     CLOCK_FRAMERATE_NTSC,

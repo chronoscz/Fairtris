@@ -98,6 +98,7 @@ type
     Burned: Integer;
     Tetrises: Integer;
     Gain: Integer;
+    GainTimer: Integer;
   public
     TotalScore: Integer;
     Transition: Integer;
@@ -305,7 +306,9 @@ begin
   Next  := 0;
   Burned := 0;
   Tetrises := 0;
+
   Gain := 0;
+  GainTimer := 0;
 
   TotalScore := 0;
   Transition := 0;

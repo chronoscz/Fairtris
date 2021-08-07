@@ -32,10 +32,12 @@ type
     procedure UpdatePieceControlRotate();
     procedure UpdatePieceControlDrop();
   private
-    procedure UpdateCountersScore();
     procedure UpdateCountersLines();
     procedure UpdateCountersLevel();
+    procedure UpdateCountersScore();
   private
+    procedure UpdateGenerator();
+    procedure UpdateDynamicCounters();
     procedure UpdatePieceControl();
     procedure UpdatePieceLock();
     procedure UpdatePieceSpawn();
@@ -57,6 +59,7 @@ var
 implementation
 
 uses
+  Fairtris.Clock,
   Fairtris.Input,
   Fairtris.Sounds,
   Fairtris.Generators,
@@ -161,10 +164,10 @@ end;
 
 procedure TCore.SpawnPiece();
 begin
-  Memory.Game.PieceID := Memory.Game.Next.Current;
+  Memory.Game.PieceID := Memory.Game.Next;
   Memory.Game.PieceOrientation := PIECE_ORIENTATION_SPAWN;
 
-  Memory.Game.Next.Current := Generators.Generator.Pick();
+  Memory.Game.Next := Generators.Generator.Pick();
   Memory.Game.Stats[Memory.Game.PieceID] += 1;
 
   Memory.Game.PieceX := PIECE_SPAWN_X;
@@ -368,8 +371,8 @@ Drop:
 LookupDropSpeed:
   Memory.Game.FallTimer += 1;
 
-  if Memory.Game.Level.Current < LEVEL_LAST then
-    DropSpeed := GRAVITY_FRAMES[Memory.Play.Region, Memory.Game.Level.Current]
+  if Memory.Game.Level < LEVEL_LAST then
+    DropSpeed := GRAVITY_FRAMES[Memory.Play.Region, Memory.Game.Level]
   else
   begin
     DropSpeed := 1;
@@ -387,12 +390,6 @@ IncrementAutorepeatY:
 end;
 
 
-procedure TCore.UpdateCountersScore();
-begin
-
-end;
-
-
 procedure TCore.UpdateCountersLines();
 begin
 
@@ -402,6 +399,36 @@ end;
 procedure TCore.UpdateCountersLevel();
 begin
 
+end;
+
+
+procedure TCore.UpdateCountersScore();
+var
+  Gain: Integer;
+begin
+  Gain := Memory.Game.FallPoints;
+  Gain += (Memory.Game.Level + 1) * LINECLEAR_VALUE[Memory.Game.ClearCount];
+
+  Memory.Game.Score += Gain;
+
+  if Gain > 0 then
+  begin
+    Memory.Game.Gain := Gain;
+    Memory.Game.GainTimer := GAIN_SECONDS_VISIBLE * Clock.FrameRateLimit;
+  end;
+end;
+
+
+procedure TCore.UpdateGenerator();
+begin
+  Generators.Generator.Step();
+end;
+
+
+procedure TCore.UpdateDynamicCounters();
+begin
+  if Memory.Game.GainTimer > 0 then
+    Memory.Game.GainTimer -= 1;
 end;
 
 
@@ -523,9 +550,9 @@ end;
 
 procedure TCore.UpdateCounters();
 begin
-  UpdateCountersScore();
   UpdateCountersLines();
   UpdateCountersLevel();
+  UpdateCountersScore();
 
   Memory.Game.State := STATE_STACK_LOWER;
   Memory.Game.LowerTimer := 1;
@@ -555,16 +582,17 @@ begin
   Memory.Game.PieceID := Generators.Generator.Pick();
 
   Generators.Generator.Step();
-  Memory.Game.Next.Current := Generators.Generator.Pick();
+  Memory.Game.Next := Generators.Generator.Pick();
 
-  Memory.Game.Level.Current := Memory.Play.Level;
+  Memory.Game.Level := Memory.Play.Level;
   Memory.Game.Stats[Memory.Game.PieceID] += 1;
 end;
 
 
 procedure TCore.Update();
 begin
-  Generators.Generator.Step();
+  UpdateGenerator();
+  UpdateDynamicCounters();
 
   case Memory.Game.State of
     STATE_PIECE_CONTROL:   UpdatePieceControl();

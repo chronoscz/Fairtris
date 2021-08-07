@@ -1094,13 +1094,14 @@ end;
 
 procedure TModernRenderer.RenderGameGain();
 begin
-  RenderText(
-    GAIN_X,
-    GAIN_Y,
-    Converter.GainToString(Memory.Game.Gain),
-    COLOR_WHITE,
-    ALIGN_RIGHT
-  );
+  if Memory.Game.GainTimer > 0 then
+    RenderText(
+      GAIN_X,
+      GAIN_Y,
+      Converter.GainToString(Memory.Game.Gain),
+      COLOR_WHITE,
+      ALIGN_RIGHT
+    );
 end;
 
 
