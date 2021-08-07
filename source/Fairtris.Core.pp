@@ -464,6 +464,9 @@ begin
     else
       Sounds.PlaySound(SOUND_BURN);
 
+  if Memory.Game.ClearCount = 4 then
+    Memory.Game.Flashing := Memory.Game.ClearTimer mod 4 < 2;
+
   if Memory.Game.ClearTimer mod 4 = 0 then
   begin
     for Index := -2 to 1 do
@@ -473,7 +476,10 @@ begin
     Memory.Game.ClearColumn -= 1;
 
     if Memory.Game.ClearColumn < 0 then
+    begin
       Memory.Game.State := STATE_UPDATE_COUNTERS;
+      Memory.Game.Flashing := False;
+    end;
   end;
 end;
 
