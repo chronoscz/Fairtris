@@ -35,8 +35,7 @@ type
     procedure UpdateCountersLines();
     procedure UpdateCountersScore();
   private
-    procedure UpdateGenerator();
-    procedure UpdateDynamicCounters();
+    procedure UpdateCommon();
     procedure UpdatePieceControl();
     procedure UpdatePieceLock();
     procedure UpdatePieceSpawn();
@@ -453,16 +452,15 @@ begin
 end;
 
 
-procedure TCore.UpdateGenerator();
+procedure TCore.UpdateCommon();
 begin
   Generators.Generator.Step();
-end;
 
-
-procedure TCore.UpdateDynamicCounters();
-begin
   if Memory.Game.GainTimer > 0 then
     Memory.Game.GainTimer -= 1;
+
+  if Input.Device.Select.JustPressed then
+    Memory.Game.NextVisible := not Memory.Game.NextVisible;
 end;
 
 
@@ -624,8 +622,7 @@ end;
 
 procedure TCore.Update();
 begin
-  UpdateGenerator();
-  UpdateDynamicCounters();
+  UpdateCommon();
 
   case Memory.Game.State of
     STATE_PIECE_CONTROL:   UpdatePieceControl();

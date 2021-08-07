@@ -499,14 +499,13 @@ end;
 
 procedure TRenderer.RenderGameNext();
 begin
-  if Memory.Game.Next = PIECE_UNKNOWN then Exit;
-
-  RenderNext(
-    NEXT_X[Memory.Options.Theme],
-    NEXT_Y[Memory.Options.Theme],
-    Memory.Game.Next,
-    Memory.Game.Level
-  );
+  if Memory.Game.NextVisible then
+    RenderNext(
+      NEXT_X[Memory.Options.Theme],
+      NEXT_Y[Memory.Options.Theme],
+      Memory.Game.Next,
+      Memory.Game.Level
+    );
 end;
 
 

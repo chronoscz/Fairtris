@@ -54,6 +54,8 @@ type
 type
   TGameMemory = class(TObject)
   public
+    constructor Create();
+  public
     procedure Reset();
   public
     Started: Boolean;
@@ -101,6 +103,7 @@ type
     Lines: Integer;
     Level: Integer;
     Next: Integer;
+    NextVisible: Boolean;
     Burned: Integer;
     Tetrises: Integer;
     Gain: Integer;
@@ -265,6 +268,12 @@ begin
   Region := Settings.General.Region;
   RNG := Settings.General.RNG;
   Level := Settings.General.Level;
+end;
+
+
+constructor TGameMemory.Create();
+begin
+  NextVisible := True;
 end;
 
 
