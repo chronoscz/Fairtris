@@ -44,6 +44,7 @@ type
 type
   TGameStack = array [0 .. 9, -2 .. 19] of Integer;
   TGameStats = array [PIECE_FIRST .. PIECE_LAST] of Integer;
+  TGameLines = array [LINES_FIRST .. LINES_LAST] of Integer;
 
 type
   TGameLineClearPermits = array [-2 .. 1] of Boolean;
@@ -92,6 +93,7 @@ type
   public
     Stack: TGameStack;
     Stats: TGameStats;
+    Lines: TGameLines;
   public
     Top: TGameMeter;
     Score: TGameMeter;
@@ -327,6 +329,7 @@ begin
 
   Stack := Default(TGameStack);
   Stats := Default(TGameStats);
+  Lines := Default(TGameLines);
 
   Top.Reset();
   Score.Reset();
