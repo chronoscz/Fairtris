@@ -105,7 +105,7 @@ type
     Next: Integer;
     NextVisible: Boolean;
     Burned: Integer;
-    Tetrises: Integer;
+    TetrisRate: Integer;
     Gain: Integer;
     GainTimer: Integer;
   public
@@ -113,7 +113,6 @@ type
     Transition: Integer;
     LinesCleared: Integer;
     LinesBurned: Integer;
-    TetrisRate: Integer;
   end;
 
 
@@ -326,7 +325,7 @@ begin
   Level := 0;
   Next  := 0;
   Burned := 0;
-  Tetrises := 0;
+  TetrisRate := 0;
 
   Gain := 0;
   GainTimer := 0;
@@ -335,7 +334,6 @@ begin
   Transition := 0;
   LinesCleared := 0;
   LinesBurned := 0;
-  TetrisRate := 0;
 end;
 
 

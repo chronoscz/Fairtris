@@ -1084,7 +1084,7 @@ begin
   RenderText(
     TETRISES_X,
     TETRISES_Y,
-    Converter.TetrisesToString(Memory.Game.Tetrises),
+    Converter.TetrisesToString(Memory.Game.TetrisRate),
     COLOR_WHITE,
     ALIGN_RIGHT
   );
