@@ -15,14 +15,18 @@ type
     function CanDropPiece(): Boolean;
     function CanShiftPiece(ADirection: Integer): Boolean;
     function CanRotatePiece(ADirection: Integer): Boolean;
+  private
     function CanClearLine(AIndex: Integer): Boolean;
+    function CanLowerStack(AIndex: Integer): Boolean;
   private
     procedure SpawnPiece();
     procedure PlacePiece();
     procedure DropPiece();
     procedure ShiftPiece(ADirection: Integer);
     procedure RotatePiece(ADirection: Integer);
+  private
     procedure ClearLine(AIndex: Integer);
+    procedure LowerStack(AIndex: Integer);
   private
     procedure UpdatePieceControlShift();
     procedure UpdatePieceControlRotate();
@@ -145,6 +149,12 @@ begin
 end;
 
 
+function TCore.CanLowerStack(AIndex: Integer): Boolean;
+begin
+  Result := Memory.Game.ClearPermits[AIndex];
+end;
+
+
 procedure TCore.SpawnPiece();
 begin
   Memory.Game.PieceID := Memory.Game.Next.Current;
@@ -209,6 +219,20 @@ procedure TCore.ClearLine(AIndex: Integer);
 begin
   Memory.Game.Stack[Memory.Game.ClearColumn, AIndex] := BRICK_EMPTY;
   Memory.Game.Stack[9 - Memory.Game.ClearColumn, AIndex] := BRICK_EMPTY;
+end;
+
+
+procedure TCore.LowerStack(AIndex: Integer);
+var
+  BrickX, BrickY, LineIndex: Integer;
+begin
+  for BrickY := AIndex - 1 downto 0 do
+    for BrickX := 0 to 9 do
+      Memory.Game.Stack[BrickX, BrickY + 1] := Memory.Game.Stack[BrickX, BrickY];
+
+  for LineIndex := Memory.Game.LowerTimer - 1 downto -2 do
+    if Memory.Game.ClearPermits[LineIndex] then
+      Memory.Game.ClearIndexes[LineIndex] += 1;
 end;
 
 
@@ -452,13 +476,23 @@ end;
 
 procedure TCore.UpdateStackLower();
 begin
-  Memory.Game.State := STATE_PIECE_SPAWN;
+  if Memory.Game.LowerTimer >= -2 then
+  begin
+    if Memory.Game.ClearCount > 0 then
+      if CanLowerStack(Memory.Game.LowerTimer) then
+        LowerStack(Memory.Game.ClearIndexes[Memory.Game.LowerTimer]);
+
+    Memory.Game.LowerTimer -= 1;
+  end
+  else
+    Memory.Game.State := STATE_PIECE_SPAWN;
 end;
 
 
 procedure TCore.UpdateCounters();
 begin
   Memory.Game.State := STATE_STACK_LOWER;
+  Memory.Game.LowerTimer := 1;
 end;
 
 
