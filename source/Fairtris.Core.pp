@@ -32,6 +32,10 @@ type
     procedure UpdatePieceControlRotate();
     procedure UpdatePieceControlDrop();
   private
+    procedure UpdateCountersScore();
+    procedure UpdateCountersLines();
+    procedure UpdateCountersLevel();
+  private
     procedure UpdatePieceControl();
     procedure UpdatePieceLock();
     procedure UpdatePieceSpawn();
@@ -383,6 +387,24 @@ IncrementAutorepeatY:
 end;
 
 
+procedure TCore.UpdateCountersScore();
+begin
+
+end;
+
+
+procedure TCore.UpdateCountersLines();
+begin
+
+end;
+
+
+procedure TCore.UpdateCountersLevel();
+begin
+
+end;
+
+
 procedure TCore.UpdatePieceControl();
 begin
   UpdatePieceControlShift();
@@ -501,6 +523,10 @@ end;
 
 procedure TCore.UpdateCounters();
 begin
+  UpdateCountersScore();
+  UpdateCountersLines();
+  UpdateCountersLevel();
+
   Memory.Game.State := STATE_STACK_LOWER;
   Memory.Game.LowerTimer := 1;
 end;
