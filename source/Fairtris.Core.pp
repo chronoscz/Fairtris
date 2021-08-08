@@ -30,6 +30,7 @@ type
   private
     procedure UpdatePieceControlDropControl();
     procedure UpdatePieceControlDropAutorepeat();
+    procedure UpdatePieceControlDropUpPressed();
     procedure UpdatePieceControlDropDownPressed();
     procedure UpdatePieceControlDropMove();
     procedure UpdatePieceControlDropLookupSpeed();
@@ -277,6 +278,20 @@ begin
 end;
 
 
+procedure TCore.UpdatePieceControlDropUpPressed();
+begin
+  Memory.Game.FallPoints := 1;
+
+  while CanDropPiece() do
+  begin
+    UpdatePieceControlDropMove();
+    Memory.Game.FallPoints += 1;
+  end;
+
+  UpdatePieceControlDropMove();
+end;
+
+
 procedure TCore.UpdatePieceControlDropDownPressed();
 begin
   Memory.Game.AutorepeatY += 1;
@@ -385,19 +400,22 @@ end;
 
 procedure TCore.UpdatePieceControlDrop();
 begin
-  if Memory.Game.AutorepeatY > 0 then
-    UpdatePieceControlDropAutorepeat()
+  if Input.Device.Up.JustPressed and (not Input.Device.Left.Pressed and not Input.Device.Right.Pressed) then
+    UpdatePieceControlDropUpPressed()
   else
-    if Memory.Game.AutorepeatY = 0 then
-      UpdatePieceControlDropControl()
+    if Memory.Game.AutorepeatY > 0 then
+      UpdatePieceControlDropAutorepeat()
     else
-      if not Input.Device.Down.JustPressed then
-        Memory.Game.AutorepeatY += 1
+      if Memory.Game.AutorepeatY = 0 then
+        UpdatePieceControlDropControl()
       else
-      begin
-        Memory.Game.AutorepeatY := 0;
-        UpdatePieceControlDropControl();
-      end;
+        if not Input.Device.Down.JustPressed then
+          Memory.Game.AutorepeatY += 1
+        else
+        begin
+          Memory.Game.AutorepeatY := 0;
+          UpdatePieceControlDropControl();
+        end;
 end;
 
 
