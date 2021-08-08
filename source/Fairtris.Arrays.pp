@@ -108,7 +108,16 @@ const
   );
 
 const
-  BEST_SCORES_PATH = 'scores\';
+  BEST_SCORES_PATH: array [REGION_FIRST .. REGION_LAST] of String = (
+    'scores\ntsc\',
+    'scores\ntsc extended\',
+    'scores\jpn\',
+    'scores\jpn extended\',
+    'scores\pal\',
+    'scores\pal extended\',
+    'scores\eur\',
+    'scores\eur extended\'
+  );
 
 
 const

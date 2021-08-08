@@ -75,15 +75,27 @@ type
     constructor Create(const APath: String; ARegion: Integer);
     destructor Destroy(); override;
   public
+    procedure Load();
+    procedure Save();
+  public
     property RNG[ARNG: Integer]: TRNGEntries read GetRNG; default;
   end;
 
 
 type
   TBestScores = class(TObject)
+  private
+    FRegions: array [REGION_FIRST .. REGION_LAST] of TRegionEntries;
+  private
+    function GetRegion(ARegion: Integer): TRegionEntries;
+  public
+    constructor Create();
+    destructor Destroy(); override;
   public
     procedure Load();
     procedure Save();
+  public
+    property Region[ARegion: Integer]: TRegionEntries read GetRegion; default;
   end;
 
 
@@ -228,21 +240,71 @@ begin
 end;
 
 
+procedure TRegionEntries.Load();
+var
+  Index: Integer;
+begin
+  for Index := Low(FRNGs) to High(FRNGs) do
+    FRNGs[Index].Load();
+end;
+
+
+procedure TRegionEntries.Save();
+var
+  Index: Integer;
+begin
+  for Index := Low(FRNGs) to High(FRNGs) do
+    FRNGs[Index].Save();
+end;
+
+
 function TRegionEntries.GetRNG(ARNG: Integer): TRNGEntries;
 begin
   Result := FRNGs[ARNG];
 end;
 
 
-procedure TBestScores.Load();
+constructor TBestScores.Create();
+var
+  Index: Integer;
 begin
+  for Index := Low(FRegions) to High(FRegions) do
+    FRegions[Index] := TRegionEntries.Create(BEST_SCORES_PATH[Index], Index);
+end;
 
+
+destructor TBestScores.Destroy();
+var
+  Index: Integer;
+begin
+  for Index := Low(FRegions) to High(FRegions) do
+    FRegions[Index].Free();
+
+  inherited Destroy();
+end;
+
+
+function TBestScores.GetRegion(ARegion: Integer): TRegionEntries;
+begin
+  Result := FRegions[ARegion];
+end;
+
+
+procedure TBestScores.Load();
+var
+  Index: Integer;
+begin
+  for Index := Low(FRegions) to High(FRegions) do
+    FRegions[Index].Load();
 end;
 
 
 procedure TBestScores.Save();
+var
+  Index: Integer;
 begin
-
+  for Index := Low(FRegions) to High(FRegions) do
+    FRegions[Index].Save();
 end;
 
 

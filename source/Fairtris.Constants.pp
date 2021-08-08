@@ -881,19 +881,6 @@ const
 
 
 const
-  BEST_SCORES_PATH_NTSC          = 'ntsc\';
-  BEST_SCORES_PATH_NTSC_EXTENDED = 'ntsc extended\';
-
-  BEST_SCORES_PATH_JPN           = 'jpn\';
-  BEST_SCORES_PATH_JPN_EXTENDED  = 'jpn extended\';
-
-  BEST_SCORES_PATH_PAL           = 'pal\';
-  BEST_SCORES_PATH_PAL_EXTENDED  = 'pal extended\';
-
-  BEST_SCORES_PATH_EUR           = 'eur\';
-  BEST_SCORES_PATH_EUR_EXTENDED  = 'eur extended\';
-
-const
   BEST_SCORES_SECTION_GENERAL = 'GENERAL';
   BEST_SCORES_SECTION_SCORE   = 'SCORE %d';
 
