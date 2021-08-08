@@ -10,20 +10,32 @@ uses
 
 
 type
-  TCustomScore = class(TObject)
+  TScoreEntry = class(TObject)
+  private
+    FRegion: Integer;
   private
     FLinesCleared: Integer;
     FLevelBegin: Integer;
     FLevelEnd: Integer;
     FTetrisRate: Integer;
     FTotalScore: Integer;
-  protected
+  private
     FValid: Boolean;
-  protected
-    procedure Validate(); virtual;
+  private
+    procedure Validate();
+  public
+    constructor Create(ARegion: Integer);
   public
     procedure Load(AFile: TIniFile; const ASection: String);
     procedure Save(AFile: TIniFile; const ASection: String);
+  public
+    property LinesCleared: Integer read FLinesCleared;
+    property LevelBegin: Integer read FLevelBegin;
+    property LevelEnd: Integer read FLevelEnd;
+    property TetrisRate: Integer read FTetrisRate;
+    property TotalScore: Integer read FTotalScore;
+  public
+    property Valid: Boolean read FValid;
   end;
 
 
@@ -43,6 +55,7 @@ implementation
 
 uses
   Math,
+  Fairtris.Arrays,
   Fairtris.Constants;
 
 
@@ -50,13 +63,19 @@ procedure TScoreEntry.Validate();
 begin
   FValid := InRange(FLinesCleared, 0, 999);
 
-  FValid := FValid and InRange(FLevelBegin, LEVEL_FIRST, LEVEL_LAST);
+  FValid := FValid and InRange(FLevelBegin, LEVEL_FIRST, LEVEL_KILLSCREEN[FRegion]);
   FValid := FValid and InRange(FLevelEnd,   LEVEL_FIRST, 99);
 
   FValid := FValid and (FLevelBegin <= FLevelEnd);
 
   FValid := FValid and InRange(FTetrisRate, 0, 100);
   FValid := FValid and InRange(FTotalScore, 0, 9999999);
+end;
+
+
+constructor TScoreEntry.Create(ARegion: Integer);
+begin
+  FRegion := ARegion;
 end;
 
 
