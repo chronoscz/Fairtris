@@ -25,16 +25,16 @@ type
   private
     procedure Validate();
   public
-    constructor Create(ARegion: Integer);
+    constructor Create(ARegion: Integer; AValid: Boolean = False);
   public
     procedure Load(AFile: TIniFile; const ASection: String);
     procedure Save(AFile: TIniFile; const ASection: String);
   public
-    property LinesCleared: Integer read FLinesCleared;
-    property LevelBegin: Integer read FLevelBegin;
-    property LevelEnd: Integer read FLevelEnd;
-    property TetrisRate: Integer read FTetrisRate;
-    property TotalScore: Integer read FTotalScore;
+    property LinesCleared: Integer read FLinesCleared write FLinesCleared;
+    property LevelBegin: Integer read FLevelBegin write FLevelBegin;
+    property LevelEnd: Integer read FLevelEnd write FLevelEnd;
+    property TetrisRate: Integer read FTetrisRate write FTetrisRate;
+    property TotalScore: Integer read FTotalScore write FTotalScore;
   public
     property Valid: Boolean read FValid;
   end;
@@ -59,6 +59,8 @@ type
   public
     procedure Load();
     procedure Save();
+  public
+    procedure Add(AEntry: TScoreEntry);
   public
     property Entry[AIndex: Integer]: TScoreEntry read GetEntry; default;
     property Count: Integer read GetCount;
@@ -125,9 +127,10 @@ begin
 end;
 
 
-constructor TScoreEntry.Create(ARegion: Integer);
+constructor TScoreEntry.Create(ARegion: Integer; AValid: Boolean);
 begin
   FRegion := ARegion;
+  FValid := AValid;
 end;
 
 
@@ -217,6 +220,12 @@ begin
 
   for Index := 0 to StoreCount - 1 do
     FEntries[Index].Save(FScoresFile, BEST_SCORES_SECTION_SCORE.Format([Index]));
+end;
+
+
+procedure TRNGEntries.Add(AEntry: TScoreEntry);
+begin
+  FEntries.Add(AEntry);
 end;
 
 

@@ -32,6 +32,7 @@ type
   private
     procedure PrepareTopOutSelection();
     procedure PrepareTopOutResult();
+    procedure PrepareTopOutBestScore();
   private
     procedure PrepareOptionsSelection();
     procedure PrepareOptionsScene();
@@ -134,6 +135,7 @@ uses
   Fairtris.Renderers,
   Fairtris.Grounds,
   Fairtris.Sounds,
+  Fairtris.BestScores,
   Fairtris.Generators,
   Fairtris.Core,
   Fairtris.Utils,
@@ -225,6 +227,22 @@ begin
 end;
 
 
+procedure TLogic.PrepareTopOutBestScore();
+var
+  Entry: TScoreEntry;
+begin
+  Entry := TScoreEntry.Create(Memory.Play.Region, True);
+
+  Entry.LinesCleared := Memory.Game.LinesCleared;
+  Entry.LevelBegin := Memory.Play.Level;
+  Entry.LevelEnd := Memory.Game.Level;
+  Entry.TetrisRate := Memory.Game.TetrisRate;
+  Entry.TotalScore := Memory.Game.Score;
+
+  BestScores[Memory.Play.Region][Memory.Play.RNG].Add(Entry);
+end;
+
+
 procedure TLogic.PrepareOptionsSelection();
 begin
   Memory.Options.ItemIndex := ITEM_OPTIONS_FIRST;
@@ -299,6 +317,7 @@ begin
   begin
     PrepareTopOutSelection();
     PrepareTopOutResult();
+    PrepareTopOutBestScore();
 
     Memory.Game.Started := False;
   end;
