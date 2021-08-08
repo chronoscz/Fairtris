@@ -40,6 +40,32 @@ type
 
 
 type
+  TScoreEntries = specialize TFPGObjectList<TScoreEntry>;
+
+
+type
+  TRNGEntries = class(TObject)
+  private
+    FScoresFile: TMemIniFile;
+    FEntries: TScoreEntries;
+  private
+    FRegion: Integer;
+  private
+    function GetEntry(AIndex: Integer): TScoreEntry;
+    function GetCount(): Integer;
+  public
+    constructor Create(const AFileName: String; ARegion: Integer);
+    destructor Destroy(); override;
+  public
+    procedure Load();
+    procedure Save();
+  public
+    property Entry[AIndex: Integer]: TScoreEntry read GetEntry; default;
+    property Count: Integer read GetCount;
+  end;
+
+
+type
   TBestScores = class(TObject)
   public
     procedure Load();
@@ -55,6 +81,7 @@ implementation
 
 uses
   Math,
+  SysUtils,
   Fairtris.Arrays,
   Fairtris.Constants;
 
@@ -102,6 +129,69 @@ begin
 
   AFile.WriteInteger(ASection, BEST_SCORES_KEY_SCORE_TETRIS_RATE, FTetrisRate);
   AFile.WriteInteger(ASection, BEST_SCORES_KEY_SCORE_TOTAL_SCORE, FTotalScore);
+end;
+
+
+constructor TRNGEntries.Create(const AFileName: String; ARegion: Integer);
+begin
+  FScoresFile := TMemIniFile.Create(AFileName);
+  FEntries := TScoreEntries.Create();
+
+  FRegion := ARegion;
+end;
+
+
+destructor TRNGEntries.Destroy();
+begin
+  FScoresFile.Free();
+  FEntries.Free();
+
+  inherited Destroy();
+end;
+
+
+function TRNGEntries.GetEntry(AIndex: Integer): TScoreEntry;
+begin
+  Result := FEntries[AIndex];
+end;
+
+
+function TRNGEntries.GetCount(): Integer;
+begin
+  Result := FEntries.Count;
+end;
+
+
+procedure TRNGEntries.Load();
+var
+  Entry: TScoreEntry;
+  EntriesCount, Index: Integer;
+begin
+  FEntries.Clear();
+  EntriesCount := FScoresFile.ReadInteger(BEST_SCORES_SECTION_GENERAL, BEST_SCORES_KEY_GENERAL_COUNT, 0);
+
+  for Index := 0 to EntriesCount - 1 do
+  begin
+    Entry := TScoreEntry.Create(FRegion);
+    Entry.Load(FScoresFile, BEST_SCORES_SECTION_SCORE.Format([Index]));
+
+    if Entry.Valid then
+      FEntries.Add(Entry);
+  end;
+end;
+
+
+procedure TRNGEntries.Save();
+var
+  StoreCount, Index: Integer;
+begin
+  StoreCount := Min(FEntries.Count, BEST_SCORES_STORE_COUNT);
+
+  FScoresFile.Clear();
+  FScoresFile.WriteInteger(BEST_SCORES_SECTION_GENERAL, BEST_SCORES_KEY_GENERAL_COUNT, StoreCount);
+
+  for Index := 0 to StoreCount - 1 do
+    FEntries[Index].Save(FScoresFile, BEST_SCORES_SECTION_SCORE.Format([Index]));
 end;
 
 
