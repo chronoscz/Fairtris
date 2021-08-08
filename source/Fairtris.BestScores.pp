@@ -38,7 +38,6 @@ type
     property Valid: Boolean read FValid;
   end;
 
-
 type
   TScoreEntries = specialize TFPGObjectList<TScoreEntry>;
 
