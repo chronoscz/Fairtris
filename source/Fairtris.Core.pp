@@ -28,6 +28,12 @@ type
     procedure ClearLine(AIndex: Integer);
     procedure LowerStack(AIndex: Integer);
   private
+    procedure UpdatePieceControlDropControl();
+    procedure UpdatePieceControlDropAutorepeat();
+    procedure UpdatePieceControlDropDownPressed();
+    procedure UpdatePieceControlDropMove();
+    procedure UpdatePieceControlDropLookupSpeed();
+  private
     procedure UpdatePieceControlShift();
     procedure UpdatePieceControlRotate();
     procedure UpdatePieceControlDrop();
@@ -242,6 +248,82 @@ begin
 end;
 
 
+procedure TCore.UpdatePieceControlDropControl();
+begin
+  if Input.Device.Left.Pressed or Input.Device.Right.Pressed then
+    UpdatePieceControlDropLookupSpeed()
+  else
+    if Input.Device.Down.JustPressed and (Input.Device.Left.Pressed or Input.Device.Right.Pressed) then
+      UpdatePieceControlDropLookupSpeed()
+    else
+    begin
+      Memory.Game.AutorepeatY := 1;
+      UpdatePieceControlDropLookupSpeed();
+    end;
+end;
+
+
+procedure TCore.UpdatePieceControlDropAutorepeat();
+begin
+  if Input.Device.Down.Pressed and (not Input.Device.Left.Pressed and not Input.Device.Right.Pressed) then
+    UpdatePieceControlDropDownPressed()
+  else
+  begin
+    Memory.Game.AutorepeatY := 0;
+    Memory.Game.FallPoints := 0;
+
+    UpdatePieceControlDropLookupSpeed();
+  end;
+end;
+
+
+procedure TCore.UpdatePieceControlDropDownPressed();
+begin
+  Memory.Game.AutorepeatY += 1;
+
+  if Memory.Game.AutorepeatY < 3 then
+    UpdatePieceControlDropLookupSpeed()
+  else
+  begin
+    Memory.Game.AutorepeatY := 1;
+    Memory.Game.FallPoints += 1;
+
+    UpdatePieceControlDropMove();
+  end;
+end;
+
+
+procedure TCore.UpdatePieceControlDropMove();
+begin
+  Memory.Game.FallTimer := 0;
+
+  if CanDropPiece() then
+    DropPiece()
+  else
+  begin
+    PlacePiece();
+
+    Memory.Game.State := STATE_LINES_CHECK;
+    Memory.Game.ClearCount := 0;
+    Memory.Game.ClearTimer := 0;
+    Memory.Game.ClearColumn := 4;
+  end;
+end;
+
+
+procedure TCore.UpdatePieceControlDropLookupSpeed();
+begin
+  Memory.Game.FallTimer += 1;
+  Memory.Game.FallSpeed := 1;
+
+  if Memory.Game.Level < LEVEL_LAST then
+    Memory.Game.FallSpeed := GRAVITY_FRAMES[Memory.Play.Region, Memory.Game.Level];
+
+  if Memory.Game.FallTimer >= Memory.Game.FallSpeed then
+    UpdatePieceControlDropMove();
+end;
+
+
 procedure TCore.UpdatePieceControlShift();
 begin
   if Input.Device.Down.Pressed then Exit;
@@ -302,80 +384,20 @@ end;
 
 
 procedure TCore.UpdatePieceControlDrop();
-label
-  Playing, Autorepeating, DownPressed, Drop, LookupDropSpeed, IncrementAutorepeatY;
-var
-  DropSpeed: Integer = 1;
 begin
-  if Memory.Game.AutorepeatY > 0 then goto Autorepeating;
-  if Memory.Game.AutorepeatY = 0 then goto Playing;
-
-  if not Input.Device.Down.JustPressed then
-    goto IncrementAutorepeatY;
-
-  Memory.Game.AutorepeatY := 0;
-
-Playing:
-  if Input.Device.Left.Pressed or Input.Device.Right.Pressed then
-    goto LookupDropSpeed;
-
-  if Input.Device.Down.JustPressed then
-    if Input.Device.Up.Pressed or Input.Device.Left.Pressed or Input.Device.Right.Pressed then
-      goto LookupDropSpeed;
-
-  Memory.Game.AutorepeatY := 1;
-  goto LookupDropSpeed;
-
-Autorepeating:
-  if Input.Device.Down.Pressed then
-    if not Input.Device.Left.Pressed and not Input.Device.Right.Pressed then
-      goto DownPressed;
-
-  Memory.Game.AutorepeatY := 0;
-  Memory.Game.FallPoints := 0;
-
-  goto LookupDropSpeed;
-
-DownPressed:
-  Memory.Game.AutorepeatY += 1;
-
-  if Memory.Game.AutorepeatY < 3 then
-    goto LookupDropSpeed;
-
-  Memory.Game.AutorepeatY := 1;
-  Memory.Game.FallPoints += 1;
-
-Drop:
-  Memory.Game.FallTimer := 0;
-
-  if CanDropPiece() then
-    DropPiece()
+  if Memory.Game.AutorepeatY > 0 then
+    UpdatePieceControlDropAutorepeat()
   else
-  begin
-    PlacePiece();
-
-    Memory.Game.State := STATE_LINES_CHECK;
-
-    Memory.Game.ClearCount := 0;
-    Memory.Game.ClearTimer := 0;
-    Memory.Game.ClearColumn := 4;
-  end;
-
-  Exit;
-
-LookupDropSpeed:
-  Memory.Game.FallTimer += 1;
-
-  if Memory.Game.Level < LEVEL_LAST then
-    DropSpeed := GRAVITY_FRAMES[Memory.Play.Region, Memory.Game.Level];
-
-  if Memory.Game.FallTimer >= DropSpeed then
-    goto Drop;
-
-  Exit;
-
-IncrementAutorepeatY:
-  Memory.Game.AutorepeatY += 1;
+    if Memory.Game.AutorepeatY = 0 then
+      UpdatePieceControlDropControl()
+    else
+      if not Input.Device.Down.JustPressed then
+        Memory.Game.AutorepeatY += 1
+      else
+      begin
+        Memory.Game.AutorepeatY := 0;
+        UpdatePieceControlDropControl();
+      end;
 end;
 
 

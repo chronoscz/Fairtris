@@ -72,6 +72,7 @@ type
     AutorepeatY: Integer;
   public
     FallTimer: Integer;
+    FallSpeed: Integer;
     FallPoints: Integer;
   public
     LockRow: Integer;
@@ -288,6 +289,7 @@ begin
   AutorepeatY := 0;
 
   FallTimer := 0;
+  FallSpeed := 0;
   FallPoints := 0;
 
   LockRow := 0;
