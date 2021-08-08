@@ -303,7 +303,7 @@ end;
 
 procedure TCore.UpdatePieceControlDrop();
 label
-  Playing, Autorepeating, DownPressed, Drop, LookupDropSpeed, NoTableLookup, IncrementAutorepeatY;
+  Playing, Autorepeating, DownPressed, Drop, LookupDropSpeed, IncrementAutorepeatY;
 var
   DropSpeed: Integer = 1;
 begin
@@ -369,7 +369,6 @@ LookupDropSpeed:
   if Memory.Game.Level < LEVEL_LAST then
     DropSpeed := GRAVITY_FRAMES[Memory.Play.Region, Memory.Game.Level];
 
-NoTableLookup:
   if Memory.Game.FallTimer >= DropSpeed then
     goto Drop;
 
