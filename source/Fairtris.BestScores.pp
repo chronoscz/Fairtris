@@ -6,7 +6,8 @@ interface
 
 uses
   FGL,
-  IniFiles;
+  IniFiles,
+  Fairtris.Constants;
 
 
 type
@@ -65,6 +66,20 @@ type
 
 
 type
+  TRegionEntries = class(TObject)
+  private
+    FRNGs: array [RNG_FIRST .. RNG_LAST] of TRNGEntries;
+  private
+    function GetRNG(ARNG: Integer): TRNGEntries;
+  public
+    constructor Create(const APath: String; ARegion: Integer);
+    destructor Destroy(); override;
+  public
+    property RNG[ARNG: Integer]: TRNGEntries read GetRNG; default;
+  end;
+
+
+type
   TBestScores = class(TObject)
   public
     procedure Load();
@@ -81,8 +96,7 @@ implementation
 uses
   Math,
   SysUtils,
-  Fairtris.Arrays,
-  Fairtris.Constants;
+  Fairtris.Arrays;
 
 
 procedure TScoreEntry.Validate();
@@ -191,6 +205,32 @@ begin
 
   for Index := 0 to StoreCount - 1 do
     FEntries[Index].Save(FScoresFile, BEST_SCORES_SECTION_SCORE.Format([Index]));
+end;
+
+
+constructor TRegionEntries.Create(const APath: String; ARegion: Integer);
+var
+  Index: Integer;
+begin
+  for Index := Low(FRNGs) to High(FRNGs) do
+    FRNGs[Index] := TRNGEntries.Create(APath + BEST_SCORES_FILENAME[Index], ARegion);
+end;
+
+
+destructor TRegionEntries.Destroy();
+var
+  Index: Integer;
+begin
+  for Index := Low(FRNGs) to High(FRNGs) do
+    FRNGs[Index].Free();
+
+  inherited Destroy();
+end;
+
+
+function TRegionEntries.GetRNG(ARNG: Integer): TRNGEntries;
+begin
+  Result := FRNGs[ARNG];
 end;
 
 

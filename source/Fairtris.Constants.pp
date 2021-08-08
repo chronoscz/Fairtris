@@ -881,14 +881,6 @@ const
 
 
 const
-  BEST_SCORES_FILENAME_7_BAG   = '7-bag.ini';
-  BEST_SCORES_FILENAME_FAIR    = 'fair.ini';
-  BEST_SCORES_FILENAME_CLASSIC = 'classic.ini';
-  BEST_SCORES_FILENAME_RANDOM  = 'random.ini';
-
-const
-  BEST_SCORES_PATH               = 'scores\';
-
   BEST_SCORES_PATH_NTSC          = 'ntsc\';
   BEST_SCORES_PATH_NTSC_EXTENDED = 'ntsc extended\';
 

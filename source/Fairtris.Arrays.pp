@@ -100,6 +100,18 @@ const
 
 
 const
+  BEST_SCORES_FILENAME: array [RNG_FIRST .. RNG_LAST] of String = (
+    '7-bag.ini',
+    'fair.ini',
+    'classic.ini',
+    'random.ini'
+  );
+
+const
+  BEST_SCORES_PATH = 'scores\';
+
+
+const
   SOUND_LENGTH_NTSC: array [SOUND_FIRST .. SOUND_LAST] of Integer = (0, 170, 190, 110, 280, 210, 770, 960, 1040, 1100, 330, 720);
   SOUND_LENGTH_JPN:  array [SOUND_FIRST .. SOUND_LAST] of Integer = (0, 170, 190, 110, 280, 210, 770, 960, 1040, 1100, 330, 720);
   SOUND_LENGTH_PAL:  array [SOUND_FIRST .. SOUND_LAST] of Integer = (0, 160, 210, 100, 320, 250, 760, 950, 1070, 1280, 380, 720);
