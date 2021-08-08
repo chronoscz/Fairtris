@@ -887,6 +887,8 @@ const
   BEST_SCORES_FILENAME_RANDOM  = 'random.ini';
 
 const
+  BEST_SCORES_PATH               = 'scores\';
+
   BEST_SCORES_PATH_NTSC          = 'ntsc\';
   BEST_SCORES_PATH_NTSC_EXTENDED = 'ntsc extended\';
 
