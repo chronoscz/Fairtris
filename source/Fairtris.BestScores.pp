@@ -164,7 +164,7 @@ end;
 
 procedure TRNGEntries.Load();
 var
-  Entry: TScoreEntry;
+  NewEntry: TScoreEntry;
   EntriesCount, Index: Integer;
 begin
   FEntries.Clear();
@@ -172,11 +172,11 @@ begin
 
   for Index := 0 to EntriesCount - 1 do
   begin
-    Entry := TScoreEntry.Create(FRegion);
-    Entry.Load(FScoresFile, BEST_SCORES_SECTION_SCORE.Format([Index]));
+    NewEntry := TScoreEntry.Create(FRegion);
+    NewEntry.Load(FScoresFile, BEST_SCORES_SECTION_SCORE.Format([Index]));
 
-    if Entry.Valid then
-      FEntries.Add(Entry);
+    if NewEntry.Valid then
+      FEntries.Add(NewEntry);
   end;
 end;
 
