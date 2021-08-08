@@ -465,6 +465,9 @@ procedure TCore.UpdateLinesClear();
 var
   Index: Integer;
 begin
+  if Memory.Game.ClearCount = 4 then
+    Memory.Game.Flashing := Memory.Game.ClearTimer mod 4 = 0;
+
   Memory.Game.ClearTimer += 1;
 
   if Memory.Game.ClearTimer = 8 then
@@ -472,9 +475,6 @@ begin
       Sounds.PlaySound(SOUND_TETRIS)
     else
       Sounds.PlaySound(SOUND_BURN);
-
-  if Memory.Game.ClearCount = 4 then
-    Memory.Game.Flashing := Memory.Game.ClearTimer mod 4 < 2;
 
   if Memory.Game.ClearTimer mod 4 = 0 then
   begin

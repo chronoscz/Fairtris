@@ -527,12 +527,8 @@ end;
 
 procedure TLogic.UpdateGameScene();
 begin
+  FScene.Current := IfThen(Memory.Game.Flashing, SCENE_GAME_FLASH, SCENE_GAME_NORMAL);
   FScene.Validate();
-
-  if Memory.Game.Flashing then
-    FScene.Current := SCENE_GAME_FLASH
-  else
-    FScene.Current := SCENE_GAME_NORMAL;
 
   if Memory.Game.State = STATE_UPDATE_TOP_OUT then
   begin
