@@ -53,6 +53,7 @@ type
   private
     function GetEntry(AIndex: Integer): TScoreEntry;
     function GetCount(): Integer;
+    function GetBestScore(): Integer;
   public
     constructor Create(const AFileName: String; ARegion: Integer);
     destructor Destroy(); override;
@@ -64,6 +65,8 @@ type
   public
     property Entry[AIndex: Integer]: TScoreEntry read GetEntry; default;
     property Count: Integer read GetCount;
+  public
+    property BestScore: Integer read GetBestScore;
   end;
 
 
@@ -187,6 +190,15 @@ end;
 function TRNGEntries.GetCount(): Integer;
 begin
   Result := FEntries.Count;
+end;
+
+
+function TRNGEntries.GetBestScore(): Integer;
+begin
+  if FEntries.Count = 0 then
+    Result := 0
+  else
+    Result := FEntries.First.TotalScore;
 end;
 
 

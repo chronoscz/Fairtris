@@ -64,6 +64,7 @@ uses
   Fairtris.Clock,
   Fairtris.Input,
   Fairtris.Sounds,
+  Fairtris.BestScores,
   Fairtris.Generators,
   Fairtris.Utils,
   Fairtris.Arrays,
@@ -648,6 +649,8 @@ begin
 
   Memory.Game.Level := Memory.Play.Level;
   Memory.Game.Stats[Memory.Game.PieceID] += 1;
+
+  Memory.Game.Best := BestScores[Memory.Play.Region][Memory.Play.RNG].BestScore;
 end;
 
 
