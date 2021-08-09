@@ -39,6 +39,23 @@ type
 
 
 type
+  TBag = class(TObject)
+  private
+    FPieces: array of Integer;
+    FSize: Integer;
+  private
+    function GetPiece(AIndex: Integer): Integer;
+  public
+    constructor Create(const APieces: array of Integer);
+  public
+    function Shuffle(ASeed: UInt16): Boolean;
+  public
+    property Piece[AIndex: Integer]: Integer read GetPiece; default;
+    property Size: Integer read FSize;
+  end;
+
+
+type
   T7BagGenerator = class(TCustomGenerator)
   public
     procedure Initialize(); override;
@@ -145,6 +162,42 @@ end;
 procedure TCustomGenerator.Initialize();
 begin
   FRegister.Initialize();
+end;
+
+
+constructor TBag.Create(const APieces: array of Integer);
+var
+  Index: Integer;
+begin
+  FSize := Length(APieces);
+  SetLength(FPieces, FSize);
+
+  for Index := 0 to FSize - 1 do
+    FPieces[Index] := APieces[Index];
+end;
+
+
+function TBag.Shuffle(ASeed: UInt16): Boolean;
+var
+  IndexA, IndexB, TempPiece: Integer;
+begin
+  IndexA := Hi(ASeed) mod FSize;
+  IndexB := Lo(ASeed) mod FSize;
+
+  Result := IndexA <> IndexB;
+
+  if Result then
+  begin
+    TempPiece := FPieces[IndexA];
+    FPieces[IndexA] := FPieces[IndexB];
+    FPieces[IndexB] := TempPiece;
+  end;
+end;
+
+
+function TBag.GetPiece(AIndex: Integer): Integer;
+begin
+  Result := FPieces[AIndex];
 end;
 
 
