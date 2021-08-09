@@ -284,7 +284,7 @@ begin
   Memory.Game.AutorepeatY := 0;
 
   Memory.Game.FallTimer := 0;
-  Memory.Game.FallPoints := 1;
+  Memory.Game.FallPoints := 0;
 
   while CanDropPiece() do
   begin
