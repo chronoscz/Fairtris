@@ -66,6 +66,7 @@ type
     procedure UpdateGameState();
     procedure UpdateGameScene();
   private
+    procedure UpdatePauseCommon();
     procedure UpdatePauseSelection();
     procedure UpdatePauseScene();
   private
@@ -560,6 +561,12 @@ begin
       FScene.Current := SCENE_PAUSE;
       Sounds.PlaySound(SOUND_PAUSE);
     end;
+end;
+
+
+procedure TLogic.UpdatePauseCommon();
+begin
+  Generators.Generator.Step();
 end;
 
 
@@ -1230,6 +1237,7 @@ procedure TLogic.UpdatePause();
 begin
   PreparePause();
 
+  UpdatePauseCommon();
   UpdatePauseSelection();
   UpdatePauseScene();
 end;
