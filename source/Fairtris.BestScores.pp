@@ -213,7 +213,7 @@ procedure TRNGEntries.Save();
 var
   StoreCount, Index: Integer;
 begin
-  StoreCount := Min(FEntries.Count, BEST_SCORES_STORE_COUNT);
+  StoreCount := Min(FEntries.Count, BEST_SCORES_COUNT);
 
   FScoresFile.Clear();
   FScoresFile.WriteInteger(BEST_SCORES_SECTION_GENERAL, BEST_SCORES_KEY_GENERAL_COUNT, StoreCount);

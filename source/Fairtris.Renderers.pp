@@ -8,6 +8,7 @@ uses
   Types,
   Graphics,
   Fairtris.Interfaces,
+  Fairtris.BestScores,
   Fairtris.Constants;
 
 
@@ -23,6 +24,9 @@ type
   private
     procedure RenderSprite(ABuffer, ASprite: TBitmap; ABufferRect, ASpriteRect: TRect; AExcludeFuchsia: Boolean = True); inline;
     procedure RenderChar(ABuffer, ASprite: TBitmap; ABufferRect, ASpriteRect: TRect; AColor: TColor); inline;
+  protected
+    function EmptyEntryToString(): String;
+    function ScoreEntryToString(AEntry: TScoreEntry): String;
   protected
     procedure RenderText(AX, AY: Integer; const AText: String; AColor: TColor = COLOR_WHITE; AAlign: Integer = ALIGN_LEFT);
     procedure RenderNext(AX, AY, APiece, ALevel: Integer);
@@ -273,6 +277,21 @@ begin
 end;
 
 
+function TRenderer.EmptyEntryToString(): String;
+begin
+  Result := '---  --.--       -------';
+end;
+
+
+function TRenderer.ScoreEntryToString(AEntry: TScoreEntry): String;
+begin
+  Result := '%.3d'.Format([AEntry.LinesCleared]);
+  Result += '%.2d'.Format([AEntry.LevelBegin]).PadLeft(4) + '-' + '%.2d'.Format([AEntry.LevelEnd]);
+  Result += '%d%%'.Format([AEntry.TetrisRate]).PadLeft(5);
+  Result += '%.7d'.Format([AEntry.TotalScore]).PadLeft(9);
+end;
+
+
 procedure TRenderer.RenderText(AX, AY: Integer; const AText: String; AColor: TColor; AAlign: Integer);
 var
   Character: Char;
@@ -458,8 +477,24 @@ end;
 
 
 procedure TRenderer.RenderPlayBestScores();
+var
+  Index: Integer;
 begin
-  // wyrenderować trzy najlepsze wyniki
+  for Index := BEST_SCORES_FIRST to BEST_SCORES_LAST do
+    if Index < BestScores[Memory.Play.Region][Memory.Play.RNG].Count then
+      RenderText(
+        ITEM_X_PLAY_BEST_SCORE,
+        ITEM_Y_PLAY_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
+        ScoreEntryToString(BestScores[Memory.Play.Region][Memory.Play.RNG].Entry[Index]),
+        BEST_SCORES_COLOR_FILLED[Memory.Options.Theme]
+      )
+    else
+      RenderText(
+        ITEM_X_PLAY_BEST_SCORE,
+        ITEM_Y_PLAY_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
+        EmptyEntryToString(),
+        BEST_SCORES_COLOR_EMPTY[Memory.Options.Theme]
+      );
 end;
 
 
