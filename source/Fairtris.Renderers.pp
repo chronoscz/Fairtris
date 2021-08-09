@@ -279,7 +279,7 @@ end;
 
 function TRenderer.EmptyEntryToString(): String;
 begin
-  Result := '---  --.--       -------';
+  Result := '-    -        -        -';
 end;
 
 
@@ -485,15 +485,14 @@ begin
       RenderText(
         ITEM_X_PLAY_BEST_SCORE,
         ITEM_Y_PLAY_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
-        ScoreEntryToString(BestScores[Memory.Play.Region][Memory.Play.RNG].Entry[Index]),
-        BEST_SCORES_COLOR_FILLED[Memory.Options.Theme]
+        ScoreEntryToString(BestScores[Memory.Play.Region][Memory.Play.RNG].Entry[Index])
       )
     else
       RenderText(
         ITEM_X_PLAY_BEST_SCORE,
         ITEM_Y_PLAY_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
         EmptyEntryToString(),
-        BEST_SCORES_COLOR_EMPTY[Memory.Options.Theme]
+        COLOR_DARK
       );
 end;
 
