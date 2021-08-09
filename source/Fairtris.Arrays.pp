@@ -903,14 +903,6 @@ const
 
 const
   PIECE_FRAMES_LOCK_DELAY: array [0 .. 19] of Integer = (
-    14, 14, 14, 14, 14, 14,
-    12, 12, 12, 12,
-    10, 10, 10, 10,
-    08, 08, 08, 08,
-    06, 06
-  );
-
-  PIECE_FRAMES_LOCK_SOUND: array [0 .. 19] of Integer = (
     12, 12, 12, 12, 12, 12,
     10, 10, 10, 10,
     08, 08, 08, 08,

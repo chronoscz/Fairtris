@@ -447,11 +447,10 @@ procedure TCore.UpdatePieceLock();
 begin
   Memory.Game.LockTimer -= 1;
 
-  if Memory.Game.LockTimer = PIECE_FRAMES_LOCK_SOUND[Memory.Game.LockRow] then
-    Sounds.PlaySound(SOUND_DROP);
-
   if Memory.Game.LockTimer = 0 then
   begin
+    Sounds.PlaySound(SOUND_DROP);
+
     Memory.Game.State := STATE_UPDATE_COUNTERS;
     Memory.Game.ClearCount := 0;
     Memory.Game.ClearTimer := 0;
