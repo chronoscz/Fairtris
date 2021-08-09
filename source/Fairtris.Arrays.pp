@@ -104,7 +104,7 @@ const
     '7-bag.ini',
     'fair.ini',
     'classic.ini',
-    'random.ini'
+    'unfair.ini'
   );
 
 const
@@ -383,7 +383,7 @@ const
     ITEM_TEXT_PLAY_RNG_7_BAG,
     ITEM_TEXT_PLAY_RNG_FAIR,
     ITEM_TEXT_PLAY_RNG_CLASSIC,
-    ITEM_TEXT_PLAY_RNG_RANDOM
+    ITEM_TEXT_PLAY_RNG_UNFAIR
   );
 
 const

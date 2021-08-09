@@ -79,7 +79,7 @@ type
 
 
 type
-  TRandomGenerator = class(TCustomGenerator)
+  TUnfairGenerator = class(TCustomGenerator)
   public
     procedure Shuffle(); override;
     procedure Step(); override;
@@ -248,19 +248,19 @@ begin
 end;
 
 
-procedure TRandomGenerator.Shuffle();
+procedure TUnfairGenerator.Shuffle();
 begin
   FRegister.Update();
 end;
 
 
-procedure TRandomGenerator.Step();
+procedure TUnfairGenerator.Step();
 begin
   FRegister.Update();
 end;
 
 
-function TRandomGenerator.Pick(): Integer;
+function TUnfairGenerator.Pick(): Integer;
 begin
   Result := Hi(FRegister.Seed) mod PIECE_LAST + PIECE_FIRST;
 end;
@@ -271,7 +271,7 @@ begin
   FGenerators[RNG_7_BAG]   := T7BagGenerator.Create();
   FGenerators[RNG_FAIR]    := TFairGenerator.Create();
   FGenerators[RNG_CLASSIC] := TClassicGenerator.Create();
-  FGenerators[RNG_RANDOM]  := TRandomGenerator.Create();
+  FGenerators[RNG_UNFAIR]  := TUnfairGenerator.Create();
 end;
 
 
@@ -287,8 +287,8 @@ begin
   FGenerator := FGenerators[FGeneratorID];
 
   // added only for testing game core logic
-  FGeneratorID := RNG_RANDOM;
-  FGenerator := FGenerators[RNG_RANDOM];
+  FGeneratorID := RNG_UNFAIR;
+  FGenerator := FGenerators[RNG_UNFAIR];
   // remove after testing
 end;
 
