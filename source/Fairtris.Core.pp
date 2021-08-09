@@ -643,7 +643,7 @@ begin
   Memory.Game.Started := True;
   Memory.Game.AutorepeatY := PIECE_FRAMES_HANG[Memory.Play.Region];
 
-  Generators.Generator.Prepare();
+  Generators.Generator.Step();
   Memory.Game.PieceID := Generators.Generator.Pick();
 
   Generators.Generator.Step();

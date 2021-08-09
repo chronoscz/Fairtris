@@ -30,7 +30,6 @@ type
     destructor Destroy(); override;
   public
     procedure Initialize(); virtual;
-    procedure Prepare(); virtual;
   public
     procedure Shuffle(); virtual; abstract;
     procedure Step(); virtual; abstract;
@@ -43,7 +42,6 @@ type
   T7BagGenerator = class(TCustomGenerator)
   public
     procedure Initialize(); override;
-    procedure Prepare(); override;
   public
     procedure Shuffle(); override;
     procedure Step(); override;
@@ -56,7 +54,6 @@ type
   TFairGenerator = class(TCustomGenerator)
   public
     procedure Initialize(); override;
-    procedure Prepare(); override;
   public
     procedure Shuffle(); override;
     procedure Step(); override;
@@ -69,7 +66,6 @@ type
   TClassicGenerator = class(TCustomGenerator)
   public
     procedure Initialize(); override;
-    procedure Prepare(); override;
   public
     procedure Shuffle(); override;
     procedure Step(); override;
@@ -152,21 +148,9 @@ begin
 end;
 
 
-procedure TCustomGenerator.Prepare();
-begin
-
-end;
-
-
 procedure T7BagGenerator.Initialize();
 begin
   inherited Initialize();
-end;
-
-
-procedure T7BagGenerator.Prepare();
-begin
-
 end;
 
 
@@ -194,12 +178,6 @@ begin
 end;
 
 
-procedure TFairGenerator.Prepare();
-begin
-
-end;
-
-
 procedure TFairGenerator.Shuffle();
 begin
 
@@ -221,12 +199,6 @@ end;
 procedure TClassicGenerator.Initialize();
 begin
   inherited Initialize();
-end;
-
-
-procedure TClassicGenerator.Prepare();
-begin
-  Step();
 end;
 
 
