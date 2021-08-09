@@ -20,6 +20,9 @@ type
   private
     procedure UpdateItemIndex(var AItemIndex: Integer; ACount, AStep: Integer);
   private
+    function InputMenuAccepted(): Boolean;
+    function InputMenuRejected(): Boolean;
+  private
     procedure HelpUnderstand();
     procedure HelpControl();
   private
@@ -160,6 +163,19 @@ end;
 procedure TLogic.UpdateItemIndex(var AItemIndex: Integer; ACount, AStep: Integer);
 begin
   AItemIndex := WrapAround(AItemIndex, ACount, AStep);
+end;
+
+
+function TLogic.InputMenuAccepted(): Boolean;
+begin
+  Result := Input.Device.Start.JustPressed or Input.Device.A.JustPressed or
+            Input.Keyboard.Start.JustPressed or Input.Keyboard.A.JustPressed;
+end;
+
+
+function TLogic.InputMenuRejected(): Boolean;
+begin
+  Result := Input.Device.B.JustPressed or Input.Keyboard.B.JustPressed;
 end;
 
 
@@ -405,7 +421,7 @@ procedure TLogic.UpdateMenuScene();
 begin
   FScene.Validate();
 
-  if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
+  if InputMenuAccepted() then
   begin
     case Memory.Menu.ItemIndex of
       ITEM_MENU_PLAY:    FScene.Current := SCENE_PLAY;
@@ -508,19 +524,19 @@ begin
   if not Input.Device.Connected then
     if Memory.Play.ItemIndex = ITEM_PLAY_START then
     begin
-      if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
+      if InputMenuAccepted() then
         Sounds.PlaySound(SOUND_DROP);
 
       Exit;
     end;
 
-  if Input.Device.B.JustPressed or Input.Keyboard.B.JustPressed then
+  if InputMenuRejected() then
   begin
     FScene.Current := SCENE_MENU;
     Sounds.PlaySound(SOUND_DROP);
   end;
 
-  if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
+  if InputMenuAccepted() then
   case Memory.Play.ItemIndex of
     ITEM_PLAY_START:
     begin
@@ -593,10 +609,7 @@ begin
   if not Input.Device.Connected then
     if Memory.Pause.ItemIndex in [ITEM_PAUSE_RESUME, ITEM_PAUSE_RESTART] then
     begin
-      if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
-        Sounds.PlaySound(SOUND_DROP);
-
-      if Input.Device.Start.JustPressed or Input.Keyboard.Start.JustPressed then
+      if InputMenuAccepted() then
         Sounds.PlaySound(SOUND_DROP);
 
       Exit;
@@ -606,7 +619,7 @@ begin
     if Input.Device.Start.JustPressed or Input.Keyboard.Start.JustPressed then
       FScene.Current := Memory.Pause.FromScene;
 
-  if Input.Device.Start.JustPressed or Input.Device.A.JustPressed or Input.Keyboard.Start.JustPressed or Input.Keyboard.A.JustPressed then
+  if InputMenuAccepted() then
   case Memory.Pause.ItemIndex of
     ITEM_PAUSE_RESUME:
       FScene.Current := Memory.Pause.FromScene;
@@ -618,7 +631,7 @@ begin
     end;
   end;
 
-  if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
+  if InputMenuAccepted() then
   case Memory.Pause.ItemIndex of
     ITEM_PAUSE_OPTIONS:
     begin
@@ -657,7 +670,7 @@ begin
   if not Input.Device.Connected then
     if Memory.TopOut.ItemIndex = ITEM_TOP_OUT_PLAY then
     begin
-      if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
+      if InputMenuAccepted() then
         Sounds.PlaySound(SOUND_DROP);
 
       Exit;
@@ -665,7 +678,7 @@ begin
 
   case Memory.TopOut.ItemIndex of
     ITEM_TOP_OUT_PLAY:
-      if Input.Device.Start.JustPressed or Input.Device.A.JustPressed or Input.Keyboard.Start.JustPressed or Input.Keyboard.A.JustPressed then
+      if InputMenuAccepted() then
       begin
         Memory.Game.Reset();
 
@@ -673,7 +686,7 @@ begin
         Sounds.PlaySound(SOUND_START);
       end;
     ITEM_TOP_OUT_BACK:
-      if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
+      if InputMenuAccepted() then
       begin
         FScene.Current := SCENE_PLAY;
         Sounds.PlaySound(SOUND_DROP);
@@ -808,23 +821,23 @@ begin
 
   if not Input.Device.Connected then
   begin
-    if Input.Device.B.JustPressed or Input.Keyboard.B.JustPressed then
+    if InputMenuRejected() then
       Sounds.PlaySound(SOUND_DROP);
 
     if Memory.Options.ItemIndex in [ITEM_OPTIONS_SET_UP, ITEM_OPTIONS_BACK] then
-      if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
+      if InputMenuAccepted() then
         Sounds.PlaySound(SOUND_DROP);
 
     Exit;
   end;
 
-  if Input.Device.B.JustPressed or Input.Keyboard.B.JustPressed then
+  if InputMenuRejected() then
   begin
     FScene.Current := Memory.Options.FromScene;
     Sounds.PlaySound(SOUND_DROP);
   end;
 
-  if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
+  if InputMenuAccepted() then
   case Memory.Options.ItemIndex of
     ITEM_OPTIONS_SET_UP:
     case Memory.Options.Input of
@@ -868,7 +881,7 @@ begin
 
   case Memory.Keyboard.ItemIndex of
     ITEM_KEYBOARD_CHANGE:
-    if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
+    if InputMenuAccepted() then
     begin
       Input.Device.A.Validate();
       Input.Keyboard.A.Validate();
@@ -879,7 +892,7 @@ begin
       Sounds.PlaySound(SOUND_START);
     end;
     ITEM_KEYBOARD_RESTORE:
-    if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
+    if InputMenuAccepted() then
     begin
       Input.Keyboard.Restore();
       PrepareKeyboardScanCodes();
@@ -914,7 +927,7 @@ begin
     end;
 
   if Memory.Keyboard.KeyIndex in [ITEM_KEYBOARD_SCANCODE_FIRST .. ITEM_KEYBOARD_SCANCODE_LAST] then
-    if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
+    if InputMenuAccepted() then
     begin
       Memory.Keyboard.SettingUp := True;
 
@@ -923,14 +936,14 @@ begin
     end;
 
   if Memory.Keyboard.KeyIndex = ITEM_KEYBOARD_KEY_BACK then
-    if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
+    if InputMenuAccepted() then
     begin
       Memory.Keyboard.Changing := False;
       Sounds.PlaySound(SOUND_DROP);
     end;
 
   if not Memory.Keyboard.SettingUp then
-    if Input.Device.B.JustPressed or Input.Keyboard.B.JustPressed then
+    if InputMenuRejected() then
     begin
       Input.Device.B.Validate();
       Input.Keyboard.B.Validate();
@@ -973,7 +986,7 @@ begin
 
   if not Memory.Keyboard.Changing then
   begin
-    if Input.Device.B.JustPressed or Input.Keyboard.B.JustPressed then
+    if InputMenuRejected() then
     begin
       if Memory.Keyboard.MappedCorrectly() then
         FScene.Current := SCENE_OPTIONS;
@@ -982,7 +995,7 @@ begin
     end;
 
     if Memory.Keyboard.ItemIndex = ITEM_KEYBOARD_SAVE then
-      if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
+      if InputMenuAccepted() then
         if Memory.Keyboard.MappedCorrectly() then
         begin
           Input.Keyboard.Introduce();
@@ -994,7 +1007,7 @@ begin
           Sounds.PlaySound(SOUND_DROP);
 
     if Memory.Keyboard.ItemIndex = ITEM_KEYBOARD_CANCEL then
-      if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
+      if InputMenuAccepted() then
       begin
         FScene.Current := SCENE_OPTIONS;
         Sounds.PlaySound(SOUND_DROP);
@@ -1021,7 +1034,7 @@ begin
 
   case Memory.Controller.ItemIndex of
     ITEM_CONTROLLER_CHANGE:
-    if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
+    if InputMenuAccepted() then
     begin
       Input.Device.A.Validate();
       Input.Keyboard.A.Validate();
@@ -1032,7 +1045,7 @@ begin
       Sounds.PlaySound(SOUND_START);
     end;
     ITEM_CONTROLLER_RESTORE:
-    if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
+    if InputMenuAccepted() then
     begin
       Input.Controller.Restore();
       PrepareControllerScanCodes();
@@ -1067,7 +1080,7 @@ begin
     end;
 
   if Memory.Controller.ButtonIndex in [ITEM_CONTROLLER_SCANCODE_FIRST .. ITEM_CONTROLLER_SCANCODE_LAST] then
-    if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
+    if InputMenuAccepted() then
     begin
       Memory.Controller.SettingUp := True;
 
@@ -1076,14 +1089,14 @@ begin
     end;
 
   if Memory.Controller.ButtonIndex = ITEM_CONTROLLER_BUTTON_BACK then
-    if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
+    if InputMenuAccepted() then
     begin
       Memory.Controller.Changing := False;
       Sounds.PlaySound(SOUND_DROP);
     end;
 
   if not Memory.Controller.SettingUp then
-    if Input.Device.B.JustPressed or Input.Keyboard.B.JustPressed then
+    if InputMenuRejected() then
     begin
       Input.Device.B.Validate();
       Input.Keyboard.B.Validate();
@@ -1137,7 +1150,7 @@ begin
 
   if not Memory.Controller.Changing then
   begin
-    if Input.Device.B.JustPressed or Input.Keyboard.B.JustPressed then
+    if InputMenuRejected() then
     begin
       if Memory.Controller.MappedCorrectly() then
         FScene.Current := SCENE_OPTIONS;
@@ -1146,7 +1159,7 @@ begin
     end;
 
     if Memory.Controller.ItemIndex = ITEM_CONTROLLER_SAVE then
-      if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
+      if InputMenuAccepted() then
         if Memory.Controller.MappedCorrectly() then
         begin
           Input.Controller.Introduce();
@@ -1158,7 +1171,7 @@ begin
           Sounds.PlaySound(SOUND_DROP);
 
     if Memory.Controller.ItemIndex = ITEM_CONTROLLER_CANCEL then
-      if Input.Device.A.JustPressed or Input.Keyboard.A.JustPressed then
+      if InputMenuAccepted() then
       begin
         FScene.Current := SCENE_OPTIONS;
         Sounds.PlaySound(SOUND_DROP);
