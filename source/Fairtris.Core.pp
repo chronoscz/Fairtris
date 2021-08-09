@@ -281,6 +281,9 @@ end;
 
 procedure TCore.UpdatePieceControlDropUpPressed();
 begin
+  Memory.Game.AutorepeatY := 0;
+
+  Memory.Game.FallTimer := 0;
   Memory.Game.FallPoints := 1;
 
   while CanDropPiece() do
