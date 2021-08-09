@@ -224,7 +224,16 @@ end;
 
 
 procedure TRNGEntries.Add(AEntry: TScoreEntry);
+var
+  Index: Integer;
 begin
+  for Index := 0 to FEntries.Count - 1 do
+    if AEntry.TotalScore > FEntries[Index].TotalScore then
+    begin
+      FEntries.Insert(Index, AEntry);
+      Exit;
+    end;
+
   FEntries.Add(AEntry);
 end;
 
