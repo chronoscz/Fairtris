@@ -287,8 +287,9 @@ function TRenderer.ScoreEntryToString(AEntry: TScoreEntry): String;
 begin
   Result := '%.3d'.Format([AEntry.LinesCleared]);
   Result += '%.2d'.Format([AEntry.LevelBegin]).PadLeft(4) + '-' + '%.2d'.Format([AEntry.LevelEnd]);
-  Result += '%d%%'.Format([AEntry.TetrisRate]).PadLeft(5);
-  Result += '%.7d'.Format([AEntry.TotalScore]).PadLeft(9);
+
+  Result += Converter.TetrisesToString(AEntry.TetrisRate).PadLeft(5);
+  Result += Converter.ScoreToString(AEntry.TotalScore).PadLeft(9);
 end;
 
 
