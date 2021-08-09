@@ -1184,7 +1184,7 @@ end;
 
 procedure TLogic.UpdateCommon();
 begin
-  Sounds.InGame := FScene.Current in [SCENE_GAME_NORMAL, SCENE_GAME_FLASH];
+  Sounds.Smart := FScene.Current in [SCENE_GAME_NORMAL, SCENE_GAME_FLASH];
 
   if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_HELP_UNDERSTAND].JustPressed then
     HelpUnderstand();

@@ -10,7 +10,7 @@ type
   private
     FSound: Integer;
   private
-    FInGame: Boolean;
+    FSmart: Boolean;
     FEnabled: Integer;
   private
     FTimeExecute: TDateTime;
@@ -33,7 +33,7 @@ type
   public
     procedure PlaySound(ASound: Integer);
   public
-    property InGame: Boolean read FInGame write FInGame;
+    property Smart: Boolean read FSmart write FSmart;
     property Enabled: Integer read FEnabled write FEnabled;
   end;
 
@@ -74,10 +74,26 @@ end;
 
 function TSounds.CanPlaySound(ASound: Integer): Boolean;
 begin
-  if FStillPlaying then
-    Result := SOUND_PRIORITY[FInGame, ASound] >= SOUND_PRIORITY[FInGame, FSound]
+  if (not FStillPlaying) or (FSound = SOUND_GLASS) then Exit(True);
+
+  if FSmart then
+  begin
+    if FSound in [SOUND_START, SOUND_TRANSITION, SOUND_TOP_OUT, SOUND_PAUSE] then
+      Exit(False);
+
+    if FSound in [SOUND_BURN, SOUND_TETRIS] then
+      Exit(ASound in [SOUND_TRANSITION, SOUND_TOP_OUT]);
+  end
   else
-    Result := True;
+  begin
+    if (FSound = SOUND_BURN) and (ASound = SOUND_BURN) then
+      Exit(True);
+
+    if FSound in [SOUND_BURN, SOUND_TETRIS, SOUND_TRANSITION, SOUND_TOP_OUT] then
+      Exit(False);
+  end;
+
+  Result := True;
 end;
 
 
