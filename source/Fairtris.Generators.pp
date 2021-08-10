@@ -30,6 +30,7 @@ type
     destructor Destroy(); override;
   public
     procedure Initialize(); virtual;
+    procedure Prepare(); virtual;
   public
     procedure Shuffle(); virtual; abstract;
     procedure Step(); virtual; abstract;
@@ -66,6 +67,8 @@ type
   public
     constructor Create(); override;
     destructor Destroy(); override;
+  public
+    procedure Prepare(); override;
   public
     procedure Shuffle(); override;
     procedure Step(); override;
@@ -137,7 +140,6 @@ var
 implementation
 
 uses
-  Math,
   Fairtris.Settings;
 
 
@@ -169,6 +171,12 @@ end;
 procedure TCustomGenerator.Initialize();
 begin
   FRegister.Initialize();
+end;
+
+
+procedure TCustomGenerator.Prepare();
+begin
+
 end;
 
 
@@ -228,6 +236,13 @@ begin
   FBags[1].Free();
 
   inherited Destroy();
+end;
+
+
+procedure T7BagGenerator.Prepare();
+begin
+  inherited Prepare();
+  FIndexPiece := 0;
 end;
 
 
@@ -339,7 +354,7 @@ end;
 
 function TGenerators.GetGenerator(AGeneratorID: Integer): IGenerable;
 begin
-  Result := FGenerators[FGeneratorID];
+  Result := FGenerators[AGeneratorID];
 end;
 
 
@@ -349,8 +364,11 @@ begin
   FGenerator := FGenerators[FGeneratorID];
 
   // added only for testing game core logic
-  FGeneratorID := RNG_UNFAIR;
-  FGenerator := FGenerators[RNG_UNFAIR];
+  if AGeneratorID in [RNG_FAIR, RNG_CLASSIC] then
+  begin
+    FGeneratorID := RNG_UNFAIR;
+    FGenerator := FGenerators[RNG_UNFAIR];
+  end;
   // remove after testing
 end;
 
