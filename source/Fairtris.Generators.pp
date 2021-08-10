@@ -48,7 +48,7 @@ type
   public
     constructor Create(const APieces: array of Integer);
   public
-    function Shuffle(ASeed: UInt16): Boolean;
+    function Swap(ASeed: UInt16): Boolean;
   public
     property Piece[AIndex: Integer]: Integer read GetPiece; default;
     property Size: Integer read FSize;
@@ -57,8 +57,15 @@ type
 
 type
   T7BagGenerator = class(TCustomGenerator)
+  private
+    FBags: array [0 .. 1] of TBag;
+  private
+    FIndexBagPick: Integer;
+    FIndexBagSwap: Integer;
+    FIndexPiece: Integer;
   public
-    procedure Initialize(); override;
+    constructor Create(); override;
+    destructor Destroy(); override;
   public
     procedure Shuffle(); override;
     procedure Step(); override;
@@ -177,7 +184,7 @@ begin
 end;
 
 
-function TBag.Shuffle(ASeed: UInt16): Boolean;
+function TBag.Swap(ASeed: UInt16): Boolean;
 var
   IndexA, IndexB, TempPiece: Integer;
 begin
@@ -201,27 +208,57 @@ begin
 end;
 
 
-procedure T7BagGenerator.Initialize();
+constructor T7BagGenerator.Create();
 begin
-  inherited Initialize();
+  inherited Create();
+
+  FBags[0] := TBag.Create([PIECE_T, PIECE_J, PIECE_Z, PIECE_O, PIECE_S, PIECE_L, PIECE_I]);
+  FBags[1] := TBag.Create([PIECE_T, PIECE_J, PIECE_Z, PIECE_O, PIECE_S, PIECE_L, PIECE_I]);
+
+  FIndexBagPick := 0;
+  FIndexBagSwap := 1;
+
+  FIndexPiece := 0;
+end;
+
+
+destructor T7BagGenerator.Destroy();
+begin
+  FBags[0].Free();
+  FBags[1].Free();
+
+  inherited Destroy();
 end;
 
 
 procedure T7BagGenerator.Shuffle();
 begin
+  repeat FRegister.Update() until FBags[0].Swap(FRegister.Seed);
+  repeat FRegister.Update() until FBags[1].Swap(FRegister.Seed);
 
+  FIndexBagPick := FIndexBagPick xor 1;
+  FIndexBagSwap := FIndexBagSwap xor 1;
+
+  FIndexPiece := (FIndexPiece + 1) mod FBags[0].Size;
 end;
 
 
 procedure T7BagGenerator.Step();
 begin
-
+  repeat FRegister.Update() until FBags[FIndexBagSwap].Swap(FRegister.Seed);
 end;
 
 
 function T7BagGenerator.Pick(): Integer;
 begin
+  Result := FBags[FIndexBagPick][FIndexPiece];
+  FIndexPiece := (FIndexPiece + 1) mod FBags[FIndexBagPick].Size;
 
+  if FIndexPiece = 0 then
+  begin
+    FIndexBagPick := FIndexBagPick xor 1;
+    FIndexBagSwap := FIndexBagSwap xor 1;
+  end;
 end;
 
 
