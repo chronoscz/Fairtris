@@ -40,7 +40,7 @@ type
 
 
 type
-  TBag = class(TObject)
+  TPiecesBag = class(TObject)
   private
     FPieces: array of Integer;
     FSize: Integer;
@@ -59,7 +59,7 @@ type
 type
   T7BagGenerator = class(TCustomGenerator)
   private
-    FBags: array [0 .. 1] of TBag;
+    FBags: array [0 .. 1] of TPiecesBag;
   private
     FIndexBagPick: Integer;
     FIndexBagSwap: Integer;
@@ -184,7 +184,7 @@ begin
 end;
 
 
-constructor TBag.Create(const APieces: array of Integer);
+constructor TPiecesBag.Create(const APieces: array of Integer);
 var
   Index: Integer;
 begin
@@ -196,7 +196,7 @@ begin
 end;
 
 
-function TBag.Swap(ASeed: UInt16): Boolean;
+function TPiecesBag.Swap(ASeed: UInt16): Boolean;
 var
   IndexA, IndexB, TempPiece: Integer;
 begin
@@ -214,7 +214,7 @@ begin
 end;
 
 
-function TBag.GetPiece(AIndex: Integer): Integer;
+function TPiecesBag.GetPiece(AIndex: Integer): Integer;
 begin
   Result := FPieces[AIndex];
 end;
@@ -224,8 +224,8 @@ constructor T7BagGenerator.Create();
 begin
   inherited Create();
 
-  FBags[0] := TBag.Create([PIECE_T, PIECE_J, PIECE_Z, PIECE_O, PIECE_S, PIECE_L, PIECE_I]);
-  FBags[1] := TBag.Create([PIECE_T, PIECE_J, PIECE_Z, PIECE_O, PIECE_S, PIECE_L, PIECE_I]);
+  FBags[0] := TPiecesBag.Create([PIECE_T, PIECE_J, PIECE_Z, PIECE_O, PIECE_S, PIECE_L, PIECE_I]);
+  FBags[1] := TPiecesBag.Create([PIECE_T, PIECE_J, PIECE_Z, PIECE_O, PIECE_S, PIECE_L, PIECE_I]);
 
   FIndexBagPick := 0;
   FIndexBagSwap := 1;
