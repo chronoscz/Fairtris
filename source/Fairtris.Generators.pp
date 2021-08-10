@@ -91,8 +91,12 @@ type
 
 type
   TClassicGenerator = class(TCustomGenerator)
-  public
-    procedure Initialize(); override;
+  private
+    FSpawnID: UInt8;
+    FSpawnCount: UInt8;
+  private
+    function IndexToSpawnID(AIndex: UInt8): UInt8;
+    function SpawnIDToPieceID(ASpawnID: UInt8): Integer;
   public
     procedure Shuffle(); override;
     procedure Step(); override;
@@ -301,27 +305,64 @@ begin
 end;
 
 
-procedure TClassicGenerator.Initialize();
+function TClassicGenerator.IndexToSpawnID(AIndex: UInt8): UInt8;
 begin
-  inherited Initialize();
+  case AIndex of
+    0: Result := $02;
+    1: Result := $07;
+    2: Result := $08;
+    3: Result := $0A;
+    4: Result := $0B;
+    5: Result := $0E;
+    6: Result := $12;
+    7: Result := $02;
+  end;
+end;
+
+
+function TClassicGenerator.SpawnIDToPieceID(ASpawnID: UInt8): Integer;
+begin
+  case ASpawnID of
+    $02: Result := PIECE_T;
+    $07: Result := PIECE_J;
+    $08: Result := PIECE_Z;
+    $0A: Result := PIECE_O;
+    $0B: Result := PIECE_S;
+    $0E: Result := PIECE_L;
+    $12: Result := PIECE_I;
+  end;
 end;
 
 
 procedure TClassicGenerator.Shuffle();
 begin
-
+  FRegister.Update();
 end;
 
 
 procedure TClassicGenerator.Step();
 begin
-
+  FRegister.Update();
 end;
 
 
 function TClassicGenerator.Pick(): Integer;
+var
+  Index: UInt8;
 begin
+  {$PUSH}{$RANGECHECKS OFF}
+  FSpawnCount += 1;
+  Index := (Hi(FRegister.Seed) + FSpawnCount) and %111;
+  {$POP}
 
+  if (Index = 7) or (IndexToSpawnID(Index) = FSpawnID) then
+  begin
+    FRegister.Update();
+    Index := ((Hi(FRegister.Seed) and %111) + FSpawnID) mod 7;
+  end;
+
+  FSpawnID := IndexToSpawnID(Index);
+  Result := SpawnIDToPieceID(FSpawnID);
 end;
 
 
@@ -364,7 +405,7 @@ begin
   FGenerator := FGenerators[FGeneratorID];
 
   // added only for testing game core logic
-  if AGeneratorID in [RNG_FAIR, RNG_CLASSIC] then
+  if AGeneratorID = RNG_FAIR then
   begin
     FGeneratorID := RNG_UNFAIR;
     FGenerator := FGenerators[RNG_UNFAIR];
