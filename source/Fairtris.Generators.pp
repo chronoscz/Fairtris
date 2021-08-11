@@ -49,7 +49,7 @@ type
   public
     constructor Create(const AItems: array of Integer);
   public
-    function Swap(ASeed: UInt16): Boolean;
+    procedure Swap(ASeed: UInt16);
   public
     property Item[AIndex: Integer]: Integer read GetItem; default;
     property Size: Integer read FSize;
@@ -196,16 +196,14 @@ begin
 end;
 
 
-function TBag.Swap(ASeed: UInt16): Boolean;
+procedure TBag.Swap(ASeed: UInt16);
 var
   IndexA, IndexB, TempPiece: Integer;
 begin
   IndexA := Hi(ASeed) mod FSize;
   IndexB := Lo(ASeed) mod FSize;
 
-  Result := IndexA <> IndexB;
-
-  if Result then
+  if IndexA <> IndexB then
   begin
     TempPiece := FItems[IndexA];
     FItems[IndexA] := FItems[IndexB];
@@ -252,8 +250,11 @@ end;
 
 procedure T7BagGenerator.Shuffle();
 begin
-  repeat FRegister.Update() until FBags[0].Swap(FRegister.Seed);
-  repeat FRegister.Update() until FBags[1].Swap(FRegister.Seed);
+  FRegister.Update();
+  FBags[0].Swap(FRegister.Seed);
+
+  FRegister.Update();
+  FBags[1].Swap(FRegister.Seed);
 
   FIndexBagPick := FIndexBagPick xor 1;
   FIndexBagSwap := FIndexBagSwap xor 1;
@@ -264,7 +265,8 @@ end;
 
 procedure T7BagGenerator.Step();
 begin
-  repeat FRegister.Update() until FBags[FIndexBagSwap].Swap(FRegister.Seed);
+  FRegister.Update();
+  FBags[FIndexBagSwap].Swap(FRegister.Seed);
 end;
 
 
