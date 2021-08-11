@@ -69,6 +69,7 @@ type
     constructor Create(); override;
     destructor Destroy(); override;
   public
+    procedure Initialize(); override;
     procedure Prepare(); override;
   public
     procedure Shuffle(); override;
@@ -225,11 +226,6 @@ begin
 
   FBags[0] := TBag.Create([PIECE_T, PIECE_J, PIECE_Z, PIECE_O, PIECE_S, PIECE_L, PIECE_I]);
   FBags[1] := TBag.Create([PIECE_T, PIECE_J, PIECE_Z, PIECE_O, PIECE_S, PIECE_L, PIECE_I]);
-
-  FIndexBagPick := 0;
-  FIndexBagSwap := 1;
-
-  FIndexPiece := 0;
 end;
 
 
@@ -239,6 +235,17 @@ begin
   FBags[1].Free();
 
   inherited Destroy();
+end;
+
+
+procedure T7BagGenerator.Initialize();
+begin
+  inherited Initialize();
+
+  FIndexBagPick := 0;
+  FIndexBagSwap := 1;
+
+  FIndexPiece := 0;
 end;
 
 
