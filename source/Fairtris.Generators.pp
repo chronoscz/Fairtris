@@ -63,6 +63,7 @@ type
   private
     FIndexBagPick: Integer;
     FIndexBagSwap: Integer;
+  private
     FIndexPiece: Integer;
   public
     constructor Create(); override;
