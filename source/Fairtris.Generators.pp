@@ -334,6 +334,8 @@ constructor TFairGenerator.Create();
 var
   Index: Integer;
 begin
+  inherited Create();
+
   for Index := Low(FIndexBags) to High(FIndexBags) do
     FIndexBags[Index] := TBag.Create(FAIR_BAGS_COUNT);
 
@@ -530,14 +532,6 @@ procedure TGenerators.SetGeneratorID(AGeneratorID: Integer);
 begin
   FGeneratorID := AGeneratorID;
   FGenerator := FGenerators[FGeneratorID];
-
-  // added only for testing game core logic
-  if AGeneratorID = RNG_FAIR then
-  begin
-    FGeneratorID := RNG_UNFAIR;
-    FGenerator := FGenerators[RNG_UNFAIR];
-  end;
-  // remove after testing
 end;
 
 
