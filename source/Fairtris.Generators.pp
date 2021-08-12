@@ -83,6 +83,19 @@ type
 
 type
   TFairGenerator = class(TCustomGenerator)
+  private
+    FIndexBags: array [0 .. 1] of TBag;
+    FPieceBags: array [FAIR_BAGS_FIRST .. FAIR_BAGS_LAST] of TBag;
+  private
+    FIndexPick: Integer;
+    FIndexSwap: Integer;
+  private
+    FBagPick: Integer;
+    FBagSwap: Integer;
+    FBagPiece: Integer;
+  public
+    constructor Create(); override;
+    destructor Destroy(); override;
   public
     procedure Initialize(); override;
   public
@@ -148,7 +161,9 @@ var
 implementation
 
 uses
-  Fairtris.Settings;
+  Fairtris.Clock,
+  Fairtris.Settings,
+  Fairtris.Arrays;
 
 
 procedure TShiftRegister.Initialize();
@@ -315,27 +330,105 @@ begin
 end;
 
 
+constructor TFairGenerator.Create();
+var
+  Index: Integer;
+begin
+  for Index := Low(FIndexBags) to High(FIndexBags) do
+    FIndexBags[Index] := TBag.Create(FAIR_BAGS_COUNT);
+
+  for Index := Low(FPieceBags) to High(FPieceBags) do
+    FPieceBags[Index] := TBag.Create(FAIR_BAGS[Index]);
+end;
+
+
+destructor TFairGenerator.Destroy();
+var
+  Index: Integer;
+begin
+  for Index := Low(FIndexBags) to High(FIndexBags) do
+    FIndexBags[Index].Free();
+
+  for Index := Low(FPieceBags) to High(FPieceBags) do
+    FPieceBags[Index].Free();
+
+  inherited Destroy();
+end;
+
+
 procedure TFairGenerator.Initialize();
 begin
   inherited Initialize();
+
+  FIndexPick := 0;
+  FIndexSwap := 1;
+
+  FBagPick := FAIR_BAGS_FIRST;
+  FBagSwap := FAIR_BAGS_FIRST + 1;
+
+  FBagPiece := FAIR_BAGS_PIECE_FIRST;
 end;
 
 
 procedure TFairGenerator.Shuffle();
+var
+  Index: Integer;
 begin
+  if Clock.FrameIndex mod 4 = 0 then
+    for Index := Low(FIndexBags) to High(FIndexBags) do
+    begin
+      FRegister.Update();
+      FIndexBags[Index].Swap(FRegister.Seed);
+    end
+  else
+    for Index := Low(FPieceBags) to High(FPieceBags) do
+    begin
+      FRegister.Update();
+      FPieceBags[Index].Swap(FRegister.Seed);
+    end;
 
+  FIndexPick := (FIndexPick + 1) mod FIndexBags[0].Size;
+  FIndexSwap := FIndexPick + 1;
+
+  FBagPick := FBagPick xor 1;
+  FBagSwap := FBagSwap xor 1;
+
+  FBagPiece := (FBagPiece + 1) mod FPieceBags[0].Size;
 end;
 
 
 procedure TFairGenerator.Step();
 begin
+  FRegister.Update();
+  FIndexBags[FBagSwap].Swap(FRegister.Seed);
 
+  if FIndexSwap < FIndexBags[0].Size then
+  begin
+    FRegister.Update();
+    FPieceBags[FIndexBags[FBagPick][FIndexSwap]].Swap(FRegister.Seed);
+  end;
 end;
 
 
 function TFairGenerator.Pick(): Integer;
 begin
+  Result := FPieceBags[FIndexBags[FBagPick][FIndexPick]][FBagPiece];
+  FBagPiece := (FBagPiece + 1) mod FPieceBags[0].Size;
 
+  if FBagPiece = 0 then
+  begin
+    FIndexPick := (FIndexPick + 1) mod FIndexBags[0].Size;
+    FIndexSwap := FIndexPick + 1;
+
+    if FIndexPick = 0 then
+    begin
+      if FIndexBags[FBagPick][FIndexBags[FBagPick].Size - 1] = FIndexBags[FBagSwap][0] then
+        FIndexBags[FBagSwap].SwapFirst();
+
+      FBagPick := FBagPick xor 1;
+      FBagSwap := FBagSwap xor 1;
+    end;
+  end;
 end;
 
 
