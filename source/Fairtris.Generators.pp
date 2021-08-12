@@ -98,6 +98,7 @@ type
     destructor Destroy(); override;
   public
     procedure Initialize(); override;
+    procedure Prepare(); override;
   public
     procedure Shuffle(); override;
     procedure Step(); override;
@@ -372,6 +373,17 @@ begin
 end;
 
 
+procedure TFairGenerator.Prepare();
+begin
+  inherited Prepare();
+
+  FIndexPick := 0;
+  FIndexSwap := 1;
+
+  FBagPiece := FAIR_BAGS_PIECE_FIRST;
+end;
+
+
 procedure TFairGenerator.Shuffle();
 var
   Index: Integer;
@@ -400,6 +412,8 @@ end;
 
 
 procedure TFairGenerator.Step();
+var
+  Index: Integer;
 begin
   FRegister.Update();
   FIndexBags[FBagSwap].Swap(FRegister.Seed);
@@ -408,7 +422,14 @@ begin
   begin
     FRegister.Update();
     FPieceBags[FIndexBags[FBagPick][FIndexSwap]].Swap(FRegister.Seed);
-  end;
+  end
+  else
+    for Index := FAIR_BAGS_FIRST to FAIR_BAGS_LAST do
+      if Index <> FIndexBags[FBagPick][FIndexBags[0].Size - 1] then
+      begin
+        FRegister.Update();
+        FPieceBags[FIndexBags[FBagPick][Index]].Swap(FRegister.Seed);
+      end;
 end;
 
 
