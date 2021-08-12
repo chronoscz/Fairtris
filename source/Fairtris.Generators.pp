@@ -47,9 +47,11 @@ type
   private
     function GetItem(AIndex: Integer): Integer;
   public
+    constructor Create(const ACount: Integer);
     constructor Create(const AItems: array of Integer);
   public
     procedure Swap(ASeed: UInt16);
+    procedure SwapFirst();
   public
     property Item[AIndex: Integer]: Integer read GetItem; default;
     property Size: Integer read FSize;
@@ -186,6 +188,18 @@ begin
 end;
 
 
+constructor TBag.Create(const ACount: Integer);
+var
+  Index: Integer;
+begin
+  FSize := ACount;
+  SetLength(FItems, ACount);
+
+  for Index := 0 to FSize - 1 do
+    FItems[Index] := Index;
+end;
+
+
 constructor TBag.Create(const AItems: array of Integer);
 var
   Index: Integer;
@@ -211,6 +225,16 @@ begin
     FItems[IndexA] := FItems[IndexB];
     FItems[IndexB] := TempPiece;
   end;
+end;
+
+
+procedure TBag.SwapFirst();
+var
+  TempIndex: Integer;
+begin
+  TempIndex := FItems[0];
+  FItems[0] := FItems[1];
+  FItems[1] := TempIndex;
 end;
 
 
