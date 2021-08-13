@@ -63,10 +63,9 @@ type
   private
     FBags: array [0 .. 1] of TBag;
   private
-    FIndexBagPick: Integer;
-    FIndexBagSwap: Integer;
-  private
-    FIndexPiece: Integer;
+    FBagPick: Integer;
+    FBagSwap: Integer;
+    FBagPiece: Integer;
   public
     constructor Create(); override;
     destructor Destroy(); override;
@@ -282,17 +281,17 @@ procedure T7BagGenerator.Initialize();
 begin
   inherited Initialize();
 
-  FIndexBagPick := 0;
-  FIndexBagSwap := 1;
+  FBagPick := 0;
+  FBagSwap := 1;
 
-  FIndexPiece := 0;
+  FBagPiece := 0;
 end;
 
 
 procedure T7BagGenerator.Prepare();
 begin
   inherited Prepare();
-  FIndexPiece := 0;
+  FBagPiece := 0;
 end;
 
 
@@ -304,29 +303,29 @@ begin
   FRegister.Update();
   FBags[1].Swap(FRegister.Seed);
 
-  FIndexBagPick := FIndexBagPick xor 1;
-  FIndexBagSwap := FIndexBagSwap xor 1;
+  FBagPick := FBagPick xor 1;
+  FBagSwap := FBagSwap xor 1;
 
-  FIndexPiece := (FIndexPiece + 1) mod FBags[0].Size;
+  FBagPiece := (FBagPiece + 1) mod FBags[0].Size;
 end;
 
 
 procedure T7BagGenerator.Step();
 begin
   FRegister.Update();
-  FBags[FIndexBagSwap].Swap(FRegister.Seed);
+  FBags[FBagSwap].Swap(FRegister.Seed);
 end;
 
 
 function T7BagGenerator.Pick(): Integer;
 begin
-  Result := FBags[FIndexBagPick][FIndexPiece];
-  FIndexPiece := (FIndexPiece + 1) mod FBags[FIndexBagPick].Size;
+  Result := FBags[FBagPick][FBagPiece];
+  FBagPiece := (FBagPiece + 1) mod FBags[FBagPick].Size;
 
-  if FIndexPiece = 0 then
+  if FBagPiece = 0 then
   begin
-    FIndexBagPick := FIndexBagPick xor 1;
-    FIndexBagSwap := FIndexBagSwap xor 1;
+    FBagPick := FBagPick xor 1;
+    FBagSwap := FBagSwap xor 1;
   end;
 end;
 
