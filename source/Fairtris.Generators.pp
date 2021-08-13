@@ -379,6 +379,9 @@ begin
   FIndexPick := 0;
   FIndexSwap := 1;
 
+  FBagPick := FBagPick xor 1;
+  FBagSwap := FBagSwap xor 1;
+
   FBagPiece := FAIR_BAGS_PIECE_FIRST;
 end;
 
