@@ -1234,7 +1234,7 @@ begin
   if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_HELP_CONTROL].JustPressed then
     HelpControl();
 
-  if Input.Keyboard.Device.Key[VK_F10].JustPressed then
+  if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_TOGGLE_CLIP].JustPressed then
     Renderers.ClipFrame := not Renderers.ClipFrame;
 
   if not Memory.Game.Started then
