@@ -87,7 +87,6 @@ type
     FPieceBags: array [FAIR_BAGS_FIRST .. FAIR_BAGS_LAST] of TBag;
   private
     FIndexPick: Integer;
-    FIndexSwap: Integer;
   private
     FBagPick: Integer;
     FBagSwap: Integer;
@@ -363,7 +362,6 @@ begin
   inherited Initialize();
 
   FIndexPick := 0;
-  FIndexSwap := 1;
 
   FBagPick := FAIR_BAGS_FIRST;
   FBagSwap := FAIR_BAGS_FIRST + 1;
@@ -377,7 +375,6 @@ begin
   inherited Prepare();
 
   FIndexPick := 0;
-  FIndexSwap := 1;
 
   FBagPick := FBagPick xor 1;
   FBagSwap := FBagSwap xor 1;
@@ -404,7 +401,6 @@ begin
     end;
 
   FIndexPick := (FIndexPick + 1) mod FIndexBags[0].Size;
-  FIndexSwap := FIndexPick + 1;
 
   FBagPick := FBagPick xor 1;
   FBagSwap := FBagSwap xor 1;
@@ -420,18 +416,12 @@ begin
   FRegister.Update();
   FIndexBags[FBagSwap].Swap(FRegister.Seed);
 
-  if FIndexSwap < FIndexBags[0].Size then
-  begin
-    FRegister.Update();
-    FPieceBags[FIndexBags[FBagPick][FIndexSwap]].Swap(FRegister.Seed);
-  end
-  else
-    for Index := FAIR_BAGS_FIRST to FAIR_BAGS_LAST do
-      if Index <> FIndexBags[FBagPick][FIndexBags[0].Size - 1] then
-      begin
-        FRegister.Update();
-        FPieceBags[FIndexBags[FBagPick][Index]].Swap(FRegister.Seed);
-      end;
+  for Index := FAIR_BAGS_FIRST to FAIR_BAGS_LAST do
+    if Index <> FIndexBags[FBagPick][FIndexPick] then
+    begin
+      FRegister.Update();
+      FPieceBags[Index].Swap(FRegister.Seed);
+    end;
 end;
 
 
@@ -443,7 +433,6 @@ begin
   if FBagPiece = 0 then
   begin
     FIndexPick := (FIndexPick + 1) mod FIndexBags[0].Size;
-    FIndexSwap := FIndexPick + 1;
 
     if FIndexPick = 0 then
     begin
