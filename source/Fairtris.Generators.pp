@@ -15,7 +15,7 @@ type
     FSeed: UInt16;
   public
     procedure Initialize();
-    procedure Update();
+    procedure Step();
   public
     property Seed: UInt16 read FSeed;
   end;
@@ -171,7 +171,7 @@ begin
 end;
 
 
-procedure TShiftRegister.Update();
+procedure TShiftRegister.Step();
 begin
   FSeed := ((((FSeed shr 9) and 1) xor ((FSeed shr 1) and 1)) shl 15) or (FSeed shr 1);
 end;
@@ -296,10 +296,10 @@ end;
 
 procedure T7BagGenerator.Shuffle();
 begin
-  FRegister.Update();
+  FRegister.Step();
   FBags[0].Swap(FRegister.Seed);
 
-  FRegister.Update();
+  FRegister.Step();
   FBags[1].Swap(FRegister.Seed);
 
   FBagPick := FBagPick xor 1;
@@ -311,7 +311,7 @@ end;
 
 procedure T7BagGenerator.Step();
 begin
-  FRegister.Update();
+  FRegister.Step();
   FBags[FBagSwap].Swap(FRegister.Seed);
 end;
 
@@ -390,13 +390,13 @@ begin
   if Clock.FrameIndex mod 4 = 0 then
     for Index := Low(FIndexBags) to High(FIndexBags) do
     begin
-      FRegister.Update();
+      FRegister.Step();
       FIndexBags[Index].Swap(FRegister.Seed);
     end
   else
     for Index := Low(FPieceBags) to High(FPieceBags) do
     begin
-      FRegister.Update();
+      FRegister.Step();
       FPieceBags[Index].Swap(FRegister.Seed);
     end;
 
@@ -413,13 +413,13 @@ procedure TFairGenerator.Step();
 var
   Index: Integer;
 begin
-  FRegister.Update();
+  FRegister.Step();
   FIndexBags[FBagSwap].Swap(FRegister.Seed);
 
   for Index := FAIR_BAGS_FIRST to FAIR_BAGS_LAST do
     if Index <> FIndexBags[FBagPick][FIndexPick] then
     begin
-      FRegister.Update();
+      FRegister.Step();
       FPieceBags[Index].Swap(FRegister.Seed);
     end;
 end;
@@ -477,13 +477,13 @@ end;
 
 procedure TClassicGenerator.Shuffle();
 begin
-  FRegister.Update();
+  FRegister.Step();
 end;
 
 
 procedure TClassicGenerator.Step();
 begin
-  FRegister.Update();
+  FRegister.Step();
 end;
 
 
@@ -498,7 +498,7 @@ begin
 
   if (Index = 7) or (IndexToSpawnID(Index) = FSpawnID) then
   begin
-    FRegister.Update();
+    FRegister.Step();
     Index := ((Hi(FRegister.Seed) and %111) + FSpawnID) mod 7;
   end;
 
@@ -509,13 +509,13 @@ end;
 
 procedure TUnfairGenerator.Shuffle();
 begin
-  FRegister.Update();
+  FRegister.Step();
 end;
 
 
 procedure TUnfairGenerator.Step();
 begin
-  FRegister.Update();
+  FRegister.Step();
 end;
 
 
