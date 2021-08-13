@@ -504,15 +504,45 @@ begin
 
   if Input.Device.Left.JustPressed or Input.Keyboard.Left.JustPressed then
   begin
+    Memory.Play.Autorepeat := 0;
+
     UpdateItemIndex(Memory.Play.Level, LEVEL_COUNT[Memory.Play.Region], ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
-  end;
+  end
+  else
+    if Input.Device.Left.Pressed or Input.Keyboard.Left.Pressed then
+    begin
+      Memory.Play.Autorepeat += 1;
+
+      if Memory.Play.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.Play.Region] then
+      begin
+        Memory.Play.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Play.Region];
+
+        UpdateItemIndex(Memory.Play.Level, LEVEL_COUNT[Memory.Play.Region], ITEM_PREV);
+        Sounds.PlaySound(SOUND_SHIFT);
+      end;
+    end;
 
   if Input.Device.Right.JustPressed or Input.Keyboard.Right.JustPressed then
   begin
+    Memory.Play.Autorepeat := 0;
+
     UpdateItemIndex(Memory.Play.Level, LEVEL_COUNT[Memory.Play.Region], ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
-  end;
+  end
+  else
+    if Input.Device.Right.Pressed or Input.Keyboard.Right.Pressed then
+    begin
+      Memory.Play.Autorepeat += 1;
+
+      if Memory.Play.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.Play.Region] then
+      begin
+        Memory.Play.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Play.Region];
+
+        UpdateItemIndex(Memory.Play.Level, LEVEL_COUNT[Memory.Play.Region], ITEM_NEXT);
+        Sounds.PlaySound(SOUND_SHIFT);
+      end;
+    end;
 end;
 
 

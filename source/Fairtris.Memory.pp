@@ -33,6 +33,7 @@ type
     procedure Initialize();
   public
     ItemIndex: Integer;
+    Autorepeat: Integer;
   public
     Region: Integer;
     RNG: Integer;
@@ -259,6 +260,7 @@ end;
 procedure TPlayMemory.Initialize();
 begin
   ItemIndex := ITEM_PLAY_FIRST;
+  Autorepeat := 0;
 
   Region := Settings.General.Region;
   RNG := Settings.General.RNG;
