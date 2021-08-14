@@ -378,8 +378,6 @@ begin
 
   FBagPick := FBagPick xor 1;
   FBagSwap := FBagSwap xor 1;
-
-  FBagPiece := FAIR_BAGS_PIECE_FIRST;
 end;
 
 
