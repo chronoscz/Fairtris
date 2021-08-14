@@ -168,7 +168,7 @@ end;
 
 function TLogic.InputMenuAccepted(): Boolean;
 begin
-  Result := Input.Device.Start.JustPressed or Input.Keyboard.Start.JustPressed;
+  Result := Input.Device.Start.JustPressed or Input.Keyboard.Start.JustPressed or Input.Keyboard.A.JustPressed;
 end;
 
 
