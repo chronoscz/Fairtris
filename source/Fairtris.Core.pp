@@ -384,13 +384,13 @@ end;
 
 procedure TCore.UpdatePieceControlRotate();
 begin
+  if Input.Device.B.JustPressed and Input.Device.A.JustPressed then Exit;
+
   if Input.Device.B.JustPressed then
     if CanRotatePiece(PIECE_ROTATE_COUNTERCLOCKWISE) then
     begin
       RotatePiece(PIECE_ROTATE_COUNTERCLOCKWISE);
       Sounds.PlaySound(SOUND_SPIN);
-
-      Exit;
     end;
 
   if Input.Device.A.JustPressed then
