@@ -555,7 +555,7 @@ var
   Gain: Integer;
 var
   HappenedKillScreen: Boolean = False;
-  HappenedAnyTransition: Boolean = False;
+  HappenedLaterTransition: Boolean = False;
   HappenedFirstTransition: Boolean = False;
 begin
   if Memory.Game.ClearCount > 0 then
@@ -567,9 +567,9 @@ begin
     if Memory.Game.AfterTransition then
     begin
       if (Memory.Game.Lines div 10) <> ((Memory.Game.Lines + Memory.Game.ClearCount) div 10) then
-        HappenedAnyTransition := True;
+        HappenedLaterTransition := True;
 
-      if HappenedAnyTransition then
+      if HappenedLaterTransition then
         if Memory.Game.Lines + Memory.Game.ClearCount >= KILLSCREEN_LINES[Memory.Play.Region, Memory.Play.Level] then
           HappenedKillScreen := True;
     end;
@@ -577,7 +577,7 @@ begin
     if HappenedFirstTransition then
       Memory.Game.AfterTransition := True;
 
-    if HappenedFirstTransition or HappenedAnyTransition then
+    if HappenedFirstTransition or HappenedLaterTransition then
     begin
       Memory.Game.Level += 1;
       Sounds.PlaySound(SOUND_TRANSITION);
@@ -613,7 +613,7 @@ begin
     Memory.Game.GainTimer := GAIN_SECONDS_VISIBLE * Clock.FrameRateLimit;
   end;
 
-  if HappenedFirstTransition or HappenedAnyTransition then
+  if HappenedFirstTransition or HappenedLaterTransition then
   begin
     if (Memory.Play.Level < 19) and (Memory.Game.Level = 19) then Memory.Game.Transition := Memory.Game.Score;
     if (Memory.Play.Level = 19) and (Memory.Game.Level = 20) then Memory.Game.Transition := Memory.Game.Score;
