@@ -235,9 +235,6 @@ begin
 
   if IndexA <> IndexB then
   begin
-    if FItems[IndexA] = PIECE_I then if (IndexA = Low(FItems)) or (IndexA = High(FItems)) then Exit;
-    if FItems[IndexB] = PIECE_I then if (IndexB = Low(FItems)) or (IndexB = High(FItems)) then Exit;
-
     TempPiece := FItems[IndexA];
     FItems[IndexA] := FItems[IndexB];
     FItems[IndexB] := TempPiece;
