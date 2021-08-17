@@ -237,17 +237,14 @@ end;
 
 
 procedure TClock.UpdateFrameAlign();
-var
-  SleepTime: Single;
 begin
-  SleepTime := 1000 / FFrameRateLimit * (1 - (FFrameTicksEnd - FFrameTicksBegin) / FTicksPerFrame) - 1;
-  SleepTime -= Ord(Round(SleepTime) > SleepTime);
-  SleepTime := Max(SleepTime, 0);
-
-  Sleep(Round(SleepTime));
+  while GetCounterValue() < FFrameTicksNext - FTicksPerFrame do
+    Sleep(1);
 
   while GetCounterValue() < FFrameTicksNext do
-    Sleep(0);
+  asm
+    pause
+  end;
 end;
 
 
