@@ -1,4 +1,5 @@
 source/lib/
+bin/
 
 *.exe
 *.dbg

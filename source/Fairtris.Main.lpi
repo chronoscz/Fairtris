@@ -196,7 +196,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="fairtris.exe"/>
+      <Filename Value="..\bin\fairtris.exe"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
