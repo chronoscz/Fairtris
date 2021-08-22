@@ -59,6 +59,9 @@
               </Win32>
             </Options>
           </Linking>
+          <Other>
+            <WriteFPCLogo Value="False"/>
+          </Other>
         </CompilerOptions>
       </Item2>
       <SharedMatrixOptions Count="2">
