@@ -1,4 +1,3 @@
-release/
 source/lib/
 
 *.exe
@@ -6,4 +5,4 @@ source/lib/
 *.lps
 *.res
 
-source/grounds/desktop.ini
+*desktop.ini
