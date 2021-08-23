@@ -72,7 +72,7 @@ begin
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 'linear');
 
   if SDL_Init(SDL_INIT_EVERYTHING) < 0 then Halt();
-  if Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) < 0 then Halt();
+  if MIX_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) < 0 then Halt();
 end;
 
 
@@ -103,7 +103,7 @@ end;
 
 procedure TGame.DestroySystem();
 begin
-  Mix_CloseAudio();
+  MIX_CloseAudio();
   SDL_Quit();
 end;
 
@@ -221,7 +221,7 @@ begin
   Logic.Update();
 
   if Logic.Scene.Current = SCENE_STOP then
-    Stop();
+    Logic.Stop();
 end;
 
 
@@ -233,25 +233,19 @@ end;
 
 procedure TGame.UpdateBuffer();
 begin
-  if not Logic.Stopped then
-    Renderers.Theme.RenderScene(Logic.Scene.Current);
+  Renderers.Theme.RenderScene(Logic.Scene.Current);
 end;
 
 
 procedure TGame.UpdateWindow();
 begin
-  if not Logic.Stopped then
-  begin
-    Window.Invalidate();
-    Application.ProcessMessages();
-  end;
+  SDL_RenderPresent(Window.Renderer);
 end;
 
 
 procedure TGame.UpdateTaskBar();
 begin
-  if not Logic.Stopped then
-    Taskbar.Update();
+  Taskbar.Update();
 end;
 
 
@@ -266,7 +260,7 @@ begin
       UpdateLogic();
       UpdateSounds();
 
-      if not Logic.Scene.Changed then
+      if not Logic.Scene.Changed and not Logic.Stopped then
       begin
         UpdateBuffer();
         UpdateWindow();
