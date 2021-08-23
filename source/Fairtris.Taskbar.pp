@@ -11,7 +11,7 @@ uses
 type
   TTaskbar = class(TObject)
   private
-    FList: ITaskBarList3;
+    FButton: ITaskBarList3;
     FSupported: Boolean;
   public
     procedure Initialize();
@@ -38,10 +38,7 @@ var
   Instance: IInterface;
 begin
   Instance := CreateComObject(CLSID_TASKBARLIST);
-  FSupported := Supports(Instance, ITaskBarList3, FList);
-
-  if not FSupported then
-    FList := nil;
+  FSupported := Supports(Instance, ITaskBarList3, FButton);
 end;
 
 
@@ -65,8 +62,8 @@ begin
       61 .. 85: ButtonState := TBPF_PAUSED;
     end;
 
-    FList.SetProgressState(Application.Handle, ButtonState);
-    FList.SetProgressValue(Application.Handle, ButtonValue, ButtonTotal);
+    FButton.SetProgressState(Application.Handle, ButtonState);
+    FButton.SetProgressValue(Application.Handle, ButtonValue, ButtonTotal);
   end;
 end;
 
