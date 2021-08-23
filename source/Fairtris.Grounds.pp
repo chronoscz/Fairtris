@@ -5,19 +5,17 @@ unit Fairtris.Grounds;
 interface
 
 uses
+  SDL2,
   Fairtris.Constants;
 
 
 type
   TThemeGrounds = class(TObject)
   private type
-    TGrounds = array [SCENE_FIRST .. SCENE_LAST] of TBitmap;
+    TGrounds = array [SCENE_FIRST .. SCENE_LAST] of PSDL_Texture;
   private
     FGrounds: TGrounds;
     FGroundsPath: String;
-  private
-    procedure InitGrounds();
-    procedure DoneGrounds();
   private
     function GetGround(ASceneID: Integer): TBitmap;
   public
@@ -26,7 +24,7 @@ type
   public
     procedure Load();
   public
-    property Ground[ASceneID: Integer]: TBitmap read GetGround; default;
+    property Ground[ASceneID: Integer]: PSDL_Texture read GetGround; default;
   end;
 
 
@@ -64,32 +62,17 @@ uses
 constructor TThemeGrounds.Create(const APath: String);
 begin
   FGroundsPath := APath;
-  InitGrounds();
 end;
 
 
 destructor TThemeGrounds.Destroy();
+var
+  Index: Integer;
 begin
-  DoneGrounds();
+  for Index := Low(FGrounds) to High(FGrounds) do
+    SDL_DestroyTexture(FGrounds[Index]);
+
   inherited Destroy();
-end;
-
-
-procedure TThemeGrounds.InitGrounds();
-var
-  Index: Integer;
-begin
-  for Index := Low(FGrounds) to High(FGrounds) do
-    FGrounds[Index] := TBitmap.Create();
-end;
-
-
-procedure TThemeGrounds.DoneGrounds();
-var
-  Index: Integer;
-begin
-  for Index := Low(FGrounds) to High(FGrounds) do
-    FGrounds[Index].Free();
 end;
 
 
