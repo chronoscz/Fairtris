@@ -41,7 +41,7 @@ type
     function CorrectTop(AValue: Integer): Integer;
     function CorrectLevel(AValue: Integer): Integer;
   private
-    function DetermineMonitor(AHandle: THandle): Integer;
+    function DetermineMonitor(): Integer;
   private
     procedure CorrectRanges();
   public
@@ -126,6 +126,7 @@ var
 implementation
 
 uses
+  SDL2,
   Fairtris.Window,
   Fairtris.Clock,
   Fairtris.Input,
@@ -156,26 +157,40 @@ function TGeneralSettings.CorrectMonitor(AValue: Integer): Integer;
 begin
   Result := AValue;
 
-  if (Result < 0) or (Result > Screen.MonitorCount - 1) then
+  if (Result < 0) or (Result > SDL_GetNumVideoDisplays() - 1) then
     Result := MONITOR_DEFAULT;
 end;
 
 
 function TGeneralSettings.CorrectLeft(AValue: Integer): Integer;
+var
+  MonitorBounds: TSDL_Rect;
 begin
   Result := AValue;
 
-  if Result < Screen.Monitors[FMonitor].BoundsRect.Left then Exit(0);
-  if Result > Screen.Monitors[FMonitor].BoundsRect.Right - BUFFER_WIDTH then Exit(0);
+  if SDL_GetDisplayBounds(FMonitor, @MonitorBounds) = 0 then
+  begin
+    if Result < MonitorBounds.X then Exit(0);
+    if Result > MonitorBounds.X + MonitorBounds.W - BUFFER_WIDTH then Exit(0);
+  end
+  else
+    Result := 0;
 end;
 
 
 function TGeneralSettings.CorrectTop(AValue: Integer): Integer;
+var
+  MonitorBounds: TSDL_Rect;
 begin
   Result := AValue;
 
-  if Result < Screen.Monitors[FMonitor].BoundsRect.Top then Exit(0);
-  if Result > Screen.Monitors[FMonitor].BoundsRect.Bottom - BUFFER_HEIGHT then Exit(0);
+  if SDL_GetDisplayBounds(FMonitor, @MonitorBounds) = 0 then
+  begin
+    if Result < MonitorBounds.Y then Exit(0);
+    if Result > MonitorBounds.Y + MonitorBounds.H - BUFFER_HEIGHT then Exit(0);
+  end
+  else
+    Result := 0;
 end;
 
 
@@ -194,17 +209,9 @@ begin
 end;
 
 
-function TGeneralSettings.DetermineMonitor(AHandle: THandle): Integer;
-var
-  Occupied: TMonitor;
-  Index: Integer;
+function TGeneralSettings.DetermineMonitor(): Integer;
 begin
-  Result := MONITOR_DEFAULT;
-  Occupied := Screen.MonitorFromWindow(AHandle, mdPrimary);
-
-  for Index := 0 to Screen.MonitorCount - 1 do
-    if Occupied = Screen.Monitors[Index] then
-      Exit(Index);
+  Result := SDL_GetWindowDisplayIndex(Window.Window);
 end;
 
 
@@ -233,7 +240,7 @@ begin
   FFrameRate := Clock.FrameRateLimit;
   FWindow := Placement.WindowSize;
 
-  FMonitor := DetermineMonitor(Window.Handle);
+  FMonitor := DetermineMonitor();
   FLeft := Window.Left;
   FTop := Window.Top;
 
