@@ -35,9 +35,6 @@ type
   private
     FThemes: TThemes;
   private
-    procedure InitThemes();
-    procedure DoneThemes();
-  private
     function GetTheme(AThemeID: Integer): TThemeGrounds;
   public
     constructor Create();
@@ -98,19 +95,6 @@ end;
 
 
 constructor TGrounds.Create();
-begin
-  InitThemes();
-end;
-
-
-destructor TGrounds.Destroy();
-begin
-  DoneThemes();
-  inherited Destroy();
-end;
-
-
-procedure TGrounds.InitThemes();
 var
   Index: Integer;
 begin
@@ -119,12 +103,14 @@ begin
 end;
 
 
-procedure TGrounds.DoneThemes();
+destructor TGrounds.Destroy();
 var
   Index: Integer;
 begin
   for Index := Low(FThemes) to High(FThemes) do
     FThemes[Index].Free();
+
+  inherited Destroy();
 end;
 
 
