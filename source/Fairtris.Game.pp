@@ -31,8 +31,7 @@ type
     constructor Create();
     destructor Destroy(); override;
   public
-    procedure Start();
-    procedure Stop();
+    procedure Run();
   end;
 
 
@@ -200,7 +199,8 @@ begin
       if Event.Wheel.Y < 0 then Placement.Reduce();
       if Event.Wheel.Y > 0 then Placement.Enlarge();
     end;
-    SDL_QUITEV: Stop();
+    SDL_QUITEV:
+      Logic.Stop();
   end;
 end;
 
@@ -255,7 +255,7 @@ begin
 end;
 
 
-procedure TGame.Start();
+procedure TGame.Run();
 begin
   Initialize();
 
@@ -276,12 +276,6 @@ begin
   until Logic.Stopped;
 
   Finalize();
-end;
-
-
-procedure TGame.Stop();
-begin
-  Logic.Stop();
 end;
 
 
