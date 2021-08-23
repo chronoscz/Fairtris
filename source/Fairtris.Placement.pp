@@ -5,6 +5,7 @@ unit Fairtris.Placement;
 interface
 
 uses
+  SDL2,
   Types,
   Fairtris.Arrays;
 
@@ -14,19 +15,20 @@ type
   private
     FInitialized: Boolean;
   private
-    FMonitor: TMonitor;
+    FMonitorIndex: Integer;
+    FMonitorBounds: TSDL_Rect;
   private
     FWindowSize: Integer;
-    FWindowBounds: TRect;
-    FWindowClient: TRect;
+    FWindowBounds: TSDL_Rect;
+    FWindowClient: TSDL_Rect;
   private
     FScroll: Integer;
     FFullScreen: Boolean;
   private
     procedure SetMonitorIndex(AIndex: Integer);
     procedure SetWindowSize(ASize: Integer);
-    procedure SetWindowBounds(ABounds: TRect);
-    procedure SetWindowClient(AClient: TRect);
+    procedure SetWindowBounds(ABounds: TSDL_Rect);
+    procedure SetWindowClient(AClient: TSDL_Rect);
   private
     procedure UpdateWindowBounds();
     procedure UpdateWindowClient();
@@ -45,12 +47,12 @@ type
     procedure Enlarge();
     procedure Reduce();
   public
-    property Monitor: TMonitor read FMonitor;
+    property Monitor: Integer read FMonitorIndex;
     property MonitorIndex: Integer write SetMonitorIndex;
   public
     property WindowSize: Integer read FWindowSize write SetWindowSize;
-    property WindowBounds: TRect read FWindowBounds write SetWindowBounds;
-    property WindowClient: TRect read FWindowClient write SetWindowClient;
+    property WindowBounds: TSDL_Rect read FWindowBounds write SetWindowBounds;
+    property WindowClient: TSDL_Rect read FWindowClient write SetWindowClient;
   public
     property Scroll: Integer read FScroll write FScroll;
     property FullScreen: Boolean read FFullScreen;
@@ -69,12 +71,15 @@ uses
   Fairtris.Window,
   Fairtris.Buffers,
   Fairtris.Settings,
+  Fairtris.Utils,
   Fairtris.Constants;
 
 
 constructor TPlacement.Create();
 begin
-  FMonitor := Screen.PrimaryMonitor;
+  FMonitorIndex := 0;
+  SDL_GetDisplayBounds(FMonitorIndex, @FMonitorBounds);
+
   FWindowSize := WINDOW_FULLSCREEN;
 
   UpdateWindowBounds();
@@ -84,14 +89,16 @@ end;
 
 procedure TPlacement.Initialize();
 begin
-  FMonitor := Screen.Monitors[Settings.General.Monitor];
+  FMonitorIndex := Settings.General.Monitor;
+  SDL_GetDisplayBounds(FMonitorIndex, @FMonitorBounds);
+
   FWindowSize := Settings.General.Window;
   FScroll := Settings.General.Scroll;
 
   if FWindowSize <> WINDOW_FULLSCREEN then
   begin
-    FWindowBounds.Left := Settings.General.Left;
-    FWindowBounds.Top := Settings.General.Top;
+    FWindowBounds.X := Settings.General.Left;
+    FWindowBounds.Y := Settings.General.Top;
   end;
 
   UpdateWindow();
@@ -103,7 +110,9 @@ end;
 
 procedure TPlacement.SetMonitorIndex(AIndex: Integer);
 begin
-  FMonitor := Screen.Monitors[EnsureRange(AIndex, 0, Screen.MonitorCount - 1)];
+  FMonitorIndex := EnsureRange(AIndex, 0, SDL_GetNumVideoDisplays() - 1);
+  SDL_GetDisplayBounds(FMonitorIndex, @FMonitorBounds);
+
   UpdateWindow();
 end;
 
@@ -121,13 +130,13 @@ begin
 end;
 
 
-procedure TPlacement.SetWindowBounds(ABounds: TRect);
+procedure TPlacement.SetWindowBounds(ABounds: TSDL_Rect);
 begin
   FWindowBounds := ABounds;
 end;
 
 
-procedure TPlacement.SetWindowClient(AClient: TRect);
+procedure TPlacement.SetWindowClient(AClient: TSDL_Rect);
 begin
   FWindowClient := AClient;
 end;
@@ -145,15 +154,15 @@ begin
 
       if FInitialized then
       begin
-        FWindowBounds.Left := FMonitor.WorkareaRect.Left + (FMonitor.WorkareaRect.Width - NewWidth) div 2;
-        FWindowBounds.Top := FMonitor.WorkareaRect.Top + (FMonitor.WorkareaRect.Height - NewHeight) div 2;
+        FWindowBounds.X := FMonitorBounds.X + (FMonitorBounds.W - NewWidth) div 2;
+        FWindowBounds.Y := FMonitorBounds.Y + (FMonitorBounds.H - NewHeight) div 2;
       end;
 
-      FWindowBounds.Width := NewWidth;
-      FWindowBounds.Height := NewHeight;
+      FWindowBounds.W := NewWidth;
+      FWindowBounds.H := NewHeight;
     end;
     WINDOW_FULLSCREEN:
-      FWindowBounds := FMonitor.BoundsRect;
+      FWindowBounds := FMonitorBounds;
   end;
 end;
 
@@ -164,23 +173,23 @@ var
 begin
   case FWindowSize of
     WINDOW_NATIVE, WINDOW_ZOOM_2X, WINDOW_ZOOM_3X, WINDOW_ZOOM_4X:
-      FWindowClient := Bounds(0, 0, FWindowBounds.Width, FWindowBounds.Height);
+      FWindowClient := TSDL_Rect.Create(0, 0, FWindowBounds.W, FWindowBounds.H);
     WINDOW_FULLSCREEN:
     begin
-      NewHeight := Round(FWindowBounds.Height * CLIENT_FILL_MULTIPLIER);
+      NewHeight := Round(FWindowBounds.H * CLIENT_FILL_MULTIPLIER);
       NewWidth := Round(NewHeight * CLIENT_RATIO_LANDSCAPE);
 
-      if NewWidth > FWindowBounds.Width then
+      if NewWidth > FWindowBounds.W then
       begin
-        NewWidth := Round(FWindowBounds.Width * CLIENT_FILL_MULTIPLIER);
+        NewWidth := Round(FWindowBounds.W * CLIENT_FILL_MULTIPLIER);
         NewHeight := Round(NewWidth * CLIENT_RATIO_PORTRAIT);
       end;
 
-      FWindowClient.Left := (FWindowBounds.Width - NewWidth) div 2;
-      FWindowClient.Top := (FWindowBounds.Height - NewHeight) div 2;
+      FWindowClient.X := (FWindowBounds.W - NewWidth) div 2;
+      FWindowClient.Y := (FWindowBounds.H - NewHeight) div 2;
 
-      FWindowClient.Width := NewWidth;
-      FWindowClient.Height := NewHeight;
+      FWindowClient.W := NewWidth;
+      FWindowClient.H := NewHeight;
     end;
   end;
 end;
@@ -189,15 +198,16 @@ end;
 procedure TPlacement.UpdateWindowCursor();
 begin
   if FWindowSize = WINDOW_FULLSCREEN then
-    Screen.Cursor := crNone
+    SDL_ShowCursor(SDL_DISABLE)
   else
-    Screen.Cursor := crSizeAll;
+    SDL_ShowCursor(SDL_ENABLE);
 end;
 
 
 procedure TPlacement.UpdateWindowPlacement();
 begin
-  Window.BoundsRect := FWindowBounds;
+  SDL_SetWindowSize(Window.Window, FWindowBounds.W, FWindowBounds.H);
+  SDL_SetWindowPosition(Window.Window, FWindowBounds.X, FWindowBounds.Y);
 end;
 
 
@@ -209,7 +219,8 @@ end;
 
 procedure TPlacement.UpdateMonitor();
 begin
-  FMonitor := Screen.MonitorFromPoint(Window.BoundsRect.CenterPoint);
+  FMonitorIndex := SDL_GetWindowDisplayIndex(Window.Window);
+  SDL_GetDisplayBounds(FMonitorIndex, @FMonitorBounds);
 end;
 
 
