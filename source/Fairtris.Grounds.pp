@@ -56,6 +56,8 @@ var
 implementation
 
 uses
+  SDL2_Image,
+  Fairtris.Window,
   Fairtris.Arrays;
 
 
@@ -87,7 +89,7 @@ var
   Index: Integer;
 begin
   for Index := Low(FGrounds) to High(FGrounds) do
-    FGrounds[Index].LoadFromFile(FGroundsPath + GROUND_FILENAME[Index]);
+    IMG_LoadTexture(Window.Renderer, PChar(FGroundsPath + GROUND_FILENAME[Index]));
 end;
 
 
