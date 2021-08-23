@@ -20,6 +20,7 @@ type
     procedure OpenFrame();
     procedure CloseFrame();
   private
+    procedure UpdateQueue();
     procedure UpdateInput();
     procedure UpdateLogic();
     procedure UpdateSounds();
@@ -188,6 +189,22 @@ begin
 end;
 
 
+procedure TGame.UpdateQueue();
+var
+  Event: TSDL_Event;
+begin
+  while SDL_PollEvent(@Event) = 1 do
+  case Event.Type_ of
+    SDL_MOUSEWHEEL:
+    begin
+      if Event.Wheel.Y < 0 then Placement.Reduce();
+      if Event.Wheel.Y > 0 then Placement.Enlarge();
+    end;
+    SDL_QUITEV: Stop();
+  end;
+end;
+
+
 procedure TGame.UpdateInput();
 begin
   Input.Controller.Update();
@@ -244,6 +261,7 @@ begin
 
   repeat
     OpenFrame();
+      UpdateQueue();
       UpdateInput();
       UpdateLogic();
       UpdateSounds();
