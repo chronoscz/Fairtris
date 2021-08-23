@@ -14,17 +14,14 @@ type
   TDevice = class(TObject)
   private type
     TKeys = array [UInt8] of TSwitch;
+  private type
     TStatus = array [UInt8] of UInt8;
+    PStatus = ^TStatus;
   private
-    FStatus: TStatus;
+    FStatus: PStatus;
     FConnected: Boolean;
   private
     FKeys: TKeys;
-  private
-    procedure InitKeys();
-    procedure DoneKeys();
-  private
-    procedure UpdateKeys();
   private
     function GetKey(AKeyID: UInt8): TSwitch;
   public
@@ -97,49 +94,31 @@ type
 implementation
 
 uses
-  Windows,
+  SDL2,
   Fairtris.Memory,
   Fairtris.Settings,
   Fairtris.Arrays;
 
 
 constructor TDevice.Create();
-begin
-  InitKeys();
-end;
-
-
-destructor TDevice.Destroy();
-begin
-  DoneKeys();
-  inherited Destroy();
-end;
-
-
-procedure TDevice.InitKeys();
 var
   Index: Integer;
 begin
+  FStatus := PStatus(SDL_GetKeyboardState(nil));
+
   for Index := Low(FKeys) to High(FKeys) do
     FKeys[Index] := TSwitch.Create(False);
 end;
 
 
-procedure TDevice.DoneKeys();
+destructor TDevice.Destroy();
 var
   Index: Integer;
 begin
   for Index := Low(FKeys) to High(FKeys) do
     FKeys[Index].Free();
-end;
 
-
-procedure TDevice.UpdateKeys();
-var
-  Index: Integer;
-begin
-  for Index := Low(FKeys) to High(FKeys) do
-    FKeys[Index].Pressed := FStatus[Index] and %10000000 <> 0;
+  inherited Destroy();
 end;
 
 
@@ -162,14 +141,11 @@ end;
 
 
 procedure TDevice.Update();
+var
+  Index: Integer;
 begin
-  FillChar(FStatus, Length(FStatus), 0);
-  FConnected := GetKeyboardState(@FStatus);
-
-  if FConnected then
-    UpdateKeys()
-  else
-    Reset();
+  for Index := Low(FKeys) to High(FKeys) do
+    FKeys[Index].Pressed := FStatus^[Index] = 1;
 end;
 
 
@@ -214,14 +190,14 @@ end;
 
 procedure TKeyboard.InitScanCodesDefault();
 begin
-  FScanCodesDefault[KEYBOARD_KEY_UP]     := VK_UP;
-  FScanCodesDefault[KEYBOARD_KEY_DOWN]   := VK_DOWN;
-  FScanCodesDefault[KEYBOARD_KEY_LEFT]   := VK_LEFT;
-  FScanCodesDefault[KEYBOARD_KEY_RIGHT]  := VK_RIGHT;
-  FScanCodesDefault[KEYBOARD_KEY_SELECT] := VK_A;
-  FScanCodesDefault[KEYBOARD_KEY_START]  := VK_S;
-  FScanCodesDefault[KEYBOARD_KEY_B]      := VK_Z;
-  FScanCodesDefault[KEYBOARD_KEY_A]      := VK_X;
+  FScanCodesDefault[KEYBOARD_KEY_UP]     := SDL_SCANCODE_UP;
+  FScanCodesDefault[KEYBOARD_KEY_DOWN]   := SDL_SCANCODE_DOWN;
+  FScanCodesDefault[KEYBOARD_KEY_LEFT]   := SDL_SCANCODE_LEFT;
+  FScanCodesDefault[KEYBOARD_KEY_RIGHT]  := SDL_SCANCODE_RIGHT;
+  FScanCodesDefault[KEYBOARD_KEY_SELECT] := SDL_SCANCODE_A;
+  FScanCodesDefault[KEYBOARD_KEY_START]  := SDL_SCANCODE_S;
+  FScanCodesDefault[KEYBOARD_KEY_B]      := SDL_SCANCODE_Z;
+  FScanCodesDefault[KEYBOARD_KEY_A]      := SDL_SCANCODE_X;
 end;
 
 
