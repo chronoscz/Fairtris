@@ -6,7 +6,6 @@ interface
 
 uses
   SDL2,
-  Types,
   Fairtris.Arrays;
 
 
@@ -67,7 +66,6 @@ implementation
 
 uses
   Math,
-  Controls,
   Fairtris.Window,
   Fairtris.Buffers,
   Fairtris.Settings,
