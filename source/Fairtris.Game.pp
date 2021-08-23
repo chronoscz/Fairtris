@@ -8,6 +8,12 @@ interface
 type
   TGame = class(TObject)
   private
+    procedure CreateSystem();
+    procedure CreateObjects();
+  private
+    procedure DestroySystem();
+    procedure DestroyObjects();
+  private
     procedure Initialize();
     procedure Finalize();
   private
@@ -37,6 +43,8 @@ var
 implementation
 
 uses
+  SDL2,
+  SDL2_Mixer,
   Windows,
   Forms,
   SysUtils,
@@ -60,7 +68,17 @@ uses
   Fairtris.Constants;
 
 
-constructor TGame.Create();
+procedure TGame.CreateSystem();
+begin
+  SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, '0');
+  SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 'linear');
+
+  if SDL_Init(SDL_INIT_EVERYTHING) < 0 then Halt();
+  if Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) < 0 then Halt();
+end;
+
+
+procedure TGame.CreateObjects();
 begin
   Taskbar := TTaskbar.Create();
 
@@ -84,7 +102,14 @@ begin
 end;
 
 
-destructor TGame.Destroy();
+procedure TGame.DestroySystem();
+begin
+  Mix_CloseAudio();
+  SDL_Quit();
+end;
+
+
+procedure TGame.DestroyObjects();
 begin
   Taskbar.Free();
 
@@ -105,6 +130,20 @@ begin
   Core.Free();
   Memory.Free();
   Converter.Free();
+end;
+
+
+constructor TGame.Create();
+begin
+  CreateSystem();
+  CreateObjects();
+end;
+
+
+destructor TGame.Destroy();
+begin
+  DestroyObjects();
+  DestroySystem();
 
   inherited Destroy();
 end;
