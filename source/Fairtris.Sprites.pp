@@ -5,7 +5,6 @@ unit Fairtris.Sprites;
 interface
 
 uses
-  Graphics,
   Fairtris.Constants;
 
 

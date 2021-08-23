@@ -5,8 +5,7 @@ unit Fairtris.Buffers;
 interface
 
 uses
-  Types,
-  Graphics;
+  Types;
 
 
 type

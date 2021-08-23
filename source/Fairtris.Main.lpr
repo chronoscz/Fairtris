@@ -5,7 +5,6 @@ program Fairtris.Main;
 {$RESOURCE Fairtris.Main.res}
 
 uses
-  Interfaces,
   Fairtris.Game;
 begin
   Game := TGame.Create();

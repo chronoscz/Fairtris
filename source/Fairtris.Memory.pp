@@ -5,7 +5,6 @@ unit Fairtris.Memory;
 interface
 
 uses
-  Graphics,
   Fairtris.Constants;
 
 

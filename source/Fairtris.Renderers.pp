@@ -6,7 +6,6 @@ interface
 
 uses
   Types,
-  Graphics,
   Fairtris.Interfaces,
   Fairtris.BestScores,
   Fairtris.Constants;

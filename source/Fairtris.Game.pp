@@ -46,7 +46,6 @@ uses
   SDL2,
   SDL2_Mixer,
   Windows,
-  Forms,
   SysUtils,
   Fairtris.Window,
   Fairtris.Taskbar,

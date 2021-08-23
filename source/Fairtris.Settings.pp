@@ -126,7 +126,6 @@ var
 implementation
 
 uses
-  Forms,
   Fairtris.Window,
   Fairtris.Clock,
   Fairtris.Input,

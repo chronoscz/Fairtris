@@ -130,7 +130,6 @@ implementation
 uses
   Windows,
   Math,
-  Forms,
   Fairtris.Clock,
   Fairtris.Buffers,
   Fairtris.Input,

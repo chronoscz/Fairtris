@@ -28,7 +28,6 @@ implementation
 uses
   ComObj,
   Math,
-  Forms,
   SysUtils,
   Fairtris.Clock;
 

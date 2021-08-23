@@ -5,7 +5,6 @@ unit Fairtris.Grounds;
 interface
 
 uses
-  Graphics,
   Fairtris.Constants;
 
 
