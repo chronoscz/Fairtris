@@ -13,12 +13,16 @@ type
   private
     FWindow: PSDL_Window;
     FRenderer: PSDL_Renderer;
+  private
+    function GetFocused(): Boolean;
   public
     constructor Create();
     destructor Destroy(); override;
   public
     property Window: PSDL_Window read FWindow;
     property Renderer: PSDL_Renderer read FRenderer;
+  public
+    property Focused: Boolean read GetFocused;
   end;
 
 
@@ -45,6 +49,12 @@ begin
   SDL_DestroyRenderer(FRenderer);
 
   inherited Destroy();
+end;
+
+
+function TWindow.GetFocused(): Boolean;
+begin
+  Result := SDL_GetWindowFlags(Window) and SDL_WINDOW_INPUT_FOCUS = SDL_WINDOW_INPUT_FOCUS;
 end;
 
 

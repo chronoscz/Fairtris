@@ -78,7 +78,7 @@ end;
 
 procedure TGame.CreateObjects();
 begin
-
+  Window := TWindow.Create();
   Taskbar := TTaskbar.Create();
 
   Clock := TClock.Create();
@@ -110,6 +110,7 @@ end;
 
 procedure TGame.DestroyObjects();
 begin
+  Window.Free();
   Taskbar.Free();
 
   Clock.Free();
@@ -171,8 +172,6 @@ procedure TGame.Finalize();
 begin
   Settings.Save();
   BestScores.Save();
-
-  Window.Close();
 end;
 
 
@@ -193,7 +192,7 @@ procedure TGame.UpdateInput();
 begin
   Input.Controller.Update();
 
-  if (GetForegroundWindow() = Window.Handle) and (GetActiveWindow() = Window.Handle) then
+  if Window.Focused then
     Input.Keyboard.Update()
   else
     Input.Keyboard.Reset();
