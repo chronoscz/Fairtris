@@ -30,7 +30,6 @@ type
     constructor Create();
     destructor Destroy(); override;
   public
-    procedure Run();
     procedure Start();
     procedure Stop();
   end;
@@ -145,16 +144,6 @@ begin
   DestroySystem();
 
   inherited Destroy();
-end;
-
-
-procedure TGame.Run();
-begin
-  RequireDerivedFormResource := True;
-
-  Application.Initialize();
-  Application.CreateForm(TGameForm, GameForm);
-  Application.Run();
 end;
 
 

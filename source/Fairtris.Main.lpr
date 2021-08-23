@@ -9,7 +9,7 @@ uses
 begin
   Game := TGame.Create();
   try
-    Game.Run();
+    Game.Start();
   finally
     Game.Free();
   end;
