@@ -9,7 +9,7 @@ uses
 
 
 type
-  TGameForm = class(TObject)
+  TWindow = class(TObject)
   private
     FWindow: PSDL_Window;
     FRenderer: PSDL_Renderer;
@@ -23,13 +23,13 @@ type
 
 
 var
-  GameForm: TGameForm;
+  Window: TWindow;
 
 
 implementation
 
 
-constructor TGameForm.Create();
+constructor TWindow.Create();
 begin
   FWindow := SDL_CreateWindow('Fairtris', SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 0, 0, SDL_WINDOW_BORDERLESS);
   if FWindow = nil then Halt();
@@ -39,7 +39,7 @@ begin
 end;
 
 
-destructor TGameForm.Destroy();
+destructor TWindow.Destroy();
 begin
   SDL_DestroyWindow(FWindow);
   SDL_DestroyRenderer(FRenderer);

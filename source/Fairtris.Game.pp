@@ -78,6 +78,7 @@ end;
 
 procedure TGame.CreateObjects();
 begin
+
   Taskbar := TTaskbar.Create();
 
   Clock := TClock.Create();
@@ -171,7 +172,7 @@ begin
   Settings.Save();
   BestScores.Save();
 
-  GameForm.Close();
+  Window.Close();
 end;
 
 
@@ -192,7 +193,7 @@ procedure TGame.UpdateInput();
 begin
   Input.Controller.Update();
 
-  if (GetForegroundWindow() = GameForm.Handle) and (GetActiveWindow() = GameForm.Handle) then
+  if (GetForegroundWindow() = Window.Handle) and (GetActiveWindow() = Window.Handle) then
     Input.Keyboard.Update()
   else
     Input.Keyboard.Reset();
@@ -225,7 +226,7 @@ procedure TGame.UpdateWindow();
 begin
   if not Logic.Stopped then
   begin
-    GameForm.Invalidate();
+    Window.Invalidate();
     Application.ProcessMessages();
   end;
 end;

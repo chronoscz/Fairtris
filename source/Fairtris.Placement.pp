@@ -197,7 +197,7 @@ end;
 
 procedure TPlacement.UpdateWindowPlacement();
 begin
-  GameForm.BoundsRect := FWindowBounds;
+  Window.BoundsRect := FWindowBounds;
 end;
 
 
@@ -209,7 +209,7 @@ end;
 
 procedure TPlacement.UpdateMonitor();
 begin
-  FMonitor := Screen.MonitorFromPoint(GameForm.BoundsRect.CenterPoint);
+  FMonitor := Screen.MonitorFromPoint(Window.BoundsRect.CenterPoint);
 end;
 
 

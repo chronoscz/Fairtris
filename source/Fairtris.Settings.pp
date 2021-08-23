@@ -233,9 +233,9 @@ begin
   FFrameRate := Clock.FrameRateLimit;
   FWindow := Placement.WindowSize;
 
-  FMonitor := DetermineMonitor(GameForm.Handle);
-  FLeft := GameForm.Left;
-  FTop := GameForm.Top;
+  FMonitor := DetermineMonitor(Window.Handle);
+  FLeft := Window.Left;
+  FTop := Window.Top;
 
   FInput := Memory.Options.Input;
   FTheme := Memory.Options.Theme;
