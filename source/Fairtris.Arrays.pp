@@ -5,7 +5,7 @@ unit Fairtris.Arrays;
 interface
 
 uses
-  Windows,
+  SDL2,
   Fairtris.Constants;
 
 
@@ -20,19 +20,6 @@ const
     CLOCK_FRAMERATE_PAL,
     CLOCK_FRAMERATE_PAL
   );
-
-
-const
-  KEYBOARD_KEY_LOCKED: set of UInt8 = [
-    VK_LBUTTON,
-    VK_RBUTTON,
-    VK_MBUTTON,
-    VK_XBUTTON1,
-    VK_XBUTTON2,
-    VK_SHIFT,
-    VK_CONTROL,
-    VK_MENU
-  ];
 
 
 const

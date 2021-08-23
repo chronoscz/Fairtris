@@ -124,10 +124,7 @@ end;
 
 function TDevice.GetKey(AKeyID: UInt8): TSwitch;
 begin
-  if AKeyID in KEYBOARD_KEY_LOCKED then
-    Result := FKeys[0]
-  else
-    Result := FKeys[AKeyID];
+  Result := FKeys[AKeyID];
 end;
 
 
