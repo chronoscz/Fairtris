@@ -26,10 +26,12 @@ var
 implementation
 
 uses
+  SDL2,
   ComObj,
   Math,
   SysUtils,
-  Fairtris.Clock;
+  Fairtris.Clock,
+  Fairtris.Window;
 
 
 procedure TTaskbar.Initialize();
@@ -50,7 +52,7 @@ begin
   if not FSupported then Exit;
 
   if Clock.FrameRate.Changed then
-    Application.Title := 'Fairtris — %dfps'.Format([Clock.FrameRate.Current]);
+    SDL_SetWindowTitle(Window.Window, PChar('Fairtris — %dfps'.Format([Clock.FrameRate.Current])));
 
   if Clock.FrameLoad.Changed then
   begin
@@ -61,8 +63,8 @@ begin
       61 .. 85: ButtonState := TBPF_PAUSED;
     end;
 
-    FButton.SetProgressState(Application.Handle, ButtonState);
-    FButton.SetProgressValue(Application.Handle, ButtonValue, ButtonTotal);
+    FButton.SetProgressState(Window.Handle, ButtonState);
+    FButton.SetProgressValue(Window.Handle, ButtonValue, ButtonTotal);
   end;
 end;
 
