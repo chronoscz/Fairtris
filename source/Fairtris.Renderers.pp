@@ -22,8 +22,8 @@ type
     function EmptyEntryToString(): String;
     function ScoreEntryToString(AEntry: TScoreEntry): String;
   protected
-    procedure RenderText(AX, AY: Integer; const AText: String; AColor: TColor = COLOR_WHITE; AAlign: Integer = ALIGN_LEFT);
     procedure RenderSprite(ABuffer, ASprite: TBitmap; ABufferRect, ASpriteRect: TRect; AExcludeFuchsia: Boolean = True);
+    procedure RenderText(AX, AY: Integer; const AText: String; AColor: Integer = COLOR_WHITE; AAlign: Integer = ALIGN_LEFT);
     procedure RenderNext(AX, AY, APiece, ALevel: Integer);
     procedure RenderBrick(AX, AY, ABrick, ALevel: Integer);
   protected
@@ -219,7 +219,7 @@ begin
 end;
 
 
-procedure TRenderer.RenderText(AX, AY: Integer; const AText: String; AColor: TColor; AAlign: Integer);
+procedure TRenderer.RenderText(AX, AY: Integer; const AText: String; AColor: Integer; AAlign: Integer);
 var
   Character: Char;
   CharIndex: Integer;
