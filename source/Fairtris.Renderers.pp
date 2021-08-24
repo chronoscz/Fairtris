@@ -1082,27 +1082,21 @@ end;
 
 procedure TModernRenderer.RenderButton(AX, AY, AButton: Integer);
 begin
-  Buffers.Native.BeginUpdate();
-
   RenderSprite(
-    Buffers.Native,
     Sprites.Controller,
-    Bounds(
+    SDL_Rect(
       AX,
       AY,
       THUMBNAIL_BUTTON_WIDTH[AButton],
       THUMBNAIL_BUTTON_HEIGHT[AButton]
     ),
-    Bounds(
+    SDL_Rect(
       THUMBNAIL_BUTTON_X[AButton],
       THUMBNAIL_BUTTON_Y[AButton],
       THUMBNAIL_BUTTON_WIDTH[AButton],
       THUMBNAIL_BUTTON_HEIGHT[AButton]
-    ),
-    False
+    )
   );
-
-  Buffers.Native.EndUpdate();
 end;
 
 
