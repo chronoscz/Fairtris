@@ -14,9 +14,6 @@ uses
 
 type
   TRenderer = class(TInterfacedObject)
-  private type
-    PPixels = ^TPixels;
-    TPixels = array [UInt16] of record B, G, R: UInt8 end;
   private
     FClipFrame: Boolean;
   private
