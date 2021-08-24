@@ -29,12 +29,13 @@ var
 implementation
 
 uses
+  Fairtris.Window,
   Fairtris.Constants;
 
 
 constructor TBuffers.Create();
 begin
-  FNative := SDL_CreateTexture(ARenderer, SDL_PIXELFORMAT_BGR24, SDL_TEXTUREACCESS_TARGET, BUFFER_WIDTH, BUFFER_HEIGHT);
+  FNative := SDL_CreateTexture(Window.Renderer, SDL_PIXELFORMAT_BGR24, SDL_TEXTUREACCESS_TARGET, BUFFER_WIDTH, BUFFER_HEIGHT);
 end;
 
 
