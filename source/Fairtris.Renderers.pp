@@ -18,13 +18,12 @@ type
     FClipFrame: Boolean;
   private
     function CharToIndex(AChar: Char): Integer;
-  private
-    procedure RenderSprite(ABuffer, ASprite: TBitmap; ABufferRect, ASpriteRect: TRect; AExcludeFuchsia: Boolean = True); inline;
   protected
     function EmptyEntryToString(): String;
     function ScoreEntryToString(AEntry: TScoreEntry): String;
   protected
     procedure RenderText(AX, AY: Integer; const AText: String; AColor: TColor = COLOR_WHITE; AAlign: Integer = ALIGN_LEFT);
+    procedure RenderSprite(ABuffer, ASprite: TBitmap; ABufferRect, ASpriteRect: TRect; AExcludeFuchsia: Boolean = True);
     procedure RenderNext(AX, AY, APiece, ALevel: Integer);
     procedure RenderBrick(AX, AY, ABrick, ALevel: Integer);
   protected
@@ -204,41 +203,6 @@ begin
 end;
 
 
-procedure TRenderer.RenderSprite(ABuffer, ASprite: TBitmap; ABufferRect, ASpriteRect: TRect; AExcludeFuchsia: Boolean);
-var
-  SpriteX, SpriteY, BufferX, BufferY: Integer;
-  SpritePixels, BufferPixels: PPixels;
-begin
-  SpriteY := ASpriteRect.Top;
-  BufferY := ABufferRect.Top;
-
-  while SpriteY < ASpriteRect.Bottom do
-  begin
-    SpritePixels := ASprite.ScanLine[SpriteY];
-    BufferPixels := ABuffer.ScanLine[BufferY];
-
-    SpriteX := ASpriteRect.Left;
-    BufferX := ABufferRect.Left;
-
-    while SpriteX < ASpriteRect.Right do
-    begin
-      if (not AExcludeFuchsia) or (AExcludeFuchsia and (SpritePixels^[SpriteX].R <> 255)) then
-      begin
-        BufferPixels^[BufferX].R := SpritePixels^[SpriteX].R;
-        BufferPixels^[BufferX].G := SpritePixels^[SpriteX].G;
-        BufferPixels^[BufferX].B := SpritePixels^[SpriteX].B;
-      end;
-
-      SpriteX += 1;
-      BufferX += 1;
-    end;
-
-    SpriteY += 1;
-    BufferY += 1;
-  end;
-end;
-
-
 function TRenderer.EmptyEntryToString(): String;
 begin
   Result := '-    -        -        -';
@@ -280,6 +244,41 @@ begin
   end;
 
   SDL_SetTextureColorMod(Sprites.Charset, 255, 255, 255);
+end;
+
+
+procedure TRenderer.RenderSprite(ABuffer, ASprite: TBitmap; ABufferRect, ASpriteRect: TRect; AExcludeFuchsia: Boolean);
+var
+  SpriteX, SpriteY, BufferX, BufferY: Integer;
+  SpritePixels, BufferPixels: PPixels;
+begin
+  SpriteY := ASpriteRect.Top;
+  BufferY := ABufferRect.Top;
+
+  while SpriteY < ASpriteRect.Bottom do
+  begin
+    SpritePixels := ASprite.ScanLine[SpriteY];
+    BufferPixels := ABuffer.ScanLine[BufferY];
+
+    SpriteX := ASpriteRect.Left;
+    BufferX := ABufferRect.Left;
+
+    while SpriteX < ASpriteRect.Right do
+    begin
+      if (not AExcludeFuchsia) or (AExcludeFuchsia and (SpritePixels^[SpriteX].R <> 255)) then
+      begin
+        BufferPixels^[BufferX].R := SpritePixels^[SpriteX].R;
+        BufferPixels^[BufferX].G := SpritePixels^[SpriteX].G;
+        BufferPixels^[BufferX].B := SpritePixels^[SpriteX].B;
+      end;
+
+      SpriteX += 1;
+      BufferX += 1;
+    end;
+
+    SpriteY += 1;
+    BufferY += 1;
+  end;
 end;
 
 
