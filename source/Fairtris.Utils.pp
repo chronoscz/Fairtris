@@ -22,10 +22,10 @@ implementation
 
 function SDL_Rect(ALeft, ATop, AWidth, AHeight: SInt32): TSDL_Rect;
 begin
-  Self.X := ALeft;
-  Self.Y := ATop;
-  Self.W := AWidth;
-  Self.H := AHeight;
+  Result.X := ALeft;
+  Result.Y := ATop;
+  Result.W := AWidth;
+  Result.H := AHeight;
 end;
 
 
