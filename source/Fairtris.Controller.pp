@@ -201,7 +201,7 @@ procedure TDevice.Detach();
 begin
   if FConnected then
   begin
-    SDL_JoystickClose(0);
+    SDL_JoystickClose(FJoystick);
     FConnected := False;
   end;
 end;
