@@ -5,6 +5,7 @@ unit Fairtris.Renderers;
 interface
 
 uses
+  SDL2,
   Types,
   Fairtris.Interfaces,
   Fairtris.BestScores,
@@ -76,6 +77,9 @@ type
     procedure RenderControllerButtonScanCodes();
   protected
     procedure RenderClipping();
+  protected
+    procedure RenderBegin();
+    procedure RenderEnd();
   protected
     property ClipFrame: Boolean read FClipFrame write FClipFrame;
   end;
@@ -1134,6 +1138,18 @@ begin
 end;
 
 
+procedure TRenderer.RenderBegin();
+begin
+  SDL_SetRenderTarget(Window.Renderer, Buffers.Native);
+end;
+
+
+procedure TRenderer.RenderEnd();
+begin
+  SDL_SetRenderTarget(Window.Renderer, nil);
+end;
+
+
 procedure TModernRenderer.RenderButton(AX, AY, AButton: Integer);
 begin
   Buffers.Native.BeginUpdate();
@@ -1298,6 +1314,7 @@ end;
 
 procedure TModernRenderer.RenderScene(ASceneID: Integer);
 begin
+  RenderBegin();
   RenderGround(ASceneID);
 
   case ASceneID of
@@ -1315,6 +1332,7 @@ begin
   end;
 
   RenderClipping();
+  RenderEnd();
 end;
 
 
@@ -1454,6 +1472,7 @@ end;
 
 procedure TClassicRenderer.RenderScene(ASceneID: Integer);
 begin
+  RenderBegin();
   RenderGround(ASceneID);
 
   case ASceneID of
@@ -1471,6 +1490,7 @@ begin
   end;
 
   RenderClipping();
+  RenderEnd();
 end;
 
 
