@@ -378,11 +378,18 @@ end;
 
 
 procedure TLogic.PrepareQuit();
+var
+  OldTarget: PSDL_Texture;
 begin
   if not FScene.Changed then Exit;
 
-  Memory.Quit.Buffer.Canvas.Draw(0, 0, Buffers.Native);
-  Memory.Quit.Buffer.Canvas.Draw(0, 0, Grounds[Memory.Options.Theme][SCENE_QUIT]);
+  OldTarget := SDL_GetRenderTarget(Window.Renderer);
+  SDL_SetRenderTarget(Window.Renderer, Memory.Quit.Buffer);
+
+  SDL_RenderCopy(Window.Renderer, Buffers.Native, nil, nil);
+  SDL_RenderCopy(Window.Renderer, Grounds[Memory.Options.Theme][SCENE_QUIT], nil, nil);
+
+  SDL_SetRenderTarget(Window.Renderer, OldTarget);
 end;
 
 
