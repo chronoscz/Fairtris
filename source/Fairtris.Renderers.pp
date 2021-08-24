@@ -285,21 +285,19 @@ begin
     ALevel := ALevel mod 10;
 
     RenderSprite(
-      Buffers.Native,
       Sprites.Bricks,
-      Bounds(
+      TSDL_Rect.Create(
         AX,
         AY,
         BRICK_WIDTH,
         BRICK_HEIGHT
       ),
-      Bounds(
+      TSDL_Rect.Create(
         ABrick * BRICK_WIDTH,
         ALevel * BRICK_HEIGHT,
         BRICK_WIDTH,
         BRICK_HEIGHT
-      ),
-      False
+      )
     );
   end;
 end;
