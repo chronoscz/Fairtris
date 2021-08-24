@@ -5,8 +5,6 @@ unit Fairtris.Controller;
 interface
 
 uses
-  MMSystem,
-  Classes,
   Fairtris.Interfaces,
   Fairtris.Classes,
   Fairtris.Constants;
@@ -17,17 +15,10 @@ type
   private type
     TButtons = array [0 .. CONTROLLER_BUTTONS_COUNT + CONTROLLER_ARROWS_COUNT] of TSwitch;
   private
-    FUpdater: TDeviceUpdater;
-  private
-    FStatus: JOYINFOEX;
+    FButtons: TButtons;
     FConnected: Boolean;
   private
-    FButtons: TButtons;
-  private
     procedure InitButtons();
-    procedure InitUpdater();
-  private
-    procedure DoneUpdater();
     procedure DoneButtons();
   private
     procedure UpdateButtons();
@@ -109,13 +100,11 @@ uses
 constructor TDevice.Create();
 begin
   InitButtons();
-  InitUpdater();
 end;
 
 
 destructor TDevice.Destroy();
 begin
-  DoneUpdater();
   DoneButtons();
 
   inherited Destroy();
@@ -128,20 +117,6 @@ var
 begin
   for Index := Low(FButtons) to High(FButtons) do
     FButtons[Index] := TSwitch.Create(False);
-end;
-
-
-procedure TDevice.InitUpdater();
-begin
-  FUpdater := TDeviceUpdater.Create(@FStatus, @FConnected);
-  FUpdater.FreeOnTerminate := True;
-end;
-
-
-procedure TDevice.DoneUpdater();
-begin
-  FUpdater.Terminate();
-  FUpdater.WaitFor();
 end;
 
 
