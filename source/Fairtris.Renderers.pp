@@ -172,6 +172,7 @@ uses
   Math,
   SysUtils,
   StrUtils,
+  Fairtris.Window,
   Fairtris.Clock,
   Fairtris.Input,
   Fairtris.Buffers,
@@ -180,6 +181,7 @@ uses
   Fairtris.Grounds,
   Fairtris.Sprites,
   Fairtris.Settings,
+  Fairtris.Utils,
   Fairtris.Arrays;
 
 
@@ -298,24 +300,26 @@ var
   Character: Char;
   CharIndex: Integer;
 var
-  BufferRect, CharRect: TRect;
+  BufferRect, CharRect: TSDL_Rect;
 begin
-  Buffers.Native.BeginUpdate();
-  BufferRect := Bounds(AX, AY, CHAR_WIDTH, CHAR_HEIGHT);
+  SDL_SetTextureColorMod(Sprites.Charset, GetR(AColor), GetG(AColor), GetB(AColor));
+
+  CharRect := TSDL_Rect.Create(0, 0, CHAR_WIDTH, CHAR_HEIGHT);
+  BufferRect := TSDL_Rect.Create(AX, AY, CHAR_WIDTH, CHAR_HEIGHT);
 
   if AAlign = ALIGN_RIGHT then
-    BufferRect.Offset(-(AText.Length * CHAR_WIDTH), 0);
+    BufferRect.X -= AText.Length * CHAR_WIDTH;
 
   for Character in AText do
   begin
     CharIndex := CharToIndex(UpCase(Character));
-    CharRect := Bounds(CharIndex * CHAR_WIDTH, 0, CHAR_WIDTH, CHAR_HEIGHT);
+    CharRect.X := CharIndex * CHAR_WIDTH;
 
-    RenderChar(Buffers.Native, Sprites.Charset, BufferRect, CharRect, AColor);
-    BufferRect.Offset(CHAR_WIDTH, 0);
+    SDL_RenderCopy(Window.Renderer, Sprites.Charset, @CharRect, @BufferRect);
+    BufferRect.X += CHAR_WIDTH;
   end;
 
-  Buffers.Native.EndUpdate();
+  SDL_SetTextureColorMod(Sprites.Charset, 255, 255, 255);
 end;
 
 
