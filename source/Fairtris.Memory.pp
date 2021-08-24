@@ -5,6 +5,7 @@ unit Fairtris.Memory;
 interface
 
 uses
+  SDL2,
   Fairtris.Constants;
 
 
@@ -198,7 +199,7 @@ type
     procedure Initialize();
   public
     FrameIndex: Integer;
-    Buffer: TBitmap;
+    Buffer: PSDL_Texture;
   end;
 
 
@@ -241,6 +242,7 @@ var
 implementation
 
 uses
+  Fairtris.Window,
   Fairtris.Settings;
 
 
@@ -413,15 +415,13 @@ end;
 
 constructor TQuitMemory.Create();
 begin
-  Buffer := TBitmap.Create();
-  Buffer.PixelFormat := pf24bit;
-  Buffer.SetSize(BUFFER_WIDTH, BUFFER_HEIGHT);
+  Buffer := SDL_CreateTexture(Window.Renderer, SDL_PIXELFORMAT_BGR24, SDL_TEXTUREACCESS_TARGET, BUFFER_WIDTH, BUFFER_HEIGHT);
 end;
 
 
 destructor TQuitMemory.Destroy();
 begin
-  Buffer.Free();
+  SDL_DestroyTexture(Buffer);
   inherited Destroy();
 end;
 
