@@ -30,8 +30,8 @@ uses
   ComObj,
   Math,
   SysUtils,
-  Fairtris.Clock,
-  Fairtris.Window;
+  Fairtris.Window,
+  Fairtris.Clock;
 
 
 procedure TTaskbar.Initialize();
