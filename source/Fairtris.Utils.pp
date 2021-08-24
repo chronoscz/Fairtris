@@ -9,7 +9,7 @@ uses
 
 
 type
-  TSDL_Rect = type helper for SDL2.TSDL_Rect
+  TSDL_RectHelper = type helper for SDL2.TSDL_Rect
     constructor Create(ALeft, ATop, AWidth, AHeight: SInt32);
   end;
 
@@ -20,7 +20,7 @@ type
 implementation
 
 
-constructor TSDL_Rect.Create(ALeft, ATop, AWidth, AHeight: SInt32);
+constructor TSDL_RectHelper.Create(ALeft, ATop, AWidth, AHeight: SInt32);
 begin
   Self.X := ALeft;
   Self.Y := ATop;
