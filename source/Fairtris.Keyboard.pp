@@ -105,6 +105,7 @@ var
   Index: Integer;
 begin
   FKeyboard := PKeyboard(SDL_GetKeyboardState(nil));
+  FConnected := True;
 
   for Index := Low(FKeys) to High(FKeys) do
     FKeys[Index] := TSwitch.Create(False);
