@@ -228,8 +228,8 @@ var
 begin
   SDL_SetTextureColorMod(Sprites.Charset, GetR(AColor), GetG(AColor), GetB(AColor));
 
-  CharRect := TSDL_Rect.Create(0, 0, CHAR_WIDTH, CHAR_HEIGHT);
-  BufferRect := TSDL_Rect.Create(AX, AY, CHAR_WIDTH, CHAR_HEIGHT);
+  CharRect := SDL_Rect(0, 0, CHAR_WIDTH, CHAR_HEIGHT);
+  BufferRect := SDL_Rect(AX, AY, CHAR_WIDTH, CHAR_HEIGHT);
 
   if AAlign = ALIGN_RIGHT then
     BufferRect.X -= AText.Length * CHAR_WIDTH;
@@ -261,13 +261,13 @@ begin
 
     RenderSprite(
       Sprites.Pieces,
-      TSDL_Rect.Create(
+      SDL_Rect(
         AX,
         AY,
         PIECE_WIDTH,
         PIECE_HEIGHT
       ),
-      TSDL_Rect.Create(
+      SDL_Rect(
         APiece * PIECE_WIDTH,
         ALevel * PIECE_HEIGHT,
         PIECE_WIDTH,
@@ -286,13 +286,13 @@ begin
 
     RenderSprite(
       Sprites.Bricks,
-      TSDL_Rect.Create(
+      SDL_Rect(
         AX,
         AY,
         BRICK_WIDTH,
         BRICK_HEIGHT
       ),
-      TSDL_Rect.Create(
+      SDL_Rect(
         ABrick * BRICK_WIDTH,
         ALevel * BRICK_HEIGHT,
         BRICK_WIDTH,
