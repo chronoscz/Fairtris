@@ -19,8 +19,6 @@ type
 type
   TGeneralSettings = class(TCustomSettings)
   private
-    FFrameRate: Integer;
-  private
     FMonitor: Integer;
     FLeft: Integer;
     FTop: Integer;
@@ -35,7 +33,6 @@ type
     FRNG: Integer;
     FLevel: Integer;
   private
-    function CorrectFrameRate(AValue: Integer): Integer;
     function CorrectMonitor(AValue: Integer): Integer;
     function CorrectLeft(AValue: Integer): Integer;
     function CorrectTop(AValue: Integer): Integer;
@@ -49,8 +46,6 @@ type
   public
     procedure Load(AFile: TIniFile; const ASection: String);
     procedure Save(AFile: TIniFile; const ASection: String);
-  public
-    property FrameRate: Integer read FFrameRate;
   public
     property Monitor: Integer read FMonitor;
     property Left: Integer read FLeft;
@@ -144,15 +139,6 @@ begin
 end;
 
 
-function TGeneralSettings.CorrectFrameRate(AValue: Integer): Integer;
-begin
-  Result := AValue;
-
-  if not (Result in [CLOCK_FRAMERATE_NTSC, CLOCK_FRAMERATE_PAL]) then
-    Result := CLOCK_FRAMERATE_NTSC;
-end;
-
-
 function TGeneralSettings.CorrectMonitor(AValue: Integer): Integer;
 begin
   Result := AValue;
@@ -217,8 +203,6 @@ end;
 
 procedure TGeneralSettings.CorrectRanges();
 begin
-  FFrameRate := CorrectFrameRate(FFrameRate);
-
   FMonitor := CorrectMonitor(FMonitor);
   FLeft := CorrectLeft(FLeft);
   FTop := CorrectTop(FTop);
@@ -237,7 +221,6 @@ end;
 
 procedure TGeneralSettings.Collect();
 begin
-  FFrameRate := Clock.FrameRateLimit;
   FSize := Placement.WindowSize;
 
   FMonitor := DetermineMonitor();
@@ -257,8 +240,6 @@ end;
 
 procedure TGeneralSettings.Load(AFile: TIniFile; const ASection: String);
 begin
-  FFrameRate := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_FRAMERATE, CLOCK_FRAMERATE_DEFAULT);
-
   FMonitor := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_MONITOR, MONITOR_DEFAULT);
   FLeft    := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_LEFT,    0);
   FTop     := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_TOP,     0);
@@ -279,8 +260,6 @@ end;
 
 procedure TGeneralSettings.Save(AFile: TIniFile; const ASection: String);
 begin
-  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_FRAMERATE, FFrameRate);
-
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_MONITOR, FMonitor);
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_LEFT,    FLeft);
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_TOP,     FTop);

@@ -80,6 +80,7 @@ uses
   SysUtils,
   DateUtils,
   Fairtris.Settings,
+  Fairtris.Arrays,
   Fairtris.Constants;
 
 
@@ -185,7 +186,7 @@ end;
 
 procedure TClock.Initialize();
 begin
-  SetFrameRateLimit(Settings.General.FrameRate);
+  SetFrameRateLimit(CLOCK_FRAMERATE_LIMIT[Settings.General.Region]);
 end;
 
 
