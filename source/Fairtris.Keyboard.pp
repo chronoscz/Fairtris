@@ -15,10 +15,10 @@ type
   private type
     TKeys = array [UInt8] of TSwitch;
   private type
-    TStatus = array [UInt8] of UInt8;
-    PStatus = ^TStatus;
+    TKeyboard = array [UInt8] of UInt8;
+    PKeyboard = ^TKeyboard;
   private
-    FStatus: PStatus;
+    FKeyboard: PKeyboard;
     FConnected: Boolean;
   private
     FKeys: TKeys;
@@ -104,7 +104,7 @@ constructor TDevice.Create();
 var
   Index: Integer;
 begin
-  FStatus := PStatus(SDL_GetKeyboardState(nil));
+  FKeyboard := PKeyboard(SDL_GetKeyboardState(nil));
 
   for Index := Low(FKeys) to High(FKeys) do
     FKeys[Index] := TSwitch.Create(False);
@@ -142,7 +142,7 @@ var
   Index: Integer;
 begin
   for Index := Low(FKeys) to High(FKeys) do
-    FKeys[Index].Pressed := FStatus^[Index] = 1;
+    FKeys[Index].Pressed := FKeyboard^[Index] = 1;
 end;
 
 
