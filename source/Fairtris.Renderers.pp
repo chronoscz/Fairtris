@@ -1265,26 +1265,22 @@ begin
   if APiece <> MINIATURE_UNKNOWN then
   begin
     ALevel := ALevel mod 10;
-    Buffers.Native.BeginUpdate();
 
     RenderSprite(
-      Buffers.Native,
       Sprites.Miniatures,
-      Bounds(
+      SDL_Rect(
         AX,
         AY,
         MINIATURE_WIDTH,
         MINIATURE_HEIGHT
       ),
-      Bounds(
+      SDL_Rect(
         APiece * MINIATURE_WIDTH,
         ALevel * MINIATURE_HEIGHT,
         MINIATURE_WIDTH,
         MINIATURE_HEIGHT
       )
     );
-
-    Buffers.Native.EndUpdate();
   end;
 end;
 
