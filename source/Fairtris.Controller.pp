@@ -13,23 +13,6 @@ uses
 
 
 type
-  TDeviceUpdater = class(TThread)
-  private
-    FDeviceStatus: PJOYINFOEX;
-    FDeviceConnected: PBoolean;
-  private
-    FLocalStatus: JOYINFOEX;
-    FLocalConnected: Boolean;
-  private
-    procedure UpdateDevice();
-  public
-    constructor Create(AStatus: PJOYINFOEX; AConnected: PBoolean);
-  public
-    procedure Execute(); override;
-  end;
-
-
-type
   TDevice = class(TObject)
   private type
     TButtons = array [0 .. CONTROLLER_BUTTONS_COUNT + CONTROLLER_ARROWS_COUNT] of TSwitch;
@@ -121,38 +104,6 @@ implementation
 uses
   Fairtris.Memory,
   Fairtris.Settings;
-
-
-constructor TDeviceUpdater.Create(AStatus: PJOYINFOEX; AConnected: PBoolean);
-begin
-  inherited Create(False);
-
-  FDeviceStatus := AStatus;
-  FDeviceConnected := AConnected;
-end;
-
-
-procedure TDeviceUpdater.UpdateDevice();
-begin
-  FDeviceStatus^ := FLocalStatus;
-  FDeviceConnected^ := FLocalConnected;
-end;
-
-
-procedure TDeviceUpdater.Execute();
-begin
-  while not Terminated do
-  begin
-    FLocalStatus := Default(JOYINFOEX);
-    FLocalStatus.dwSize := SizeOf(JOYINFOEX);
-    FLocalStatus.dwFlags := JOY_RETURNX or JOY_RETURNY or JOY_RETURNBUTTONS;
-
-    FLocalConnected := joyGetPosEx(JOYSTICKID1, @FLocalStatus) = JOYERR_NOERROR;
-
-    Synchronize(@UpdateDevice);
-    Sleep(10);
-  end;
-end;
 
 
 constructor TDevice.Create();
