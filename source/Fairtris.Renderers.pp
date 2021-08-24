@@ -306,9 +306,9 @@ end;
 procedure TRenderer.RenderGround(ASceneID: Integer);
 begin
   if ASceneID = SCENE_QUIT then
-    Buffers.Native.Canvas.Draw(0, 0, Memory.Quit.Buffer)
+    SDL_RenderCopy(Window.Renderer, Memory.Quit.Buffer, nil, nil)
   else
-    Buffers.Native.Canvas.Draw(0, 0, Grounds[Memory.Options.Theme][ASceneID]);
+    SDL_RenderCopy(Window.Renderer, Grounds[Memory.Options.Theme][ASceneID], nil, nil);
 end;
 
 
