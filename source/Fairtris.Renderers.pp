@@ -20,7 +20,6 @@ type
     function CharToIndex(AChar: Char): Integer;
   private
     procedure RenderSprite(ABuffer, ASprite: TBitmap; ABufferRect, ASpriteRect: TRect; AExcludeFuchsia: Boolean = True); inline;
-    procedure RenderChar(ABuffer, ASprite: TBitmap; ABufferRect, ASpriteRect: TRect; AColor: TColor); inline;
   protected
     function EmptyEntryToString(): String;
     function ScoreEntryToString(AEntry: TScoreEntry): String;
@@ -228,45 +227,6 @@ begin
         BufferPixels^[BufferX].R := SpritePixels^[SpriteX].R;
         BufferPixels^[BufferX].G := SpritePixels^[SpriteX].G;
         BufferPixels^[BufferX].B := SpritePixels^[SpriteX].B;
-      end;
-
-      SpriteX += 1;
-      BufferX += 1;
-    end;
-
-    SpriteY += 1;
-    BufferY += 1;
-  end;
-end;
-
-
-procedure TRenderer.RenderChar(ABuffer, ASprite: TBitmap; ABufferRect, ASpriteRect: TRect; AColor: TColor);
-var
-  SpritePixels, BufferPixels: PPixels;
-  SpriteX, SpriteY, BufferX, BufferY: Integer;
-var
-  R, G, B: UInt8;
-begin
-  RedGreenBlue(AColor, R, G, B);
-
-  SpriteY := ASpriteRect.Top;
-  BufferY := ABufferRect.Top;
-
-  while SpriteY < ASpriteRect.Bottom do
-  begin
-    SpritePixels := ASprite.ScanLine[SpriteY];
-    BufferPixels := ABuffer.ScanLine[BufferY];
-
-    SpriteX := ASpriteRect.Left;
-    BufferX := ABufferRect.Left;
-
-    while SpriteX < ASpriteRect.Right do
-    begin
-      if SpritePixels^[SpriteX].R <> 255 then
-      begin
-        BufferPixels^[BufferX].R := R;
-        BufferPixels^[BufferX].G := G;
-        BufferPixels^[BufferX].B := B;
       end;
 
       SpriteX += 1;
