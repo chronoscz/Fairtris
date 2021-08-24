@@ -1,6 +1,6 @@
 unit Fairtris.Utils;
 
-{$MODE OBJFPC}{$LONGSTRINGS ON}{$MODESWITCH TYPEHELPERS}
+{$MODE OBJFPC}{$LONGSTRINGS ON}
 
 interface
 
@@ -8,11 +8,7 @@ uses
   SDL2;
 
 
-type
-  TSDL_RectHelper = type helper for SDL2.TSDL_Rect
-    constructor Create(ALeft, ATop, AWidth, AHeight: SInt32);
-  end;
-
+  function SDL_Rect(ALeft, ATop, AWidth, AHeight: SInt32): TSDL_Rect;
 
   function WrapAround(AValue, ACount, AStep: Integer): Integer;
 
@@ -24,7 +20,7 @@ type
 implementation
 
 
-constructor TSDL_RectHelper.Create(ALeft, ATop, AWidth, AHeight: SInt32);
+function SDL_Rect(ALeft, ATop, AWidth, AHeight: SInt32): TSDL_Rect;
 begin
   Self.X := ALeft;
   Self.Y := ATop;
