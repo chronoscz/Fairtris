@@ -128,7 +128,6 @@ var
 implementation
 
 uses
-  Windows,
   Math,
   Fairtris.Clock,
   Fairtris.Buffers,
