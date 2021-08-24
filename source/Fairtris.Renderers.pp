@@ -258,26 +258,22 @@ begin
   if APiece <> PIECE_UNKNOWN then
   begin
     ALevel := ALevel mod 10;
-    Buffers.Native.BeginUpdate();
 
     RenderSprite(
-      Buffers.Native,
       Sprites.Pieces,
-      Bounds(
+      TSDL_Rect.Create(
         AX,
         AY,
         PIECE_WIDTH,
         PIECE_HEIGHT
       ),
-      Bounds(
+      TSDL_Rect.Create(
         APiece * PIECE_WIDTH,
         ALevel * PIECE_HEIGHT,
         PIECE_WIDTH,
         PIECE_HEIGHT
       )
     );
-
-    Buffers.Native.EndUpdate();
   end;
 end;
 
