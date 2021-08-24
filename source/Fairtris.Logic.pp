@@ -760,23 +760,23 @@ end;
 
 procedure TLogic.UpdateOptionsWindow();
 begin
-  Memory.Options.Window := Placement.WindowSize;
+  Memory.Options.Size := Placement.WindowSize;
 
   if Memory.Options.ItemIndex <> ITEM_OPTIONS_WINDOW then Exit;
 
   if Input.Device.Left.JustPressed or Input.Keyboard.Left.JustPressed then
   begin
-    UpdateItemIndex(Memory.Options.Window, WINDOW_COUNT, ITEM_PREV);
+    UpdateItemIndex(Memory.Options.Size, WINDOW_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if Input.Device.Right.JustPressed or Input.Keyboard.Right.JustPressed then
   begin
-    UpdateItemIndex(Memory.Options.Window, WINDOW_COUNT, ITEM_NEXT);
+    UpdateItemIndex(Memory.Options.Size, WINDOW_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
-  Placement.WindowSize := Memory.Options.Window;
+  Placement.WindowSize := Memory.Options.Size;
 end;
 
 

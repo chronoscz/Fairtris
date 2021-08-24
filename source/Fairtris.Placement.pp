@@ -90,7 +90,7 @@ begin
   FMonitorIndex := Settings.General.Monitor;
   SDL_GetDisplayBounds(FMonitorIndex, @FMonitorBounds);
 
-  FWindowSize := Settings.General.Window;
+  FWindowSize := Settings.General.Size;
   FScroll := Settings.General.Scroll;
 
   if FWindowSize <> WINDOW_FULLSCREEN then

@@ -891,7 +891,7 @@ begin
   RenderText(
     ITEM_X_OPTIONS_PARAM,
     ITEM_Y_OPTIONS_WINDOW,
-    ITEM_TEXT_OPTIONS_WINDOW[Memory.Options.Window],
+    ITEM_TEXT_OPTIONS_WINDOW[Memory.Options.Size],
     IfThen(
       Memory.Options.ItemIndex = ITEM_OPTIONS_WINDOW,
       COLOR_WHITE,

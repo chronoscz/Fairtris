@@ -147,7 +147,7 @@ type
     FromScene: Integer;
   public
     Input: Integer;
-    Window: Integer;
+    Size: Integer;
     Theme: Integer;
     Sounds: Integer;
     Scroll: Integer;
@@ -346,7 +346,7 @@ begin
   FromScene := SCENE_MENU;
 
   Input := Settings.General.Input;
-  Window := Settings.General.Window;
+  Size := Settings.General.Size;
   Theme := Settings.General.Theme;
   Sounds := Settings.General.Sounds;
   Scroll := Settings.General.Scroll;

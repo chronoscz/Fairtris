@@ -26,7 +26,7 @@ type
     FTop: Integer;
   private
     FInput: Integer;
-    FWindow: Integer;
+    FSize: Integer;
     FTheme: Integer;
     FSounds: Integer;
     FScroll: Integer;
@@ -57,7 +57,7 @@ type
     property Top: Integer read FTop;
   public
     property Input: Integer read FInput;
-    property Window: Integer read FWindow;
+    property Size: Integer read FSize;
     property Theme: Integer read FTheme;
     property Sounds: Integer read FSounds;
     property Scroll: Integer read FScroll;
@@ -224,7 +224,7 @@ begin
   FTop := CorrectTop(FTop);
 
   FInput  := CorrectRange(FInput,  INPUT_FIRST,  INPUT_LAST,  INPUT_DEFAULT);
-  FWindow := CorrectRange(FWindow, WINDOW_FIRST, WINDOW_LAST, WINDOW_DEFAULT);
+  FSize   := CorrectRange(FSize,   WINDOW_FIRST, WINDOW_LAST, WINDOW_DEFAULT);
   FTheme  := CorrectRange(FTheme,  THEME_FIRST,  THEME_LAST,  THEME_DEFAULT);
   FSounds := CorrectRange(FSounds, SOUNDS_FIRST, SOUNDS_LAST, SOUNDS_DEFAULT);
   FScroll := CorrectRange(FScroll, SCROLL_FIRST, SCROLL_LAST, SCROLL_DEFAULT);
@@ -238,7 +238,7 @@ end;
 procedure TGeneralSettings.Collect();
 begin
   FFrameRate := Clock.FrameRateLimit;
-  FWindow := Placement.WindowSize;
+  FSize := Placement.WindowSize;
 
   FMonitor := DetermineMonitor();
   FLeft := Window.Left;
@@ -264,7 +264,7 @@ begin
   FTop     := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_TOP,     0);
 
   FInput  := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_INPUT,  INPUT_DEFAULT);
-  FWindow := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_WINDOW, WINDOW_DEFAULT);
+  FSize   := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_WINDOW, WINDOW_DEFAULT);
   FTheme  := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_THEME,  THEME_DEFAULT);
   FSounds := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_SOUNDS, SOUNDS_DEFAULT);
   FScroll := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_SCROLL, SCROLL_DEFAULT);
@@ -286,7 +286,7 @@ begin
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_TOP,     FTop);
 
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_INPUT,  FInput);
-  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_WINDOW, FWindow);
+  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_WINDOW, FSize);
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_THEME,  FTheme);
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_SOUNDS, FSounds);
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_SCROLL, FScroll);
