@@ -17,7 +17,7 @@ type
     FGrounds: TGrounds;
     FGroundsPath: String;
   private
-    function GetGround(ASceneID: Integer): TBitmap;
+    function GetGround(ASceneID: Integer): PSDL_Texture;
   public
     constructor Create(const APath: String);
     destructor Destroy(); override;
@@ -75,7 +75,7 @@ begin
 end;
 
 
-function TThemeGrounds.GetGround(ASceneID: Integer): TBitmap;
+function TThemeGrounds.GetGround(ASceneID: Integer): PSDL_Texture;
 begin
   Result := FGrounds[ASceneID];
 end;
