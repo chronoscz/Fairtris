@@ -1052,13 +1052,18 @@ end;
 
 
 procedure TRenderer.RenderClipping();
+var
+  StripeTop, StripeBottom: TSDL_Rect;
 begin
   if FClipFrame then
   begin
-    Buffers.Native.Canvas.Brush.Color := COLOR_WINDOW;
+    StripeTop := SDL_Rect(0, 0, BUFFER_WIDTH, BUFFER_CLIPPING);
+    StripeBottom := SDL_Rect(0, BUFFER_HEIGHT - BUFFER_CLIPPING, BUFFER_WIDTH, BUFFER_CLIPPING);
 
-    Buffers.Native.Canvas.FillRect(0, 0, BUFFER_WIDTH, BUFFER_CLIPPING);
-    Buffers.Native.Canvas.FillRect(0, BUFFER_HEIGHT - BUFFER_CLIPPING, BUFFER_WIDTH, BUFFER_HEIGHT);
+    SDL_SetRenderDrawColor(Window.Renderer, 0, 0, 0, 255);
+
+    SDL_RenderFillRect(Window.Renderer, @StripeTop);
+    SDL_RenderFillRect(Window.Renderer, @StripeBottom);
   end;
 end;
 
