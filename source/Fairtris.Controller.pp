@@ -5,6 +5,7 @@ unit Fairtris.Controller;
 interface
 
 uses
+  SDL2,
   Fairtris.Interfaces,
   Fairtris.Classes,
   Fairtris.Constants;
@@ -15,11 +16,10 @@ type
   private type
     TButtons = array [0 .. CONTROLLER_BUTTONS_COUNT + CONTROLLER_ARROWS_COUNT] of TSwitch;
   private
+    FJoystick: PSDL_Joystick;
+  private
     FButtons: TButtons;
     FConnected: Boolean;
-  private
-    procedure InitButtons();
-    procedure DoneButtons();
   private
     procedure UpdateButtons();
   private
@@ -33,6 +33,9 @@ type
   public
     procedure Validate();
     procedure Invalidate();
+  public
+    procedure Attach();
+    procedure Detach();
   public
     property Button[AIndex: Integer]: TSwitch read GetButton;
     property Connected: Boolean read FConnected;
@@ -71,6 +74,9 @@ type
     procedure Validate();
     procedure Invalidate();
   public
+    procedure Attach();
+    procedure Detach();
+  public
     function CatchedOneButton(out AScanCode: UInt8): Boolean;
   public
     property Device: TDevice read FDevice;
@@ -98,20 +104,6 @@ uses
 
 
 constructor TDevice.Create();
-begin
-  InitButtons();
-end;
-
-
-destructor TDevice.Destroy();
-begin
-  DoneButtons();
-
-  inherited Destroy();
-end;
-
-
-procedure TDevice.InitButtons();
 var
   Index: Integer;
 begin
@@ -120,30 +112,36 @@ begin
 end;
 
 
-procedure TDevice.DoneButtons();
+destructor TDevice.Destroy();
 var
   Index: Integer;
 begin
   for Index := Low(FButtons) to High(FButtons) do
     FButtons[Index].Free();
+
+  inherited Destroy();
 end;
 
 
 procedure TDevice.UpdateButtons();
+const
+  JOYSTICK_AXIS_X = 0;
+  JOYSTICK_AXIS_Y = 1;
+const
+  JOYSTICK_AXIS_DEADZONE = 9999;
 var
-  Index: Integer;
-  Mask: Integer = JOY_BUTTON1;
+  AxisX, AxisY, Index: Integer;
 begin
   for Index := Low(FButtons) to CONTROLLER_BUTTONS_COUNT - 1 do
-  begin
-    FButtons[Index].Pressed := FStatus.wButtons and Mask <> 0;
-    Mask := Mask shl 1;
-  end;
+    FButtons[Index].Pressed := SDL_JoystickGetButton(FJoystick, Index) = 1;
 
-  FButtons[CONTROLLER_ARROWS_OFFSET + CONTROLLER_BUTTON_UP].Pressed    := FStatus.wYpos = $0000;
-  FButtons[CONTROLLER_ARROWS_OFFSET + CONTROLLER_BUTTON_DOWN].Pressed  := FStatus.wYpos = $FFFF;
-  FButtons[CONTROLLER_ARROWS_OFFSET + CONTROLLER_BUTTON_LEFT].Pressed  := FStatus.wXpos = $0000;
-  FButtons[CONTROLLER_ARROWS_OFFSET + CONTROLLER_BUTTON_RIGHT].Pressed := FStatus.wXpos = $FFFF;
+  AxisX := SDL_JoystickGetAxis(FJoystick, JOYSTICK_AXIS_X);
+  AxisY := SDL_JoystickGetAxis(FJoystick, JOYSTICK_AXIS_Y);
+
+  FButtons[CONTROLLER_ARROWS_OFFSET + CONTROLLER_BUTTON_UP].Pressed    := AxisY < -JOYSTICK_AXIS_DEADZONE;
+  FButtons[CONTROLLER_ARROWS_OFFSET + CONTROLLER_BUTTON_DOWN].Pressed  := AxisY > +JOYSTICK_AXIS_DEADZONE;
+  FButtons[CONTROLLER_ARROWS_OFFSET + CONTROLLER_BUTTON_LEFT].Pressed  := AxisX < -JOYSTICK_AXIS_DEADZONE;
+  FButtons[CONTROLLER_ARROWS_OFFSET + CONTROLLER_BUTTON_RIGHT].Pressed := AxisX > +JOYSTICK_AXIS_DEADZONE;
 end;
 
 
@@ -157,8 +155,6 @@ procedure TDevice.Reset();
 var
   Index: Integer;
 begin
-  FStatus := Default(JOYINFOEX);
-
   for Index := Low(FButtons) to High(FButtons) do
     FButtons[Index].Reset();
 end;
@@ -188,6 +184,26 @@ var
 begin
   for Index := Low(FButtons) to High(FButtons) do
     FButtons[Index].Invalidate();
+end;
+
+
+procedure TDevice.Attach();
+begin
+  if not FConnected then
+  begin
+    FJoystick := SDL_JoystickOpen(0);
+    FConnected := True;
+  end;
+end;
+
+
+procedure TDevice.Detach();
+begin
+  if FConnected then
+  begin
+    SDL_JoystickClose(0);
+    FConnected := False;
+  end;
 end;
 
 
@@ -295,6 +311,18 @@ end;
 procedure TController.Invalidate();
 begin
   FDevice.Invalidate();
+end;
+
+
+procedure TController.Attach();
+begin
+  FDevice.Attach();
+end;
+
+
+procedure TController.Detach();
+begin
+  FDevice.Detach();
 end;
 
 
