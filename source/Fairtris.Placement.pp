@@ -171,7 +171,7 @@ var
 begin
   case FWindowSize of
     WINDOW_NATIVE, WINDOW_ZOOM_2X, WINDOW_ZOOM_3X, WINDOW_ZOOM_4X:
-      FWindowClient := SDL_Rect.Create(0, 0, FWindowBounds.W, FWindowBounds.H);
+      FWindowClient := SDL_Rect(0, 0, FWindowBounds.W, FWindowBounds.H);
     WINDOW_FULLSCREEN:
     begin
       NewHeight := Round(FWindowBounds.H * CLIENT_FILL_MULTIPLIER);
