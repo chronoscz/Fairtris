@@ -847,8 +847,6 @@ begin
     UpdateItemIndex(Memory.Options.Scroll, SCROLL_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
-
-  Placement.Scroll := Memory.Options.Scroll;
 end;
 
 

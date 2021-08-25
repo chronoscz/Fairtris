@@ -21,8 +21,6 @@ type
     FWindowBounds: TSDL_Rect;
     FWindowClient: TSDL_Rect;
   private
-    FScroll: Integer;
-  private
     procedure SetMonitorIndex(AIndex: Integer);
     procedure SetWindowSize(ASize: Integer);
     procedure SetWindowBounds(ABounds: TSDL_Rect);
@@ -51,8 +49,6 @@ type
     property WindowSize: Integer read FWindowSize write SetWindowSize;
     property WindowBounds: TSDL_Rect read FWindowBounds write SetWindowBounds;
     property WindowClient: TSDL_Rect read FWindowClient write SetWindowClient;
-  public
-    property Scroll: Integer read FScroll write FScroll;
   end;
 
 
@@ -98,7 +94,6 @@ begin
   SDL_GetDisplayBounds(FMonitorIndex, @FMonitorBounds);
 
   FWindowSize := Settings.General.Size;
-  FScroll := Settings.General.Scroll;
 
   if FWindowSize <> WINDOW_FULLSCREEN then
   begin
@@ -251,8 +246,6 @@ end;
 
 procedure TPlacement.Enlarge();
 begin
-  if FScroll = SCROLL_DISABLED then Exit;
-
   if FWindowSize < WINDOW_FULLSCREEN then
   begin
     FWindowSize += 1;
@@ -266,8 +259,6 @@ end;
 
 procedure TPlacement.Reduce();
 begin
-  if FScroll = SCROLL_DISABLED then Exit;
-
   if FWindowSize > WINDOW_NATIVE then
   begin
     FWindowSize -= 1;
