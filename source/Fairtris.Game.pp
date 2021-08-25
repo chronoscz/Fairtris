@@ -211,12 +211,10 @@ end;
 
 procedure TGame.UpdateInput();
 begin
-  Input.Controller.Update();
-
   if Window.Focused then
-    Input.Keyboard.Update()
+    Input.Update()
   else
-    Input.Keyboard.Reset();
+    Input.Reset();
 end;
 
 
