@@ -32,6 +32,7 @@ type
     procedure UpdateWindowBounds();
     procedure UpdateWindowClient();
     procedure UpdateWindowCursor();
+    procedure UpdateWindowHitTest();
     procedure UpdateWindowPlacement();
     procedure UpdateWindowProperties();
   private
@@ -71,6 +72,15 @@ uses
   Fairtris.Settings,
   Fairtris.Utils,
   Fairtris.Constants;
+
+
+function WindowHitTest(AWindow: PSDL_Window; const APoint: PSDL_Point; AData: Pointer): TSDL_HitTestResult; cdecl;
+begin
+  if Placement.WindowSize = WINDOW_FULLSCREEN then
+    Result := SDL_HITTEST_NORMAL
+  else
+    Result := SDL_HITTEST_DRAGGABLE;
+end;
 
 
 constructor TPlacement.Create();
@@ -202,6 +212,15 @@ begin
 end;
 
 
+procedure TPlacement.UpdateWindowHitTest();
+begin
+  if FWindowSize = WINDOW_FULLSCREEN then
+    SDL_SetWindowHitTest(Window.Window, nil, nil)
+  else
+    SDL_SetWindowHitTest(Window.Window, @WindowHitTest, nil);
+end;
+
+
 procedure TPlacement.UpdateWindowPlacement();
 begin
   SDL_SetWindowSize(Window.Window, FWindowBounds.W, FWindowBounds.H);
@@ -227,6 +246,7 @@ begin
   UpdateWindowBounds();
   UpdateWindowClient();
   UpdateWindowCursor();
+  UpdateWindowHitTest();
   UpdateWindowPlacement();
   UpdateWindowProperties();
 end;
