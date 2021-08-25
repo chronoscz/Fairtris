@@ -16,9 +16,6 @@ type
     FWindow: PSDL_Window;
     FRenderer: PSDL_Renderer;
   private
-    function GetLeft(): Integer;
-    function GetTop(): Integer;
-  private
     function GetFocused(): Boolean;
   public
     constructor Create();
@@ -28,10 +25,6 @@ type
     property Renderer: PSDL_Renderer read FRenderer;
   public
     property Handle: THandle read FHandle;
-  public
-    property Left: Integer read GetLeft;
-    property Top: Integer read GetTop;
-  public
     property Focused: Boolean read GetFocused;
   end;
 
@@ -66,22 +59,6 @@ begin
   SDL_DestroyRenderer(FRenderer);
 
   inherited Destroy();
-end;
-
-
-function TWindow.GetLeft(): Integer;
-var
-  Dummy: Integer = -1;
-begin
-  SDL_GetWindowPosition(FWindow, @Result, @Dummy);
-end;
-
-
-function TWindow.GetTop(): Integer;
-var
-  Dummy: Integer = -1;
-begin
-  SDL_GetWindowPosition(FWindow, @Dummy, @Result);
 end;
 
 
