@@ -270,8 +270,8 @@ begin
   FSize := Placement.WindowSize;
 
   FMonitor := DetermineMonitor();
-  FLeft := Window.Left;
-  FTop := Window.Top;
+  FLeft := Placement.WindowBounds.X;
+  FTop := Placement.WindowBounds.Y;
 
   FInput := Memory.Options.Input;
   FTheme := Memory.Options.Theme;
