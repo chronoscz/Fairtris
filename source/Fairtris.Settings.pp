@@ -285,19 +285,19 @@ end;
 
 procedure TGeneralSettings.Load(AFile: TIniFile; const ASection: String);
 begin
-  FMonitor := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_MONITOR, MONITOR_DEFAULT);
-  FLeft    := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_LEFT,    0);
-  FTop     := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_TOP,     0);
+  FMonitor := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_MONITOR, SETTINGS_VALUE_GENERAL_MONITOR);
+  FLeft    := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_LEFT,    SETTINGS_VALUE_GENERAL_LEFT);
+  FTop     := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_TOP,     SETTINGS_VALUE_GENERAL_TOP);
 
-  FInput  := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_INPUT,  INPUT_DEFAULT);
-  FSize   := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_WINDOW, WINDOW_DEFAULT);
-  FTheme  := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_THEME,  THEME_DEFAULT);
-  FSounds := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_SOUNDS, SOUNDS_DEFAULT);
-  FScroll := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_SCROLL, SCROLL_DEFAULT);
+  FInput  := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_INPUT,  SETTINGS_VALUE_GENERAL_INPUT);
+  FSize   := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_WINDOW, SETTINGS_VALUE_GENERAL_WINDOW);
+  FTheme  := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_THEME,  SETTINGS_VALUE_GENERAL_THEME);
+  FSounds := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_SOUNDS, SETTINGS_VALUE_GENERAL_SOUNDS);
+  FScroll := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_SCROLL, SETTINGS_VALUE_GENERAL_SCROLL);
 
-  FRegion := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_REGION, REGION_DEFAULT);
-  FRNG    := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_RNG,    RNG_DEFAULT);
-  FLevel  := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_LEVEL,  LEVEL_DEFAULT);
+  FRegion := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_REGION, SETTINGS_VALUE_GENERAL_REGION);
+  FRNG    := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_RNG,    SETTINGS_VALUE_GENERAL_RNG);
+  FLevel  := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_LEVEL,  SETTINGS_VALUE_GENERAL_LEVEL);
 
   Correct();
 end;
