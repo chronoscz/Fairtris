@@ -37,6 +37,8 @@ type
 type
   TGeneralSettings = class(TCustomSettings)
   private
+    FDeflored: Boolean;
+  private
     FMonitor: Integer;
     FLeft: Integer;
     FTop: Integer;
@@ -63,6 +65,8 @@ type
   public
     procedure Load(AFile: TIniFile; const ASection: String);
     procedure Save(AFile: TIniFile; const ASection: String);
+  public
+    property Deflored: Boolean read FDeflored;
   public
     property Monitor: Integer read FMonitor;
     property Left: Integer read FLeft;
@@ -285,6 +289,8 @@ end;
 
 procedure TGeneralSettings.Load(AFile: TIniFile; const ASection: String);
 begin
+  FDeflored := AFile.ReadBool(ASection, SETTINGS_KEY_GENERAL_DEFLORED, SETTINGS_VALUE_GENERAL_DEFLORED);
+
   FMonitor := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_MONITOR, SETTINGS_VALUE_GENERAL_MONITOR);
   FLeft    := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_LEFT,    SETTINGS_VALUE_GENERAL_LEFT);
   FTop     := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_TOP,     SETTINGS_VALUE_GENERAL_TOP);
@@ -305,6 +311,8 @@ end;
 
 procedure TGeneralSettings.Save(AFile: TIniFile; const ASection: String);
 begin
+  AFile.WriteBool(ASection, SETTINGS_KEY_GENERAL_DEFLORED, FDeflored);
+
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_MONITOR, FMonitor);
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_LEFT,    FLeft);
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_TOP,     FTop);
