@@ -17,6 +17,24 @@ type
 
 
 type
+  TVideoSettings = class(TCustomSettings)
+  private
+    FEnabled: Boolean;
+    FWidth: Integer;
+    FHeight: Integer;
+  private
+    procedure Collect();
+  public
+    procedure Load(AFile: TIniFile; const ASection: String);
+    procedure Save(AFile: TIniFile; const ASection: String);
+  public
+    property Enabled: Boolean read FEnabled;
+    property Width: Integer read FWidth;
+    property Height: Integer read FHeight;
+  end;
+
+
+type
   TGeneralSettings = class(TCustomSettings)
   private
     FMonitor: Integer;
@@ -99,6 +117,7 @@ type
     FSettingsFile: TMemIniFile;
   private
     FGeneral: TGeneralSettings;
+    FVideo: TVideoSettings;
     FKeyboard: TKeyboardSettings;
     FController: TControllerSettings;
   public
@@ -108,6 +127,7 @@ type
     procedure Load();
     procedure Save();
   public
+    property Video: TVideoSettings read FVideo;
     property General: TGeneralSettings read FGeneral;
     property Keyboard: TKeyboardSettings read FKeyboard;
     property Controller: TControllerSettings read FController;
@@ -136,6 +156,33 @@ begin
     Result := AValue
   else
     Result := ADefault;
+end;
+
+
+procedure TVideoSettings.Collect();
+begin
+  FEnabled := Placement.VideoEnabled;
+
+  FWidth := Placement.VideoWidth;
+  FHeight := Placement.VideoHeight;
+end;
+
+
+procedure TVideoSettings.Load(AFile: TIniFile; const ASection: String);
+begin
+  FEnabled := AFile.ReadBool(ASection, SETTINGS_KEY_VIDEO_ENABLED, SETTINGS_VALUE_VIDEO_ENABLED);
+
+  FWidth  := AFile.ReadInteger(ASection, SETTINGS_KEY_VIDEO_WIDTH,  SETTINGS_VALUE_VIDEO_WIDTH);
+  FHeight := AFile.ReadInteger(ASection, SETTINGS_KEY_VIDEO_HEIGHT, SETTINGS_VALUE_VIDEO_HEIGHT);
+end;
+
+
+procedure TVideoSettings.Save(AFile: TIniFile; const ASection: String);
+begin
+  AFile.WriteBool(ASection, SETTINGS_KEY_VIDEO_ENABLED, FEnabled);
+
+  AFile.WriteInteger(ASection, SETTINGS_KEY_VIDEO_WIDTH,  FWidth);
+  AFile.WriteInteger(ASection, SETTINGS_KEY_VIDEO_HEIGHT, FHeight);
 end;
 
 
@@ -338,6 +385,7 @@ constructor TSettings.Create();
 begin
   FSettingsFile := TMemIniFile.Create(SETTINGS_FILENAME);
 
+  FVideo := TVideoSettings.Create();
   FGeneral := TGeneralSettings.Create();
   FKeyboard := TKeyboardSettings.Create(INPUT_KEYBOARD);
   FController := TControllerSettings.Create(INPUT_CONTROLLER);
@@ -348,6 +396,7 @@ destructor TSettings.Destroy();
 begin
   FSettingsFile.Free();
 
+  FVideo.Free();
   FGeneral.Free();
   FKeyboard.Free();
   FController.Free();
@@ -358,6 +407,7 @@ end;
 
 procedure TSettings.Load();
 begin
+  FVideo.Load(FSettingsFile, SETTINGS_SECTION_VIDEO);
   FGeneral.Load(FSettingsFile, SETTINGS_SECTION_GENERAL);
   FKeyboard.Load(FSettingsFile, SETTINGS_SECTION_KEYBOARD);
   FController.Load(FSettingsFile, SETTINGS_SECTION_CONTROLLER);
@@ -366,10 +416,12 @@ end;
 
 procedure TSettings.Save();
 begin
+  FVideo.Collect();
   FGeneral.Collect();
   FKeyboard.Collect();
   FController.Collect();
 
+  FVideo.Save(FSettingsFile, SETTINGS_SECTION_VIDEO);
   FGeneral.Save(FSettingsFile, SETTINGS_SECTION_GENERAL);
   FKeyboard.Save(FSettingsFile, SETTINGS_SECTION_KEYBOARD);
   FController.Save(FSettingsFile, SETTINGS_SECTION_CONTROLLER);
