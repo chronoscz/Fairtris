@@ -199,8 +199,8 @@ begin
     SDL_MOUSEWHEEL:
       if Memory.Options.Scroll = SCROLL_ENABLED then
       begin
-        if Event.Wheel.Y < 0 then Placement.Reduce();
-        if Event.Wheel.Y > 0 then Placement.Enlarge();
+        if Event.Wheel.Y < 0 then Placement.ReduceWindow();
+        if Event.Wheel.Y > 0 then Placement.EnlargeWindow();
       end;
     SDL_JOYDEVICEADDED:   Input.Controller.Attach();
     SDL_JOYDEVICEREMOVED: Input.Controller.Detach();

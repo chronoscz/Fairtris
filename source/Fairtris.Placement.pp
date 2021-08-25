@@ -40,8 +40,8 @@ type
   public
     procedure Initialize();
   public
-    procedure Enlarge();
-    procedure Reduce();
+    procedure EnlargeWindow();
+    procedure ReduceWindow();
   public
     property Monitor: Integer read FMonitorIndex;
     property MonitorIndex: Integer write SetMonitorIndex;
@@ -244,7 +244,7 @@ begin
 end;
 
 
-procedure TPlacement.Enlarge();
+procedure TPlacement.EnlargeWindow();
 begin
   if FWindowSize < WINDOW_FULLSCREEN then
   begin
@@ -257,7 +257,7 @@ begin
 end;
 
 
-procedure TPlacement.Reduce();
+procedure TPlacement.ReduceWindow();
 begin
   if FWindowSize > WINDOW_NATIVE then
   begin
