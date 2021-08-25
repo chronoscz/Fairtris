@@ -14,6 +14,10 @@ type
   private
     FInitialized: Boolean;
   private
+    FVideoEnabled: Boolean;
+    FVideoWidth: Integer;
+    FVideoHeight: Integer;
+  private
     FMonitorIndex: Integer;
     FMonitorBounds: TSDL_Rect;
   private
@@ -35,6 +39,7 @@ type
     procedure UpdateMonitor();
     procedure UpdateWindow();
     procedure UpdateBuffer();
+    procedure UpdateVideo();
   public
     constructor Create();
   public
@@ -42,6 +47,13 @@ type
   public
     procedure EnlargeWindow();
     procedure ReduceWindow();
+    procedure ExposeWindow();
+  public
+    procedure ToggleVideoMode();
+  public
+    property VideoEnabled: Boolean read FVideoEnabled;
+    property VideoWidth: Integer read FVideoWidth;
+    property VideoHeight: Integer read FVideoHeight;
   public
     property Monitor: Integer read FMonitorIndex;
     property MonitorIndex: Integer write SetMonitorIndex;
@@ -72,7 +84,10 @@ begin
   if Placement.WindowSize = WINDOW_FULLSCREEN then
     Result := SDL_HITTEST_NORMAL
   else
+  begin
     Result := SDL_HITTEST_DRAGGABLE;
+    Placement.ExposeWindow();
+  end;
 end;
 
 
@@ -90,6 +105,10 @@ end;
 
 procedure TPlacement.Initialize();
 begin
+  FVideoEnabled := Settings.Video.Enabled;
+  FVideoWidth := Settings.Video.Width;
+  FVideoHeight := Settings.Video.Height;
+
   FMonitorIndex := Settings.General.Monitor;
   SDL_GetDisplayBounds(FMonitorIndex, @FMonitorBounds);
 
@@ -103,6 +122,9 @@ begin
 
   UpdateWindow();
   UpdateBuffer();
+
+  if FVideoEnabled then
+    UpdateVideo();
 
   FInitialized := True;
 end;
@@ -197,7 +219,7 @@ end;
 
 procedure TPlacement.UpdateWindowCursor();
 begin
-  if FWindowSize = WINDOW_FULLSCREEN then
+  if FVideoEnabled or (FWindowSize = WINDOW_FULLSCREEN) then
     SDL_ShowCursor(SDL_DISABLE)
   else
     SDL_ShowCursor(SDL_ENABLE);
@@ -206,7 +228,7 @@ end;
 
 procedure TPlacement.UpdateWindowHitTest();
 begin
-  if FWindowSize = WINDOW_FULLSCREEN then
+  if FVideoEnabled or (FWindowSize = WINDOW_FULLSCREEN) then
     SDL_SetWindowHitTest(Window.Window, nil, nil)
   else
     SDL_SetWindowHitTest(Window.Window, @WindowHitTest, nil);
@@ -244,8 +266,32 @@ begin
 end;
 
 
+procedure TPlacement.UpdateVideo();
+begin
+  if FVideoEnabled then
+  begin
+    SDL_ShowCursor(SDL_DISABLE);
+    SDL_SetWindowHitTest(Window.Window, nil, nil);
+
+    SDL_SetWindowSize(Window.Window, FVideoWidth, FVideoHeight);
+    SDL_SetWindowFullScreen(Window.Window, SDL_WINDOW_FULLSCREEN);
+  end
+  else
+  begin
+    SDL_SetWindowFullScreen(Window.Window, SDL_DISABLE);
+    SDL_SetWindowSize(Window.Window, FWindowBounds.W, FWindowBounds.H);
+    SDL_SetWindowPosition(Window.Window, FWindowBounds.X, FWindowBounds.Y);
+
+    SDL_ShowCursor(SDL_ENABLE);
+    SDL_SetWindowHitTest(Window.Window, @WindowHitTest, nil);
+  end;
+end;
+
+
 procedure TPlacement.EnlargeWindow();
 begin
+  if FVideoEnabled then Exit;
+
   if FWindowSize < WINDOW_FULLSCREEN then
   begin
     FWindowSize += 1;
@@ -259,6 +305,8 @@ end;
 
 procedure TPlacement.ReduceWindow();
 begin
+  if FVideoEnabled then Exit;
+
   if FWindowSize > WINDOW_NATIVE then
   begin
     FWindowSize -= 1;
@@ -266,6 +314,20 @@ begin
     UpdateMonitor();
     UpdateWindow();
   end;
+end;
+
+
+procedure TPlacement.ExposeWindow();
+begin
+  if not FVideoEnabled then
+    SDL_GetWindowPosition(Window.Window, @FWindowBounds.X, @FWindowBounds.Y);
+end;
+
+
+procedure TPlacement.ToggleVideoMode();
+begin
+  FVideoEnabled := not FVideoEnabled;
+  UpdateVideo();
 end;
 
 
