@@ -23,7 +23,6 @@ type
     procedure UpdateQueue();
     procedure UpdateInput();
     procedure UpdateLogic();
-    procedure UpdateSounds();
     procedure UpdateBuffer();
     procedure UpdateWindow();
     procedure UpdateTaskBar();
@@ -227,12 +226,6 @@ begin
 end;
 
 
-procedure TGame.UpdateSounds();
-begin
-  Sounds.Update();
-end;
-
-
 procedure TGame.UpdateBuffer();
 begin
   Renderers.Theme.RenderScene(Logic.Scene.Current);
@@ -265,7 +258,6 @@ begin
       UpdateQueue();
       UpdateInput();
       UpdateLogic();
-      UpdateSounds();
 
       if not Logic.Scene.Changed and not Logic.Stopped then
       begin
