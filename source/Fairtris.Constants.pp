@@ -32,6 +32,10 @@ const
 
 
 const
+  WINDOW_RATIO = 8 / 7;
+
+
+const
   SCENE_LEGAL       = 0;
   SCENE_MENU        = 1;
   SCENE_PLAY        = 2;

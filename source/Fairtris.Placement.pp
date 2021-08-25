@@ -177,6 +177,8 @@ begin
     WINDOW_NATIVE, WINDOW_ZOOM_2X, WINDOW_ZOOM_3X, WINDOW_ZOOM_4X:
     begin
       NewWidth := Ord(FWindowSize) * BUFFER_WIDTH + BUFFER_WIDTH;
+      NewWidth := Round(NewWidth * WINDOW_RATIO);
+
       NewHeight := Ord(FWindowSize) * BUFFER_HEIGHT + BUFFER_HEIGHT;
 
       if FInitialized then
