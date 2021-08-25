@@ -192,6 +192,8 @@ procedure TGame.UpdateQueue();
 var
   Event: TSDL_Event;
 begin
+  SDL_PumpEvents();
+
   while SDL_PollEvent(@Event) = 1 do
   case Event.Type_ of
     SDL_MOUSEWHEEL:
