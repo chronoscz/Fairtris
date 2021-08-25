@@ -22,7 +22,6 @@ type
     FWindowClient: TSDL_Rect;
   private
     FScroll: Integer;
-    FFullScreen: Boolean;
   private
     procedure SetMonitorIndex(AIndex: Integer);
     procedure SetWindowSize(ASize: Integer);
@@ -34,7 +33,6 @@ type
     procedure UpdateWindowCursor();
     procedure UpdateWindowHitTest();
     procedure UpdateWindowPlacement();
-    procedure UpdateWindowProperties();
   private
     procedure UpdateMonitor();
     procedure UpdateWindow();
@@ -55,7 +53,6 @@ type
     property WindowClient: TSDL_Rect read FWindowClient write SetWindowClient;
   public
     property Scroll: Integer read FScroll write FScroll;
-    property FullScreen: Boolean read FFullScreen;
   end;
 
 
@@ -228,12 +225,6 @@ begin
 end;
 
 
-procedure TPlacement.UpdateWindowProperties();
-begin
-  FFullScreen := FWindowSize = WINDOW_FULLSCREEN;
-end;
-
-
 procedure TPlacement.UpdateMonitor();
 begin
   FMonitorIndex := SDL_GetWindowDisplayIndex(Window.Window);
@@ -248,7 +239,6 @@ begin
   UpdateWindowCursor();
   UpdateWindowHitTest();
   UpdateWindowPlacement();
-  UpdateWindowProperties();
 end;
 
 
