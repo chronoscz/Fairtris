@@ -142,7 +142,6 @@ implementation
 uses
   SDL2,
   Fairtris.Window,
-  Fairtris.Clock,
   Fairtris.Input,
   Fairtris.Memory,
   Fairtris.Placement,

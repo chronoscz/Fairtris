@@ -6,7 +6,6 @@ interface
 
 uses
   SDL2,
-  Types,
   Fairtris.Interfaces,
   Fairtris.BestScores,
   Fairtris.Constants;

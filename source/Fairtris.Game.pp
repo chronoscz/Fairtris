@@ -44,7 +44,6 @@ implementation
 uses
   SDL2,
   SDL2_Mixer,
-  Windows,
   SysUtils,
   Fairtris.Window,
   Fairtris.Taskbar,
