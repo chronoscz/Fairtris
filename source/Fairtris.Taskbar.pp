@@ -56,7 +56,7 @@ begin
 
   if Clock.FrameLoad.Changed then
   begin
-    ButtonValue := Min(Clock.FrameLoad.Current, ButtonTotal);
+    ButtonValue := Max(1, Min(Clock.FrameLoad.Current, ButtonTotal));
 
     case ButtonValue of
       00 .. 60: ButtonState := TBPF_NORMAL;
