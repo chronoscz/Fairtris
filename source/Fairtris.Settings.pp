@@ -270,9 +270,8 @@ end;
 
 procedure TGeneralSettings.Collect();
 begin
-  FSize := Placement.WindowSize;
-
   FMonitor := DetermineMonitor();
+  FSize := Placement.WindowSize;
   FLeft := Placement.WindowBounds.X;
   FTop := Placement.WindowBounds.Y;
 
