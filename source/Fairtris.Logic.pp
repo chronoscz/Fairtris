@@ -1243,6 +1243,9 @@ begin
   if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_TOGGLE_CLIP].JustPressed then
     Renderers.ClipFrame := not Renderers.ClipFrame;
 
+  if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_TOGGLE_VIDEO].JustPressed then
+    Placement.ToggleVideoMode();
+
   if not Memory.Game.Started then
     Generators.Shuffle();
 end;
