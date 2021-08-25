@@ -58,8 +58,7 @@ type
   private
     function DetermineMonitor(): Integer;
   private
-    procedure CorrectRanges();
-  public
+    procedure Correct();
     procedure Collect();
   public
     procedure Load(AFile: TIniFile; const ASection: String);
@@ -85,10 +84,10 @@ type
   TMappingSettings = class(TCustomSettings)
   private
     FDeviceID: Integer;
+  private
+    procedure Collect();
   public
     constructor Create(ADeviceID: Integer);
-  public
-    procedure Collect();
   public
     procedure Load(AFile: TIniFile; const ASection: String); virtual; abstract;
     procedure Save(AFile: TIniFile; const ASection: String);
@@ -248,7 +247,7 @@ begin
 end;
 
 
-procedure TGeneralSettings.CorrectRanges();
+procedure TGeneralSettings.Correct();
 begin
   FMonitor := CorrectMonitor(FMonitor);
   FLeft := CorrectLeft(FLeft);
@@ -301,7 +300,7 @@ begin
   FRNG    := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_RNG,    RNG_DEFAULT);
   FLevel  := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_LEVEL,  LEVEL_DEFAULT);
 
-  CorrectRanges();
+  Correct();
 end;
 
 
