@@ -244,10 +244,10 @@ end;
 
 procedure TGame.UpdateWindow();
 begin
-  if Placement.WindowSize = WINDOW_FULLSCREEN then
-    SDL_RenderCopy(Window.Renderer, Buffers.Native, nil, @Buffers.Client)
+  if Placement.VideoEnabled or (Placement.WindowSize < WINDOW_FULLSCREEN) then
+    SDL_RenderCopy(Window.Renderer, Buffers.Native, nil, nil)
   else
-    SDL_RenderCopy(Window.Renderer, Buffers.Native, nil, nil);
+    SDL_RenderCopy(Window.Renderer, Buffers.Native, nil, @Buffers.Client);
 
   SDL_RenderPresent(Window.Renderer);
 end;
