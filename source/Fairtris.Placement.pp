@@ -203,12 +203,12 @@ begin
       FWindowClient := SDL_Rect(0, 0, FWindowBounds.W, FWindowBounds.H);
     WINDOW_FULLSCREEN:
     begin
-      NewHeight := Round(FWindowBounds.H * CLIENT_FILL_MULTIPLIER);
+      NewHeight := FWindowBounds.H;
       NewWidth := Round(NewHeight * CLIENT_RATIO_LANDSCAPE);
 
       if NewWidth > FWindowBounds.W then
       begin
-        NewWidth := Round(FWindowBounds.W * CLIENT_FILL_MULTIPLIER);
+        NewWidth := FWindowBounds.W;
         NewHeight := Round(NewWidth * CLIENT_RATIO_PORTRAIT);
       end;
 

@@ -30,8 +30,6 @@ const
   CLIENT_RATIO_LANDSCAPE = 4 / 3;
   CLIENT_RATIO_PORTRAIT  = 3 / 4;
 
-  CLIENT_FILL_MULTIPLIER = 0.99;
-
 
 const
   SCENE_LEGAL       = 0;
