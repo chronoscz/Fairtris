@@ -13,6 +13,7 @@ type
   TPlacement = class(TObject)
   private
     FInitialized: Boolean;
+    FDeflored: Boolean;
   private
     FVideoEnabled: Boolean;
     FVideoWidth: Integer;
@@ -50,6 +51,8 @@ type
     procedure ExposeWindow();
   public
     procedure ToggleVideoMode();
+  public
+    property Deflored: Boolean read FDeflored;
   public
     property VideoEnabled: Boolean read FVideoEnabled;
     property VideoWidth: Integer read FVideoWidth;
@@ -105,6 +108,8 @@ end;
 
 procedure TPlacement.Initialize();
 begin
+  FDeflored := Settings.General.Deflored;
+
   FVideoEnabled := Settings.Video.Enabled;
   FVideoWidth := Settings.Video.Width;
   FVideoHeight := Settings.Video.Height;
@@ -279,11 +284,20 @@ begin
   else
   begin
     SDL_SetWindowFullScreen(Window.Window, SDL_DISABLE);
-    SDL_SetWindowSize(Window.Window, FWindowBounds.W, FWindowBounds.H);
-    SDL_SetWindowPosition(Window.Window, FWindowBounds.X, FWindowBounds.Y);
 
-    SDL_ShowCursor(SDL_ENABLE);
-    SDL_SetWindowHitTest(Window.Window, @WindowHitTest, nil);
+    if FDeflored then
+    begin
+      SDL_SetWindowSize(Window.Window, FWindowBounds.W, FWindowBounds.H);
+      SDL_SetWindowPosition(Window.Window, FWindowBounds.X, FWindowBounds.Y);
+
+      SDL_ShowCursor(SDL_ENABLE);
+      SDL_SetWindowHitTest(Window.Window, @WindowHitTest, nil);
+    end
+    else
+    begin
+      FDeflored := True;
+      UpdateWindow();
+    end;
   end;
 end;
 

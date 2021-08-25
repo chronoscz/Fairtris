@@ -270,6 +270,8 @@ end;
 
 procedure TGeneralSettings.Collect();
 begin
+  FDeflored := Placement.Deflored;
+
   FMonitor := DetermineMonitor();
   FSize := Placement.WindowSize;
   FLeft := Placement.WindowBounds.X;
