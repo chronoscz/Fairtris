@@ -125,7 +125,10 @@ end;
 
 function TDevice.GetKey(AKeyID: UInt8): TSwitch;
 begin
-  Result := FKeys[AKeyID];
+  if AKeyID in KEYBOARD_KEY_LOCKED then
+    Result := FKeys[0]
+  else
+    Result := FKeys[AKeyID];
 end;
 
 
@@ -279,14 +282,15 @@ begin
   Result := False;
 
   for Index := KEYBOARD_SCANCODE_KEY_FIRST to KEYBOARD_SCANCODE_KEY_LAST do
-    if FDevice.Key[Index].JustPressed then
-      if not Catched then
-      begin
-        Catched := True;
-        CatchedScanCode := Index;
-      end
-      else
-        Exit;
+    if not (Index in KEYBOARD_KEY_LOCKED) then
+      if FDevice.Key[Index].JustPressed then
+        if not Catched then
+        begin
+          Catched := True;
+          CatchedScanCode := Index;
+        end
+        else
+          Exit;
 
   if Catched then
   begin
