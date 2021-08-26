@@ -57,6 +57,7 @@ var
 implementation
 
 uses
+  Fairtris.Memory,
   Fairtris.Settings,
   Fairtris.Arrays;
 
@@ -149,7 +150,7 @@ begin
   if AExclusive then
     MIX_HaltChannel(-1);
 
-  // play sound here
+  Mix_PlayChannel(SOUND_CHANNEL[ASound], FRegions[Memory.Play.Region][ASound], 0);
 end;
 
 
