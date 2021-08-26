@@ -67,7 +67,7 @@ const
 
 
 const
-  SOUND_FILENAME: array [SOUND_FIRST .. SOUND_LAST] of WideString = (
+  SOUND_FILENAME: array [SOUND_FIRST .. SOUND_LAST] of String = (
     'blip.wav',
     'start.wav',
     'shift.wav',
