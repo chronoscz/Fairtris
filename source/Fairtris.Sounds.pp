@@ -46,7 +46,6 @@ type
   public
     procedure PlaySound(ASound: Integer);
   public
-    property Region[ARegionID: Integer]: TRegionSounds read GetRegion; default;
     property Enabled: Integer read FEnabled write FEnabled;
   end;
 
