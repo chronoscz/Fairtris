@@ -5,29 +5,26 @@ unit Fairtris.Grounds;
 interface
 
 uses
-  Graphics,
+  SDL2,
   Fairtris.Constants;
 
 
 type
   TThemeGrounds = class(TObject)
   private type
-    TGrounds = array [SCENE_FIRST .. SCENE_LAST] of TBitmap;
+    TGrounds = array [SCENE_FIRST .. SCENE_LAST] of PSDL_Texture;
   private
     FGrounds: TGrounds;
     FGroundsPath: String;
   private
-    procedure InitGrounds();
-    procedure DoneGrounds();
-  private
-    function GetGround(ASceneID: Integer): TBitmap;
+    function GetGround(ASceneID: Integer): PSDL_Texture;
   public
     constructor Create(const APath: String);
     destructor Destroy(); override;
   public
     procedure Load();
   public
-    property Ground[ASceneID: Integer]: TBitmap read GetGround; default;
+    property Ground[ASceneID: Integer]: PSDL_Texture read GetGround; default;
   end;
 
 
@@ -37,9 +34,6 @@ type
     TThemes = array [THEME_FIRST .. THEME_LAST] of TThemeGrounds;
   private
     FThemes: TThemes;
-  private
-    procedure InitThemes();
-    procedure DoneThemes();
   private
     function GetTheme(AThemeID: Integer): TThemeGrounds;
   public
@@ -59,42 +53,29 @@ var
 implementation
 
 uses
+  SDL2_Image,
+  Fairtris.Window,
   Fairtris.Arrays;
 
 
 constructor TThemeGrounds.Create(const APath: String);
 begin
   FGroundsPath := APath;
-  InitGrounds();
 end;
 
 
 destructor TThemeGrounds.Destroy();
+var
+  Index: Integer;
 begin
-  DoneGrounds();
+  for Index := Low(FGrounds) to High(FGrounds) do
+    SDL_DestroyTexture(FGrounds[Index]);
+
   inherited Destroy();
 end;
 
 
-procedure TThemeGrounds.InitGrounds();
-var
-  Index: Integer;
-begin
-  for Index := Low(FGrounds) to High(FGrounds) do
-    FGrounds[Index] := TBitmap.Create();
-end;
-
-
-procedure TThemeGrounds.DoneGrounds();
-var
-  Index: Integer;
-begin
-  for Index := Low(FGrounds) to High(FGrounds) do
-    FGrounds[Index].Free();
-end;
-
-
-function TThemeGrounds.GetGround(ASceneID: Integer): TBitmap;
+function TThemeGrounds.GetGround(ASceneID: Integer): PSDL_Texture;
 begin
   Result := FGrounds[ASceneID];
 end;
@@ -105,24 +86,15 @@ var
   Index: Integer;
 begin
   for Index := Low(FGrounds) to High(FGrounds) do
-    FGrounds[Index].LoadFromFile(FGroundsPath + GROUND_FILENAME[Index]);
+  begin
+    FGrounds[Index] := IMG_LoadTexture(Window.Renderer, PChar(FGroundsPath + GROUND_FILENAME[Index]));
+
+    if FGrounds[Index] = nil then Halt();
+  end;
 end;
 
 
 constructor TGrounds.Create();
-begin
-  InitThemes();
-end;
-
-
-destructor TGrounds.Destroy();
-begin
-  DoneThemes();
-  inherited Destroy();
-end;
-
-
-procedure TGrounds.InitThemes();
 var
   Index: Integer;
 begin
@@ -131,12 +103,14 @@ begin
 end;
 
 
-procedure TGrounds.DoneThemes();
+destructor TGrounds.Destroy();
 var
   Index: Integer;
 begin
   for Index := Low(FThemes) to High(FThemes) do
     FThemes[Index].Free();
+
+  inherited Destroy();
 end;
 
 

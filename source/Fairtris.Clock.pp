@@ -5,8 +5,6 @@ unit Fairtris.Clock;
 interface
 
 uses
-  Windows,
-  MMsystem,
   Fairtris.Classes;
 
 
@@ -17,8 +15,6 @@ type
 
 type
   TClock = class(TObject)
-  private
-    FTimerPeriod: Integer;
   private
     FTicksPerSecond: Int64;
     FTicksPerFrame: Int64;
@@ -43,9 +39,6 @@ type
   private
     function GetCounterFrequency(): Int64;
     function GetCounterValue(): Int64;
-  private
-    procedure InitSystemTimerPeriod();
-    procedure DoneSystemTimerPeriod();
   private
     procedure InitCounters();
     procedure DoneCounters();
@@ -81,17 +74,18 @@ var
 implementation
 
 uses
+  SDL2,
+  Windows,
   Math,
   SysUtils,
   DateUtils,
   Fairtris.Settings,
+  Fairtris.Arrays,
   Fairtris.Constants;
 
 
 constructor TClock.Create();
 begin
-  InitSystemTimerPeriod();
-
   InitCounters();
   InitFrameRate();
   InitTicks();
@@ -100,9 +94,7 @@ end;
 
 destructor TClock.Destroy();
 begin
-  DoneSystemTimerPeriod();
   DoneCounters();
-
   inherited Destroy();
 end;
 
@@ -131,27 +123,6 @@ function TClock.GetCounterValue(): Int64;
 begin
   Result := 0;
   QueryPerformanceCounter(Result);
-end;
-
-
-procedure TClock.InitSystemTimerPeriod();
-var
-  Periods: TTimeCaps;
-begin
-  if TimeGetDevCaps(@Periods, SizeOf(Periods)) = TIMERR_NOERROR then
-  begin
-    FTimerPeriod := Periods.wPeriodMin;
-    TimeBeginPeriod(FTimerPeriod);
-  end
-  else
-    FTimerPeriod := -1;
-end;
-
-
-procedure TClock.DoneSystemTimerPeriod();
-begin
-  if FTimerPeriod <> -1 then
-    TimeEndPeriod(FTimerPeriod);
 end;
 
 
@@ -215,7 +186,7 @@ end;
 
 procedure TClock.Initialize();
 begin
-  SetFrameRateLimit(Settings.General.FrameRate);
+  SetFrameRateLimit(CLOCK_FRAMERATE_LIMIT[Settings.General.Region]);
 end;
 
 
@@ -237,9 +208,14 @@ end;
 
 
 procedure TClock.UpdateFrameAlign();
+var
+  SleepTime: Single;
 begin
-  while GetCounterValue() < FFrameTicksNext - FTicksPerFrame do
-    Sleep(1);
+  SleepTime := 1000 / FFrameRateLimit * (1 - (FFrameTicksEnd - FFrameTicksBegin) / FTicksPerFrame) - 1;
+  SleepTime -= Ord(Round(SleepTime) > SleepTime);
+  SleepTime := Max(SleepTime, 0);
+
+  SDL_Delay(Round(SleepTime));
 
   while GetCounterValue() < FFrameTicksNext do
   asm

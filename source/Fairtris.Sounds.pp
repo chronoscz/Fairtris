@@ -4,36 +4,48 @@ unit Fairtris.Sounds;
 
 interface
 
+uses
+  SDL2_Mixer,
+  Fairtris.Constants;
+
+
+type
+  TRegionSounds = class(TObject)
+  private type
+    TSounds = array [SOUND_FIRST .. SOUND_LAST] of PMix_Chunk;
+  private
+    FSounds: TSounds;
+    FSoundsPath: String;
+  private
+    function GetSound(ASoundID: Integer): PMix_Chunk;
+  public
+    constructor Create(const APath: String);
+    destructor Destroy(); override;
+  public
+    procedure Load();
+  public
+    property Sound[ASoundID: Integer]: PMix_Chunk read GetSound; default;
+  end;
+
 
 type
   TSounds = class(TObject)
+  private type
+    TRegions = array [SOUND_REGION_FIRST .. SOUND_REGION_LAST] of TRegionSounds;
   private
-    FSound: Integer;
-  private
-    FInGame: Boolean;
+    FRegions: TRegions;
     FEnabled: Integer;
   private
-    FTimeExecute: TDateTime;
-    FTimeExpired: TDateTime;
-  private
-    FStillPlaying: Boolean;
-  private
-    function GetSoundLength(): Integer;
-    function GetSoundPath(): WideString;
-  private
-    function CanPlaySound(ASound: Integer): Boolean;
-  private
-    procedure UpdateSound(ASound: Integer);
-    procedure ExecuteSound();
+    function GetRegion(ARegionID: Integer): TRegionSounds;
+  public
+    constructor Create();
+    destructor Destroy(); override;
   public
     procedure Initilize();
+    procedure Load();
   public
-    procedure Update();
-    procedure Reset();
+    procedure PlaySound(ASound: Integer; ANeedAttention: Boolean = False);
   public
-    procedure PlaySound(ASound: Integer);
-  public
-    property InGame: Boolean read FInGame write FInGame;
     property Enabled: Integer read FEnabled write FEnabled;
   end;
 
@@ -45,59 +57,73 @@ var
 implementation
 
 uses
-  MMSystem,
-  SysUtils,
-  DateUtils,
   Fairtris.Memory,
   Fairtris.Settings,
-  Fairtris.Arrays,
-  Fairtris.Constants;
+  Fairtris.Arrays;
 
 
-function TSounds.GetSoundLength(): Integer;
+constructor TRegionSounds.Create(const APath: String);
 begin
-  case Memory.Play.Region of
-    REGION_NTSC, REGION_NTSC_EXTENDED: Result := SOUND_LENGTH_NTSC[FSound];
-    REGION_PAL,  REGION_PAL_EXTENDED:  Result := SOUND_LENGTH_PAL[FSound];
-    REGION_EUR,  REGION_EUR_EXTENDED:  Result := SOUND_LENGTH_EUR[FSound];
-  otherwise
-    Result := 0;
+  FSoundsPath := APath;
+end;
+
+
+destructor TRegionSounds.Destroy();
+var
+  Index: Integer;
+begin
+  for Index := Low(FSounds) to High(FSounds) do
+    Mix_FreeChunk(FSounds[Index]);
+
+  inherited Destroy();
+end;
+
+
+function TRegionSounds.GetSound(ASoundID: Integer): PMix_Chunk;
+begin
+  Result := FSounds[ASoundID];
+end;
+
+
+procedure TRegionSounds.Load();
+var
+  Index: Integer;
+begin
+  for Index := Low(FSounds) to High(FSounds) do
+  begin
+    FSounds[Index] := Mix_LoadWAV(PChar(FSoundsPath + SOUND_FILENAME[Index]));
+
+    if FSounds[Index] = nil then Halt();
   end;
 end;
 
 
-function TSounds.GetSoundPath(): WideString;
-begin
-  Result := SOUND_PATH[Memory.Play.Region] + SOUND_FILENAME[FSound];
-end;
-
-
-function TSounds.CanPlaySound(ASound: Integer): Boolean;
-begin
-  if FStillPlaying then
-    Result := SOUND_PRIORITY[FInGame, ASound] >= SOUND_PRIORITY[FInGame, FSound]
-  else
-    Result := True;
-end;
-
-
-procedure TSounds.UpdateSound(ASound: Integer);
-begin
-  FSound := ASound;
-
-  FTimeExecute := Now();
-  FTimeExpired := IncMilliSecond(FTimeExecute, GetSoundLength());
-
-  FStillPlaying := True;
-end;
-
-
-procedure TSounds.ExecuteSound();
+constructor TSounds.Create();
 var
-  SoundPath: WideString;
+  Index: Integer;
 begin
-  SoundPath := GetSoundPath();
-  PlaySoundW(PWideChar(SoundPath), 0, SND_FILENAME or SND_ASYNC or SND_NODEFAULT);
+  for Index := Low(FRegions) to High(FRegions) do
+    FRegions[Index] := TRegionSounds.Create(SOUND_PATH[Index]);
+end;
+
+
+destructor TSounds.Destroy();
+var
+  Index: Integer;
+begin
+  for Index := Low(FRegions) to High(FRegions) do
+    FRegions[Index].Free();
+
+  inherited Destroy();
+end;
+
+
+function TSounds.GetRegion(ARegionID: Integer): TRegionSounds;
+begin
+  case ARegionID of
+    REGION_NTSC, REGION_NTSC_EXTENDED, REGION_JPN, REGION_JPN_EXTENDED: Result := FRegions[SOUND_REGION_NTSC];
+    REGION_PAL,  REGION_PAL_EXTENDED,  REGION_EUR, REGION_EUR_EXTENDED: Result := FRegions[SOUND_REGION_PAL];
+  end;
 end;
 
 
@@ -107,36 +133,24 @@ begin
 end;
 
 
-procedure TSounds.Update();
+procedure TSounds.Load();
+var
+  Index: Integer;
 begin
-  FStillPlaying := (FSound <> SOUND_UNKNOWN) and (Now() < FTimeExpired);
-
-  if not FStillPlaying then
-    Reset();
+  for Index := Low(FRegions) to High(FRegions) do
+    FRegions[Index].Load();
 end;
 
 
-procedure TSounds.Reset();
+procedure TSounds.PlaySound(ASound: Integer; ANeedAttention: Boolean);
 begin
-  FSound := SOUND_UNKNOWN;
-
-  FTimeExecute := Default(TDateTime);
-  FTimeExpired := Default(TDateTime);
-
-  FStillPlaying := False;
-end;
-
-
-procedure TSounds.PlaySound(ASound: Integer);
-begin
-  if FEnabled = SOUNDS_DISABLED then Exit;
   if ASound = SOUND_UNKNOWN then Exit;
+  if FEnabled = SOUNDS_DISABLED then Exit;
 
-  if CanPlaySound(ASound) then
-  begin
-    UpdateSound(ASound);
-    ExecuteSound();
-  end;
+  if ANeedAttention then
+    Mix_HaltChannel(-1);
+
+  Mix_PlayChannel(SOUND_CHANNEL[ASound], FRegions[SOUND_REGION[Memory.Play.Region]][ASound], 0);
 end;
 
 

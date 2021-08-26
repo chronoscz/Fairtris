@@ -128,9 +128,10 @@ var
 implementation
 
 uses
+  SDL2,
   Windows,
   Math,
-  Forms,
+  Fairtris.Window,
   Fairtris.Clock,
   Fairtris.Buffers,
   Fairtris.Input,
@@ -183,7 +184,7 @@ begin
   Sounds.PlaySound(SOUND_START);
 
   ShellExecute(0, 'open', 'https://github.com/furious-programming/fairtris', nil, nil, SW_SHOWNORMAL);
-  Application.Minimize();
+  SDL_MinimizeWindow(Window.Window);
 end;
 
 
@@ -195,7 +196,7 @@ begin
   Memory.Options.Input := INPUT_KEYBOARD;
 
   PrepareKeyboardScanCodes();
-  Sounds.PlaySound(SOUND_TRANSITION);
+  Sounds.PlaySound(SOUND_TRANSITION, True);
 end;
 
 
@@ -377,11 +378,18 @@ end;
 
 
 procedure TLogic.PrepareQuit();
+var
+  OldTarget: PSDL_Texture;
 begin
   if not FScene.Changed then Exit;
 
-  Memory.Quit.Buffer.Canvas.Draw(0, 0, Buffers.Native);
-  Memory.Quit.Buffer.Canvas.Draw(0, 0, Grounds[Memory.Options.Theme][SCENE_QUIT]);
+  OldTarget := SDL_GetRenderTarget(Window.Renderer);
+  SDL_SetRenderTarget(Window.Renderer, Memory.Quit.Buffer);
+
+  SDL_RenderCopy(Window.Renderer, Buffers.Native, nil, nil);
+  SDL_RenderCopy(Window.Renderer, Grounds[Memory.Options.Theme][SCENE_QUIT], nil, nil);
+
+  SDL_SetRenderTarget(Window.Renderer, OldTarget);
 end;
 
 
@@ -431,7 +439,7 @@ begin
     if Memory.Menu.ItemIndex <> ITEM_MENU_QUIT then
       Sounds.PlaySound(SOUND_START)
     else
-      Sounds.PlaySound(SOUND_GLASS);
+      Sounds.PlaySound(SOUND_GLASS, True);
 
     if Memory.Menu.ItemIndex = ITEM_MENU_HELP then
       HelpUnderstand();
@@ -604,7 +612,7 @@ begin
     if not Input.Device.Connected or Input.Device.Start.JustPressed then
     begin
       FScene.Current := SCENE_PAUSE;
-      Sounds.PlaySound(SOUND_PAUSE);
+      Sounds.PlaySound(SOUND_PAUSE, True);
     end;
 end;
 
@@ -762,23 +770,23 @@ end;
 
 procedure TLogic.UpdateOptionsWindow();
 begin
-  Memory.Options.Window := Placement.WindowSize;
+  Memory.Options.Size := Placement.WindowSize;
 
   if Memory.Options.ItemIndex <> ITEM_OPTIONS_WINDOW then Exit;
 
   if Input.Device.Left.JustPressed or Input.Keyboard.Left.JustPressed then
   begin
-    UpdateItemIndex(Memory.Options.Window, WINDOW_COUNT, ITEM_PREV);
+    UpdateItemIndex(Memory.Options.Size, WINDOW_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if Input.Device.Right.JustPressed or Input.Keyboard.Right.JustPressed then
   begin
-    UpdateItemIndex(Memory.Options.Window, WINDOW_COUNT, ITEM_NEXT);
+    UpdateItemIndex(Memory.Options.Size, WINDOW_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
-  Placement.WindowSize := Memory.Options.Window;
+  Placement.WindowSize := Memory.Options.Size;
 end;
 
 
@@ -839,8 +847,6 @@ begin
     UpdateItemIndex(Memory.Options.Scroll, SCROLL_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
-
-  Placement.Scroll := Memory.Options.Scroll;
 end;
 
 
@@ -926,7 +932,7 @@ begin
       Input.Keyboard.Restore();
       PrepareKeyboardScanCodes();
 
-      Sounds.PlaySound(SOUND_TOP_OUT);
+      Sounds.PlaySound(SOUND_TOP_OUT, True);
     end;
   end;
 end;
@@ -1030,7 +1036,7 @@ begin
           Input.Keyboard.Introduce();
 
           FScene.Current := SCENE_OPTIONS;
-          Sounds.PlaySound(SOUND_TETRIS);
+          Sounds.PlaySound(SOUND_TETRIS, True);
         end
         else
           Sounds.PlaySound(SOUND_DROP);
@@ -1079,7 +1085,7 @@ begin
       Input.Controller.Restore();
       PrepareControllerScanCodes();
 
-      Sounds.PlaySound(SOUND_TOP_OUT);
+      Sounds.PlaySound(SOUND_TOP_OUT, True);
     end;
   end;
 end;
@@ -1173,7 +1179,7 @@ begin
     Memory.Controller.Changing := False;
     Memory.Controller.SettingUp := False;
 
-    Sounds.PlaySound(SOUND_TOP_OUT);
+    Sounds.PlaySound(SOUND_TOP_OUT, True);
     Exit;
   end;
 
@@ -1194,7 +1200,7 @@ begin
           Input.Controller.Introduce();
 
           FScene.Current := SCENE_OPTIONS;
-          Sounds.PlaySound(SOUND_TETRIS);
+          Sounds.PlaySound(SOUND_TETRIS, True);
         end
         else
           Sounds.PlaySound(SOUND_DROP);
@@ -1226,8 +1232,6 @@ end;
 
 procedure TLogic.UpdateCommon();
 begin
-  Sounds.InGame := FScene.Current in [SCENE_GAME_NORMAL, SCENE_GAME_FLASH];
-
   if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_HELP_UNDERSTAND].JustPressed then
     HelpUnderstand();
 
@@ -1236,6 +1240,9 @@ begin
 
   if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_TOGGLE_CLIP].JustPressed then
     Renderers.ClipFrame := not Renderers.ClipFrame;
+
+  if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_TOGGLE_VIDEO].JustPressed then
+    Placement.ToggleVideoMode();
 
   if not Memory.Game.Started then
     Generators.Shuffle();
@@ -1370,7 +1377,7 @@ begin
   if FScene.Current <> SCENE_QUIT then
   begin
     FScene.Current := SCENE_QUIT;
-    Sounds.PlaySound(SOUND_GLASS);
+    Sounds.PlaySound(SOUND_GLASS, True);
   end;
 end;
 

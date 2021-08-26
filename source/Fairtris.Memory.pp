@@ -5,7 +5,7 @@ unit Fairtris.Memory;
 interface
 
 uses
-  Graphics,
+  SDL2,
   Fairtris.Constants;
 
 
@@ -147,7 +147,7 @@ type
     FromScene: Integer;
   public
     Input: Integer;
-    Window: Integer;
+    Size: Integer;
     Theme: Integer;
     Sounds: Integer;
     Scroll: Integer;
@@ -199,7 +199,7 @@ type
     procedure Initialize();
   public
     FrameIndex: Integer;
-    Buffer: TBitmap;
+    Buffer: PSDL_Texture;
   end;
 
 
@@ -242,6 +242,7 @@ var
 implementation
 
 uses
+  Fairtris.Window,
   Fairtris.Settings;
 
 
@@ -345,7 +346,7 @@ begin
   FromScene := SCENE_MENU;
 
   Input := Settings.General.Input;
-  Window := Settings.General.Window;
+  Size := Settings.General.Size;
   Theme := Settings.General.Theme;
   Sounds := Settings.General.Sounds;
   Scroll := Settings.General.Scroll;
@@ -414,15 +415,13 @@ end;
 
 constructor TQuitMemory.Create();
 begin
-  Buffer := TBitmap.Create();
-  Buffer.PixelFormat := pf24bit;
-  Buffer.SetSize(BUFFER_WIDTH, BUFFER_HEIGHT);
+  Buffer := SDL_CreateTexture(Window.Renderer, SDL_PIXELFORMAT_BGR24, SDL_TEXTUREACCESS_TARGET, BUFFER_WIDTH, BUFFER_HEIGHT);
 end;
 
 
 destructor TQuitMemory.Destroy();
 begin
-  Buffer.Free();
+  SDL_DestroyTexture(Buffer);
   inherited Destroy();
 end;
 

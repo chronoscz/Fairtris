@@ -8,15 +8,21 @@ interface
 type
   TGame = class(TObject)
   private
+    procedure CreateSystem();
+    procedure CreateObjects();
+  private
+    procedure DestroySystem();
+    procedure DestroyObjects();
+  private
     procedure Initialize();
     procedure Finalize();
   private
     procedure OpenFrame();
     procedure CloseFrame();
   private
+    procedure UpdateQueue();
     procedure UpdateInput();
     procedure UpdateLogic();
-    procedure UpdateSounds();
     procedure UpdateBuffer();
     procedure UpdateWindow();
     procedure UpdateTaskBar();
@@ -25,8 +31,6 @@ type
     destructor Destroy(); override;
   public
     procedure Run();
-    procedure Start();
-    procedure Stop();
   end;
 
 
@@ -37,8 +41,8 @@ var
 implementation
 
 uses
-  Windows,
-  Forms,
+  SDL2,
+  SDL2_Mixer,
   SysUtils,
   Fairtris.Window,
   Fairtris.Taskbar,
@@ -48,9 +52,9 @@ uses
   Fairtris.Memory,
   Fairtris.Placement,
   Fairtris.Renderers,
+  Fairtris.Sounds,
   Fairtris.Grounds,
   Fairtris.Sprites,
-  Fairtris.Sounds,
   Fairtris.Settings,
   Fairtris.BestScores,
   Fairtris.Generators,
@@ -60,8 +64,19 @@ uses
   Fairtris.Constants;
 
 
-constructor TGame.Create();
+procedure TGame.CreateSystem();
 begin
+  SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, '0');
+  SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 'linear');
+
+  if SDL_Init(SDL_INIT_EVERYTHING) < 0 then Halt();
+  if Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, SOUND_CHANNELS_COUNT, 1024) < 0 then Halt();
+end;
+
+
+procedure TGame.CreateObjects();
+begin
+  Window := TWindow.Create();
   Taskbar := TTaskbar.Create();
 
   Clock := TClock.Create();
@@ -70,9 +85,9 @@ begin
   Placement := TPlacement.Create();
   Renderers := TRenderers.Create();
 
+  Sounds := TSounds.Create();
   Grounds := TGrounds.Create();
   Sprites := TSprites.Create();
-  Sounds := TSounds.Create();
   Settings := TSettings.Create();
   BestScores := TBestScores.Create();
 
@@ -84,8 +99,16 @@ begin
 end;
 
 
-destructor TGame.Destroy();
+procedure TGame.DestroySystem();
 begin
+  Mix_CloseAudio();
+  SDL_Quit();
+end;
+
+
+procedure TGame.DestroyObjects();
+begin
+  Window.Free();
   Taskbar.Free();
 
   Clock.Free();
@@ -94,9 +117,9 @@ begin
   Placement.Free();
   Renderers.Free();
 
+  Sounds.Free();
   Grounds.Free();
   Sprites.Free();
-  Sounds.Free();
   Settings.Free();
   BestScores.Free();
 
@@ -105,23 +128,28 @@ begin
   Core.Free();
   Memory.Free();
   Converter.Free();
+end;
+
+
+constructor TGame.Create();
+begin
+  CreateSystem();
+  CreateObjects();
+end;
+
+
+destructor TGame.Destroy();
+begin
+  DestroyObjects();
+  DestroySystem();
 
   inherited Destroy();
 end;
 
 
-procedure TGame.Run();
-begin
-  RequireDerivedFormResource := True;
-
-  Application.Initialize();
-  Application.CreateForm(TGameForm, GameForm);
-  Application.Run();
-end;
-
-
 procedure TGame.Initialize();
 begin
+  Sounds.Load();
   Grounds.Load();
   Sprites.Load();
   Settings.Load();
@@ -143,8 +171,6 @@ procedure TGame.Finalize();
 begin
   Settings.Save();
   BestScores.Save();
-
-  GameForm.Close();
 end;
 
 
@@ -161,14 +187,34 @@ begin
 end;
 
 
+procedure TGame.UpdateQueue();
+var
+  Event: TSDL_Event;
+begin
+  SDL_PumpEvents();
+
+  while SDL_PollEvent(@Event) = 1 do
+  case Event.Type_ of
+    SDL_MOUSEWHEEL:
+      if Memory.Options.Scroll = SCROLL_ENABLED then
+      begin
+        if Event.Wheel.Y < 0 then Placement.ReduceWindow();
+        if Event.Wheel.Y > 0 then Placement.EnlargeWindow();
+      end;
+    SDL_JOYDEVICEADDED:   Input.Controller.Attach();
+    SDL_JOYDEVICEREMOVED: Input.Controller.Detach();
+    SDL_QUITEV:
+      Logic.Stop();
+  end;
+end;
+
+
 procedure TGame.UpdateInput();
 begin
-  Input.Controller.Update();
-
-  if (GetForegroundWindow() = GameForm.Handle) and (GetActiveWindow() = GameForm.Handle) then
-    Input.Keyboard.Update()
+  if Window.Focused then
+    Input.Update()
   else
-    Input.Keyboard.Reset();
+    Input.Reset();
 end;
 
 
@@ -177,51 +223,44 @@ begin
   Logic.Update();
 
   if Logic.Scene.Current = SCENE_STOP then
-    Stop();
-end;
-
-
-procedure TGame.UpdateSounds();
-begin
-  Sounds.Update();
+    Logic.Stop();
 end;
 
 
 procedure TGame.UpdateBuffer();
 begin
-  if not Logic.Stopped then
-    Renderers.Theme.RenderScene(Logic.Scene.Current);
+  Renderers.Theme.RenderScene(Logic.Scene.Current);
 end;
 
 
 procedure TGame.UpdateWindow();
 begin
-  if not Logic.Stopped then
-  begin
-    GameForm.Invalidate();
-    Application.ProcessMessages();
-  end;
+  if Placement.VideoEnabled or (Placement.WindowSize < WINDOW_FULLSCREEN) then
+    SDL_RenderCopy(Window.Renderer, Buffers.Native, nil, nil)
+  else
+    SDL_RenderCopy(Window.Renderer, Buffers.Native, nil, @Buffers.Client);
+
+  SDL_RenderPresent(Window.Renderer);
 end;
 
 
 procedure TGame.UpdateTaskBar();
 begin
-  if not Logic.Stopped then
-    Taskbar.Update();
+  Taskbar.Update();
 end;
 
 
-procedure TGame.Start();
+procedure TGame.Run();
 begin
   Initialize();
 
   repeat
     OpenFrame();
+      UpdateQueue();
       UpdateInput();
       UpdateLogic();
-      UpdateSounds();
 
-      if not Logic.Scene.Changed then
+      if not Logic.Scene.Changed and not Logic.Stopped then
       begin
         UpdateBuffer();
         UpdateWindow();
@@ -231,12 +270,6 @@ begin
   until Logic.Stopped;
 
   Finalize();
-end;
-
-
-procedure TGame.Stop();
-begin
-  Logic.Stop();
 end;
 
 

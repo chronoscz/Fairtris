@@ -5,94 +5,66 @@ unit Fairtris.Window;
 interface
 
 uses
-  Forms,
-  Classes,
-  Controls;
+  SDL2,
+  SysUtils;
 
 
 type
-  TGameForm = class(TForm)
-    procedure FormShow(ASender: TObject);
-    procedure FormPaint(ASender: TObject);
-    procedure FormClose(ASender: TObject; var ACloseAction: TCloseAction);
-    procedure FormMouseDown(ASender: TObject; AButton: TMouseButton; AShift: TShiftState; AX, AY: Integer);
-    procedure FormMouseWheelUp(ASender: TObject; AShift: TShiftState; AMousePos: TPoint; var AHandled: Boolean);
-    procedure FormMouseWheelDown(ASender: TObject; AShift: TShiftState; AMousePos: TPoint; var AHandled: Boolean);
+  TWindow = class(TObject)
+  private
+    FHandle: THandle;
+    FWindow: PSDL_Window;
+    FRenderer: PSDL_Renderer;
+  private
+    function GetFocused(): Boolean;
+  public
+    constructor Create();
+    destructor Destroy(); override;
+  public
+    property Window: PSDL_Window read FWindow;
+    property Renderer: PSDL_Renderer read FRenderer;
+  public
+    property Handle: THandle read FHandle;
+    property Focused: Boolean read GetFocused;
   end;
 
 
 var
-  GameForm: TGameForm;
+  Window: TWindow;
 
 
 implementation
 
-{$RESOURCE Fairtris.Window.lfm}
 
-uses
-  Windows,
-  Messages,
-  Graphics,
-  Fairtris.Game,
-  Fairtris.Buffers,
-  Fairtris.Placement,
-  Fairtris.Arrays,
-  Fairtris.Constants;
-
-
-procedure TGameForm.FormShow(ASender: TObject);
+constructor TWindow.Create();
+var
+  SysInfo: TSDL_SysWMInfo;
 begin
-  ShowWindow(Handle, SW_SHOWNORMAL);
-  Game.Start();
+  FWindow := SDL_CreateWindow('Fairtris', SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 0, 0, SDL_WINDOW_BORDERLESS);
+  if FWindow = nil then Halt();
+
+  FRenderer := SDL_CreateRenderer(FWindow, -1, SDL_RENDERER_ACCELERATED or SDL_RENDERER_TARGETTEXTURE);
+  if FRenderer = nil then Halt();
+
+  SDL_Version(SysInfo.Version);
+  SDL_GetWindowWMInfo(FWindow, @SysInfo);
+
+  FHandle := SysInfo.Win.Window;
 end;
 
 
-procedure TGameForm.FormPaint(ASender: TObject);
+destructor TWindow.Destroy();
 begin
-  case Placement.WindowSize of
-    WINDOW_NATIVE:
-      Canvas.Draw(0, 0, Buffers.Native);
-    WINDOW_ZOOM_2X, WINDOW_ZOOM_3X, WINDOW_ZOOM_4X:
-      Canvas.StretchDraw(ClientRect, Buffers.Native);
-    WINDOW_FULLSCREEN:
-      Canvas.StretchDraw(Buffers.Client, Buffers.Native);
-  end;
+  SDL_DestroyWindow(FWindow);
+  SDL_DestroyRenderer(FRenderer);
+
+  inherited Destroy();
 end;
 
 
-procedure TGameForm.FormClose(ASender: TObject; var ACloseAction: TCloseAction);
+function TWindow.GetFocused(): Boolean;
 begin
-  Game.Stop();
-end;
-
-
-procedure TGameForm.FormMouseDown(ASender: TObject; AButton: TMouseButton; AShift: TShiftState; AX, AY: Integer);
-begin
-  if Placement.FullScreen then Exit;
-
-  if (AShift = [ssLeft]) and (AButton = mbLeft) then
-  begin
-    ReleaseCapture();
-    SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
-  end;
-end;
-
-
-procedure TGameForm.FormMouseWheelUp(ASender: TObject; AShift: TShiftState; AMousePos: TPoint; var AHandled: Boolean);
-begin
-  if AShift = [] then
-    Placement.Enlarge();
-
-  AHandled := True;
-end;
-
-
-procedure TGameForm.FormMouseWheelDown(ASender: TObject; AShift: TShiftState; AMousePos: TPoint; var AHandled: Boolean);
-begin
-  if AShift = [] then
-    Placement.Reduce();
-
-  AHandled := True;
+  Result := SDL_GetWindowFlags(Window) and SDL_WINDOW_INPUT_FOCUS = SDL_WINDOW_INPUT_FOCUS;
 end;
 
 

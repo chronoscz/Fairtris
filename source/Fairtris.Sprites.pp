@@ -5,34 +5,30 @@ unit Fairtris.Sprites;
 interface
 
 uses
-  Graphics,
+  SDL2,
   Fairtris.Constants;
 
 
 type
   TSprites = class(TObject)
   private type
-    TCollections = array [SPRITE_FIRST .. SPRITE_LAST] of TBitmap;
+    TCollections = array [SPRITE_FIRST .. SPRITE_LAST] of PSDL_Texture;
   private
     FCollections: TCollections;
   private
-    procedure InitCollections();
-    procedure DoneCollections();
-  private
-    function GetCollection(ACollectionID: Integer): TBitmap;
+    function GetCollection(ACollectionID: Integer): PSDL_Texture;
   public
-    constructor Create();
     destructor Destroy(); override;
   public
     procedure Load();
   public
-    property Collection[ACollectionID: Integer]: TBitmap read GetCollection; default;
+    property Collection[ACollectionID: Integer]: PSDL_Texture read GetCollection; default;
   public
-    property Charset: TBitmap index SPRITE_CHARSET read GetCollection;
-    property Bricks: TBitmap index SPRITE_BRICKS read GetCollection;
-    property Pieces: TBitmap index SPRITE_PIECES read GetCollection;
-    property Miniatures: TBitmap index SPRITE_MINIATURES read GetCollection;
-    property Controller: TBitmap index SPRITE_CONTROLLER read GetCollection;
+    property Charset: PSDL_Texture index SPRITE_CHARSET read GetCollection;
+    property Bricks: PSDL_Texture index SPRITE_BRICKS read GetCollection;
+    property Pieces: PSDL_Texture index SPRITE_PIECES read GetCollection;
+    property Miniatures: PSDL_Texture index SPRITE_MINIATURES read GetCollection;
+    property Controller: PSDL_Texture index SPRITE_CONTROLLER read GetCollection;
   end;
 
 
@@ -43,41 +39,23 @@ var
 implementation
 
 uses
+  SDL2_Image,
+  Fairtris.Window,
   Fairtris.Arrays;
 
 
-constructor TSprites.Create();
-begin
-  InitCollections();
-end;
-
-
 destructor TSprites.Destroy();
+var
+  Index: Integer;
 begin
-  DoneCollections();
+  for Index := Low(FCollections) to High(FCollections) do
+    SDL_DestroyTexture(FCollections[Index]);
+
   inherited Destroy();
 end;
 
 
-procedure TSprites.InitCollections();
-var
-  Index: Integer;
-begin
-  for Index := Low(FCollections) to High(FCollections) do
-    FCollections[Index] := TBitmap.Create();
-end;
-
-
-procedure TSprites.DoneCollections();
-var
-  Index: Integer;
-begin
-  for Index := Low(FCollections) to High(FCollections) do
-    FCollections[Index].Free();
-end;
-
-
-function TSprites.GetCollection(ACollectionID: Integer): TBitmap;
+function TSprites.GetCollection(ACollectionID: Integer): PSDL_Texture;
 begin
   Result := FCollections[ACollectionID];
 end;
@@ -88,7 +66,11 @@ var
   Index: Integer;
 begin
   for Index := Low(FCollections) to High(FCollections) do
-    FCollections[Index].LoadFromFile(SPRITE_PATH + SPRITE_FILENAME[Index]);
+  begin
+    FCollections[Index] := IMG_LoadTexture(Window.Renderer, PChar(SPRITE_PATH + SPRITE_FILENAME[Index]));
+
+    if FCollections[Index] = nil then Halt();
+  end;
 end;
 
 

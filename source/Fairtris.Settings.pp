@@ -17,16 +17,34 @@ type
 
 
 type
+  TVideoSettings = class(TCustomSettings)
+  private
+    FEnabled: Boolean;
+    FWidth: Integer;
+    FHeight: Integer;
+  private
+    procedure Collect();
+  public
+    procedure Load(AFile: TIniFile; const ASection: String);
+    procedure Save(AFile: TIniFile; const ASection: String);
+  public
+    property Enabled: Boolean read FEnabled;
+    property Width: Integer read FWidth;
+    property Height: Integer read FHeight;
+  end;
+
+
+type
   TGeneralSettings = class(TCustomSettings)
   private
-    FFrameRate: Integer;
+    FDeflored: Boolean;
   private
     FMonitor: Integer;
     FLeft: Integer;
     FTop: Integer;
   private
     FInput: Integer;
-    FWindow: Integer;
+    FSize: Integer;
     FTheme: Integer;
     FSounds: Integer;
     FScroll: Integer;
@@ -35,29 +53,27 @@ type
     FRNG: Integer;
     FLevel: Integer;
   private
-    function CorrectFrameRate(AValue: Integer): Integer;
     function CorrectMonitor(AValue: Integer): Integer;
     function CorrectLeft(AValue: Integer): Integer;
     function CorrectTop(AValue: Integer): Integer;
     function CorrectLevel(AValue: Integer): Integer;
   private
-    function DetermineMonitor(AHandle: THandle): Integer;
+    function DetermineMonitor(): Integer;
   private
-    procedure CorrectRanges();
-  public
+    procedure Correct();
     procedure Collect();
   public
     procedure Load(AFile: TIniFile; const ASection: String);
     procedure Save(AFile: TIniFile; const ASection: String);
   public
-    property FrameRate: Integer read FFrameRate;
+    property Deflored: Boolean read FDeflored;
   public
     property Monitor: Integer read FMonitor;
     property Left: Integer read FLeft;
     property Top: Integer read FTop;
   public
     property Input: Integer read FInput;
-    property Window: Integer read FWindow;
+    property Size: Integer read FSize;
     property Theme: Integer read FTheme;
     property Sounds: Integer read FSounds;
     property Scroll: Integer read FScroll;
@@ -72,10 +88,10 @@ type
   TMappingSettings = class(TCustomSettings)
   private
     FDeviceID: Integer;
+  private
+    procedure Collect();
   public
     constructor Create(ADeviceID: Integer);
-  public
-    procedure Collect();
   public
     procedure Load(AFile: TIniFile; const ASection: String); virtual; abstract;
     procedure Save(AFile: TIniFile; const ASection: String);
@@ -104,6 +120,7 @@ type
     FSettingsFile: TMemIniFile;
   private
     FGeneral: TGeneralSettings;
+    FVideo: TVideoSettings;
     FKeyboard: TKeyboardSettings;
     FController: TControllerSettings;
   public
@@ -113,6 +130,7 @@ type
     procedure Load();
     procedure Save();
   public
+    property Video: TVideoSettings read FVideo;
     property General: TGeneralSettings read FGeneral;
     property Keyboard: TKeyboardSettings read FKeyboard;
     property Controller: TControllerSettings read FController;
@@ -126,9 +144,8 @@ var
 implementation
 
 uses
-  Forms,
+  SDL2,
   Fairtris.Window,
-  Fairtris.Clock,
   Fairtris.Input,
   Fairtris.Memory,
   Fairtris.Placement,
@@ -144,12 +161,30 @@ begin
 end;
 
 
-function TGeneralSettings.CorrectFrameRate(AValue: Integer): Integer;
+procedure TVideoSettings.Collect();
 begin
-  Result := AValue;
+  FEnabled := Placement.VideoEnabled;
 
-  if not (Result in [CLOCK_FRAMERATE_NTSC, CLOCK_FRAMERATE_PAL]) then
-    Result := CLOCK_FRAMERATE_NTSC;
+  FWidth := Placement.VideoWidth;
+  FHeight := Placement.VideoHeight;
+end;
+
+
+procedure TVideoSettings.Load(AFile: TIniFile; const ASection: String);
+begin
+  FEnabled := AFile.ReadBool(ASection, SETTINGS_KEY_VIDEO_ENABLED, SETTINGS_VALUE_VIDEO_ENABLED);
+
+  FWidth  := AFile.ReadInteger(ASection, SETTINGS_KEY_VIDEO_WIDTH,  SETTINGS_VALUE_VIDEO_WIDTH);
+  FHeight := AFile.ReadInteger(ASection, SETTINGS_KEY_VIDEO_HEIGHT, SETTINGS_VALUE_VIDEO_HEIGHT);
+end;
+
+
+procedure TVideoSettings.Save(AFile: TIniFile; const ASection: String);
+begin
+  AFile.WriteBool(ASection, SETTINGS_KEY_VIDEO_ENABLED, FEnabled);
+
+  AFile.WriteInteger(ASection, SETTINGS_KEY_VIDEO_WIDTH,  FWidth);
+  AFile.WriteInteger(ASection, SETTINGS_KEY_VIDEO_HEIGHT, FHeight);
 end;
 
 
@@ -157,26 +192,40 @@ function TGeneralSettings.CorrectMonitor(AValue: Integer): Integer;
 begin
   Result := AValue;
 
-  if (Result < 0) or (Result > Screen.MonitorCount - 1) then
+  if (Result < 0) or (Result > SDL_GetNumVideoDisplays() - 1) then
     Result := MONITOR_DEFAULT;
 end;
 
 
 function TGeneralSettings.CorrectLeft(AValue: Integer): Integer;
+var
+  MonitorBounds: TSDL_Rect;
 begin
   Result := AValue;
 
-  if Result < Screen.Monitors[FMonitor].BoundsRect.Left then Exit(0);
-  if Result > Screen.Monitors[FMonitor].BoundsRect.Right - BUFFER_WIDTH then Exit(0);
+  if SDL_GetDisplayBounds(FMonitor, @MonitorBounds) = 0 then
+  begin
+    if Result < MonitorBounds.X then Exit(0);
+    if Result > MonitorBounds.X + MonitorBounds.W - BUFFER_WIDTH then Exit(0);
+  end
+  else
+    Result := 0;
 end;
 
 
 function TGeneralSettings.CorrectTop(AValue: Integer): Integer;
+var
+  MonitorBounds: TSDL_Rect;
 begin
   Result := AValue;
 
-  if Result < Screen.Monitors[FMonitor].BoundsRect.Top then Exit(0);
-  if Result > Screen.Monitors[FMonitor].BoundsRect.Bottom - BUFFER_HEIGHT then Exit(0);
+  if SDL_GetDisplayBounds(FMonitor, @MonitorBounds) = 0 then
+  begin
+    if Result < MonitorBounds.Y then Exit(0);
+    if Result > MonitorBounds.Y + MonitorBounds.H - BUFFER_HEIGHT then Exit(0);
+  end
+  else
+    Result := 0;
 end;
 
 
@@ -195,30 +244,20 @@ begin
 end;
 
 
-function TGeneralSettings.DetermineMonitor(AHandle: THandle): Integer;
-var
-  Occupied: TMonitor;
-  Index: Integer;
+function TGeneralSettings.DetermineMonitor(): Integer;
 begin
-  Result := MONITOR_DEFAULT;
-  Occupied := Screen.MonitorFromWindow(AHandle, mdPrimary);
-
-  for Index := 0 to Screen.MonitorCount - 1 do
-    if Occupied = Screen.Monitors[Index] then
-      Exit(Index);
+  Result := SDL_GetWindowDisplayIndex(Window.Window);
 end;
 
 
-procedure TGeneralSettings.CorrectRanges();
+procedure TGeneralSettings.Correct();
 begin
-  FFrameRate := CorrectFrameRate(FFrameRate);
-
   FMonitor := CorrectMonitor(FMonitor);
   FLeft := CorrectLeft(FLeft);
   FTop := CorrectTop(FTop);
 
   FInput  := CorrectRange(FInput,  INPUT_FIRST,  INPUT_LAST,  INPUT_DEFAULT);
-  FWindow := CorrectRange(FWindow, WINDOW_FIRST, WINDOW_LAST, WINDOW_DEFAULT);
+  FSize   := CorrectRange(FSize,   WINDOW_FIRST, WINDOW_LAST, WINDOW_DEFAULT);
   FTheme  := CorrectRange(FTheme,  THEME_FIRST,  THEME_LAST,  THEME_DEFAULT);
   FSounds := CorrectRange(FSounds, SOUNDS_FIRST, SOUNDS_LAST, SOUNDS_DEFAULT);
   FScroll := CorrectRange(FScroll, SCROLL_FIRST, SCROLL_LAST, SCROLL_DEFAULT);
@@ -231,12 +270,12 @@ end;
 
 procedure TGeneralSettings.Collect();
 begin
-  FFrameRate := Clock.FrameRateLimit;
-  FWindow := Placement.WindowSize;
+  FDeflored := Placement.Deflored;
 
-  FMonitor := DetermineMonitor(GameForm.Handle);
-  FLeft := GameForm.Left;
-  FTop := GameForm.Top;
+  FMonitor := DetermineMonitor();
+  FSize := Placement.WindowSize;
+  FLeft := Placement.WindowBounds.X;
+  FTop := Placement.WindowBounds.Y;
 
   FInput := Memory.Options.Input;
   FTheme := Memory.Options.Theme;
@@ -251,36 +290,36 @@ end;
 
 procedure TGeneralSettings.Load(AFile: TIniFile; const ASection: String);
 begin
-  FFrameRate := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_FRAMERATE, CLOCK_FRAMERATE_DEFAULT);
+  FDeflored := AFile.ReadBool(ASection, SETTINGS_KEY_GENERAL_DEFLORED, SETTINGS_VALUE_GENERAL_DEFLORED);
 
-  FMonitor := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_MONITOR, MONITOR_DEFAULT);
-  FLeft    := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_LEFT,    0);
-  FTop     := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_TOP,     0);
+  FMonitor := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_MONITOR, SETTINGS_VALUE_GENERAL_MONITOR);
+  FLeft    := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_LEFT,    SETTINGS_VALUE_GENERAL_LEFT);
+  FTop     := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_TOP,     SETTINGS_VALUE_GENERAL_TOP);
 
-  FInput  := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_INPUT,  INPUT_DEFAULT);
-  FWindow := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_WINDOW, WINDOW_DEFAULT);
-  FTheme  := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_THEME,  THEME_DEFAULT);
-  FSounds := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_SOUNDS, SOUNDS_DEFAULT);
-  FScroll := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_SCROLL, SCROLL_DEFAULT);
+  FInput  := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_INPUT,  SETTINGS_VALUE_GENERAL_INPUT);
+  FSize   := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_WINDOW, SETTINGS_VALUE_GENERAL_WINDOW);
+  FTheme  := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_THEME,  SETTINGS_VALUE_GENERAL_THEME);
+  FSounds := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_SOUNDS, SETTINGS_VALUE_GENERAL_SOUNDS);
+  FScroll := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_SCROLL, SETTINGS_VALUE_GENERAL_SCROLL);
 
-  FRegion := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_REGION, REGION_DEFAULT);
-  FRNG    := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_RNG,    RNG_DEFAULT);
-  FLevel  := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_LEVEL,  LEVEL_DEFAULT);
+  FRegion := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_REGION, SETTINGS_VALUE_GENERAL_REGION);
+  FRNG    := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_RNG,    SETTINGS_VALUE_GENERAL_RNG);
+  FLevel  := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_LEVEL,  SETTINGS_VALUE_GENERAL_LEVEL);
 
-  CorrectRanges();
+  Correct();
 end;
 
 
 procedure TGeneralSettings.Save(AFile: TIniFile; const ASection: String);
 begin
-  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_FRAMERATE, FFrameRate);
+  AFile.WriteBool(ASection, SETTINGS_KEY_GENERAL_DEFLORED, FDeflored);
 
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_MONITOR, FMonitor);
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_LEFT,    FLeft);
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_TOP,     FTop);
 
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_INPUT,  FInput);
-  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_WINDOW, FWindow);
+  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_WINDOW, FSize);
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_THEME,  FTheme);
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_SOUNDS, FSounds);
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_SCROLL, FScroll);
@@ -353,6 +392,7 @@ constructor TSettings.Create();
 begin
   FSettingsFile := TMemIniFile.Create(SETTINGS_FILENAME);
 
+  FVideo := TVideoSettings.Create();
   FGeneral := TGeneralSettings.Create();
   FKeyboard := TKeyboardSettings.Create(INPUT_KEYBOARD);
   FController := TControllerSettings.Create(INPUT_CONTROLLER);
@@ -363,6 +403,7 @@ destructor TSettings.Destroy();
 begin
   FSettingsFile.Free();
 
+  FVideo.Free();
   FGeneral.Free();
   FKeyboard.Free();
   FController.Free();
@@ -373,6 +414,7 @@ end;
 
 procedure TSettings.Load();
 begin
+  FVideo.Load(FSettingsFile, SETTINGS_SECTION_VIDEO);
   FGeneral.Load(FSettingsFile, SETTINGS_SECTION_GENERAL);
   FKeyboard.Load(FSettingsFile, SETTINGS_SECTION_KEYBOARD);
   FController.Load(FSettingsFile, SETTINGS_SECTION_CONTROLLER);
@@ -381,10 +423,12 @@ end;
 
 procedure TSettings.Save();
 begin
+  FVideo.Collect();
   FGeneral.Collect();
   FKeyboard.Collect();
   FController.Collect();
 
+  FVideo.Save(FSettingsFile, SETTINGS_SECTION_VIDEO);
   FGeneral.Save(FSettingsFile, SETTINGS_SECTION_GENERAL);
   FKeyboard.Save(FSettingsFile, SETTINGS_SECTION_KEYBOARD);
   FController.Save(FSettingsFile, SETTINGS_SECTION_CONTROLLER);

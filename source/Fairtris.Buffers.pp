@@ -5,21 +5,20 @@ unit Fairtris.Buffers;
 interface
 
 uses
-  Types,
-  Graphics;
+  SDL2;
 
 
 type
   TBuffers = class(TObject)
   private
-    FNative: TBitmap;
-    FClient: TRect;
+    FNative: PSDL_Texture;
+    FClient: TSDL_Rect;
   public
     constructor Create();
     destructor Destroy(); override;
   public
-    property Native: TBitmap read FNative;
-    property Client: TRect read FClient write FClient;
+    property Native: PSDL_Texture read FNative;
+    property Client: TSDL_Rect read FClient write FClient;
   end;
 
 
@@ -30,21 +29,19 @@ var
 implementation
 
 uses
+  Fairtris.Window,
   Fairtris.Constants;
 
 
 constructor TBuffers.Create();
 begin
-  FNative := TBitmap.Create();
-
-  FNative.PixelFormat := pf24bit;
-  FNative.SetSize(BUFFER_WIDTH, BUFFER_HEIGHT);
+  FNative := SDL_CreateTexture(Window.Renderer, SDL_PIXELFORMAT_BGR24, SDL_TEXTUREACCESS_TARGET, BUFFER_WIDTH, BUFFER_HEIGHT);
 end;
 
 
 destructor TBuffers.Destroy();
 begin
-  FNative.Free();
+  SDL_DestroyTexture(FNative);
   inherited Destroy();
 end;
 

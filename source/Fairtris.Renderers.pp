@@ -5,8 +5,7 @@ unit Fairtris.Renderers;
 interface
 
 uses
-  Types,
-  Graphics,
+  SDL2,
   Fairtris.Interfaces,
   Fairtris.BestScores,
   Fairtris.Constants;
@@ -14,21 +13,16 @@ uses
 
 type
   TRenderer = class(TInterfacedObject)
-  private type
-    PPixels = ^TPixels;
-    TPixels = array [UInt16] of record B, G, R: UInt8 end;
   private
     FClipFrame: Boolean;
   private
     function CharToIndex(AChar: Char): Integer;
-  private
-    procedure RenderSprite(ABuffer, ASprite: TBitmap; ABufferRect, ASpriteRect: TRect; AExcludeFuchsia: Boolean = True); inline;
-    procedure RenderChar(ABuffer, ASprite: TBitmap; ABufferRect, ASpriteRect: TRect; AColor: TColor); inline;
   protected
     function EmptyEntryToString(): String;
     function ScoreEntryToString(AEntry: TScoreEntry): String;
   protected
-    procedure RenderText(AX, AY: Integer; const AText: String; AColor: TColor = COLOR_WHITE; AAlign: Integer = ALIGN_LEFT);
+    procedure RenderText(AX, AY: Integer; const AText: String; AColor: Integer = COLOR_WHITE; AAlign: Integer = ALIGN_LEFT);
+    procedure RenderSprite(ASprite: PSDL_Texture; ABufferRect, ASpriteRect: TSDL_Rect);
     procedure RenderNext(AX, AY, APiece, ALevel: Integer);
     procedure RenderBrick(AX, AY, ABrick, ALevel: Integer);
   protected
@@ -77,6 +71,9 @@ type
     procedure RenderControllerButtonScanCodes();
   protected
     procedure RenderClipping();
+  protected
+    procedure RenderBegin();
+    procedure RenderEnd();
   protected
     property ClipFrame: Boolean read FClipFrame write FClipFrame;
   end;
@@ -172,6 +169,7 @@ uses
   Math,
   SysUtils,
   StrUtils,
+  Fairtris.Window,
   Fairtris.Clock,
   Fairtris.Input,
   Fairtris.Buffers,
@@ -180,6 +178,7 @@ uses
   Fairtris.Grounds,
   Fairtris.Sprites,
   Fairtris.Settings,
+  Fairtris.Utils,
   Fairtris.Arrays;
 
 
@@ -203,80 +202,6 @@ begin
 end;
 
 
-procedure TRenderer.RenderSprite(ABuffer, ASprite: TBitmap; ABufferRect, ASpriteRect: TRect; AExcludeFuchsia: Boolean);
-var
-  SpriteX, SpriteY, BufferX, BufferY: Integer;
-  SpritePixels, BufferPixels: PPixels;
-begin
-  SpriteY := ASpriteRect.Top;
-  BufferY := ABufferRect.Top;
-
-  while SpriteY < ASpriteRect.Bottom do
-  begin
-    SpritePixels := ASprite.ScanLine[SpriteY];
-    BufferPixels := ABuffer.ScanLine[BufferY];
-
-    SpriteX := ASpriteRect.Left;
-    BufferX := ABufferRect.Left;
-
-    while SpriteX < ASpriteRect.Right do
-    begin
-      if (not AExcludeFuchsia) or (AExcludeFuchsia and (SpritePixels^[SpriteX].R <> 255)) then
-      begin
-        BufferPixels^[BufferX].R := SpritePixels^[SpriteX].R;
-        BufferPixels^[BufferX].G := SpritePixels^[SpriteX].G;
-        BufferPixels^[BufferX].B := SpritePixels^[SpriteX].B;
-      end;
-
-      SpriteX += 1;
-      BufferX += 1;
-    end;
-
-    SpriteY += 1;
-    BufferY += 1;
-  end;
-end;
-
-
-procedure TRenderer.RenderChar(ABuffer, ASprite: TBitmap; ABufferRect, ASpriteRect: TRect; AColor: TColor);
-var
-  SpritePixels, BufferPixels: PPixels;
-  SpriteX, SpriteY, BufferX, BufferY: Integer;
-var
-  R, G, B: UInt8;
-begin
-  RedGreenBlue(AColor, R, G, B);
-
-  SpriteY := ASpriteRect.Top;
-  BufferY := ABufferRect.Top;
-
-  while SpriteY < ASpriteRect.Bottom do
-  begin
-    SpritePixels := ASprite.ScanLine[SpriteY];
-    BufferPixels := ABuffer.ScanLine[BufferY];
-
-    SpriteX := ASpriteRect.Left;
-    BufferX := ABufferRect.Left;
-
-    while SpriteX < ASpriteRect.Right do
-    begin
-      if SpritePixels^[SpriteX].R <> 255 then
-      begin
-        BufferPixels^[BufferX].R := R;
-        BufferPixels^[BufferX].G := G;
-        BufferPixels^[BufferX].B := B;
-      end;
-
-      SpriteX += 1;
-      BufferX += 1;
-    end;
-
-    SpriteY += 1;
-    BufferY += 1;
-  end;
-end;
-
-
 function TRenderer.EmptyEntryToString(): String;
 begin
   Result := '-    -        -        -';
@@ -293,29 +218,37 @@ begin
 end;
 
 
-procedure TRenderer.RenderText(AX, AY: Integer; const AText: String; AColor: TColor; AAlign: Integer);
+procedure TRenderer.RenderText(AX, AY: Integer; const AText: String; AColor: Integer; AAlign: Integer);
 var
   Character: Char;
   CharIndex: Integer;
 var
-  BufferRect, CharRect: TRect;
+  BufferRect, CharRect: TSDL_Rect;
 begin
-  Buffers.Native.BeginUpdate();
-  BufferRect := Bounds(AX, AY, CHAR_WIDTH, CHAR_HEIGHT);
+  SDL_SetTextureColorMod(Sprites.Charset, GetR(AColor), GetG(AColor), GetB(AColor));
+
+  CharRect := SDL_Rect(0, 0, CHAR_WIDTH, CHAR_HEIGHT);
+  BufferRect := SDL_Rect(AX, AY, CHAR_WIDTH, CHAR_HEIGHT);
 
   if AAlign = ALIGN_RIGHT then
-    BufferRect.Offset(-(AText.Length * CHAR_WIDTH), 0);
+    BufferRect.X -= AText.Length * CHAR_WIDTH;
 
   for Character in AText do
   begin
     CharIndex := CharToIndex(UpCase(Character));
-    CharRect := Bounds(CharIndex * CHAR_WIDTH, 0, CHAR_WIDTH, CHAR_HEIGHT);
+    CharRect.X := CharIndex * CHAR_WIDTH;
 
-    RenderChar(Buffers.Native, Sprites.Charset, BufferRect, CharRect, AColor);
-    BufferRect.Offset(CHAR_WIDTH, 0);
+    SDL_RenderCopy(Window.Renderer, Sprites.Charset, @CharRect, @BufferRect);
+    BufferRect.X += CHAR_WIDTH;
   end;
 
-  Buffers.Native.EndUpdate();
+  SDL_SetTextureColorMod(Sprites.Charset, 255, 255, 255);
+end;
+
+
+procedure TRenderer.RenderSprite(ASprite: PSDL_Texture; ABufferRect, ASpriteRect: TSDL_Rect);
+begin
+  SDL_RenderCopy(Window.Renderer, ASprite, @ASpriteRect, @ABufferRect);
 end;
 
 
@@ -324,26 +257,22 @@ begin
   if APiece <> PIECE_UNKNOWN then
   begin
     ALevel := ALevel mod 10;
-    Buffers.Native.BeginUpdate();
 
     RenderSprite(
-      Buffers.Native,
       Sprites.Pieces,
-      Bounds(
+      SDL_Rect(
         AX,
         AY,
         PIECE_WIDTH,
         PIECE_HEIGHT
       ),
-      Bounds(
+      SDL_Rect(
         APiece * PIECE_WIDTH,
         ALevel * PIECE_HEIGHT,
         PIECE_WIDTH,
         PIECE_HEIGHT
       )
     );
-
-    Buffers.Native.EndUpdate();
   end;
 end;
 
@@ -355,21 +284,19 @@ begin
     ALevel := ALevel mod 10;
 
     RenderSprite(
-      Buffers.Native,
       Sprites.Bricks,
-      Bounds(
+      SDL_Rect(
         AX,
         AY,
         BRICK_WIDTH,
         BRICK_HEIGHT
       ),
-      Bounds(
+      SDL_Rect(
         ABrick * BRICK_WIDTH,
         ALevel * BRICK_HEIGHT,
         BRICK_WIDTH,
         BRICK_HEIGHT
-      ),
-      False
+      )
     );
   end;
 end;
@@ -378,9 +305,9 @@ end;
 procedure TRenderer.RenderGround(ASceneID: Integer);
 begin
   if ASceneID = SCENE_QUIT then
-    Buffers.Native.Canvas.Draw(0, 0, Memory.Quit.Buffer)
+    SDL_RenderCopy(Window.Renderer, Memory.Quit.Buffer, nil, nil)
   else
-    Buffers.Native.Canvas.Draw(0, 0, Grounds[Memory.Options.Theme][ASceneID]);
+    SDL_RenderCopy(Window.Renderer, Grounds[Memory.Options.Theme][ASceneID], nil, nil);
 end;
 
 
@@ -892,7 +819,7 @@ begin
   RenderText(
     ITEM_X_OPTIONS_PARAM,
     ITEM_Y_OPTIONS_WINDOW,
-    ITEM_TEXT_OPTIONS_WINDOW[Memory.Options.Window],
+    ITEM_TEXT_OPTIONS_WINDOW[Memory.Options.Size],
     IfThen(
       Memory.Options.ItemIndex = ITEM_OPTIONS_WINDOW,
       COLOR_WHITE,
@@ -1124,40 +1051,51 @@ end;
 
 
 procedure TRenderer.RenderClipping();
+var
+  StripeTop, StripeBottom: TSDL_Rect;
 begin
   if FClipFrame then
   begin
-    Buffers.Native.Canvas.Brush.Color := COLOR_WINDOW;
+    StripeTop := SDL_Rect(0, 0, BUFFER_WIDTH, BUFFER_CLIPPING);
+    StripeBottom := SDL_Rect(0, BUFFER_HEIGHT - BUFFER_CLIPPING, BUFFER_WIDTH, BUFFER_CLIPPING);
 
-    Buffers.Native.Canvas.FillRect(0, 0, BUFFER_WIDTH, BUFFER_CLIPPING);
-    Buffers.Native.Canvas.FillRect(0, BUFFER_HEIGHT - BUFFER_CLIPPING, BUFFER_WIDTH, BUFFER_HEIGHT);
+    SDL_SetRenderDrawColor(Window.Renderer, 0, 0, 0, 255);
+
+    SDL_RenderFillRect(Window.Renderer, @StripeTop);
+    SDL_RenderFillRect(Window.Renderer, @StripeBottom);
   end;
+end;
+
+
+procedure TRenderer.RenderBegin();
+begin
+  SDL_SetRenderTarget(Window.Renderer, Buffers.Native);
+end;
+
+
+procedure TRenderer.RenderEnd();
+begin
+  SDL_SetRenderTarget(Window.Renderer, nil);
 end;
 
 
 procedure TModernRenderer.RenderButton(AX, AY, AButton: Integer);
 begin
-  Buffers.Native.BeginUpdate();
-
   RenderSprite(
-    Buffers.Native,
     Sprites.Controller,
-    Bounds(
+    SDL_Rect(
       AX,
       AY,
       THUMBNAIL_BUTTON_WIDTH[AButton],
       THUMBNAIL_BUTTON_HEIGHT[AButton]
     ),
-    Bounds(
+    SDL_Rect(
       THUMBNAIL_BUTTON_X[AButton],
       THUMBNAIL_BUTTON_Y[AButton],
       THUMBNAIL_BUTTON_WIDTH[AButton],
       THUMBNAIL_BUTTON_HEIGHT[AButton]
-    ),
-    False
+    )
   );
-
-  Buffers.Native.EndUpdate();
 end;
 
 
@@ -1299,6 +1237,7 @@ end;
 
 procedure TModernRenderer.RenderScene(ASceneID: Integer);
 begin
+  RenderBegin();
   RenderGround(ASceneID);
 
   case ASceneID of
@@ -1316,6 +1255,7 @@ begin
   end;
 
   RenderClipping();
+  RenderEnd();
 end;
 
 
@@ -1324,26 +1264,22 @@ begin
   if APiece <> MINIATURE_UNKNOWN then
   begin
     ALevel := ALevel mod 10;
-    Buffers.Native.BeginUpdate();
 
     RenderSprite(
-      Buffers.Native,
       Sprites.Miniatures,
-      Bounds(
+      SDL_Rect(
         AX,
         AY,
         MINIATURE_WIDTH,
         MINIATURE_HEIGHT
       ),
-      Bounds(
+      SDL_Rect(
         APiece * MINIATURE_WIDTH,
         ALevel * MINIATURE_HEIGHT,
         MINIATURE_WIDTH,
         MINIATURE_HEIGHT
       )
     );
-
-    Buffers.Native.EndUpdate();
   end;
 end;
 
@@ -1455,6 +1391,7 @@ end;
 
 procedure TClassicRenderer.RenderScene(ASceneID: Integer);
 begin
+  RenderBegin();
   RenderGround(ASceneID);
 
   case ASceneID of
@@ -1472,6 +1409,7 @@ begin
   end;
 
   RenderClipping();
+  RenderEnd();
 end;
 
 
