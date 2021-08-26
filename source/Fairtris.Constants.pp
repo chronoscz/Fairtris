@@ -110,7 +110,7 @@ const
 
 const
   DURATION_HANG_LEGAL = 5;
-  DURATION_HANG_QUIT  = 1.5;
+  DURATION_HANG_QUIT  = 2;
 
 
 const

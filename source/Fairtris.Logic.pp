@@ -1231,7 +1231,7 @@ procedure TLogic.UpdateQuitScene();
 begin
   FScene.Validate();
 
-  if Memory.Quit.FrameIndex = Round(DURATION_HANG_QUIT * Clock.FrameRateLimit) then
+  if Memory.Quit.FrameIndex = DURATION_HANG_QUIT * Clock.FrameRateLimit then
     FStopped := True;
 end;
 
