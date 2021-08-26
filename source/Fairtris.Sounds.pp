@@ -150,7 +150,7 @@ begin
   if ANeedAttention then
     MIX_HaltChannel(-1);
 
-  MIX_PlayChannel(SOUND_CHANNEL[ASound], FRegions[Memory.Play.Region][ASound], 0);
+  MIX_PlayChannel(SOUND_CHANNEL[ASound], FRegions[SOUND_REGION[Memory.Play.Region]][ASound], 0);
 end;
 
 

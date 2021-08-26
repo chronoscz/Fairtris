@@ -88,6 +88,18 @@ const
   );
 
 const
+  SOUND_REGION:  array [REGION_FIRST .. REGION_LAST] of Integer = (
+    SOUND_REGION_NTSC,
+    SOUND_REGION_NTSC,
+    SOUND_REGION_NTSC,
+    SOUND_REGION_NTSC,
+    SOUND_REGION_PAL,
+    SOUND_REGION_PAL,
+    SOUND_REGION_PAL,
+    SOUND_REGION_PAL
+  );
+
+const
   SOUND_CHANNEL: array [SOUND_FIRST .. SOUND_LAST] of Integer = (5, 0, 2, 3, 4, 0, 0, 1, 0, 0, 0);
 
 
