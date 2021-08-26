@@ -174,6 +174,7 @@ uses
   Fairtris.Input,
   Fairtris.Buffers,
   Fairtris.Memory,
+  Fairtris.Placement,
   Fairtris.Converter,
   Fairtris.Grounds,
   Fairtris.Sprites,
@@ -746,9 +747,13 @@ begin
     ITEM_Y_OPTIONS[Memory.Options.ItemIndex],
     ITEM_TEXT_OPTIONS[Memory.Options.ItemIndex],
     IfThen(
-      Memory.Options.ItemIndex <> ITEM_OPTIONS_SET_UP,
-      COLOR_WHITE,
-      IfThen(Input.Device.Connected, COLOR_WHITE, COLOR_DARK)
+      Memory.Options.ItemIndex = ITEM_OPTIONS_SET_UP,
+      IfThen(Input.Device.Connected, COLOR_WHITE, COLOR_DARK),
+      IfThen(
+        Memory.Options.ItemIndex = ITEM_OPTIONS_WINDOW,
+        IfThen(Placement.VideoEnabled, COLOR_DARK, COLOR_WHITE),
+        COLOR_WHITE
+      )
     )
   );
 
@@ -759,7 +764,11 @@ begin
     IfThen(
       Memory.Options.ItemIndex in [ITEM_OPTIONS_SET_UP, ITEM_OPTIONS_BACK],
       IfThen(Input.Device.Connected, COLOR_WHITE, COLOR_DARK),
-      COLOR_WHITE
+      IfThen(
+        Memory.Options.ItemIndex = ITEM_OPTIONS_WINDOW,
+        IfThen(Placement.VideoEnabled, COLOR_DARK, COLOR_WHITE),
+        COLOR_WHITE
+      )
     )
   );
 end;
@@ -779,6 +788,21 @@ begin
         IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
       ),
       COLOR_DARK
+    )
+  );
+
+  RenderText(
+    ITEM_X_OPTIONS_WINDOW,
+    ITEM_Y_OPTIONS_WINDOW,
+    ITEM_TEXT_OPTIONS_WINDOW_TITLE,
+    IfThen(
+      Memory.Options.ItemIndex = ITEM_OPTIONS_WINDOW,
+      IfThen(Placement.VideoEnabled, COLOR_DARK, COLOR_WHITE),
+      IfThen(
+        Placement.VideoEnabled,
+        COLOR_DARK,
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      )
     )
   );
 
@@ -819,11 +843,19 @@ begin
   RenderText(
     ITEM_X_OPTIONS_PARAM,
     ITEM_Y_OPTIONS_WINDOW,
-    ITEM_TEXT_OPTIONS_WINDOW[Memory.Options.Size],
+    IfThen(
+      Placement.VideoEnabled,
+      ITEM_TEXT_OPTIONS_WINDOW_VIDEO_MODE,
+      ITEM_TEXT_OPTIONS_WINDOW[Memory.Options.Size]
+    ),
     IfThen(
       Memory.Options.ItemIndex = ITEM_OPTIONS_WINDOW,
-      COLOR_WHITE,
-      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      IfThen(Placement.VideoEnabled, COLOR_DARK, COLOR_WHITE),
+      IfThen(
+        Placement.VideoEnabled,
+        COLOR_DARK,
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      )
     )
   );
 
