@@ -87,6 +87,9 @@ const
     'sounds\pal\'
   );
 
+const
+  SOUND_CHANNEL: array [SOUND_FIRST .. SOUND_LAST] of Integer = (5, 0, 2, 3, 4, 0, 0, 1, 0, 0, 0);
+
 
 const
   BEST_SCORES_FILENAME: array [RNG_FIRST .. RNG_LAST] of String = (
