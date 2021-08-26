@@ -52,9 +52,9 @@ uses
   Fairtris.Memory,
   Fairtris.Placement,
   Fairtris.Renderers,
+  Fairtris.Sounds,
   Fairtris.Grounds,
   Fairtris.Sprites,
-  Fairtris.Sounds,
   Fairtris.Settings,
   Fairtris.BestScores,
   Fairtris.Generators,
@@ -85,9 +85,9 @@ begin
   Placement := TPlacement.Create();
   Renderers := TRenderers.Create();
 
+  Sounds := TSounds.Create();
   Grounds := TGrounds.Create();
   Sprites := TSprites.Create();
-  Sounds := TSounds.Create();
   Settings := TSettings.Create();
   BestScores := TBestScores.Create();
 
@@ -117,9 +117,9 @@ begin
   Placement.Free();
   Renderers.Free();
 
+  Sounds.Free();
   Grounds.Free();
   Sprites.Free();
-  Sounds.Free();
   Settings.Free();
   BestScores.Free();
 
@@ -149,6 +149,7 @@ end;
 
 procedure TGame.Initialize();
 begin
+  Sounds.Load();
   Grounds.Load();
   Sprites.Load();
   Settings.Load();
