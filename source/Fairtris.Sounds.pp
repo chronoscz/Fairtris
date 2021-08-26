@@ -30,13 +30,23 @@ type
 
 type
   TSounds = class(TObject)
+  private type
+    TRegions = array [SOUND_REGION_FIRST .. SOUND_REGION_LAST] of TRegionSounds;
   private
+    FRegions: TRegions;
     FEnabled: Integer;
+  private
+    function GetRegion(ARegionID: Integer): TRegionSounds;
+  public
+    constructor Create();
+    destructor Destroy(); override;
   public
     procedure Initilize();
+    procedure Load();
   public
     procedure PlaySound(ASound: Integer);
   public
+    property Region[ARegionID: Integer]: TRegionSounds read GetRegion; default;
     property Enabled: Integer read FEnabled write FEnabled;
   end;
 
@@ -88,9 +98,47 @@ begin
 end;
 
 
+constructor TSounds.Create();
+var
+  Index: Integer;
+begin
+  for Index := Low(FRegions) to High(FRegions) do
+    FRegions[Index] := TRegionSounds.Create(SOUND_PATH[Index]);
+end;
+
+
+destructor TSounds.Destroy();
+var
+  Index: Integer;
+begin
+  for Index := Low(FRegions) to High(FRegions) do
+    FRegions[Index].Free();
+
+  inherited Destroy();
+end;
+
+
+function TSounds.GetRegion(ARegionID: Integer): TRegionSounds;
+begin
+  case ARegionID of
+    REGION_NTSC, REGION_NTSC_EXTENDED, REGION_JPN, REGION_JPN_EXTENDED: Result := FRegions[SOUND_REGION_NTSC];
+    REGION_PAL,  REGION_PAL_EXTENDED,  REGION_EUR, REGION_EUR_EXTENDED: Result := FRegions[SOUND_REGION_PAL];
+  end;
+end;
+
+
 procedure TSounds.Initilize();
 begin
   FEnabled := Settings.General.Sounds;
+end;
+
+
+procedure TSounds.Load();
+var
+  Index: Integer;
+begin
+  for Index := Low(FRegions) to High(FRegions) do
+    FRegions[Index].Load();
 end;
 
 
