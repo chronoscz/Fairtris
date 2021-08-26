@@ -196,7 +196,7 @@ begin
   Memory.Options.Input := INPUT_KEYBOARD;
 
   PrepareKeyboardScanCodes();
-  Sounds.PlaySound(SOUND_TRANSITION);
+  Sounds.PlaySound(SOUND_TRANSITION, True);
 end;
 
 
@@ -439,7 +439,7 @@ begin
     if Memory.Menu.ItemIndex <> ITEM_MENU_QUIT then
       Sounds.PlaySound(SOUND_START)
     else
-      Sounds.PlaySound(SOUND_GLASS);
+      Sounds.PlaySound(SOUND_GLASS, True);
 
     if Memory.Menu.ItemIndex = ITEM_MENU_HELP then
       HelpUnderstand();
@@ -612,7 +612,7 @@ begin
     if not Input.Device.Connected or Input.Device.Start.JustPressed then
     begin
       FScene.Current := SCENE_PAUSE;
-      Sounds.PlaySound(SOUND_PAUSE);
+      Sounds.PlaySound(SOUND_PAUSE, True);
     end;
 end;
 
@@ -932,7 +932,7 @@ begin
       Input.Keyboard.Restore();
       PrepareKeyboardScanCodes();
 
-      Sounds.PlaySound(SOUND_TOP_OUT);
+      Sounds.PlaySound(SOUND_TOP_OUT, True);
     end;
   end;
 end;
@@ -1036,7 +1036,7 @@ begin
           Input.Keyboard.Introduce();
 
           FScene.Current := SCENE_OPTIONS;
-          Sounds.PlaySound(SOUND_TETRIS);
+          Sounds.PlaySound(SOUND_TETRIS, True);
         end
         else
           Sounds.PlaySound(SOUND_DROP);
@@ -1085,7 +1085,7 @@ begin
       Input.Controller.Restore();
       PrepareControllerScanCodes();
 
-      Sounds.PlaySound(SOUND_TOP_OUT);
+      Sounds.PlaySound(SOUND_TOP_OUT, True);
     end;
   end;
 end;
@@ -1179,7 +1179,7 @@ begin
     Memory.Controller.Changing := False;
     Memory.Controller.SettingUp := False;
 
-    Sounds.PlaySound(SOUND_TOP_OUT);
+    Sounds.PlaySound(SOUND_TOP_OUT, True);
     Exit;
   end;
 
@@ -1200,7 +1200,7 @@ begin
           Input.Controller.Introduce();
 
           FScene.Current := SCENE_OPTIONS;
-          Sounds.PlaySound(SOUND_TETRIS);
+          Sounds.PlaySound(SOUND_TETRIS, True);
         end
         else
           Sounds.PlaySound(SOUND_DROP);
@@ -1377,7 +1377,7 @@ begin
   if FScene.Current <> SCENE_QUIT then
   begin
     FScene.Current := SCENE_QUIT;
-    Sounds.PlaySound(SOUND_GLASS);
+    Sounds.PlaySound(SOUND_GLASS, True);
   end;
 end;
 

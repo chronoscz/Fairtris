@@ -469,7 +469,7 @@ begin
     Memory.Game.State := STATE_UPDATE_TOP_OUT;
     Memory.Game.TopOutTimer := TOP_OUT_FRAMES[Memory.Play.Region];
 
-    Sounds.PlaySound(SOUND_TOP_OUT);
+    Sounds.PlaySound(SOUND_TOP_OUT, True);
   end;
 end;
 
@@ -580,7 +580,7 @@ begin
     if HappenedFirstTransition or HappenedLaterTransition then
     begin
       Memory.Game.Level += 1;
-      Sounds.PlaySound(SOUND_TRANSITION);
+      Sounds.PlaySound(SOUND_TRANSITION, True);
     end;
 
     Memory.Game.Lines += Memory.Game.ClearCount;
