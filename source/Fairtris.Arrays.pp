@@ -68,7 +68,6 @@ const
 
 const
   SOUND_FILENAME: array [SOUND_FIRST .. SOUND_LAST] of WideString = (
-    '',
     'blip.wav',
     'start.wav',
     'shift.wav',
@@ -96,8 +95,8 @@ const
 
 const
   SOUND_PRIORITY: array [Boolean, SOUND_FIRST .. SOUND_LAST] of Integer = (
-    (0, 1, 2, 1, 0, 2, 3, 3, 4, 3, 5, 9),
-    (0, 0, 1, 1, 2, 3, 4, 4, 5, 6, 0, 9)
+    (1, 2, 1, 0, 2, 3, 3, 4, 3, 5, 9),
+    (0, 1, 1, 2, 3, 4, 4, 5, 6, 0, 9)
   );
 
 
@@ -123,10 +122,10 @@ const
 
 
 const
-  SOUND_LENGTH_NTSC: array [SOUND_FIRST .. SOUND_LAST] of Integer = (0, 170, 190, 110, 280, 210, 770, 960, 1040, 1100, 330, 720);
-  SOUND_LENGTH_JPN:  array [SOUND_FIRST .. SOUND_LAST] of Integer = (0, 170, 190, 110, 280, 210, 770, 960, 1040, 1100, 330, 720);
-  SOUND_LENGTH_PAL:  array [SOUND_FIRST .. SOUND_LAST] of Integer = (0, 160, 210, 100, 320, 250, 760, 950, 1070, 1280, 380, 720);
-  SOUND_LENGTH_EUR:  array [SOUND_FIRST .. SOUND_LAST] of Integer = (0, 160, 210, 100, 320, 250, 760, 950, 1070, 1280, 380, 720);
+  SOUND_LENGTH_NTSC: array [SOUND_FIRST .. SOUND_LAST] of Integer = (170, 190, 110, 280, 210, 770, 960, 1040, 1100, 330, 720);
+  SOUND_LENGTH_JPN:  array [SOUND_FIRST .. SOUND_LAST] of Integer = (170, 190, 110, 280, 210, 770, 960, 1040, 1100, 330, 720);
+  SOUND_LENGTH_PAL:  array [SOUND_FIRST .. SOUND_LAST] of Integer = (160, 210, 100, 320, 250, 760, 950, 1070, 1280, 380, 720);
+  SOUND_LENGTH_EUR:  array [SOUND_FIRST .. SOUND_LAST] of Integer = (160, 210, 100, 320, 250, 760, 950, 1070, 1280, 380, 720);
 
 
 const
