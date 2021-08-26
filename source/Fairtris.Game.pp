@@ -70,7 +70,7 @@ begin
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 'linear');
 
   if SDL_Init(SDL_INIT_EVERYTHING) < 0 then Halt();
-  if MIX_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, SOUND_CHANNELS_COUNT, 1024) < 0 then Halt();
+  if Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, SOUND_CHANNELS_COUNT, 1024) < 0 then Halt();
 end;
 
 
@@ -101,7 +101,7 @@ end;
 
 procedure TGame.DestroySystem();
 begin
-  MIX_CloseAudio();
+  Mix_CloseAudio();
   SDL_Quit();
 end;
 

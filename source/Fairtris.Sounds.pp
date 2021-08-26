@@ -148,9 +148,9 @@ begin
   if FEnabled = SOUNDS_DISABLED then Exit;
 
   if ANeedAttention then
-    MIX_HaltChannel(-1);
+    Mix_HaltChannel(-1);
 
-  MIX_PlayChannel(SOUND_CHANNEL[ASound], FRegions[SOUND_REGION[Memory.Play.Region]][ASound], 0);
+  Mix_PlayChannel(SOUND_CHANNEL[ASound], FRegions[SOUND_REGION[Memory.Play.Region]][ASound], 0);
 end;
 
 
