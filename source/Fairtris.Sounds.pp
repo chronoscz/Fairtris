@@ -44,7 +44,7 @@ type
     procedure Initilize();
     procedure Load();
   public
-    procedure PlaySound(ASound: Integer; AExclusive: Boolean = False);
+    procedure PlaySound(ASound: Integer; AHaltOther: Boolean = False);
   public
     property Enabled: Integer read FEnabled write FEnabled;
   end;
@@ -142,12 +142,12 @@ begin
 end;
 
 
-procedure TSounds.PlaySound(ASound: Integer; AExclusive: Boolean);
+procedure TSounds.PlaySound(ASound: Integer; AHaltOther: Boolean);
 begin
   if ASound = SOUND_UNKNOWN then Exit;
   if FEnabled = SOUNDS_DISABLED then Exit;
 
-  if AExclusive then
+  if AHaltOther then
     MIX_HaltChannel(-1);
 
   Mix_PlayChannel(SOUND_CHANNEL[ASound], FRegions[Memory.Play.Region][ASound], 0);
