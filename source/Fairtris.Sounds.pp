@@ -143,8 +143,13 @@ end;
 
 procedure TSounds.PlaySound(ASound: Integer);
 begin
-  if ASound = SOUND_UNKNOWN then Exit;
   if FEnabled = SOUNDS_DISABLED then Exit;
+
+  if ASound = SOUND_UNKNOWN then
+  begin
+    MIX_HaltChannel(-1);
+    Exit;
+  end;
 
   // play sound here
 end;
