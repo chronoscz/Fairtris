@@ -173,6 +173,9 @@ procedure TPlacement.UpdateWindowBounds();
 var
   NewWidth, NewHeight: Integer;
 begin
+  if FVideoEnabled then
+    FWindowBounds := SDL_Rect(0, 0, FVideoWidth, FVideoHeight)
+  else
   case FWindowSize of
     WINDOW_NATIVE, WINDOW_ZOOM_2X, WINDOW_ZOOM_3X, WINDOW_ZOOM_4X:
     begin
@@ -200,27 +203,25 @@ procedure TPlacement.UpdateWindowClient();
 var
   NewWidth, NewHeight: Integer;
 begin
-  case FWindowSize of
-    WINDOW_NATIVE, WINDOW_ZOOM_2X, WINDOW_ZOOM_3X, WINDOW_ZOOM_4X:
-      FWindowClient := SDL_Rect(0, 0, FWindowBounds.W, FWindowBounds.H);
-    WINDOW_FULLSCREEN:
+  if FVideoEnabled or (FWindowSize = WINDOW_FULLSCREEN) then
+  begin
+    NewHeight := FWindowBounds.H;
+    NewWidth := Round(NewHeight * CLIENT_RATIO_LANDSCAPE);
+
+    if NewWidth > FWindowBounds.W then
     begin
-      NewHeight := FWindowBounds.H;
-      NewWidth := Round(NewHeight * CLIENT_RATIO_LANDSCAPE);
-
-      if NewWidth > FWindowBounds.W then
-      begin
-        NewWidth := FWindowBounds.W;
-        NewHeight := Round(NewWidth * CLIENT_RATIO_PORTRAIT);
-      end;
-
-      FWindowClient.X := (FWindowBounds.W - NewWidth) div 2;
-      FWindowClient.Y := (FWindowBounds.H - NewHeight) div 2;
-
-      FWindowClient.W := NewWidth;
-      FWindowClient.H := NewHeight;
+      NewWidth := FWindowBounds.W;
+      NewHeight := Round(NewWidth * CLIENT_RATIO_PORTRAIT);
     end;
-  end;
+
+    FWindowClient.X := (FWindowBounds.W - NewWidth) div 2;
+    FWindowClient.Y := (FWindowBounds.H - NewHeight) div 2;
+
+    FWindowClient.W := NewWidth;
+    FWindowClient.H := NewHeight;
+  end
+  else
+    FWindowClient := SDL_Rect(0, 0, FWindowBounds.W, FWindowBounds.H);
 end;
 
 
@@ -268,7 +269,7 @@ end;
 
 procedure TPlacement.UpdateBuffer();
 begin
-  if FWindowSize = WINDOW_FULLSCREEN then
+  if FVideoEnabled or (FWindowSize = WINDOW_FULLSCREEN) then
     Buffers.Client := FWindowClient;
 end;
 
