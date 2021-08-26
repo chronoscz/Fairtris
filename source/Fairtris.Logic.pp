@@ -770,9 +770,10 @@ end;
 
 procedure TLogic.UpdateOptionsWindow();
 begin
-  Memory.Options.Size := Placement.WindowSize;
-
+  if Placement.VideoEnabled then Exit;
   if Memory.Options.ItemIndex <> ITEM_OPTIONS_WINDOW then Exit;
+
+  Memory.Options.Size := Placement.WindowSize;
 
   if Input.Device.Left.JustPressed or Input.Keyboard.Left.JustPressed then
   begin
