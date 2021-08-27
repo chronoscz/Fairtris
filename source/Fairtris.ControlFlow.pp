@@ -10,7 +10,24 @@ type
   end;
 
 
+var
+  ControlFlow: TControlFlow;
+
+
 implementation
+
+
+initialization
+begin
+  ControlFlow := TControlFlow.Create();
+end;
+
+
+finalization
+begin
+  ControlFlow.Free();
+end;
+
 
 end.
 
