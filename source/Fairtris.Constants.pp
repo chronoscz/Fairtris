@@ -965,6 +965,10 @@ const
   BEST_SCORES_KEY_SCORE_TOTAL_SCORE   = 'TOTAL SCORE';
 
 
+const
+  LOG_FILENAME = 'log.txt';
+
+
 implementation
 
 end.

@@ -7,6 +7,8 @@ interface
 
 type
   TLog = class(TObject)
+  public
+    procedure SaveToFile(const AFileName: String);
   end;
 
 
@@ -15,6 +17,12 @@ var
 
 
 implementation
+
+
+procedure TLog.SaveToFile(const AFileName: String);
+begin
+
+end;
 
 
 initialization
