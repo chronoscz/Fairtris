@@ -44,6 +44,7 @@ uses
   SDL2,
   SDL2_Mixer,
   SysUtils,
+  Fairtris.ControlFlow,
   Fairtris.Window,
   Fairtris.Taskbar,
   Fairtris.Clock,
@@ -66,11 +67,17 @@ uses
 
 procedure TGame.CreateSystem();
 begin
-  SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, '0');
-  SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 'linear');
+  if not SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, '0') then
+    ControlFlow.HandleWarning(WARNING_SDL_HINT_MINIMIZING);
 
-  if SDL_Init(SDL_INIT_EVERYTHING) < 0 then Halt();
-  if Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, SOUND_CHANNELS_COUNT, 1024) < 0 then Halt();
+  if not SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 'linear') then
+    ControlFlow.HandleWarning(WARNING_SDL_HINT_QUALITY);
+
+  if SDL_Init(SDL_INIT_EVERYTHING) < 0 then
+    ControlFlow.HandleError(ERROR_SDL_INITIALIZE_SYSTEM);
+
+  if Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, SOUND_CHANNELS_COUNT, 1024) < 0 then
+    ControlFlow.HandleError(ERROR_SDL_INITIALIZE_AUDIO);
 end;
 
 

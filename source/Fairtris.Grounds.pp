@@ -54,6 +54,7 @@ implementation
 
 uses
   SDL2_Image,
+  Fairtris.ControlFlow,
   Fairtris.Window,
   Fairtris.Arrays;
 
@@ -89,7 +90,8 @@ begin
   begin
     FGrounds[Index] := Img_LoadTexture(Window.Renderer, PChar(FGroundsPath + GROUND_FILENAME[Index]));
 
-    if FGrounds[Index] = nil then Halt();
+    if FGrounds[Index] = nil then
+      ControlFlow.HandleError(ERROR_SDL_LOAD_GROUND);
   end;
 end;
 

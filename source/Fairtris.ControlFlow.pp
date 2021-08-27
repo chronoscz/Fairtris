@@ -45,7 +45,7 @@ end;
 
 procedure TControlFlow.HandleError(AErrorCode: Integer);
 begin
-
+  Halt;
 end;
 
 

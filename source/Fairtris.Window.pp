@@ -35,21 +35,31 @@ var
 
 implementation
 
+uses
+  Fairtris.ControlFlow,
+  Fairtris.Constants;
+
 
 constructor TWindow.Create();
 var
   SysInfo: TSDL_SysWMInfo;
 begin
   FWindow := SDL_CreateWindow('Fairtris', SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 0, 0, SDL_WINDOW_BORDERLESS);
-  if FWindow = nil then Halt();
+
+  if FWindow = nil then
+    ControlFlow.HandleError(ERROR_SDL_CREATE_WINDOW);
 
   FRenderer := SDL_CreateRenderer(FWindow, -1, SDL_RENDERER_ACCELERATED or SDL_RENDERER_TARGETTEXTURE);
-  if FRenderer = nil then Halt();
+
+  if FRenderer = nil then
+    ControlFlow.HandleError(ERROR_SDL_CREATE_RENDERER);
 
   SDL_Version(SysInfo.Version);
-  SDL_GetWindowWMInfo(FWindow, @SysInfo);
 
-  FHandle := SysInfo.Win.Window;
+  if SDL_GetWindowWMInfo(FWindow, @SysInfo) = SDL_TRUE then
+    FHandle := SysInfo.Win.Window
+  else
+    ControlFlow.HandleError(ERROR_SDL_CREATE_HANDLE);
 end;
 
 

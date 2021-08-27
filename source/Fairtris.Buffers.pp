@@ -29,6 +29,7 @@ var
 implementation
 
 uses
+  Fairtris.ControlFlow,
   Fairtris.Window,
   Fairtris.Constants;
 
@@ -36,6 +37,9 @@ uses
 constructor TBuffers.Create();
 begin
   FNative := SDL_CreateTexture(Window.Renderer, SDL_PIXELFORMAT_BGR24, SDL_TEXTUREACCESS_TARGET, BUFFER_WIDTH, BUFFER_HEIGHT);
+
+  if FNative = nil then
+    ControlFlow.HandleError(ERROR_SDL_CREATE_BACK_BUFFER);
 end;
 
 

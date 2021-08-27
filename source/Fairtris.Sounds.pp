@@ -57,6 +57,7 @@ var
 implementation
 
 uses
+  Fairtris.ControlFlow,
   Fairtris.Memory,
   Fairtris.Settings,
   Fairtris.Arrays;
@@ -93,7 +94,8 @@ begin
   begin
     FSounds[Index] := Mix_LoadWAV(PChar(FSoundsPath + SOUND_FILENAME[Index]));
 
-    if FSounds[Index] = nil then Halt();
+    if FSounds[Index] = nil then
+      ControlFlow.HandleError(ERROR_SDL_LOAD_SOUND);
   end;
 end;
 

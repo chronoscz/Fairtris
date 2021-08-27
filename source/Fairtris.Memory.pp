@@ -242,6 +242,7 @@ var
 implementation
 
 uses
+  Fairtris.ControlFlow,
   Fairtris.Window,
   Fairtris.Settings;
 
@@ -416,6 +417,9 @@ end;
 constructor TQuitMemory.Create();
 begin
   Buffer := SDL_CreateTexture(Window.Renderer, SDL_PIXELFORMAT_BGR24, SDL_TEXTUREACCESS_TARGET, BUFFER_WIDTH, BUFFER_HEIGHT);
+
+  if Buffer = nil then
+    ControlFlow.HandleError(ERROR_SDL_CREATE_QUIT_BUFFER);
 end;
 
 
