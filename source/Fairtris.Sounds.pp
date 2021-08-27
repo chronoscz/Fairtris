@@ -122,10 +122,7 @@ end;
 
 function TSounds.GetRegion(ARegionID: Integer): TRegionSounds;
 begin
-  case ARegionID of
-    REGION_NTSC, REGION_NTSC_EXTENDED, REGION_JPN, REGION_JPN_EXTENDED: Result := FRegions[SOUND_REGION_NTSC];
-    REGION_PAL,  REGION_PAL_EXTENDED,  REGION_EUR, REGION_EUR_EXTENDED: Result := FRegions[SOUND_REGION_PAL];
-  end;
+  Result := FRegions[SOUND_REGION[ARegionID]];
 end;
 
 
