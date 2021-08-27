@@ -30,6 +30,7 @@ implementation
 
 uses
   Fairtris.Logs,
+  Fairtris.Arrays,
   Fairtris.Constants;
 
 

@@ -993,6 +993,28 @@ const
   );
 
 
+const
+  MESSAGE_ERROR: array [ERROR_FIRST .. ERROR_LAST] of String = (
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    ''
+  );
+
+const
+  MESSAGE_WARNING: array [WARNING_FIRST .. WARNING_LAST] of String = (
+    '',
+    ''
+  );
+
+
 implementation
 
 end.
