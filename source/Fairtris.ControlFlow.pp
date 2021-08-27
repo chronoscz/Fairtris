@@ -10,11 +10,14 @@ uses
 
 type
   TControlFlow = class(TObject)
+  private
+    procedure Interrupt(AExitCode: Integer);
   public
     constructor Create();
   public
-    procedure HandleError(AErrorCode: Integer);
-    procedure HandleWarning(AWarningCode: Integer);
+    procedure HandleError(ACode: Integer);
+    procedure HandleError(ACode: Integer; const AProblem: String);
+    procedure HandleWarning(ACode: Integer);
     procedure HandleException(AException: Exception);
   end;
 
@@ -43,21 +46,36 @@ begin
 end;
 
 
-procedure TControlFlow.HandleError(AErrorCode: Integer);
+procedure TControlFlow.Interrupt(AExitCode: Integer);
 begin
-  Halt;
+  Halt(AExitCode);
 end;
 
 
-procedure TControlFlow.HandleWarning(AWarningCode: Integer);
+procedure TControlFlow.HandleError(ACode: Integer);
 begin
+  Log.AddError(MESSAGE_ERROR[ACode]);
+  Interrupt(ACode);
+end;
 
+
+procedure TControlFlow.HandleError(ACode: Integer; const AProblem: String);
+begin
+  Log.AddError(MESSAGE_ERROR[ACode].Format([AProblem]));
+  Interrupt(ACode);
+end;
+
+
+procedure TControlFlow.HandleWarning(ACode: Integer);
+begin
+  Log.AddWarning(MESSAGE_WARNING[ACode]);
 end;
 
 
 procedure TControlFlow.HandleException(AException: Exception);
 begin
-
+  Log.AddException(AException.ToString());
+  Interrupt(ERROR_UNEXPECTED);
 end;
 
 
