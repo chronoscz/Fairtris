@@ -9,13 +9,20 @@ program Fairtris.Main;
 {$RESOURCE Fairtris.Main.res}
 
 uses
+  SysUtils,
+  Fairtris.ControlFlow,
   Fairtris.Game;
 begin
-  Game := TGame.Create();
   try
-    Game.Run();
-  finally
-    Game.Free();
+    Game := TGame.Create();
+    try
+      Game.Run();
+    finally
+      Game.Free();
+    end;
+  except
+    on Unexpected: Exception do
+      ControlFlow.HandleException(Unexpected);
   end;
 end.
 
