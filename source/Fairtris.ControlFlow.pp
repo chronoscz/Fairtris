@@ -4,11 +4,18 @@ unit Fairtris.ControlFlow;
 
 interface
 
+uses
+  SysUtils;
+
 
 type
   TControlFlow = class(TObject)
   public
     constructor Create();
+  public
+    procedure HandleError(AErrorCode: Integer);
+    procedure HandleWarning(AWarningCode: Integer);
+    procedure HandleException(AException: Exception);
   end;
 
 
@@ -33,6 +40,24 @@ end;
 constructor TControlFlow.Create();
 begin
   AddExitProc(@ExitProc);
+end;
+
+
+procedure TControlFlow.HandleError(AErrorCode: Integer);
+begin
+
+end;
+
+
+procedure TControlFlow.HandleWarning(AWarningCode: Integer);
+begin
+
+end;
+
+
+procedure TControlFlow.HandleException(AException: Exception);
+begin
+
 end;
 
 
