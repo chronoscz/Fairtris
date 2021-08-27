@@ -192,8 +192,10 @@ begin
   FScanCodesDefault[KEYBOARD_KEY_DOWN]   := SDL_SCANCODE_DOWN;
   FScanCodesDefault[KEYBOARD_KEY_LEFT]   := SDL_SCANCODE_LEFT;
   FScanCodesDefault[KEYBOARD_KEY_RIGHT]  := SDL_SCANCODE_RIGHT;
+
   FScanCodesDefault[KEYBOARD_KEY_SELECT] := SDL_SCANCODE_V;
   FScanCodesDefault[KEYBOARD_KEY_START]  := SDL_SCANCODE_Z;
+
   FScanCodesDefault[KEYBOARD_KEY_B]      := SDL_SCANCODE_X;
   FScanCodesDefault[KEYBOARD_KEY_A]      := SDL_SCANCODE_C;
 end;
