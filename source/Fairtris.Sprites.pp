@@ -67,7 +67,7 @@ var
 begin
   for Index := Low(FCollections) to High(FCollections) do
   begin
-    FCollections[Index] := IMG_LoadTexture(Window.Renderer, PChar(SPRITE_PATH + SPRITE_FILENAME[Index]));
+    FCollections[Index] := Img_LoadTexture(Window.Renderer, PChar(SPRITE_PATH + SPRITE_FILENAME[Index]));
 
     if FCollections[Index] = nil then Halt();
   end;

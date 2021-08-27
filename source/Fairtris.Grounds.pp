@@ -87,7 +87,7 @@ var
 begin
   for Index := Low(FGrounds) to High(FGrounds) do
   begin
-    FGrounds[Index] := IMG_LoadTexture(Window.Renderer, PChar(FGroundsPath + GROUND_FILENAME[Index]));
+    FGrounds[Index] := Img_LoadTexture(Window.Renderer, PChar(FGroundsPath + GROUND_FILENAME[Index]));
 
     if FGrounds[Index] = nil then Halt();
   end;
