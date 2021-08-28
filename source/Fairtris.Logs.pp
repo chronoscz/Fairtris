@@ -12,6 +12,7 @@ type
   TLog = class(TObject)
   private
     FContent: TStringList;
+    FMustBeStored: Boolean;
   public
     constructor Create();
     destructor Destroy(); override;
@@ -21,8 +22,6 @@ type
     procedure AddError(const AMessage: String);
     procedure AddWarning(const AMessage: String);
     procedure AddException(const AMessage: String);
-  public
-    procedure SaveToFile(const AFileName: String);
   end;
 
 
@@ -31,6 +30,9 @@ var
 
 
 implementation
+
+uses
+  Fairtris.Constants;
 
 
 constructor TLog.Create();
@@ -41,6 +43,9 @@ end;
 
 destructor TLog.Destroy();
 begin
+  if FMustBeStored then
+    FContent.SaveToFile(LOG_FILENAME);
+
   FContent.Free();
   inherited Destroy();
 end;
@@ -55,6 +60,8 @@ begin
     '',
     ''
   ]);
+
+  FMustBeStored := True;
 end;
 
 
@@ -73,12 +80,6 @@ end;
 procedure TLog.AddException(const AMessage: String);
 begin
   AddEntry('Exception occured:', AMessage);
-end;
-
-
-procedure TLog.SaveToFile(const AFileName: String);
-begin
-  FContent.SaveToFile(AFileName);
 end;
 
 
