@@ -996,6 +996,18 @@ const
   WARNING_LAST  = WARNING_SDL_HINT_QUALITY;
 
 
+const
+  ERROR_TITLE   = 'Fairtris crashed!';
+
+  ERROR_MESSAGE = 'A fatal error occurred while booting the game, and the startup process must be interrupted. ' +
+                  'More information on the reason for the error can be found in the "log.txt" file.' +
+
+                  LineEnding + LineEnding +
+
+                  'Reinstalling the game may fix the problem, and if it persists, contact the author or report ' +
+                  'a bug in the project''s repository (see the file "license.txt" for helpful information).';
+
+
 implementation
 
 end.
