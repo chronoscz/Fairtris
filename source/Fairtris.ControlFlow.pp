@@ -10,10 +10,6 @@ uses
 
 type
   TControlFlow = class(TObject)
-  private
-    procedure Interrupt(AExitCode: Integer);
-  public
-    constructor Create();
   public
     procedure HandleError(ACode: Integer);
     procedure HandleError(ACode: Integer; const AProblem: String);
@@ -29,41 +25,27 @@ var
 implementation
 
 uses
+  SDL2,
   Fairtris.Logs,
   Fairtris.Arrays,
   Fairtris.Constants;
 
 
-procedure ExitProc();
-begin
-  if ExitCode <> 0 then
-    Log.SaveToFile(LOG_FILENAME);
-end;
-
-
-constructor TControlFlow.Create();
-begin
-  AddExitProc(@ExitProc);
-end;
-
-
-procedure TControlFlow.Interrupt(AExitCode: Integer);
-begin
-  Halt(AExitCode);
-end;
-
-
 procedure TControlFlow.HandleError(ACode: Integer);
 begin
   Log.AddError(MESSAGE_ERROR[ACode]);
-  Interrupt(ACode);
+  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, PChar(ERROR_TITLE), PChar(ERROR_MESSAGE), nil);
+
+  Halt(ACode);
 end;
 
 
 procedure TControlFlow.HandleError(ACode: Integer; const AProblem: String);
 begin
   Log.AddError(MESSAGE_ERROR[ACode].Format([AProblem]));
-  Interrupt(ACode);
+  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, PChar(ERROR_TITLE), PChar(ERROR_MESSAGE), nil);
+
+  Halt(ACode);
 end;
 
 
@@ -76,7 +58,9 @@ end;
 procedure TControlFlow.HandleException(AException: Exception);
 begin
   Log.AddException(AException.ToString());
-  Interrupt(ERROR_UNEXPECTED);
+  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, PChar(ERROR_TITLE), PChar(ERROR_MESSAGE), nil);
+
+  Halt(ERROR_UNEXPECTED);
 end;
 
 
