@@ -52,14 +52,15 @@ end;
 
 
 procedure TLog.AddEntry(const AHeader, AMessage: String);
+var
+  Entry: String;
 begin
-  FContent.AddStrings([
-    AHeader,
-    '',
-    AMessage,
-    '',
-    ''
-  ]);
+  Entry := AHeader + LineEnding + AMessage + LineEnding + LineEnding;
+  FContent.Add(Entry);
+
+  {$IFDEF MODE_DEBUG}
+  WriteLn(Entry);
+  {$ENDIF}
 
   FMustBeStored := True;
 end;
