@@ -9,7 +9,7 @@ uses
 
 
 type
-  TControlFlow = class(TObject)
+  TFlow = class(TObject)
   public
     procedure HandleError(ACode: Integer);
     procedure HandleError(ACode: Integer; const AProblem: String);
@@ -19,7 +19,7 @@ type
 
 
 var
-  ControlFlow: TControlFlow;
+  Flow: TFlow;
 
 
 implementation
@@ -31,7 +31,7 @@ uses
   Fairtris.Constants;
 
 
-procedure TControlFlow.HandleError(ACode: Integer);
+procedure TFlow.HandleError(ACode: Integer);
 begin
   Log.AddError(MESSAGE_ERROR[ACode]);
   SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, PChar(ERROR_TITLE), PChar(ERROR_MESSAGE), nil);
@@ -40,7 +40,7 @@ begin
 end;
 
 
-procedure TControlFlow.HandleError(ACode: Integer; const AProblem: String);
+procedure TFlow.HandleError(ACode: Integer; const AProblem: String);
 begin
   Log.AddError(MESSAGE_ERROR[ACode].Format([AProblem]));
   SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, PChar(ERROR_TITLE), PChar(ERROR_MESSAGE), nil);
@@ -49,13 +49,13 @@ begin
 end;
 
 
-procedure TControlFlow.HandleWarning(ACode: Integer);
+procedure TFlow.HandleWarning(ACode: Integer);
 begin
   Log.AddWarning(MESSAGE_WARNING[ACode]);
 end;
 
 
-procedure TControlFlow.HandleException(AException: Exception);
+procedure TFlow.HandleException(AException: Exception);
 begin
   Log.AddException(AException.ToString());
   SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, PChar(ERROR_TITLE), PChar(ERROR_MESSAGE), nil);
@@ -66,13 +66,13 @@ end;
 
 initialization
 begin
-  ControlFlow := TControlFlow.Create();
+  Flow := TFlow.Create();
 end;
 
 
 finalization
 begin
-  ControlFlow.Free();
+  Flow.Free();
 end;
 
 

@@ -22,7 +22,7 @@ begin
     end;
   except
     on Unexpected: Exception do
-      ControlFlow.HandleException(Unexpected);
+      Flow.HandleException(Unexpected);
   end;
 end.
 

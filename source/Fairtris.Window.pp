@@ -47,19 +47,19 @@ begin
   FWindow := SDL_CreateWindow('Fairtris', SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 0, 0, SDL_WINDOW_BORDERLESS);
 
   if FWindow = nil then
-    ControlFlow.HandleError(ERROR_SDL_CREATE_WINDOW);
+    Flow.HandleError(ERROR_SDL_CREATE_WINDOW);
 
   FRenderer := SDL_CreateRenderer(FWindow, -1, SDL_RENDERER_ACCELERATED or SDL_RENDERER_TARGETTEXTURE);
 
   if FRenderer = nil then
-    ControlFlow.HandleError(ERROR_SDL_CREATE_RENDERER);
+    Flow.HandleError(ERROR_SDL_CREATE_RENDERER);
 
   SDL_Version(SysInfo.Version);
 
   if SDL_GetWindowWMInfo(FWindow, @SysInfo) = SDL_TRUE then
     FHandle := SysInfo.Win.Window
   else
-    ControlFlow.HandleError(ERROR_SDL_CREATE_HANDLE);
+    Flow.HandleError(ERROR_SDL_CREATE_HANDLE);
 end;
 
 
