@@ -57,7 +57,7 @@ var
 implementation
 
 uses
-  Fairtris.ControlFlow,
+  Fairtris.Flow,
   Fairtris.Memory,
   Fairtris.Settings,
   Fairtris.Arrays;

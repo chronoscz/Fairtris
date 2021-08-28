@@ -29,7 +29,7 @@ var
 implementation
 
 uses
-  Fairtris.ControlFlow,
+  Fairtris.Flow,
   Fairtris.Window,
   Fairtris.Constants;
 

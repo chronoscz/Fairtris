@@ -36,7 +36,7 @@ var
 implementation
 
 uses
-  Fairtris.ControlFlow,
+  Fairtris.Flow,
   Fairtris.Constants;
 
 
