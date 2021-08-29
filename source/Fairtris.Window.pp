@@ -29,6 +29,9 @@ type
   end;
 
 
+  function GetWindowInstance(): PSDL_Window;
+
+
 var
   Window: TWindow;
 
@@ -36,7 +39,17 @@ var
 implementation
 
 uses
+  Fairtris.Arrays,
   Fairtris.Constants;
+
+
+function GetWindowInstance(): PSDL_Window;
+begin
+  if Assigned(Window) then
+    Result := Window.Window
+  else
+    Result := nil;
+end;
 
 
 constructor TWindow.Create();
@@ -46,19 +59,19 @@ begin
   FWindow := SDL_CreateWindow('Fairtris', SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 0, 0, SDL_WINDOW_BORDERLESS);
 
   if FWindow = nil then
-    Flow.HandleError(ERROR_SDL_CREATE_WINDOW);
+    raise Exception.CreateFmt(MESSAGE_ERROR[ERROR_SDL_CREATE_WINDOW], [SDL_GetError()]);
 
   FRenderer := SDL_CreateRenderer(FWindow, -1, SDL_RENDERER_ACCELERATED or SDL_RENDERER_TARGETTEXTURE);
 
   if FRenderer = nil then
-    Flow.HandleError(ERROR_SDL_CREATE_RENDERER);
+    raise Exception.CreateFmt(MESSAGE_ERROR[ERROR_SDL_CREATE_RENDERER], [SDL_GetError()]);
 
   SDL_Version(SysInfo.Version);
 
   if SDL_GetWindowWMInfo(FWindow, @SysInfo) = SDL_TRUE then
     FHandle := SysInfo.Win.Window
   else
-    Flow.HandleError(ERROR_SDL_CREATE_HANDLE);
+    raise Exception.CreateFmt(MESSAGE_ERROR[ERROR_SDL_CREATE_HANDLE], [SDL_GetError()]);
 end;
 
 

@@ -40,6 +40,7 @@ implementation
 
 uses
   SDL2_Image,
+  SysUtils,
   Fairtris.Window,
   Fairtris.Arrays;
 
@@ -70,7 +71,7 @@ begin
     FCollections[Index] := Img_LoadTexture(Window.Renderer, PChar(SPRITE_PATH + SPRITE_FILENAME[Index]));
 
     if FCollections[Index] = nil then
-      Flow.HandleError(ERROR_SDL_LOAD_SPRITE);
+      raise Exception.CreateFmt(MESSAGE_ERROR[ERROR_SDL_LOAD_SPRITE], [Img_GetError()]);
   end;
 end;
 

@@ -242,8 +242,10 @@ var
 implementation
 
 uses
+  SysUtils,
   Fairtris.Window,
-  Fairtris.Settings;
+  Fairtris.Settings,
+  Fairtris.Arrays;
 
 
 procedure TLegalMemory.Initialize();
@@ -418,7 +420,7 @@ begin
   Buffer := SDL_CreateTexture(Window.Renderer, SDL_PIXELFORMAT_BGR24, SDL_TEXTUREACCESS_TARGET, BUFFER_WIDTH, BUFFER_HEIGHT);
 
   if Buffer = nil then
-    Flow.HandleError(ERROR_SDL_CREATE_QUIT_BUFFER);
+    raise Exception.CreateFmt(MESSAGE_ERROR[ERROR_SDL_CREATE_QUIT_BUFFER], [SDL_GetError()]);
 end;
 
 

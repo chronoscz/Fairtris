@@ -61,22 +61,20 @@ uses
   Fairtris.Logic,
   Fairtris.Core,
   Fairtris.Converter,
+  Fairtris.Arrays,
   Fairtris.Constants;
 
 
 procedure TGame.CreateSystem();
 begin
-  if not SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, '0') then
-    Flow.HandleWarning(WARNING_SDL_HINT_MINIMIZING);
-
-  if not SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 'linear') then
-    Flow.HandleWarning(WARNING_SDL_HINT_QUALITY);
+  SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, '0');
+  SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 'linear');
 
   if SDL_Init(SDL_INIT_EVERYTHING) < 0 then
-    Flow.HandleError(ERROR_SDL_INITIALIZE_SYSTEM);
+    raise Exception.CreateFmt(MESSAGE_ERROR[ERROR_SDL_INITIALIZE_SYSTEM], [SDL_GetError()]);
 
   if Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, SOUND_CHANNELS_COUNT, 1024) < 0 then
-    Flow.HandleError(ERROR_SDL_INITIALIZE_AUDIO);
+    raise Exception.CreateFmt(MESSAGE_ERROR[ERROR_SDL_INITIALIZE_AUDIO], [Mix_GetError()]);
 end;
 
 

@@ -9,8 +9,11 @@ program Fairtris.Main;
 {$RESOURCE Fairtris.Main.res}
 
 uses
+  SDL2,
   SysUtils,
-  Fairtris.Game;
+  Fairtris.Window,
+  Fairtris.Game,
+  Fairtris.Constants;
 begin
   try
     Game := TGame.Create();
@@ -21,7 +24,10 @@ begin
     end;
   except
     on Unexpected: Exception do
-      Flow.HandleException(Unexpected);
+    begin
+      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, PChar(ERROR_TITLE), PChar(ERROR_MESSAGE), GetWindowInstance());
+      Halt;
+    end;
   end;
 end.
 

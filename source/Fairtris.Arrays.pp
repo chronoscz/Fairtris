@@ -1008,12 +1008,6 @@ const
     ''
   );
 
-const
-  MESSAGE_WARNING: array [WARNING_FIRST .. WARNING_LAST] of String = (
-    '',
-    ''
-  );
-
 
 implementation
 
