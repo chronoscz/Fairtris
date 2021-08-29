@@ -54,7 +54,6 @@ implementation
 
 uses
   SDL2_Image,
-  Fairtris.Flow,
   Fairtris.Window,
   Fairtris.Arrays;
 

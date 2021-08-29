@@ -10,7 +10,6 @@ program Fairtris.Main;
 
 uses
   SysUtils,
-  Fairtris.Flow,
   Fairtris.Game;
 begin
   try
