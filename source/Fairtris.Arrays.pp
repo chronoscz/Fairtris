@@ -995,17 +995,16 @@ const
 
 const
   MESSAGE_ERROR: array [ERROR_FIRST .. ERROR_LAST] of String = (
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    ''
+    'SDL system failed to initialize',
+    'SDL audio subsystem failed to initialize',
+    'Unable to create SDL window',
+    'Unable to create SDL window renderer',
+    'Unable to get the SDL version and thus the window handle',
+    'Unable to create back buffer texture',
+    'Unable to create quit buffer texture',
+    'Unable to load sprite %s',
+    'Unable to load background %s',
+    'Unable to load sound %s'
   );
 
 
