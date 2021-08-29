@@ -31,6 +31,7 @@ implementation
 uses
   SysUtils,
   Fairtris.Window,
+  Fairtris.Classes,
   Fairtris.Arrays,
   Fairtris.Constants;
 
@@ -40,7 +41,7 @@ begin
   FNative := SDL_CreateTexture(Window.Renderer, SDL_PIXELFORMAT_BGR24, SDL_TEXTUREACCESS_TARGET, BUFFER_WIDTH, BUFFER_HEIGHT);
 
   if FNative = nil then
-    raise Exception.CreateFmt(MESSAGE_ERROR[ERROR_SDL_CREATE_BACK_BUFFER], [SDL_GetError()]);
+    raise SDLException.CreateFmt(ERROR_MESSAGE_SDL, [MESSAGE_ERROR[ERROR_SDL_CREATE_BACK_BUFFER], SDL_GetError()]);
 end;
 
 

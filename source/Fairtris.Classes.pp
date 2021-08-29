@@ -4,6 +4,13 @@ unit Fairtris.Classes;
 
 interface
 
+uses
+  SysUtils;
+
+
+type
+  SDLException = class(Exception);
+
 
 type
   generic TCustomState<T> = class(TObject)

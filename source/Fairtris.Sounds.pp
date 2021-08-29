@@ -58,6 +58,7 @@ implementation
 
 uses
   SysUtils,
+  Fairtris.Classes,
   Fairtris.Memory,
   Fairtris.Settings,
   Fairtris.Arrays;
@@ -95,7 +96,7 @@ begin
     FSounds[Index] := Mix_LoadWAV(PChar(FSoundsPath + SOUND_FILENAME[Index]));
 
     if FSounds[Index] = nil then
-      raise Exception.CreateFmt(MESSAGE_ERROR[ERROR_SDL_LOAD_SOUND], [Mix_GetError()]);
+      raise SDLException.CreateFmt(ERROR_MESSAGE_SDL, [MESSAGE_ERROR[ERROR_SDL_LOAD_SOUND], Mix_GetError()]);
   end;
 end;
 

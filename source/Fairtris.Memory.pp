@@ -245,6 +245,7 @@ uses
   SysUtils,
   Fairtris.Window,
   Fairtris.Settings,
+  Fairtris.Classes,
   Fairtris.Arrays;
 
 
@@ -420,7 +421,7 @@ begin
   Buffer := SDL_CreateTexture(Window.Renderer, SDL_PIXELFORMAT_BGR24, SDL_TEXTUREACCESS_TARGET, BUFFER_WIDTH, BUFFER_HEIGHT);
 
   if Buffer = nil then
-    raise Exception.CreateFmt(MESSAGE_ERROR[ERROR_SDL_CREATE_QUIT_BUFFER], [SDL_GetError()]);
+    raise SDLException.CreateFmt(ERROR_MESSAGE_SDL, [MESSAGE_ERROR[ERROR_SDL_CREATE_QUIT_BUFFER], SDL_GetError()]);
 end;
 
 

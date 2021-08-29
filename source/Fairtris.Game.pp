@@ -60,6 +60,7 @@ uses
   Fairtris.Generators,
   Fairtris.Logic,
   Fairtris.Core,
+  Fairtris.Classes,
   Fairtris.Converter,
   Fairtris.Arrays,
   Fairtris.Constants;
@@ -71,10 +72,10 @@ begin
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 'linear');
 
   if SDL_Init(SDL_INIT_EVERYTHING) < 0 then
-    raise Exception.CreateFmt(MESSAGE_ERROR[ERROR_SDL_INITIALIZE_SYSTEM], [SDL_GetError()]);
+    raise SDLException.CreateFmt(ERROR_MESSAGE_SDL, [MESSAGE_ERROR[ERROR_SDL_INITIALIZE_SYSTEM], SDL_GetError()]);
 
   if Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, SOUND_CHANNELS_COUNT, 1024) < 0 then
-    raise Exception.CreateFmt(MESSAGE_ERROR[ERROR_SDL_INITIALIZE_AUDIO], [Mix_GetError()]);
+    raise SDLException.CreateFmt(ERROR_MESSAGE_SDL, [MESSAGE_ERROR[ERROR_SDL_INITIALIZE_AUDIO], Mix_GetError()]);
 end;
 
 
