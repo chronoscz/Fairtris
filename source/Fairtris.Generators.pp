@@ -81,10 +81,10 @@ type
 
 
 type
-  TFairGenerator = class(TCustomGenerator)
+  TMultiBagGenerator = class(TCustomGenerator)
   private
     FIndexBags: array [0 .. 1] of TBag;
-    FPieceBags: array [FAIR_BAGS_FIRST .. FAIR_BAGS_LAST] of TBag;
+    FPieceBags: array [MULTIBAG_BAG_FIRST .. MULTIBAG_BAG_LAST] of TBag;
   private
     FIndexPick: Integer;
   private
@@ -329,21 +329,21 @@ begin
 end;
 
 
-constructor TFairGenerator.Create();
+constructor TMultiBagGenerator.Create();
 var
   Index: Integer;
 begin
   inherited Create();
 
   for Index := Low(FIndexBags) to High(FIndexBags) do
-    FIndexBags[Index] := TBag.Create(FAIR_BAGS_COUNT);
+    FIndexBags[Index] := TBag.Create(MULTIBAG_BAGS_COUNT);
 
   for Index := Low(FPieceBags) to High(FPieceBags) do
-    FPieceBags[Index] := TBag.Create(FAIR_BAGS[Index]);
+    FPieceBags[Index] := TBag.Create(MULTIBAG_BAGS[Index]);
 end;
 
 
-destructor TFairGenerator.Destroy();
+destructor TMultiBagGenerator.Destroy();
 var
   Index: Integer;
 begin
@@ -357,20 +357,20 @@ begin
 end;
 
 
-procedure TFairGenerator.Initialize();
+procedure TMultiBagGenerator.Initialize();
 begin
   inherited Initialize();
 
   FIndexPick := 0;
 
-  FBagPick := FAIR_BAGS_FIRST;
-  FBagSwap := FAIR_BAGS_FIRST + 1;
+  FBagPick := MULTIBAG_BAG_FIRST;
+  FBagSwap := MULTIBAG_BAG_FIRST + 1;
 
-  FBagPiece := FAIR_BAGS_PIECE_FIRST;
+  FBagPiece := MULTIBAG_PIECE_FIRST;
 end;
 
 
-procedure TFairGenerator.Prepare();
+procedure TMultiBagGenerator.Prepare();
 begin
   inherited Prepare();
 
@@ -381,7 +381,7 @@ begin
 end;
 
 
-procedure TFairGenerator.Shuffle();
+procedure TMultiBagGenerator.Shuffle();
 var
   Index: Integer;
 begin
@@ -407,14 +407,14 @@ begin
 end;
 
 
-procedure TFairGenerator.Step();
+procedure TMultiBagGenerator.Step();
 var
   Index: Integer;
 begin
   FRegister.Step();
   FIndexBags[FBagSwap].Swap(FRegister.Seed);
 
-  for Index := FAIR_BAGS_FIRST to FAIR_BAGS_LAST do
+  for Index := MULTIBAG_BAG_FIRST to MULTIBAG_BAG_LAST do
     if Index <> FIndexBags[FBagPick][FIndexPick] then
     begin
       FRegister.Step();
@@ -423,7 +423,7 @@ begin
 end;
 
 
-function TFairGenerator.Pick(): Integer;
+function TMultiBagGenerator.Pick(): Integer;
 begin
   Result := FPieceBags[FIndexBags[FBagPick][FIndexPick]][FBagPiece];
   FBagPiece := (FBagPiece + 1) mod FPieceBags[0].Size;
@@ -525,10 +525,10 @@ end;
 
 constructor TGenerators.Create();
 begin
-  FGenerators[RNG_7_BAG]   := T7BagGenerator.Create();
-  FGenerators[RNG_FAIR]    := TFairGenerator.Create();
-  FGenerators[RNG_CLASSIC] := TClassicGenerator.Create();
-  FGenerators[RNG_UNFAIR]  := TUnfairGenerator.Create();
+  FGenerators[RNG_7_BAG]    := T7BagGenerator.Create();
+  FGenerators[RNG_MULTIBAG] := TMultiBagGenerator.Create();
+  FGenerators[RNG_CLASSIC]  := TClassicGenerator.Create();
+  FGenerators[RNG_UNFAIR]   := TUnfairGenerator.Create();
 end;
 
 

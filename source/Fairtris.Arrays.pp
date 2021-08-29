@@ -106,7 +106,7 @@ const
 const
   BEST_SCORES_FILENAME: array [RNG_FIRST .. RNG_LAST] of String = (
     '7-bag.ini',
-    'fair.ini',
+    'multibag.ini',
     'classic.ini',
     'unfair.ini'
   );
@@ -378,7 +378,7 @@ const
 
   ITEM_TEXT_PLAY_RNG: array [RNG_FIRST .. RNG_LAST] of String = (
     ITEM_TEXT_PLAY_RNG_7_BAG,
-    ITEM_TEXT_PLAY_RNG_FAIR,
+    ITEM_TEXT_PLAY_RNG_MULTIBAG,
     ITEM_TEXT_PLAY_RNG_CLASSIC,
     ITEM_TEXT_PLAY_RNG_UNFAIR
   );
@@ -969,7 +969,7 @@ const
 
 
 const
-  FAIR_BAGS: array [FAIR_BAGS_FIRST .. FAIR_BAGS_LAST] of array [FAIR_BAGS_PIECE_FIRST .. FAIR_BAGS_PIECE_LAST] of Integer = (
+  MULTIBAG_BAGS: array [MULTIBAG_BAG_FIRST .. MULTIBAG_BAG_LAST] of array [MULTIBAG_PIECE_FIRST .. MULTIBAG_PIECE_LAST] of Integer = (
     (PIECE_T, PIECE_J, PIECE_Z, PIECE_O, PIECE_S, PIECE_L,  PIECE_I,  PIECE_T),
     (PIECE_T, PIECE_J, PIECE_Z, PIECE_O, PIECE_S, PIECE_L,  PIECE_I,  PIECE_J),
     (PIECE_T, PIECE_J, PIECE_Z, PIECE_O, PIECE_S, PIECE_L,  PIECE_I,  PIECE_Z),
