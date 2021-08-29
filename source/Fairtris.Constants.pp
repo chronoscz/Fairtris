@@ -966,10 +966,6 @@ const
 
 
 const
-  LOG_FILENAME = 'log.txt';
-
-
-const
   ERROR_SDL_INITIALIZE_SYSTEM = 1;
   ERROR_SDL_INITIALIZE_AUDIO  = 2;
 
