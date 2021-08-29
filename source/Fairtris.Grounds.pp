@@ -92,7 +92,13 @@ begin
     FGrounds[Index] := Img_LoadTexture(Window.Renderer, PChar(FGroundsPath + GROUND_FILENAME[Index]));
 
     if FGrounds[Index] = nil then
-      raise SDLException.CreateFmt(ERROR_MESSAGE_SDL, [MESSAGE_ERROR[ERROR_SDL_LOAD_GROUND], Img_GetError()]);
+      raise SDLException.CreateFmt(
+        ERROR_MESSAGE_SDL,
+        [
+          MESSAGE_ERROR[ERROR_SDL_LOAD_GROUND].Format([FGroundsPath + GROUND_FILENAME[Index]]),
+          Img_GetError()
+        ]
+      );
   end;
 end;
 

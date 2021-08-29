@@ -72,7 +72,13 @@ begin
     FCollections[Index] := Img_LoadTexture(Window.Renderer, PChar(SPRITE_PATH + SPRITE_FILENAME[Index]));
 
     if FCollections[Index] = nil then
-      raise SDLException.CreateFmt(ERROR_MESSAGE_SDL, [MESSAGE_ERROR[ERROR_SDL_LOAD_SPRITE], Img_GetError()]);
+      raise SDLException.CreateFmt(
+        ERROR_MESSAGE_SDL,
+        [
+          MESSAGE_ERROR[ERROR_SDL_LOAD_SPRITE].Format([SPRITE_PATH + SPRITE_FILENAME[Index]]),
+          Img_GetError()
+        ]
+      );
   end;
 end;
 

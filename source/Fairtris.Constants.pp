@@ -991,8 +991,8 @@ const
 
                       LineEnding + LineEnding +
 
-                      'General message: "%s".' + LineEnding + LineEnding +
-                      'Original message: "%s".' + LineEnding + LineEnding +
+                      'General message: %s.' + LineEnding + LineEnding +
+                      'SDL message: "%s".' + LineEnding + LineEnding +
 
                       'Reinstalling the game may fix the problem, and if it persists, contact the author or report ' +
                       'a bug in the project''s repository (see the file "license.txt" for helpful information).';

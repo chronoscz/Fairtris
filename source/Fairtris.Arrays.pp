@@ -1002,9 +1002,9 @@ const
     'Unable to get the SDL version and thus the window handle',
     'Unable to create back buffer texture',
     'Unable to create quit buffer texture',
-    'Unable to load sprite %s',
-    'Unable to load background %s',
-    'Unable to load sound %s'
+    'Unable to load sprite "%s"',
+    'Unable to load background "%s"',
+    'Unable to load sound "%s"'
   );
 
 
