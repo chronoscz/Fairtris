@@ -785,6 +785,7 @@ begin
   FGenerators[RNG_MULTIBAG] := TMultiBagGenerator.Create();
   FGenerators[RNG_CLASSIC]  := TClassicGenerator.Create();
   FGenerators[RNG_TGM]      := TTGMGenerator.Create();
+  FGenerators[RNG_TGM3]     := TTGM3Generator.Create();
   FGenerators[RNG_UNFAIR]   := TUnfairGenerator.Create();
 end;
 
