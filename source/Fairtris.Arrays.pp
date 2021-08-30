@@ -106,7 +106,7 @@ const
 const
   BEST_SCORES_FILENAME: array [RNG_FIRST .. RNG_LAST] of String = (
     '7-bag.ini',
-    'multibag.ini',
+    'multi-bag.ini',
     'classic.ini',
     'tgm.ini',
     'tgm3.ini',
