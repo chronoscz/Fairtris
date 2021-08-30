@@ -143,6 +143,25 @@ type
 
 
 type
+  TTGMGenerator = class(TCustomGenerator)
+  private
+    FPieces: TPool;
+    FSpecial: TPool;
+    FHistory: TPool;
+  public
+    constructor Create(); override;
+    destructor Destroy(); override;
+  public
+    procedure Prepare(); override;
+  public
+    procedure Shuffle(); override;
+    procedure Step(); override;
+  public
+    function Pick(): Integer; override;
+  end;
+
+
+type
   TUnfairGenerator = class(TCustomGenerator)
   public
     procedure Shuffle(); override;
@@ -563,6 +582,71 @@ begin
 
   FSpawnID := IndexToSpawnID(Index);
   Result := SpawnIDToPieceID(FSpawnID);
+end;
+
+
+constructor TTGMGenerator.Create();
+begin
+  inherited Create();
+
+  FPieces := TPool.Create(TGM_POOL_PIECES);
+  FSpecial := TPool.Create(TGM_POOL_SPECIAL);
+  FHistory := TPool.Create(TGM_POOL_HISTORY);
+end;
+
+
+destructor TTGMGenerator.Destroy();
+begin
+  FPieces.Free();
+  FSpecial.Free();
+  FHistory.Free();
+
+  inherited Destroy();
+end;
+
+
+procedure TTGMGenerator.Prepare();
+begin
+  inherited Prepare();
+
+  FHistory.Free();
+  FHistory := TPool.Create(TGM_POOL_HISTORY);
+end;
+
+
+procedure TTGMGenerator.Shuffle();
+begin
+  FRegister.Step();
+end;
+
+
+procedure TTGMGenerator.Step();
+begin
+  FRegister.Step();
+end;
+
+
+function TTGMGenerator.Pick(): Integer;
+var
+  Roll: Integer;
+begin
+  if FHistory.Size = TGM_POOL_HISTORY_COUNT then
+  begin
+    Result := FSpecial[Hi(FRegister.Seed) mod FHistory.Size];
+    FHistory.Append(Result);
+  end
+  else
+  begin
+    for Roll := 0 to 3 do
+    begin
+      FRegister.Step();
+      Result := FPieces[Hi(FRegister.Seed) mod FPieces.Size];
+
+      if not FHistory.Contains(Result) then Break;
+    end;
+
+    FHistory.Push(Result);
+  end;
 end;
 
 
