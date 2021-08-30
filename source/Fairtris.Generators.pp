@@ -45,6 +45,23 @@ type
 
 
 type
+  TPool = class(TBag)
+  private
+    procedure SetItem(AIndex, AItem: Integer);
+    function GetEmpty(): Boolean;
+  public
+    procedure Append(AItem: Integer);
+    procedure Remove(AItem: Integer);
+    procedure Push(AItem: Integer);
+  public
+    function Contains(AItem: Integer): Boolean;
+  public
+    property Item[AIndex: Integer]: Integer read GetItem write SetItem; default;
+    property Empty: Boolean read GetEmpty;
+  end;
+
+
+type
   TCustomGenerator = class(TInterfacedObject, IGenerable)
   protected
     FRegister: TShiftRegister;
@@ -237,6 +254,43 @@ end;
 procedure TBag.SwapFirst();
 begin
   FItems.Exchange(0, 1);
+end;
+
+
+procedure TPool.SetItem(AIndex, AItem: Integer);
+begin
+  FItems[AIndex] := AItem;
+end;
+
+
+function TPool.GetEmpty(): Boolean;
+begin
+  Result := FItems.Count = 0;
+end;
+
+
+procedure TPool.Append(AItem: Integer);
+begin
+  FItems.Add(AItem);
+end;
+
+
+procedure TPool.Remove(AItem: Integer);
+begin
+  FItems.Remove(AItem);
+end;
+
+
+procedure TPool.Push(AItem: Integer);
+begin
+  FItems.Delete(0);
+  FItems.Add(AItem);
+end;
+
+
+function TPool.Contains(AItem: Integer): Boolean;
+begin
+  Result := FItems.IndexOf(AItem) <> -1;
 end;
 
 
