@@ -632,7 +632,7 @@ var
 begin
   if FHistory.Size = TGM_POOL_HISTORY_COUNT then
   begin
-    Result := FSpecial[Hi(FRegister.Seed) mod FHistory.Size];
+    Result := FSpecial[Hi(FRegister.Seed) mod FSpecial.Size];
     FHistory.Append(Result);
   end
   else
