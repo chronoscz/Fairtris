@@ -108,6 +108,7 @@ const
     '7-bag.ini',
     'multibag.ini',
     'classic.ini',
+    'tgm.ini',
     'unfair.ini'
   );
 
@@ -380,6 +381,7 @@ const
     ITEM_TEXT_PLAY_RNG_7_BAG,
     ITEM_TEXT_PLAY_RNG_MULTIBAG,
     ITEM_TEXT_PLAY_RNG_CLASSIC,
+    ITEM_TEXT_PLAY_RNG_TGM,
     ITEM_TEXT_PLAY_RNG_UNFAIR
   );
 

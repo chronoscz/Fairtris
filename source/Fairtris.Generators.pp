@@ -673,6 +673,7 @@ begin
   FGenerators[RNG_7_BAG]    := T7BagGenerator.Create();
   FGenerators[RNG_MULTIBAG] := TMultiBagGenerator.Create();
   FGenerators[RNG_CLASSIC]  := TClassicGenerator.Create();
+  FGenerators[RNG_TGM]      := TTGMGenerator.Create();
   FGenerators[RNG_UNFAIR]   := TUnfairGenerator.Create();
 end;
 
