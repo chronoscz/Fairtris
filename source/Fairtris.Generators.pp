@@ -5,6 +5,7 @@ unit Fairtris.Generators;
 interface
 
 uses
+  FGL,
   Fairtris.Interfaces,
   Fairtris.Constants;
 
@@ -23,20 +24,23 @@ type
 
 type
   TBag = class(TObject)
+  private type
+    TItems = specialize TFPGList<Integer>;
   private
-    FItems: array of Integer;
-    FSize: Integer;
+    FItems: TItems;
   private
     function GetItem(AIndex: Integer): Integer;
+    function GetSize(): Integer;
   public
     constructor Create(const ACount: Integer);
     constructor Create(const AItems: array of Integer);
+    destructor Destroy(); override;
   public
     procedure Swap(ASeed: UInt16);
     procedure SwapFirst();
   public
     property Item[AIndex: Integer]: Integer read GetItem; default;
-    property Size: Integer read FSize;
+    property Size: Integer read GetSize;
   end;
 
 
@@ -181,11 +185,10 @@ constructor TBag.Create(const ACount: Integer);
 var
   Index: Integer;
 begin
-  FSize := ACount;
-  SetLength(FItems, ACount);
+  FItems := TItems.Create();
 
-  for Index := 0 to FSize - 1 do
-    FItems[Index] := Index;
+  for Index := 0 to ACount - 1 do
+    FItems.Add(Index);
 end;
 
 
@@ -193,11 +196,17 @@ constructor TBag.Create(const AItems: array of Integer);
 var
   Index: Integer;
 begin
-  FSize := Length(AItems);
-  SetLength(FItems, FSize);
+  FItems := TItems.Create();
 
-  for Index := 0 to FSize - 1 do
-    FItems[Index] := AItems[Index];
+  for Index := 0 to High(AItems) do
+    FItems.Add(AItems[Index]);
+end;
+
+
+destructor TBag.Destroy();
+begin
+  FItems.Free();
+  inherited Destroy();
 end;
 
 
@@ -207,29 +216,27 @@ begin
 end;
 
 
+function TBag.GetSize(): Integer;
+begin
+  Result := FItems.Count;
+end;
+
+
 procedure TBag.Swap(ASeed: UInt16);
 var
-  IndexA, IndexB, TempPiece: Integer;
+  IndexA, IndexB: Integer;
 begin
-  IndexA := Hi(ASeed) mod FSize;
-  IndexB := Lo(ASeed) mod FSize;
+  IndexA := Hi(ASeed) mod FItems.Count;
+  IndexB := Lo(ASeed) mod FItems.Count;
 
   if IndexA <> IndexB then
-  begin
-    TempPiece := FItems[IndexA];
-    FItems[IndexA] := FItems[IndexB];
-    FItems[IndexB] := TempPiece;
-  end;
+    FItems.Exchange(IndexA, IndexB);
 end;
 
 
 procedure TBag.SwapFirst();
-var
-  TempIndex: Integer;
 begin
-  TempIndex := FItems[0];
-  FItems[0] := FItems[1];
-  FItems[1] := TempIndex;
+  FItems.Exchange(0, 1);
 end;
 
 
