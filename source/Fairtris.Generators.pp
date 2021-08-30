@@ -53,6 +53,7 @@ type
     procedure Append(AItem: Integer);
     procedure Remove(AItem: Integer);
     procedure Push(AItem: Integer);
+    procedure Clear();
   public
     function Contains(AItem: Integer): Boolean;
   public
@@ -147,6 +148,28 @@ type
   private
     FPieces: TPool;
     FSpecial: TPool;
+    FHistory: TPool;
+  public
+    constructor Create(); override;
+    destructor Destroy(); override;
+  public
+    procedure Prepare(); override;
+  public
+    procedure Shuffle(); override;
+    procedure Step(); override;
+  public
+    function Pick(): Integer; override;
+  end;
+
+
+type
+  TTGM3Generator = class(TCustomGenerator)
+  private
+    FPieces: TPool;
+    FSpecial: TPool;
+  private
+    FPool: TPool;
+    FOrder: TPool;
     FHistory: TPool;
   public
     constructor Create(); override;
@@ -304,6 +327,12 @@ procedure TPool.Push(AItem: Integer);
 begin
   FItems.Delete(0);
   FItems.Add(AItem);
+end;
+
+
+procedure TPool.Clear();
+begin
+  FItems.Clear();
 end;
 
 
@@ -645,6 +674,88 @@ begin
       if not FHistory.Contains(Result) then Break;
     end;
 
+    FHistory.Push(Result);
+  end;
+end;
+
+
+constructor TTGM3Generator.Create();
+begin
+  inherited Create();
+
+  FPieces := TPool.Create(TGM3_POOL_PIECES);
+  FSpecial := TPool.Create(TGM3_POOL_SPECIAL);
+
+  FPool := TPool.Create(TGM3_POOL_POOL);
+  FHistory := TPool.Create(TGM3_POOL_HISTORY);
+
+  FOrder := TPool.Create([]);
+end;
+
+
+destructor TTGM3Generator.Destroy();
+begin
+  FPieces.Free();
+  FSpecial.Free();
+  FPool.Free();
+  FHistory.Free();
+  FOrder.Free();
+
+  inherited Destroy();
+end;
+
+
+procedure TTGM3Generator.Prepare();
+begin
+  inherited Prepare();
+
+  FHistory.Free();
+  FHistory := TPool.Create(TGM3_POOL_HISTORY);
+
+  FOrder.Clear();
+end;
+
+
+procedure TTGM3Generator.Shuffle();
+begin
+  FRegister.Step();
+end;
+
+
+procedure TTGM3Generator.Step();
+begin
+  FRegister.Step();
+end;
+
+
+function TTGM3Generator.Pick(): Integer;
+var
+  Roll, Index: Integer;
+begin
+  if FHistory.Size = TGM3_POOL_HISTORY_COUNT then
+  begin
+    Result := FSpecial[Hi(FRegister.Seed) mod FSpecial.Size];
+    FHistory.Append(Result);
+  end
+  else
+  begin
+    for Roll := 0 to 5 do
+    begin
+      FRegister.Step();
+
+      Index := Hi(FRegister.Seed) mod FPool.Size;
+      Result := FPool[Index];
+
+      if (not FHistory.Contains(Result)) or (Roll = 5) then Break;
+
+      if not FOrder.Empty then
+        FPool[Index] := FOrder[0];
+    end;
+
+    FOrder.Remove(Result);
+    FOrder.Append(Result);
+
+    FPool[Index] := FOrder[0];
     FHistory.Push(Result);
   end;
 end;
