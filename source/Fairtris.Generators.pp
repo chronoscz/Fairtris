@@ -226,6 +226,12 @@ begin
 end;
 
 
+function TBag.GetItem(AIndex: Integer): Integer;
+begin
+  Result := FItems[AIndex];
+end;
+
+
 procedure TBag.Swap(ASeed: UInt16);
 var
   IndexA, IndexB, TempPiece: Integer;
@@ -249,12 +255,6 @@ begin
   TempIndex := FItems[0];
   FItems[0] := FItems[1];
   FItems[1] := TempIndex;
-end;
-
-
-function TBag.GetItem(AIndex: Integer): Integer;
-begin
-  Result := FItems[AIndex];
 end;
 
 
