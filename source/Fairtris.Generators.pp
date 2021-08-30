@@ -22,24 +22,6 @@ type
 
 
 type
-  TCustomGenerator = class(TInterfacedObject, IGenerable)
-  protected
-    FRegister: TShiftRegister;
-  public
-    constructor Create(); virtual;
-    destructor Destroy(); override;
-  public
-    procedure Initialize(); virtual;
-    procedure Prepare(); virtual;
-  public
-    procedure Shuffle(); virtual; abstract;
-    procedure Step(); virtual; abstract;
-  public
-    function Pick(): Integer; virtual; abstract;
-  end;
-
-
-type
   TBag = class(TObject)
   private
     FItems: array of Integer;
@@ -55,6 +37,24 @@ type
   public
     property Item[AIndex: Integer]: Integer read GetItem; default;
     property Size: Integer read FSize;
+  end;
+
+
+type
+  TCustomGenerator = class(TInterfacedObject, IGenerable)
+  protected
+    FRegister: TShiftRegister;
+  public
+    constructor Create(); virtual;
+    destructor Destroy(); override;
+  public
+    procedure Initialize(); virtual;
+    procedure Prepare(); virtual;
+  public
+    procedure Shuffle(); virtual; abstract;
+    procedure Step(); virtual; abstract;
+  public
+    function Pick(): Integer; virtual; abstract;
   end;
 
 
@@ -177,31 +177,6 @@ begin
 end;
 
 
-constructor TCustomGenerator.Create();
-begin
-  FRegister := TShiftRegister.Create();
-end;
-
-
-destructor TCustomGenerator.Destroy();
-begin
-  FRegister.Free();
-  inherited Destroy();
-end;
-
-
-procedure TCustomGenerator.Initialize();
-begin
-  FRegister.Initialize();
-end;
-
-
-procedure TCustomGenerator.Prepare();
-begin
-
-end;
-
-
 constructor TBag.Create(const ACount: Integer);
 var
   Index: Integer;
@@ -255,6 +230,31 @@ begin
   TempIndex := FItems[0];
   FItems[0] := FItems[1];
   FItems[1] := TempIndex;
+end;
+
+
+constructor TCustomGenerator.Create();
+begin
+  FRegister := TShiftRegister.Create();
+end;
+
+
+destructor TCustomGenerator.Destroy();
+begin
+  FRegister.Free();
+  inherited Destroy();
+end;
+
+
+procedure TCustomGenerator.Initialize();
+begin
+  FRegister.Initialize();
+end;
+
+
+procedure TCustomGenerator.Prepare();
+begin
+
 end;
 
 
