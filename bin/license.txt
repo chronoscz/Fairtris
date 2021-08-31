@@ -1,9 +1,11 @@
-Fair implementation of Classis Tetris®
+Faritris — a fair implementation of Classic Tetris®
 Copyleft 2021 furious programming. All rights reversed.
 
-For more information, see <https://github.com/furious-programming/fairtris>
+for more informations, see <https://github.com/furious-programming/fairtris>
 
 
+
+LICENSE TERMS
 
 This is free and unencumbered software released into the public domain.
 
