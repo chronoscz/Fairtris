@@ -211,7 +211,7 @@ type
     procedure Shuffle();
   public
     property Generator: IGenerable read FGenerator;
-    property Generators[AGeneratorID: Integer]: IGenerable read GetGenerator;
+    property Generators[AGeneratorID: Integer]: IGenerable read GetGenerator; default;
     property GeneratorID: Integer read FGeneratorID write SetGeneratorID;
   end;
 
