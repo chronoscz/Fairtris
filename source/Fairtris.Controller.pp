@@ -37,7 +37,7 @@ type
     procedure Attach();
     procedure Detach();
   public
-    property Button[AIndex: Integer]: TSwitch read GetButton;
+    property Button[AIndex: Integer]: TSwitch read GetButton; default;
     property Connected: Boolean read FConnected;
   end;
 
@@ -48,12 +48,12 @@ type
     TScanCodes = array [CONTROLLER_BUTTON_FIRST .. CONTROLLER_BUTTON_LAST] of UInt8;
   private
     FDevice: TDevice;
-    FScanCodesUsed: TScanCodes;
     FScanCodesDefault: TScanCodes;
+    FScanCodesCurrent: TScanCodes;
   private
     procedure InitDevice();
     procedure InitScanCodesDefault();
-    procedure InitScanCodesUsed();
+    procedure InitScanCodesCurrent();
   private
     procedure DoneDevice();
   private
@@ -211,7 +211,7 @@ constructor TController.Create();
 begin
   InitDevice();
   InitScanCodesDefault();
-  InitScanCodesUsed();
+  InitScanCodesCurrent();
 end;
 
 
@@ -243,7 +243,7 @@ begin
 end;
 
 
-procedure TController.InitScanCodesUsed();
+procedure TController.InitScanCodesCurrent();
 begin
   Restore();
 end;
@@ -257,13 +257,13 @@ end;
 
 function TController.GetSwitch(AButtonID: Integer): TSwitch;
 begin
-  Result := FDevice.Button[FScanCodesUsed[AButtonID]];
+  Result := FDevice[FScanCodesCurrent[AButtonID]];
 end;
 
 
 function TController.GetScanCode(AButtonID: Integer): UInt8;
 begin
-  Result := FScanCodesUsed[AButtonID];
+  Result := FScanCodesCurrent[AButtonID];
 end;
 
 
@@ -275,7 +275,7 @@ end;
 
 procedure TController.Initialize();
 begin
-  FScanCodesUsed := Settings.Controller.ScanCodes;
+  FScanCodesCurrent := Settings.Controller.ScanCodes;
 end;
 
 
@@ -293,13 +293,13 @@ end;
 
 procedure TController.Restore();
 begin
-  FScanCodesUsed := FScanCodesDefault;
+  FScanCodesCurrent := FScanCodesDefault;
 end;
 
 
 procedure TController.Introduce();
 begin
-  FScanCodesUsed := Memory.Controller.ScanCodes;
+  FScanCodesCurrent := Memory.Controller.ScanCodes;
 end;
 
 
@@ -335,7 +335,7 @@ begin
   Result := False;
 
   for Index := CONTROLLER_SCANCODE_BUTTON_FIRST to CONTROLLER_SCANCODE_BUTTON_LAST do
-    if FDevice.Button[Index].JustPressed then
+    if FDevice[Index].JustPressed then
       if not Catched then
       begin
         Catched := True;
