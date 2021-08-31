@@ -118,12 +118,8 @@ begin
   SDL_GetDisplayBounds(FMonitorIndex, @FMonitorBounds);
 
   FWindowSize := Settings.General.Size;
-
-  if FWindowSize <> WINDOW_FULLSCREEN then
-  begin
-    FWindowBounds.X := Settings.General.Left;
-    FWindowBounds.Y := Settings.General.Top;
-  end;
+  FWindowBounds.X := Settings.General.Left;
+  FWindowBounds.Y := Settings.General.Top;
 
   UpdateWindow();
   UpdateBuffer();
