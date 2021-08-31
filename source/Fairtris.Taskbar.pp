@@ -49,12 +49,10 @@ var
   ButtonTotal: Integer = 100;
   ButtonValue: Integer;
 begin
-  if not FSupported then Exit;
-
   if Clock.FrameRate.Changed then
     SDL_SetWindowTitle(Window.Window, PChar('Fairtris — %dfps'.Format([Clock.FrameRate.Current])));
 
-  if Clock.FrameLoad.Changed then
+  if FSupported and Clock.FrameLoad.Changed then
   begin
     ButtonValue := Max(1, Min(Clock.FrameLoad.Current, ButtonTotal));
 
