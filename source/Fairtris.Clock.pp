@@ -143,7 +143,7 @@ end;
 procedure TClock.InitFrameRate();
 begin
   FFrameRateSecond := SecondOf(Now());
-  FFrameRateLimit := CLOCK_FRAMERATE_NTSC;
+  FFrameRateLimit := CLOCK_FRAMERATE_DEFAULT;
 end;
 
 
