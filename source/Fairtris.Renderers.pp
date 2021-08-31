@@ -750,7 +750,7 @@ begin
       Memory.Options.ItemIndex = ITEM_OPTIONS_SET_UP,
       IfThen(Input.Device.Connected, COLOR_WHITE, COLOR_DARK),
       IfThen(
-        Memory.Options.ItemIndex = ITEM_OPTIONS_WINDOW,
+        Memory.Options.ItemIndex = ITEM_OPTIONS_SIZE,
         IfThen(Placement.VideoEnabled, COLOR_DARK, COLOR_WHITE),
         COLOR_WHITE
       )
@@ -765,7 +765,7 @@ begin
       Memory.Options.ItemIndex in [ITEM_OPTIONS_SET_UP, ITEM_OPTIONS_BACK],
       IfThen(Input.Device.Connected, COLOR_WHITE, COLOR_DARK),
       IfThen(
-        Memory.Options.ItemIndex = ITEM_OPTIONS_WINDOW,
+        Memory.Options.ItemIndex = ITEM_OPTIONS_SIZE,
         IfThen(Placement.VideoEnabled, COLOR_DARK, COLOR_WHITE),
         COLOR_WHITE
       )
@@ -792,11 +792,11 @@ begin
   );
 
   RenderText(
-    ITEM_X_OPTIONS_WINDOW,
-    ITEM_Y_OPTIONS_WINDOW,
-    ITEM_TEXT_OPTIONS_WINDOW_TITLE,
+    ITEM_X_OPTIONS_SIZE,
+    ITEM_Y_OPTIONS_SIZE,
+    ITEM_TEXT_OPTIONS_SIZE_TITLE,
     IfThen(
-      Memory.Options.ItemIndex = ITEM_OPTIONS_WINDOW,
+      Memory.Options.ItemIndex = ITEM_OPTIONS_SIZE,
       IfThen(Placement.VideoEnabled, COLOR_DARK, COLOR_WHITE),
       IfThen(
         Placement.VideoEnabled,
@@ -842,14 +842,14 @@ begin
 
   RenderText(
     ITEM_X_OPTIONS_PARAM,
-    ITEM_Y_OPTIONS_WINDOW,
+    ITEM_Y_OPTIONS_SIZE,
     IfThen(
       Placement.VideoEnabled,
-      ITEM_TEXT_OPTIONS_WINDOW_VIDEO_MODE,
-      ITEM_TEXT_OPTIONS_WINDOW[Memory.Options.Size]
+      ITEM_TEXT_OPTIONS_SIZE_VIDEO_MODE,
+      ITEM_TEXT_OPTIONS_SIZE[Memory.Options.Size]
     ),
     IfThen(
-      Memory.Options.ItemIndex = ITEM_OPTIONS_WINDOW,
+      Memory.Options.ItemIndex = ITEM_OPTIONS_SIZE,
       IfThen(Placement.VideoEnabled, COLOR_DARK, COLOR_WHITE),
       IfThen(
         Placement.VideoEnabled,

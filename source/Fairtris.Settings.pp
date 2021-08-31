@@ -257,7 +257,7 @@ begin
   FTop := CorrectTop(FTop);
 
   FInput  := CorrectRange(FInput,  INPUT_FIRST,  INPUT_LAST,  INPUT_DEFAULT);
-  FSize   := CorrectRange(FSize,   WINDOW_FIRST, WINDOW_LAST, WINDOW_DEFAULT);
+  FSize   := CorrectRange(FSize,   SIZE_FIRST,   SIZE_LAST,   SIZE_DEFAULT);
   FTheme  := CorrectRange(FTheme,  THEME_FIRST,  THEME_LAST,  THEME_DEFAULT);
   FSounds := CorrectRange(FSounds, SOUNDS_FIRST, SOUNDS_LAST, SOUNDS_DEFAULT);
   FScroll := CorrectRange(FScroll, SCROLL_FIRST, SCROLL_LAST, SCROLL_DEFAULT);
@@ -297,7 +297,7 @@ begin
   FTop     := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_TOP,     SETTINGS_VALUE_GENERAL_TOP);
 
   FInput  := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_INPUT,  SETTINGS_VALUE_GENERAL_INPUT);
-  FSize   := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_WINDOW, SETTINGS_VALUE_GENERAL_WINDOW);
+  FSize   := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_SIZE,   SETTINGS_VALUE_GENERAL_SIZE);
   FTheme  := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_THEME,  SETTINGS_VALUE_GENERAL_THEME);
   FSounds := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_SOUNDS, SETTINGS_VALUE_GENERAL_SOUNDS);
   FScroll := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_SCROLL, SETTINGS_VALUE_GENERAL_SCROLL);
@@ -319,7 +319,7 @@ begin
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_TOP,     FTop);
 
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_INPUT,  FInput);
-  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_WINDOW, FSize);
+  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_SIZE,   FSize);
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_THEME,  FTheme);
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_SOUNDS, FSounds);
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_SCROLL, FScroll);

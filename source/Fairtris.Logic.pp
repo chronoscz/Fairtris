@@ -770,14 +770,14 @@ end;
 
 procedure TLogic.UpdateOptionsWindow();
 begin
-  if Memory.Options.ItemIndex <> ITEM_OPTIONS_WINDOW then Exit;
+  if Memory.Options.ItemIndex <> ITEM_OPTIONS_SIZE then Exit;
 
   Memory.Options.Size := Placement.WindowSize;
 
   if Input.Device.Left.JustPressed or Input.Keyboard.Left.JustPressed then
     if not Placement.VideoEnabled then
     begin
-      UpdateItemIndex(Memory.Options.Size, WINDOW_COUNT, ITEM_PREV);
+      UpdateItemIndex(Memory.Options.Size, SIZE_COUNT, ITEM_PREV);
       Sounds.PlaySound(SOUND_SHIFT);
     end
     else
@@ -786,7 +786,7 @@ begin
   if Input.Device.Right.JustPressed or Input.Keyboard.Right.JustPressed then
     if not Placement.VideoEnabled then
     begin
-      UpdateItemIndex(Memory.Options.Size, WINDOW_COUNT, ITEM_NEXT);
+      UpdateItemIndex(Memory.Options.Size, SIZE_COUNT, ITEM_NEXT);
       Sounds.PlaySound(SOUND_SHIFT);
     end
     else
