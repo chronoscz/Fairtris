@@ -305,7 +305,7 @@ procedure TPlacement.EnlargeWindow();
 begin
   if FVideoEnabled then Exit;
 
-  if FWindowSize < WINDOW_FULLSCREEN then
+  if FWindowSize < WINDOW_LAST then
   begin
     FWindowSize += 1;
 
@@ -320,7 +320,7 @@ procedure TPlacement.ReduceWindow();
 begin
   if FVideoEnabled then Exit;
 
-  if FWindowSize > WINDOW_NATIVE then
+  if FWindowSize > WINDOW_FIRST then
   begin
     FWindowSize -= 1;
 
