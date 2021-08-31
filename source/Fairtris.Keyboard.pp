@@ -47,11 +47,11 @@ type
     FDevice: TDevice;
   private
     FScanCodesDefault: TScanCodes;
-    FScanCodesUsed: TScanCodes;
+    FScanCodesCurrent: TScanCodes;
   private
     procedure InitDevice();
     procedure InitScanCodesDefault();
-    procedure InitScanCodesUsed();
+    procedure InitScanCodesCurrent();
   private
     procedure DoneDevice();
   private
@@ -169,7 +169,7 @@ constructor TKeyboard.Create();
 begin
   InitDevice();
   InitScanCodesDefault();
-  InitScanCodesUsed();
+  InitScanCodesCurrent();
 end;
 
 
@@ -201,7 +201,7 @@ begin
 end;
 
 
-procedure TKeyboard.InitScanCodesUsed();
+procedure TKeyboard.InitScanCodesCurrent();
 begin
   Restore();
 end;
@@ -215,13 +215,13 @@ end;
 
 function TKeyboard.GetSwitch(AKeyID: Integer): TSwitch;
 begin
-  Result := FDevice.Key[FScanCodesUsed[AKeyID]];
+  Result := FDevice.Key[FScanCodesCurrent[AKeyID]];
 end;
 
 
 function TKeyboard.GetScanCode(AKeyID: Integer): UInt8;
 begin
-  Result := FScanCodesUsed[AKeyID];
+  Result := FScanCodesCurrent[AKeyID];
 end;
 
 
@@ -233,7 +233,7 @@ end;
 
 procedure TKeyboard.Initialize();
 begin
-  FScanCodesUsed := Settings.Keyboard.ScanCodes;
+  FScanCodesCurrent := Settings.Keyboard.ScanCodes;
 end;
 
 
@@ -251,13 +251,13 @@ end;
 
 procedure TKeyboard.Restore();
 begin
-  FScanCodesUsed := FScanCodesDefault;
+  FScanCodesCurrent := FScanCodesDefault;
 end;
 
 
 procedure TKeyboard.Introduce();
 begin
-  FScanCodesUsed := Memory.Keyboard.ScanCodes;
+  FScanCodesCurrent := Memory.Keyboard.ScanCodes;
 end;
 
 
