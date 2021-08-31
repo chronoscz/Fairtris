@@ -1001,6 +1001,14 @@ var
 begin
   if not Memory.Keyboard.SettingUp then Exit;
 
+  if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_CANCEL_MAPPING].JustPressed then
+  begin
+    Memory.Keyboard.SettingUp := False;
+    Sounds.PlaySound(SOUND_DROP);
+
+    Exit;
+  end;
+
   if Input.Keyboard.CatchedOneKey(ScanCode) then
   begin
     Memory.Keyboard.ScanCodes[Memory.Keyboard.KeyIndex] := ScanCode;
@@ -1153,6 +1161,14 @@ var
   ScanCode: UInt8 = CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED;
 begin
   if not Memory.Controller.SettingUp then Exit;
+
+  if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_CANCEL_MAPPING].JustPressed then
+  begin
+    Memory.Controller.SettingUp := False;
+    Sounds.PlaySound(SOUND_DROP);
+
+    Exit;
+  end;
 
   if Input.Controller.CatchedOneButton(ScanCode) then
   begin
