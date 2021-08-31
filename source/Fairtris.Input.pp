@@ -36,7 +36,7 @@ type
     procedure Invalidate();
   public
     property Device: IControllable read FDevice;
-    property Devices[ADeviceID: Integer]: IControllable read GetDevices;
+    property Devices[ADeviceID: Integer]: IControllable read GetDevices; default;
     property DeviceID: Integer read FDeviceID write SetDeviceID;
   public
     property Keyboard: TKeyboard read GetKeyboard;

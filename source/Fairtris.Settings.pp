@@ -341,7 +341,7 @@ var
   Index: Integer;
 begin
   for Index := DEVICE_FIRST to DEVICE_LAST do
-    ScanCodes[Index] := Input.Devices[FDeviceID].ScanCode[Index];
+    ScanCodes[Index] := Input[FDeviceID].ScanCode[Index];
 end;
 
 
