@@ -99,7 +99,7 @@ begin
   FMonitorIndex := 0;
   SDL_GetDisplayBounds(FMonitorIndex, @FMonitorBounds);
 
-  FWindowSize := WINDOW_FULLSCREEN;
+  FWindowSize := WINDOW_DEFAULT;
 
   UpdateWindowBounds();
   UpdateWindowClient();
