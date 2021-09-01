@@ -20,6 +20,8 @@ type
   private
     procedure UpdateItemIndex(var AItemIndex: Integer; ACount, AStep: Integer);
   private
+    function InputMenuSetPrev(): Boolean;
+    function InputMenuSetNext(): Boolean;
     function InputMenuAccepted(): Boolean;
     function InputMenuRejected(): Boolean;
   private
@@ -167,6 +169,18 @@ end;
 procedure TLogic.UpdateItemIndex(var AItemIndex: Integer; ACount, AStep: Integer);
 begin
   AItemIndex := WrapAround(AItemIndex, ACount, AStep);
+end;
+
+
+function TLogic.InputMenuSetPrev(): Boolean;
+begin
+  Result := Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed;
+end;
+
+
+function TLogic.InputMenuSetNext(): Boolean;
+begin
+  Result := Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed;
 end;
 
 
@@ -425,13 +439,13 @@ end;
 
 procedure TLogic.UpdateMenuSelection();
 begin
-  if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
+  if InputMenuSetPrev() then
   begin
     UpdateItemIndex(Memory.Menu.ItemIndex, ITEM_MENU_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_BLIP);
   end;
 
-  if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
+  if InputMenuSetNext() then
   begin
     UpdateItemIndex(Memory.Menu.ItemIndex, ITEM_MENU_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_BLIP);
@@ -464,13 +478,13 @@ end;
 
 procedure TLogic.UpdatePlaySelection();
 begin
-  if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
+  if InputMenuSetPrev() then
   begin
     UpdateItemIndex(Memory.Play.ItemIndex, ITEM_PLAY_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_BLIP);
   end;
 
-  if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
+  if InputMenuSetNext() then
   begin
     UpdateItemIndex(Memory.Play.ItemIndex, ITEM_PLAY_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_BLIP);
@@ -640,13 +654,13 @@ end;
 
 procedure TLogic.UpdatePauseSelection();
 begin
-  if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
+  if InputMenuSetPrev() then
   begin
     UpdateItemIndex(Memory.Pause.ItemIndex, ITEM_PAUSE_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_BLIP);
   end;
 
-  if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
+  if InputMenuSetNext() then
   begin
     UpdateItemIndex(Memory.Pause.ItemIndex, ITEM_PAUSE_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_BLIP);
@@ -701,13 +715,13 @@ end;
 
 procedure TLogic.UpdateTopOutSelection();
 begin
-  if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
+  if InputMenuSetPrev() then
   begin
     UpdateItemIndex(Memory.TopOut.ItemIndex, ITEM_TOP_OUT_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_BLIP);
   end;
 
-  if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
+  if InputMenuSetNext() then
   begin
     UpdateItemIndex(Memory.TopOut.ItemIndex, ITEM_TOP_OUT_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_BLIP);
@@ -749,13 +763,13 @@ end;
 
 procedure TLogic.UpdateOptionsSelection();
 begin
-  if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
+  if InputMenuSetPrev() then
   begin
     UpdateItemIndex(Memory.Options.ItemIndex, ITEM_OPTIONS_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_BLIP);
   end;
 
-  if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
+  if InputMenuSetNext() then
   begin
     UpdateItemIndex(Memory.Options.ItemIndex, ITEM_OPTIONS_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_BLIP);
@@ -923,13 +937,13 @@ procedure TLogic.UpdateKeyboardItemSelection();
 begin
   if Memory.Keyboard.Changing or Memory.Keyboard.SettingUp then Exit;
 
-  if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
+  if InputMenuSetPrev() then
   begin
     UpdateItemIndex(Memory.Keyboard.ItemIndex, ITEM_KEYBOARD_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_BLIP);
   end;
 
-  if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
+  if InputMenuSetNext() then
   begin
     UpdateItemIndex(Memory.Keyboard.ItemIndex, ITEM_KEYBOARD_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_BLIP);
@@ -963,13 +977,13 @@ procedure TLogic.UpdateKeyboardKeySelection();
 begin
   if not Memory.Keyboard.Changing or Memory.Keyboard.SettingUp then Exit;
 
-  if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
+  if InputMenuSetPrev() then
   begin
     UpdateItemIndex(Memory.Keyboard.KeyIndex, ITEM_KEYBOARD_KEY_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_BLIP);
   end;
 
-  if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
+  if InputMenuSetNext() then
   begin
     UpdateItemIndex(Memory.Keyboard.KeyIndex, ITEM_KEYBOARD_KEY_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_BLIP);
@@ -1087,13 +1101,13 @@ procedure TLogic.UpdateControllerItemSelection();
 begin
   if Memory.Controller.Changing or Memory.Controller.SettingUp then Exit;
 
-  if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
+  if InputMenuSetPrev() then
   begin
     UpdateItemIndex(Memory.Controller.ItemIndex, ITEM_CONTROLLER_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_BLIP);
   end;
 
-  if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
+  if InputMenuSetNext() then
   begin
     UpdateItemIndex(Memory.Controller.ItemIndex, ITEM_CONTROLLER_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_BLIP);
@@ -1127,13 +1141,13 @@ procedure TLogic.UpdateControllerButtonSelection();
 begin
   if not Memory.Controller.Changing or Memory.Controller.SettingUp then Exit;
 
-  if Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed then
+  if InputMenuSetPrev() then
   begin
     UpdateItemIndex(Memory.Controller.ButtonIndex, ITEM_CONTROLLER_BUTTON_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_BLIP);
   end;
 
-  if Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed then
+  if InputMenuSetNext() then
   begin
     UpdateItemIndex(Memory.Controller.ButtonIndex, ITEM_CONTROLLER_BUTTON_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_BLIP);
