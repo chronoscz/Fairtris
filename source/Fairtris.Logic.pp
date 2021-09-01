@@ -990,7 +990,7 @@ begin
   end;
 
   if Memory.Keyboard.KeyIndex < ITEM_KEYBOARD_KEY_LAST then
-    if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_CLEAR_MAPPING].JustPressed then
+    if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_CLEAR_MAPPING].JustPressed then
       if Memory.Keyboard.ScanCodes[Memory.Keyboard.KeyIndex] <> KEYBOARD_SCANCODE_KEY_NOT_MAPPED then
       begin
         Memory.Keyboard.ScanCodes[Memory.Keyboard.KeyIndex] := KEYBOARD_SCANCODE_KEY_NOT_MAPPED;
@@ -1056,7 +1056,7 @@ procedure TLogic.UpdateKeyboardScene();
 begin
   FScene.Validate();
 
-  if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_HELP_CONTROL].JustPressed then
+  if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_HELP_CONTROL].JustPressed then
   begin
     Memory.Keyboard.Changing := False;
     Memory.Keyboard.SettingUp := False;
@@ -1154,7 +1154,7 @@ begin
   end;
 
   if Memory.Controller.ButtonIndex < ITEM_CONTROLLER_BUTTON_LAST then
-    if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_CLEAR_MAPPING].JustPressed then
+    if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_CLEAR_MAPPING].JustPressed then
       if Memory.Controller.ScanCodes[Memory.Controller.ButtonIndex] <> CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED then
       begin
         Memory.Controller.ScanCodes[Memory.Controller.ButtonIndex] := CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED;
@@ -1220,7 +1220,7 @@ procedure TLogic.UpdateControllerScene();
 begin
   FScene.Validate();
 
-  if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_HELP_CONTROL].JustPressed then
+  if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_HELP_CONTROL].JustPressed then
   begin
     Memory.Keyboard.Changing := False;
     Memory.Keyboard.SettingUp := False;
@@ -1289,16 +1289,16 @@ end;
 
 procedure TLogic.UpdateCommon();
 begin
-  if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_HELP_UNDERSTAND].JustPressed then
+  if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_HELP_UNDERSTAND].JustPressed then
     HelpUnderstand();
 
-  if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_HELP_CONTROL].JustPressed then
+  if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_HELP_CONTROL].JustPressed then
     HelpControl();
 
-  if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_TOGGLE_CLIP].JustPressed then
+  if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_TOGGLE_CLIP].JustPressed then
     Renderers.ClipFrame := not Renderers.ClipFrame;
 
-  if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_TOGGLE_VIDEO].JustPressed then
+  if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_TOGGLE_VIDEO].JustPressed then
     Placement.ToggleVideoMode();
 
   if not Memory.Game.Started then
