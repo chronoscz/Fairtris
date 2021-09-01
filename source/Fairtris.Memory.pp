@@ -152,6 +152,8 @@ type
 
 type
   TKeyboardMemory = class(TObject)
+  private type
+    TScanCodes = array [KEYBOARD_KEY_FIRST .. KEYBOARD_KEY_LAST] of UInt8;
   public      
     procedure Initialize();
   public
@@ -164,12 +166,14 @@ type
     Changing: Boolean;
     SettingUp: Boolean;
   public
-    ScanCodes: array [KEYBOARD_KEY_FIRST .. KEYBOARD_KEY_LAST] of UInt8;
+    ScanCodes: TScanCodes;
   end;
 
 
 type
   TControllerMemory = class(TObject)
+  private type
+    TScanCodes = array [CONTROLLER_BUTTON_FIRST .. CONTROLLER_BUTTON_LAST] of UInt8;
   public             
     procedure Initialize();
   public
@@ -182,7 +186,7 @@ type
     Changing: Boolean;
     SettingUp: Boolean;
   public
-    ScanCodes: array [CONTROLLER_BUTTON_FIRST .. CONTROLLER_BUTTON_LAST] of UInt8;
+    ScanCodes: TScanCodes;
   end;
 
 
