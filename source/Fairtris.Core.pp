@@ -148,7 +148,7 @@ function TCore.CanClearLine(AIndex: Integer): Boolean;
 var
   BrickX: Integer;
 begin
-  if AIndex < 0 then Exit(False);
+  if AIndex <  0 then Exit(False);
   if AIndex > 19 then Exit(False);
 
   for BrickX := 0 to 9 do
