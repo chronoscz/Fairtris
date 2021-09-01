@@ -1,3 +1,26 @@
+{
+  Fairtris — a fair implementation of Classic Tetris®
+  Copyleft (ɔ) furious programming 2021. All rights reversed.
+
+  https://github.com/furious-programming/fairtris
+
+
+  This unit is part of the "Fairtris" video game source code. It contains
+  the implementation of all the piece sequence generators used by the
+  game, as well as the class responsible for creating, releasing and
+  managing these generators.
+
+
+  This is free and unencumbered software released into the public domain.
+
+  Anyone is free to copy, modify, publish, use, compile, sell, or
+  distribute this software, either in source code form or as a compiled
+  binary, for any purpose, commercial or non-commercial, and by any means.
+
+  For more information, see "LICENSE" or "license.txt" file, which should
+  be included with this distribution. If not, check the repository.
+}
+
 unit Fairtris.Generators;
 
 {$MODE OBJFPC}{$LONGSTRINGS ON}

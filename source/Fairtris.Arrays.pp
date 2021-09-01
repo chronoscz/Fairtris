@@ -1,3 +1,26 @@
+{
+  Fairtris — a fair implementation of Classic Tetris®
+  Copyleft (ɔ) furious programming 2021. All rights reversed.
+
+  https://github.com/furious-programming/fairtris
+
+
+  This unit is part of the "Fairtris" video game source code. Contains
+  fixed content arrays required by most game scenes, incl. file names,
+  content and item positions of all menus, layout of the main game scene
+  and its core mechanics, generators dana and so on.
+
+
+  This is free and unencumbered software released into the public domain.
+
+  Anyone is free to copy, modify, publish, use, compile, sell, or
+  distribute this software, either in source code form or as a compiled
+  binary, for any purpose, commercial or non-commercial, and by any means.
+
+  For more information, see "LICENSE" or "license.txt" file, which should
+  be included with this distribution. If not, check the repository.
+}
+
 unit Fairtris.Arrays;
 
 {$MODE OBJFPC}{$LONGSTRINGS ON}
