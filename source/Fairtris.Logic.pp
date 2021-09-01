@@ -977,10 +977,13 @@ begin
 
   if Memory.Keyboard.KeyIndex < ITEM_KEYBOARD_KEY_LAST then
     if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_CLEAR_MAPPING].JustPressed then
-    begin
-      Memory.Keyboard.ScanCodes[Memory.Keyboard.KeyIndex] := KEYBOARD_SCANCODE_KEY_NOT_MAPPED;
-      Sounds.PlaySound(SOUND_BURN);
-    end;
+      if Memory.Keyboard.ScanCodes[Memory.Keyboard.KeyIndex] <> KEYBOARD_SCANCODE_KEY_NOT_MAPPED then
+      begin
+        Memory.Keyboard.ScanCodes[Memory.Keyboard.KeyIndex] := KEYBOARD_SCANCODE_KEY_NOT_MAPPED;
+        Sounds.PlaySound(SOUND_BURN);
+      end
+      else
+        Sounds.PlaySound(SOUND_DROP);
 
   if Memory.Keyboard.KeyIndex in [ITEM_KEYBOARD_SCANCODE_FIRST .. ITEM_KEYBOARD_SCANCODE_LAST] then
     if InputMenuAccepted() then
@@ -1138,10 +1141,13 @@ begin
 
   if Memory.Controller.ButtonIndex < ITEM_CONTROLLER_BUTTON_LAST then
     if Input.Keyboard.Device.Key[KEYBOARD_SCANCODE_KEY_CLEAR_MAPPING].JustPressed then
-    begin
-      Memory.Controller.ScanCodes[Memory.Controller.ButtonIndex] := CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED;
-      Sounds.PlaySound(SOUND_BURN);
-    end;
+      if Memory.Controller.ScanCodes[Memory.Controller.ButtonIndex] <> CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED then
+      begin
+        Memory.Controller.ScanCodes[Memory.Controller.ButtonIndex] := CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED;
+        Sounds.PlaySound(SOUND_BURN);
+      end
+      else
+        Sounds.PlaySound(SOUND_DROP);
 
   if Memory.Controller.ButtonIndex in [ITEM_CONTROLLER_SCANCODE_FIRST .. ITEM_CONTROLLER_SCANCODE_LAST] then
     if InputMenuAccepted() then
