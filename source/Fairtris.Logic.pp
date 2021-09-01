@@ -955,7 +955,10 @@ begin
     if InputMenuAccepted() then
     begin
       Input.Device.A.Validate();
+      Input.Device.Start.Validate();
+
       Input.Keyboard.A.Validate();
+      Input.Keyboard.Start.Validate();
 
       Memory.Keyboard.KeyIndex := ITEM_KEYBOARD_KEY_FIRST;
       Memory.Keyboard.Changing := True;
@@ -1119,7 +1122,10 @@ begin
     if InputMenuAccepted() then
     begin
       Input.Device.A.Validate();
+      Input.Device.Start.Validate();
+
       Input.Keyboard.A.Validate();
+      Input.Keyboard.Start.Validate();
 
       Memory.Controller.ButtonIndex := ITEM_CONTROLLER_BUTTON_FIRST;
       Memory.Controller.Changing := True;
