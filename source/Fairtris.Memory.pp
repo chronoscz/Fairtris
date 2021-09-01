@@ -42,18 +42,14 @@ type
 
 
 type
-  TGameStack = array [0 .. 9, -2 .. 19] of Integer;
-  TGameStats = array [PIECE_FIRST .. PIECE_LAST] of Integer;
-
-type
-  TGameLineClears = array [LINES_FIRST .. LINES_LAST] of Integer;
-
-type
-  TGameLineClearPermits = array [-2 .. 1] of Boolean;
-  TGameLineClearIndexes = array [-2 .. 1] of Integer;
-
-type
   TGameMemory = class(TObject)
+  private type
+    TStack = array [0 .. 9, -2 .. 19] of Integer;
+    TStats = array [PIECE_FIRST .. PIECE_LAST] of Integer;
+  private type
+    TLineClears = array [LINES_FIRST .. LINES_LAST] of Integer;
+    TLineClearPermits = array [-2 .. 1] of Boolean;
+    TLineClearIndexes = array [-2 .. 1] of Integer;
   public
     constructor Create();
   public
@@ -82,8 +78,8 @@ type
     ClearCount: Integer;
     ClearTimer: Integer;
     ClearColumn: Integer;
-    ClearPermits: TGameLineClearPermits;
-    ClearIndexes: TGameLineClearIndexes;
+    ClearPermits: TLineClearPermits;
+    ClearIndexes: TLineClearIndexes;
   public
     AfterTransition: Boolean;
     AfterKillScreen: Boolean;
@@ -93,9 +89,9 @@ type
   public
     Flashing: Boolean;
   public
-    Stack: TGameStack;
-    Stats: TGameStats;
-    LineClears: TGameLineClears;
+    Stack: TStack;
+    Stats: TStats;
+    LineClears: TLineClears;
   public
     Best: Integer;
     Score: Integer;
@@ -304,8 +300,8 @@ begin
   ClearCount := 0;
   ClearTimer := 0;
   ClearColumn := 0;
-  ClearPermits := Default(TGameLineClearPermits);
-  ClearIndexes := Default(TGameLineClearIndexes);
+  ClearPermits := Default(TLineClearPermits);
+  ClearIndexes := Default(TLineClearIndexes);
 
   AfterTransition := False;
   AfterKillScreen := False;
@@ -315,9 +311,9 @@ begin
 
   Flashing := False;
 
-  Stack := Default(TGameStack);
-  Stats := Default(TGameStats);
-  LineClears := Default(TGameLineClears);
+  Stack := Default(TStack);
+  Stats := Default(TStats);
+  LineClears := Default(TLineClears);
 
   Best := 0;
   Score := 0;
