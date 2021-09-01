@@ -414,7 +414,8 @@ begin
       RenderText(
         ITEM_X_PLAY_BEST_SCORE,
         ITEM_Y_PLAY_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
-        ScoreEntryToString(BestScores[Memory.Play.Region][Memory.Play.RNG].Entry[Index])
+        ScoreEntryToString(BestScores[Memory.Play.Region][Memory.Play.RNG].Entry[Index]),
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
       )
     else
       RenderText(
