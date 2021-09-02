@@ -57,8 +57,6 @@ type
   private
     FRegions: TRegions;
     FEnabled: Integer;
-  private
-    function GetRegion(ARegionID: Integer): TRegionSounds;
   public
     constructor Create();
     destructor Destroy(); override;
@@ -146,12 +144,6 @@ begin
     FRegions[Index].Free();
 
   inherited Destroy();
-end;
-
-
-function TSounds.GetRegion(ARegionID: Integer): TRegionSounds;
-begin
-  Result := FRegions[SOUND_REGION[ARegionID]];
 end;
 
 
