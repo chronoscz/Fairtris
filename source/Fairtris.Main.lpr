@@ -82,15 +82,11 @@ end;
 }
 begin
   try
-    Game := TGame.Create();
-  except
-    on Error: SDLException do HandleErrorSDL(Error.Message);
-    on Error: Exception    do HandleErrorUnknown(Error.Message);
-  end;
-
-  try
-    Game.Run();
-    Game.Free();
+    with TGame.Create() do
+    begin
+      Run();
+      Free();
+    end;
   except
     on Error: SDLException do HandleErrorSDL(Error.Message);
     on Error: Exception    do HandleErrorUnknown(Error.Message);

@@ -57,10 +57,6 @@ type
   end;
 
 
-var
-  Game: TGame;
-
-
 implementation
 
 uses
