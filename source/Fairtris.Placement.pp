@@ -52,8 +52,6 @@ type
   private
     procedure SetMonitorIndex(AIndex: Integer);
     procedure SetWindowSize(ASize: Integer);
-    procedure SetWindowBounds(ABounds: TSDL_Rect);
-    procedure SetWindowClient(AClient: TSDL_Rect);
   private
     procedure UpdateWindowBounds();
     procedure UpdateWindowClient();
@@ -86,8 +84,8 @@ type
     property MonitorIndex: Integer write SetMonitorIndex;
   public
     property WindowSize: Integer read FWindowSize write SetWindowSize;
-    property WindowBounds: TSDL_Rect read FWindowBounds write SetWindowBounds;
-    property WindowClient: TSDL_Rect read FWindowClient write SetWindowClient;
+    property WindowBounds: TSDL_Rect read FWindowBounds;
+    property WindowClient: TSDL_Rect read FWindowClient;
   end;
 
 
@@ -174,18 +172,6 @@ begin
     UpdateWindow();
     UpdateBuffer();
   end;
-end;
-
-
-procedure TPlacement.SetWindowBounds(ABounds: TSDL_Rect);
-begin
-  FWindowBounds := ABounds;
-end;
-
-
-procedure TPlacement.SetWindowClient(AClient: TSDL_Rect);
-begin
-  FWindowClient := AClient;
 end;
 
 
