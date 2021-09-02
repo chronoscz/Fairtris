@@ -80,7 +80,7 @@ uses
   Global function to get the window pointer. The returned window pointer is only used in the unit "Fairtris.Main" to
   define the parent window for the error message box.
 
-  Result — window pointer if the window exists, "nil" if not already created
+  Result — window pointer if the window exists, "nil" if not already created.
 }
 function GetWindowInstance(): PSDL_Window;
 begin
@@ -141,7 +141,7 @@ end;
   It is used to check if the window has focus and is able to receive input messages. This method is a "Focused"
   property getter, which is used before updating the data of the input devices in the "TGame" class.
 
-  Result — "True" if the window is focused, "False" otherwise
+  Result — "True" if the window is focused, "False" otherwise.
 }
 function TWindow.GetFocused(): Boolean;
 begin

@@ -40,7 +40,7 @@ uses
   Displays the error message in the form of a native dialog, containing the original SDL error message and a more
   user-friendly Fairtris error message. When the dialog box is closed, the program operation is terminated.
 
-  AMessage — complete and formatted content of the error message
+  AMessage — complete and formatted content of the error message.
 }
 procedure HandleErrorSDL(const AMessage: String);
 begin
@@ -59,7 +59,7 @@ end;
   operation is interrupted. Only the raw exception message is delivered to this method, so the full error message must
   be extended.
 
-  AMessage — raw exception message
+  AMessage — raw exception message.
 }
 procedure HandleErrorUnknown(const AMessage: String);
 begin
