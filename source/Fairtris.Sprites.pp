@@ -32,6 +32,10 @@ uses
   Fairtris.Constants;
 
 
+{
+  Class for managing sprite collections. Its task is to load all textures from files in the appropriate directory.
+  Texture pointers are accessed through the "Collection" property.
+}
 type
   TSprites = class(TObject)
   private type
@@ -69,6 +73,11 @@ uses
   Fairtris.Arrays;
 
 
+{
+  Destructor is only responsible for releasing textures from memory.
+
+  It is called in the "TGame.DestroyObjects" method.
+}
 destructor TSprites.Destroy();
 var
   Index: Integer;
@@ -80,12 +89,26 @@ begin
 end;
 
 
+{
+  Collection property getter, returning a texture pointer based on the collection ID.
+
+  ACollectionID — the collection index in the range "SPRITE_CHARSET" to "SPRITE_CONTROLLER".
+
+  The property using this getter is used by many methods of all renderer classes located in the "Fairtris.Renderers"
+  unit, when rendering any text, stack contents, or pieces thumbnails.
+}
 function TSprites.GetCollection(ACollectionID: Integer): PSDL_Texture;
 begin
   Result := FCollections[ACollectionID];
 end;
 
 
+{
+  Method loading textures of sprite sets from a given directory. If for some reason the texture cannot be loaded, an
+  SDL exception is thrown, resulting in an error message and the process abort.
+
+  It is called in the "TGame.Initialize" method, when all data is loaded from different files.
+}
 procedure TSprites.Load();
 var
   Index: Integer;
