@@ -35,28 +35,51 @@ uses
   Fairtris.Classes,
   Fairtris.Constants;
 
-  procedure HandleErrorSDL(const AMessage: String);
-  begin
-    SDL_ShowSimpleMessageBox(
-      SDL_MESSAGEBOX_ERROR,
-      PChar(ERROR_TITLE),
-      PChar(AMessage),
-      GetWindowInstance()
-    );
-    Halt;
-  end;
 
-  procedure HandleErrorUnknown(const AMessage: String);
-  begin
-    SDL_ShowSimpleMessageBox(
-      SDL_MESSAGEBOX_ERROR,
-      PChar(ERROR_TITLE),
-      PChar(ERROR_MESSAGE_UNKNOWN.Format([AMessage])),
-      GetWindowInstance()
-    );
-    Halt;
-  end;
+{
+  Displays the error message in the form of a native dialog, containing the original SDL error message and a more
+  user-friendly Fairtris error message. When the dialog box is closed, the program operation is terminated.
 
+  AMessage — complete and formatted content of the error message
+}
+procedure HandleErrorSDL(const AMessage: String);
+begin
+  SDL_ShowSimpleMessageBox(
+    SDL_MESSAGEBOX_ERROR,
+    PChar(ERROR_TITLE),
+    PChar(AMessage),
+    GetWindowInstance()
+  );
+  Halt;
+end;
+
+
+{
+  Displays a native dialog with a message provided by the exception object. After closing the dialog box, the program
+  operation is interrupted. Only the raw exception message is delivered to this method, so the full error message must
+  be extended.
+
+  AMessage — raw exception message
+}
+procedure HandleErrorUnknown(const AMessage: String);
+begin
+  SDL_ShowSimpleMessageBox(
+    SDL_MESSAGEBOX_ERROR,
+    PChar(ERROR_TITLE),
+    PChar(ERROR_MESSAGE_UNKNOWN.Format([AMessage])),
+    GetWindowInstance()
+  );
+  Halt;
+end;
+
+
+{
+   The main program block in which an instance of the top-level game class is managed.
+
+   Both the constructor and the "Run" method can throw an exception because the window or renderer cannot be created,
+   or because the required files are missing. In the event of an exception, an error message is displayed and then the
+   process is interrupted.
+}
 begin
   try
     Game := TGame.Create();
