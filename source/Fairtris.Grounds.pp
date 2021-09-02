@@ -32,6 +32,10 @@ uses
   Fairtris.Constants;
 
 
+{
+  The class that stores the textures of all scene backgrounds for a single theme. It is responsible for loading
+  textures from disk and provides a convenient interface for downloading texture pointers.
+}
 type
   TThemeGrounds = class(TObject)
   private type
@@ -51,6 +55,10 @@ type
   end;
 
 
+{
+  High-level class for managing the objects of all texture sets for scene backgrounds. Its only job is to group
+  textures objects, manage them, and share references via "Theme" property.
+}
 type
   TGrounds = class(TThemeGrounds)
   private type
@@ -83,12 +91,24 @@ uses
   Fairtris.Arrays;
 
 
+{
+  The constructor's only task is to save the path of the background textures directory.
+
+  APath — a path to directory with a background texture set for a single theme.
+
+  It is called in the "TGrounds.Create" constructor, when creating objects of all themes.
+}
 constructor TThemeGrounds.Create(const APath: String);
 begin
   FGroundsPath := APath;
 end;
 
 
+{
+  This destructor unloads all previously loaded scene background textures from memory.
+
+  It is called in the "TGrounds.Destroy" destructor, when destroying object of all themes.
+}
 destructor TThemeGrounds.Destroy();
 var
   Index: Integer;
@@ -100,12 +120,26 @@ begin
 end;
 
 
+{
+  This method is the "TThemeGrounds.Ground" property ghetto, it is used to get texture indicator for given scene.
+
+  ASceneID — scene index ranging from "SCENE_LEGAL" to "SCENE_QUIT".
+
+  The property using this getter is used in the "TRenderer.RenderGround" method when rendering the background of
+  the current scene.
+}
 function TThemeGrounds.GetGround(ASceneID: Integer): PSDL_Texture;
 begin
   Result := FGrounds[ASceneID];
 end;
 
 
+{
+  The method responsible for loading the texture set for all scenes of a given theme. If the texture cannot be loaded
+  for some reason, an SDL exception is thrown, resulting in an error message and the process aborted.
+
+  It is called only in the "TGrounds.Load" method.
+}
 procedure TThemeGrounds.Load();
 var
   Index: Integer;
@@ -126,6 +160,12 @@ begin
 end;
 
 
+{
+  Constructor of an object that manages texture sets for various themes. Its only task is to instantiate the classes
+  that hold the texture sets.
+
+  This constructor is called in the "TGame.CreateObjects" method.
+}
 constructor TGrounds.Create();
 var
   Index: Integer;
@@ -135,6 +175,11 @@ begin
 end;
 
 
+{
+  This desuctor releases all objects that collect the scene background texture sets.
+
+  It is called in the "TGame.DestroyObjects" method.
+}
 destructor TGrounds.Destroy();
 var
   Index: Integer;
@@ -146,12 +191,26 @@ begin
 end;
 
 
+{
+  The "TGrounds.Theme" property getter. It is used to return reference of an object with a set of textures, based
+  on a given theme ID.
+
+  AThemeID — a theme index ranging from "THEME_MODERN" to "THEME_CLASSIC".
+
+  The property using this getter is only used when rendering the background of the current scene, which is done in
+  the "TRenderer.RenderGround" method.
+}
 function TGrounds.GetTheme(AThemeID: Integer): TThemeGrounds;
 begin
   Result := FThemes[AThemeID];
 end;
 
 
+{
+  This method is responsible for loading texture sets with backgrounds for all scenes of all themes.
+
+  It is called in the "TGame.Initialize" method only.
+}
 procedure TGrounds.Load();
 var
   Index: Integer;
