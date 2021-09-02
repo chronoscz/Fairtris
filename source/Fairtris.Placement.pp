@@ -50,7 +50,6 @@ type
     FWindowBounds: TSDL_Rect;
     FWindowClient: TSDL_Rect;
   private
-    procedure SetMonitorIndex(AIndex: Integer);
     procedure SetWindowSize(ASize: Integer);
   private
     procedure UpdateWindowBounds();
@@ -79,9 +78,6 @@ type
     property VideoEnabled: Boolean read FVideoEnabled;
     property VideoWidth: Integer read FVideoWidth;
     property VideoHeight: Integer read FVideoHeight;
-  public
-    property Monitor: Integer read FMonitorIndex;
-    property MonitorIndex: Integer write SetMonitorIndex;
   public
     property WindowSize: Integer read FWindowSize write SetWindowSize;
     property WindowBounds: TSDL_Rect read FWindowBounds;
@@ -153,13 +149,6 @@ begin
 end;
 
 
-procedure TPlacement.SetMonitorIndex(AIndex: Integer);
-begin
-  FMonitorIndex := EnsureRange(AIndex, 0, SDL_GetNumVideoDisplays() - 1);
-  SDL_GetDisplayBounds(FMonitorIndex, @FMonitorBounds);
-
-  UpdateWindow();
-end;
 
 
 procedure TPlacement.SetWindowSize(ASize: Integer);
