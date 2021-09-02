@@ -97,6 +97,8 @@ end;
 
   If the window or renderer cannot be created, or if the window handle cannot be retrieved, an appropriate SDL
   exception is thrown.
+
+  This constructor is called in the "TGame.CreateObjects" method.
 }
 constructor TWindow.Create();
 var
@@ -123,6 +125,8 @@ end;
 
 {
   Window class destructor. Its only task is to free the window and the renderer.
+
+  This destructor is called in the "TGame.DestroyObjects" method.
 }
 destructor TWindow.Destroy();
 begin
