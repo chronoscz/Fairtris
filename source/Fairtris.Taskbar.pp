@@ -64,6 +64,8 @@ uses
   It is used to check whether the current platform supports the "ITaskBarList3" interface, and thus the ability to set
   the colored progress bar on the taskbar button. If possible, it sets the "FSupported" flag on and allows the button
   data to be updated in the "Update" method.
+
+  This method is called in the "TGame.Initialize" method.
 }
 procedure TTaskbar.Initialize();
 var
