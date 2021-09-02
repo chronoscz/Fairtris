@@ -48,7 +48,7 @@ type
     procedure UpdateLogic();
     procedure UpdateBuffer();
     procedure UpdateWindow();
-    procedure UpdateTaskBar();
+    procedure UpdateTaskbar();
   public
     constructor Create();
     destructor Destroy(); override;
@@ -268,7 +268,7 @@ begin
 end;
 
 
-procedure TGame.UpdateTaskBar();
+procedure TGame.UpdateTaskbar();
 begin
   Taskbar.Update();
 end;
@@ -288,7 +288,7 @@ begin
       begin
         UpdateBuffer();
         UpdateWindow();
-        UpdateTaskBar();
+        UpdateTaskbar();
       end;
     CloseFrame();
   until Logic.Stopped;
