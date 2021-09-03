@@ -57,3 +57,7 @@ Video mode is used by default because it provides the best rendering efficiency.
 When the game is running in windowed mode (except fullscreen), you can drag the game window with the left mouse button anywhere on the desktop and on any screen. Additionally, you can change the size of the window with the mouse scroll — scroll forward to enlarge the window or backward to make it smaller. Don't worry — the state of the video mode as well as the size and position of the window are stored in the settings file, so they will be used the next time you start the game.
 
 You can close the game using the appropriate option in the main menu or by pressing <kbd>Alt+F4</kbd>.
+
+</br></br>
+
+*The content of this document is not finished yet, so stay tuned.*
