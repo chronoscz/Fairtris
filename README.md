@@ -17,7 +17,7 @@ Ready to play like a true Tetris master? **[Download](https://github.com/furious
 
 This project was initially created as a tool to test various RNG algorithms, but after some time it turned into a complete and rich video game that provides lots of fun. However, since **Tetris®** is a proprietary brand to which **[The Tetris Company](https://tetris.com/)** is entitled, **Fairtris is not a product**, so its source code and all binaries are public. It is a knowledge base for those who would like to know more about the internal mechanisms of the classic version of this game.
 
-Information on the license can be found in the **[LICENSE](LICENSE)** file. In general, this project is completely free, you can use it for whatever purpose you want, both the entire game and parts of it.
+Information on the license can be found in the **[LICENSE](LICENSE)** file. In general, this project is completely free, you can use it for whatever purpose you want, both the entire game and parts of it. Play, share, fork, modify, sell — do what you want, I don't give a fuck about it.
 
 **General features:**
 
@@ -38,3 +38,9 @@ Information on the license can be found in the **[LICENSE](LICENSE)** file. In g
 - it's light and very fast — runs smoothly even on a heavily loaded PC,
 - it is fully portable, no installation required,
 - and many more!
+
+# Compilation and developing
+
+**[Lazarus 2.0.12](https://sourceforge.net/projects/lazarus/)** was used to compile and work on the code, so you should use that as well (or a newer version if available). The **[headers for SDL2](https://github.com/PascalGameDevelopment/SDL2-for-Pascal)** are in the `source\sdl\` subdirectory, while the `.dll` libraries are in the `bin\` folder, where the executable file is created after compilation, so all you need to do is open the project in **Lazarus** and hit the compile button.
+
+If you are using **Free Pascal IDE** abomination or regular text editor such as **Notepad++**, be sure to add the **SDL** units path in the project settings and well... keep wasting your time.
