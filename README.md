@@ -19,7 +19,7 @@ This project was initially created as a tool to test various RNG algorithms, but
 
 Information on the license can be found in the **[LICENSE](LICENSE)** file. In general, this project is completely free, you can use it for whatever purpose you want, both the entire game and parts of it.
 
-# Features
+**General features:**
 
 - implementation of gameplay mechanics compatible with the **[Nintendo Tetris®](https://en.wikipedia.org/wiki/Tetris_(NES_video_game))** game,
 - extended mechanics with **hard-drop** and accumulation of soft-drop points,
