@@ -400,10 +400,10 @@ begin
 
   RenderText(
     ITEM_X_PLAY_PARAM,
-    ITEM_Y_PLAY_RNG,
-    ITEM_TEXT_PLAY_RNG[Memory.Play.RNG],
+    ITEM_Y_PLAY_GENERATOR,
+    ITEM_TEXT_PLAY_GENERATOR[Memory.Play.Generator],
     IfThen(
-      Memory.Play.ItemIndex = ITEM_PLAY_RNG,
+      Memory.Play.ItemIndex = ITEM_PLAY_GENERATOR,
       COLOR_WHITE,
       IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
     )
@@ -427,11 +427,11 @@ var
   Index: Integer;
 begin
   for Index := BEST_SCORES_FIRST to BEST_SCORES_LAST do
-    if Index < BestScores[Memory.Play.Region][Memory.Play.RNG].Count then
+    if Index < BestScores[Memory.Play.Region][Memory.Play.Generator].Count then
       RenderText(
         ITEM_X_PLAY_BEST_SCORE,
         ITEM_Y_PLAY_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
-        ScoreEntryToString(BestScores[Memory.Play.Region][Memory.Play.RNG].Entry[Index]),
+        ScoreEntryToString(BestScores[Memory.Play.Region][Memory.Play.Generator].Entry[Index]),
         IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
       )
     else

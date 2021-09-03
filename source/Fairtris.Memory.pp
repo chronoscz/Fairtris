@@ -53,7 +53,7 @@ type
     Autorepeat: Integer;
   public
     Region: Integer;
-    RNG: Integer;
+    Generator: Integer;
     Level: Integer;
   end;
 
@@ -284,7 +284,7 @@ begin
   Autorepeat := 0;
 
   Region := Settings.General.Region;
-  RNG := Settings.General.RNG;
+  Generator := Settings.General.Generator;
   Level := Settings.General.Level;
 end;
 

@@ -67,7 +67,7 @@ type
     FScroll: Integer;
   private
     FRegion: Integer;
-    FRNG: Integer;
+    FGenerator: Integer;
     FLevel: Integer;
   private
     function CorrectMonitor(AValue: Integer): Integer;
@@ -96,7 +96,7 @@ type
     property Scroll: Integer read FScroll;
   public
     property Region: Integer read FRegion;
-    property RNG: Integer read FRNG;
+    property Generator: Integer read FGenerator;
     property Level: Integer read FLevel;
   end;
 
@@ -279,9 +279,9 @@ begin
   FSounds := CorrectRange(FSounds, SOUNDS_FIRST, SOUNDS_LAST, SOUNDS_DEFAULT);
   FScroll := CorrectRange(FScroll, SCROLL_FIRST, SCROLL_LAST, SCROLL_DEFAULT);
 
-  FRegion := CorrectRange(FRegion, REGION_FIRST, REGION_LAST, REGION_DEFAULT);
-  FRNG    := CorrectRange(FRNG,    RNG_FIRST,    RNG_LAST,    RNG_DEFAULT);
-  FLevel  := CorrectLevel(FLevel);
+  FRegion    := CorrectRange(FRegion,    REGION_FIRST,    REGION_LAST,    REGION_DEFAULT);
+  FGenerator := CorrectRange(FGenerator, GENERATOR_FIRST, GENERATOR_LAST, GENERATOR_DEFAULT);
+  FLevel     := CorrectLevel(FLevel);
 end;
 
 
@@ -300,7 +300,7 @@ begin
   FScroll := Memory.Options.Scroll;
 
   FRegion := Memory.Play.Region;
-  FRNG := Memory.Play.RNG;
+  FGenerator := Memory.Play.Generator;
   FLevel := Memory.Play.Level;
 end;
 
@@ -319,9 +319,9 @@ begin
   FSounds := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_SOUNDS, SETTINGS_VALUE_GENERAL_SOUNDS);
   FScroll := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_SCROLL, SETTINGS_VALUE_GENERAL_SCROLL);
 
-  FRegion := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_REGION, SETTINGS_VALUE_GENERAL_REGION);
-  FRNG    := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_RNG,    SETTINGS_VALUE_GENERAL_RNG);
-  FLevel  := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_LEVEL,  SETTINGS_VALUE_GENERAL_LEVEL);
+  FRegion    := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_REGION,    SETTINGS_VALUE_GENERAL_REGION);
+  FGenerator := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_GENERATOR, SETTINGS_VALUE_GENERAL_GENERATOR);
+  FLevel     := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_LEVEL,     SETTINGS_VALUE_GENERAL_LEVEL);
 
   Correct();
 end;
@@ -341,9 +341,9 @@ begin
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_SOUNDS, FSounds);
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_SCROLL, FScroll);
 
-  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_REGION, FRegion);
-  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_RNG,    FRNG);
-  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_LEVEL,  FLevel);
+  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_REGION,    FRegion);
+  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_GENERATOR, FGenerator);
+  AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_LEVEL,     FLevel);
 end;
 
 

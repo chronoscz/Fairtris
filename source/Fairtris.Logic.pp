@@ -84,7 +84,7 @@ type
   private
     procedure UpdatePlaySelection();
     procedure UpdatePlayRegion();
-    procedure UpdatePlayRNG();
+    procedure UpdatePlayGenerator();
     procedure UpdatePlayLevel();
     procedure UpdatePlayScene();
   private
@@ -303,7 +303,7 @@ begin
   Entry.TetrisRate := Memory.Game.TetrisRate;
   Entry.TotalScore := Memory.Game.Score;
 
-  BestScores[Memory.Play.Region][Memory.Play.RNG].Add(Entry);
+  BestScores[Memory.Play.Region][Memory.Play.Generator].Add(Entry);
 end;
 
 
@@ -533,23 +533,23 @@ begin
 end;
 
 
-procedure TLogic.UpdatePlayRNG();
+procedure TLogic.UpdatePlayGenerator();
 begin
-  if Memory.Play.ItemIndex <> ITEM_PLAY_RNG then Exit;
+  if Memory.Play.ItemIndex <> ITEM_PLAY_GENERATOR then Exit;
 
   if InputOptionSetPrev() then
   begin
-    UpdateItemIndex(Memory.Play.RNG, RNG_COUNT, ITEM_PREV);
+    UpdateItemIndex(Memory.Play.Generator, GENERATOR_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if InputOptionSetNext() then
   begin
-    UpdateItemIndex(Memory.Play.RNG, RNG_COUNT, ITEM_NEXT);
+    UpdateItemIndex(Memory.Play.Generator, GENERATOR_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
-  Generators.GeneratorID := Memory.Play.RNG;
+  Generators.GeneratorID := Memory.Play.Generator;
 end;
 
 
@@ -1342,7 +1342,7 @@ begin
 
   UpdatePlaySelection();
   UpdatePlayRegion();
-  UpdatePlayRNG();
+  UpdatePlayGenerator();
   UpdatePlayLevel();
   UpdatePlayScene();
 end;

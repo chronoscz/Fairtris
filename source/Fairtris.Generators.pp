@@ -217,7 +217,7 @@ type
     FGenerator: IGenerable;
     FGeneratorID: Integer;
   private
-    FGenerators: array [RNG_FIRST .. RNG_LAST] of IGenerable;
+    FGenerators: array [GENERATOR_FIRST .. GENERATOR_LAST] of IGenerable;
   private
     function GetGenerator(AGeneratorID: Integer): IGenerable;
     procedure SetGeneratorID(AGeneratorID: Integer);
@@ -798,12 +798,12 @@ end;
 
 constructor TGenerators.Create();
 begin
-  FGenerators[RNG_7_BAG]    := T7BagGenerator.Create();
-  FGenerators[RNG_MULTIBAG] := TMultiBagGenerator.Create();
-  FGenerators[RNG_CLASSIC]  := TClassicGenerator.Create();
-  FGenerators[RNG_TGM]      := TTGMGenerator.Create();
-  FGenerators[RNG_TGM3]     := TTGM3Generator.Create();
-  FGenerators[RNG_UNFAIR]   := TUnfairGenerator.Create();
+  FGenerators[GENERATOR_7_BAG]    := T7BagGenerator.Create();
+  FGenerators[GENERATOR_MULTIBAG] := TMultiBagGenerator.Create();
+  FGenerators[GENERATOR_CLASSIC]  := TClassicGenerator.Create();
+  FGenerators[GENERATOR_TGM]      := TTGMGenerator.Create();
+  FGenerators[GENERATOR_TGM3]     := TTGM3Generator.Create();
+  FGenerators[GENERATOR_UNFAIR]   := TUnfairGenerator.Create();
 end;
 
 
@@ -824,7 +824,7 @@ procedure TGenerators.Initialize();
 var
   Index: Integer;
 begin
-  SetGeneratorID(Settings.General.RNG);
+  SetGeneratorID(Settings.General.Generator);
 
   for Index := Low(FGenerators) to High(FGenerators) do
     FGenerators[Index].Initialize();

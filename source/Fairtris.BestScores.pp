@@ -61,7 +61,7 @@ type
 
 
 type
-  TRNGEntries = class(TObject)
+  TGeneratorEntries = class(TObject)
   private
     FScoresFile: TMemIniFile;
     FEntries: TScoreEntries;
@@ -90,9 +90,9 @@ type
 type
   TRegionEntries = class(TObject)
   private
-    FRNGs: array [RNG_FIRST .. RNG_LAST] of TRNGEntries;
+    FGenerators: array [GENERATOR_FIRST .. GENERATOR_LAST] of TGeneratorEntries;
   private
-    function GetRNG(ARNGID: Integer): TRNGEntries;
+    function GetGenerator(AGeneratorID: Integer): TGeneratorEntries;
   public
     constructor Create(const APath: String; ARegionID: Integer);
     destructor Destroy(); override;
@@ -100,7 +100,7 @@ type
     procedure Load();
     procedure Save();
   public
-    property RNG[ARNGID: Integer]: TRNGEntries read GetRNG; default;
+    property Generator[AGeneratorID: Integer]: TGeneratorEntries read GetGenerator; default;
   end;
 
 
@@ -180,7 +180,7 @@ begin
 end;
 
 
-constructor TRNGEntries.Create(const AFileName: String; ARegionID: Integer);
+constructor TGeneratorEntries.Create(const AFileName: String; ARegionID: Integer);
 begin
   FScoresFile := TMemIniFile.Create(AFileName);
   FEntries := TScoreEntries.Create();
@@ -189,7 +189,7 @@ begin
 end;
 
 
-destructor TRNGEntries.Destroy();
+destructor TGeneratorEntries.Destroy();
 begin
   FScoresFile.Free();
   FEntries.Free();
@@ -198,19 +198,19 @@ begin
 end;
 
 
-function TRNGEntries.GetEntry(AIndex: Integer): TScoreEntry;
+function TGeneratorEntries.GetEntry(AIndex: Integer): TScoreEntry;
 begin
   Result := FEntries[AIndex];
 end;
 
 
-function TRNGEntries.GetCount(): Integer;
+function TGeneratorEntries.GetCount(): Integer;
 begin
   Result := FEntries.Count;
 end;
 
 
-function TRNGEntries.GetBestScore(): Integer;
+function TGeneratorEntries.GetBestScore(): Integer;
 begin
   if FEntries.Count = 0 then
     Result := 0
@@ -219,7 +219,7 @@ begin
 end;
 
 
-procedure TRNGEntries.Load();
+procedure TGeneratorEntries.Load();
 var
   NewEntry: TScoreEntry;
   EntriesCount, Index: Integer;
@@ -238,7 +238,7 @@ begin
 end;
 
 
-procedure TRNGEntries.Save();
+procedure TGeneratorEntries.Save();
 var
   StoreCount, Index: Integer;
 begin
@@ -252,7 +252,7 @@ begin
 end;
 
 
-procedure TRNGEntries.Add(AEntry: TScoreEntry);
+procedure TGeneratorEntries.Add(AEntry: TScoreEntry);
 var
   Index: Integer;
 begin
@@ -271,8 +271,8 @@ constructor TRegionEntries.Create(const APath: String; ARegionID: Integer);
 var
   Index: Integer;
 begin
-  for Index := Low(FRNGs) to High(FRNGs) do
-    FRNGs[Index] := TRNGEntries.Create(APath + BEST_SCORES_FILENAME[Index], ARegionID);
+  for Index := Low(FGenerators) to High(FGenerators) do
+    FGenerators[Index] := TGeneratorEntries.Create(APath + BEST_SCORES_FILENAME[Index], ARegionID);
 end;
 
 
@@ -280,8 +280,8 @@ destructor TRegionEntries.Destroy();
 var
   Index: Integer;
 begin
-  for Index := Low(FRNGs) to High(FRNGs) do
-    FRNGs[Index].Free();
+  for Index := Low(FGenerators) to High(FGenerators) do
+    FGenerators[Index].Free();
 
   inherited Destroy();
 end;
@@ -291,8 +291,8 @@ procedure TRegionEntries.Load();
 var
   Index: Integer;
 begin
-  for Index := Low(FRNGs) to High(FRNGs) do
-    FRNGs[Index].Load();
+  for Index := Low(FGenerators) to High(FGenerators) do
+    FGenerators[Index].Load();
 end;
 
 
@@ -300,14 +300,14 @@ procedure TRegionEntries.Save();
 var
   Index: Integer;
 begin
-  for Index := Low(FRNGs) to High(FRNGs) do
-    FRNGs[Index].Save();
+  for Index := Low(FGenerators) to High(FGenerators) do
+    FGenerators[Index].Save();
 end;
 
 
-function TRegionEntries.GetRNG(ARNGID: Integer): TRNGEntries;
+function TRegionEntries.GetGenerator(AGeneratorID: Integer): TGeneratorEntries;
 begin
-  Result := FRNGs[ARNGID];
+  Result := FGenerators[AGeneratorID];
 end;
 
 

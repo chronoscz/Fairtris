@@ -670,7 +670,7 @@ begin
   Memory.Game.Level := Memory.Play.Level;
   Memory.Game.Stats[Memory.Game.PieceID] += 1;
 
-  Memory.Game.Best := BestScores[Memory.Play.Region][Memory.Play.RNG].BestScore;
+  Memory.Game.Best := BestScores[Memory.Play.Region][Memory.Play.Generator].BestScore;
 end;
 
 
