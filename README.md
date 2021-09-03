@@ -39,7 +39,7 @@ Information on the license can be found in the **[LICENSE](LICENSE)** file. In g
 - it is fully portable, no installation required,
 - and many more!
 
-More detailed information on how to use the game and its various mechanics can be found further in this document. There is a lot to read.
+More detailed information on how to use the game and its mechanics can be found further in this document.
 
 # Compilation and developing
 
