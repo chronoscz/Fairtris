@@ -24,7 +24,7 @@ If you are using **Free Pascal IDE** abomination or regular text editor such as 
 
 This project was initially created as a tool to test various RNG algorithms, but after some time it turned into a complete and rich video game that provides lots of fun. However, since **Tetris®** is a proprietary brand to which **[The Tetris Company](https://tetris.com/)** is entitled, **Fairtris is not a product**, so its source code and all binaries are public. It is a knowledge base for those who would like to know more about the internal mechanisms of the classic version of this game.
 
-Information on the license can be found in the **[LICENSE](LICENSE)** file. In general, this project is completely free, you can use it for whatever purpose you want, both the entire game and parts of it. Play, share, fork, modify, sell — do what you want, I don't give a fuck about it.</br></br>
+Information on the license can be found in the **[LICENSE](LICENSE)** file. In general, this project is completely free, you can use it for whatever purpose you want, both the entire game and parts of it. So play, share, fork, modify, sell — do what you want, I don't give a fuck about it.</br></br>
 
 **Important features:**
 
