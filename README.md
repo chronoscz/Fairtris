@@ -43,4 +43,4 @@ Information on the license can be found in the **[LICENSE](LICENSE)** file. In g
 
 **[Lazarus 2.0.12](https://sourceforge.net/projects/lazarus/)** was used to compile and work on the code, so you should use that as well (or a newer version if available). The **[headers for SDL2](https://github.com/PascalGameDevelopment/SDL2-for-Pascal)** are in the `source\sdl\` subdirectory, while the `.dll` libraries are in the `bin\` folder, where the executable file is created after compilation, so all you need to do is open the project in **Lazarus** and hit the compile button.
 
-If you are using **Free Pascal IDE** abomination or regular text editor such as **Notepad++**, be sure to add the **SDL** units path in the project settings and well... keep wasting your time.
+If you are using **Free Pascal IDE** abomination or regular text editor such as **Notepad++**, be sure to somehow add the **SDL** units path in the project settings and well... keep wasting your time.
