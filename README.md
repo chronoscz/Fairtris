@@ -39,6 +39,8 @@ Information on the license can be found in the **[LICENSE](LICENSE)** file. In g
 - it is fully portable, no installation required,
 - and many more!
 
+More detailed information on how to use the game and its various mechanics can be found further in this document. There is a lot to read.
+
 # Compilation and developing
 
 **[Lazarus 2.0.12](https://sourceforge.net/projects/lazarus/)** was used to compile and work on the code, so you should use that as well (or a newer version if available). The **[headers for SDL2](https://github.com/PascalGameDevelopment/SDL2-for-Pascal)** are in the `source\sdl\` subdirectory, while the `.dll` libraries are in the `bin\` folder, where the executable file is created after compilation, so all you need to do is open the project in **Lazarus** and hit the compile button.
