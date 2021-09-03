@@ -5,13 +5,6 @@
   https://github.com/furious-programming/fairtris
 
 
-  This unit is part of the "Fairtris" video game source code. It contains
-  a set of classes representing individual files with the best results of
-  the player, broken down by game region and RNG type. Here is also the
-  main class that manages the entire record database and gives convenient
-  access to individual record lists.
-
-
   This is free and unencumbered software released into the public domain.
 
   Anyone is free to copy, modify, publish, use, compile, sell, or

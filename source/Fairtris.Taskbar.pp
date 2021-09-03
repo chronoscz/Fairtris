@@ -5,11 +5,6 @@
   https://github.com/furious-programming/fairtris
 
 
-  This unit is part of the "Fairtris" video game source code. Contains
-  the class of handling the button on the taskbar, displaying the name
-  of the game, the framerate and the CPU load.
-
-
   This is free and unencumbered software released into the public domain.
 
   Anyone is free to copy, modify, publish, use, compile, sell, or
@@ -30,10 +25,6 @@ uses
   ShlObj;
 
 
-{
-  The class is designed to store data about the systray button, and is also responsible for updating the data and
-  status of that button. The content and operation of this class is platform specific.
-}
 type
   TTaskbar = class(TObject)
   private
@@ -60,13 +51,6 @@ uses
   Fairtris.Clock;
 
 
-{
-  It is used to check whether the current platform supports the "ITaskBarList3" interface, and thus the ability to set
-  the colored progress bar on the taskbar button. If possible, it sets the "FSupported" flag on and allows the button
-  data to be updated in the "Update" method.
-
-  This method is called in the "TGame.Initialize" method.
-}
 procedure TTaskbar.Initialize();
 var
   Instance: IInterface;
@@ -76,13 +60,6 @@ begin
 end;
 
 
-{
-  A method for updating the status of the contents of a systray button. If the framerate has changed, it updates the
-  button content. If the progress bar is available on the current platform and the CPU load counter has changed
-  content, it sets the appropriate progress and button color.
-
-  This method is called in each iteration of the main game loop (see "TGame.Run" and "TGame.UpdateTaskbar" methods).
-}
 procedure TTaskbar.Update();
 var
   ButtonState: Integer = TBPF_ERROR;

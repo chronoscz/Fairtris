@@ -5,11 +5,6 @@
   https://github.com/furious-programming/fairtris
 
 
-  This unit is part of the "Fairtris" video game source code. Contains
-  useful utility functions that perform simple operations but reduce the
-  amount of code needed to write.
-
-
   This is free and unencumbered software released into the public domain.
 
   Anyone is free to copy, modify, publish, use, compile, sell, or

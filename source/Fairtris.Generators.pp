@@ -5,12 +5,6 @@
   https://github.com/furious-programming/fairtris
 
 
-  This unit is part of the "Fairtris" video game source code. It contains
-  the implementation of all the piece sequence generators used by the
-  game, as well as the class responsible for creating, releasing and
-  managing these generators.
-
-
   This is free and unencumbered software released into the public domain.
 
   Anyone is free to copy, modify, publish, use, compile, sell, or

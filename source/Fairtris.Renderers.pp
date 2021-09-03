@@ -5,13 +5,6 @@
   https://github.com/furious-programming/fairtris
 
 
-  This unit is part of the "Fairtris" video game source code. It contains
-  a base class to render all scenes and elements independent of the
-  current theme, as well as final renderer classes that render information
-  according to the specific themes. This module also includes a class to
-  manage renderers.
-
-
   This is free and unencumbered software released into the public domain.
 
   Anyone is free to copy, modify, publish, use, compile, sell, or

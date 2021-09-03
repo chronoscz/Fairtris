@@ -5,12 +5,6 @@
   https://github.com/furious-programming/fairtris
 
 
-  This unit is part of the "Fairtris" video game source code. It contains
-  classes that represent the keyboard device, supports key mapping, and
-  includes an interface that provides convenient access to keyboard key
-  data.
-
-
   This is free and unencumbered software released into the public domain.
 
   Anyone is free to copy, modify, publish, use, compile, sell, or

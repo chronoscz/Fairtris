@@ -5,13 +5,6 @@
   https://github.com/furious-programming/fairtris
 
 
-  This unit is part of the "Fairtris" video game source code. Contains
-  all simple constants for describing all game scenes and each element
-  of the game. This unit is a kind of control panel — the constants
-  located here allows to remodel the appearance and operation of every
-  aspect of the game.
-
-
   This is free and unencumbered software released into the public domain.
 
   Anyone is free to copy, modify, publish, use, compile, sell, or

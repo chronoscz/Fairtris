@@ -5,12 +5,6 @@
   https://github.com/furious-programming/fairtris
 
 
-  This unit is part of the "Fairtris" video game source code. It contains
-  declarations of interfaces designed for classes, which combines the
-  common and required functionality and whose references are managed by
-  high-level abstraction classes.
-
-
   This is free and unencumbered software released into the public domain.
 
   Anyone is free to copy, modify, publish, use, compile, sell, or

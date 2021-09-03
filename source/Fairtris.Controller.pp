@@ -5,12 +5,6 @@
   https://github.com/furious-programming/fairtris
 
 
-  This unit is part of the "Fairtris" video game source code. Contains
-  classes that represent the game controller device, supports button
-  mapping, and includes an interface for convenient access to the
-  joystick button data.
-
-
   This is free and unencumbered software released into the public domain.
 
   Anyone is free to copy, modify, publish, use, compile, sell, or

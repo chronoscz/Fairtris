@@ -5,13 +5,6 @@
   https://github.com/furious-programming/fairtris
 
 
-  This unit is part of the "Fairtris" video game source code. Contains
-  classes responsible for storing the required data needed to support
-  each element of each game scene. There is a separate class for each
-  game scene and the main class providing convenient access to the
-  collected data.
-
-
   This is free and unencumbered software released into the public domain.
 
   Anyone is free to copy, modify, publish, use, compile, sell, or

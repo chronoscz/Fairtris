@@ -5,12 +5,6 @@
   https://github.com/furious-programming/fairtris
 
 
-  This unit is part of the "Fairtris" video game source code. It contains
-  a class responsible for storing time data, framerate and frame load
-  information, and maintaining a given framerate, without overloading the
-  processor.
-
-
   This is free and unencumbered software released into the public domain.
 
   Anyone is free to copy, modify, publish, use, compile, sell, or

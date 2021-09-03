@@ -5,12 +5,6 @@
   https://github.com/furious-programming/fairtris
 
 
-  This unit is part of the "Fairtris" video game source code. Contains
-  the top-level abstraction class responsible for performing the game
-  logic code for all game scenes. The core game logic is separated into
-  a separate class, located in the "Fairtris.Core.pp" unit.
-
-
   This is free and unencumbered software released into the public domain.
 
   Anyone is free to copy, modify, publish, use, compile, sell, or

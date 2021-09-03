@@ -5,16 +5,6 @@
   https://github.com/furious-programming/fairtris
 
 
-  This unit is part of the "Fairtris" video game source code. It contains
-  the class responsible for executing the code of the main part of the
-  game, i.e. handling the stack, drawing and controlling pieces, updating
-  game counters and collecting statistical information about the game.
-
-  The class in this unit is used to handle the main game scene only. All
-  other scenes, ie the title screen and all menu scenes are handled by
-  the class located in the "Fairtris.Logic.pp" unit.
-
-
   This is free and unencumbered software released into the public domain.
 
   Anyone is free to copy, modify, publish, use, compile, sell, or
