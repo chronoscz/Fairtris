@@ -39,11 +39,11 @@ type
     FMonitorIndex: Integer;
     FMonitorBounds: TSDL_Rect;
   private
-    FWindowSize: Integer;
+    FWindowSizeID: Integer;
     FWindowBounds: TSDL_Rect;
     FWindowClient: TSDL_Rect;
   private
-    procedure SetWindowSize(ASize: Integer);
+    procedure SetWindowSize(ASizeID: Integer);
   private
     procedure UpdateWindowBounds();
     procedure UpdateWindowClient();
@@ -72,7 +72,7 @@ type
     property VideoWidth: Integer read FVideoWidth;
     property VideoHeight: Integer read FVideoHeight;
   public
-    property WindowSize: Integer read FWindowSize write SetWindowSize;
+    property WindowSize: Integer read FWindowSizeID write SetWindowSize;
     property WindowBounds: TSDL_Rect read FWindowBounds;
     property WindowClient: TSDL_Rect read FWindowClient;
   end;
@@ -110,7 +110,7 @@ begin
   FMonitorIndex := 0;
   SDL_GetDisplayBounds(FMonitorIndex, @FMonitorBounds);
 
-  FWindowSize := SIZE_DEFAULT;
+  FWindowSizeID := SIZE_DEFAULT;
 
   UpdateWindowBounds();
   UpdateWindowClient();
@@ -128,7 +128,7 @@ begin
   FMonitorIndex := Settings.General.Monitor;
   SDL_GetDisplayBounds(FMonitorIndex, @FMonitorBounds);
 
-  FWindowSize := Settings.General.Size;
+  FWindowSizeID := Settings.General.Size;
   FWindowBounds.X := Settings.General.Left;
   FWindowBounds.Y := Settings.General.Top;
 
@@ -142,11 +142,11 @@ begin
 end;
 
 
-procedure TPlacement.SetWindowSize(ASize: Integer);
+procedure TPlacement.SetWindowSize(ASizeID: Integer);
 begin
-  if FWindowSize <> ASize then
+  if FWindowSizeID <> ASizeID then
   begin
-    FWindowSize := ASize;
+    FWindowSizeID := ASizeID;
 
     UpdateMonitor();
     UpdateWindow();
@@ -162,13 +162,13 @@ begin
   if FVideoEnabled then
     FWindowBounds := SDL_Rect(0, 0, FVideoWidth, FVideoHeight)
   else
-  case FWindowSize of
+  case FWindowSizeID of
     SIZE_NATIVE, SIZE_ZOOM_2X, SIZE_ZOOM_3X, SIZE_ZOOM_4X:
     begin
-      NewWidth := Ord(FWindowSize) * BUFFER_WIDTH + BUFFER_WIDTH;
+      NewWidth := Ord(FWindowSizeID) * BUFFER_WIDTH + BUFFER_WIDTH;
       NewWidth := Round(NewWidth * WINDOW_RATIO);
 
-      NewHeight := Ord(FWindowSize) * BUFFER_HEIGHT + BUFFER_HEIGHT;
+      NewHeight := Ord(FWindowSizeID) * BUFFER_HEIGHT + BUFFER_HEIGHT;
 
       if FInitialized then
       begin
@@ -189,7 +189,7 @@ procedure TPlacement.UpdateWindowClient();
 var
   NewWidth, NewHeight: Integer;
 begin
-  if FVideoEnabled or (FWindowSize = SIZE_FULLSCREEN) then
+  if FVideoEnabled or (FWindowSizeID = SIZE_FULLSCREEN) then
   begin
     NewHeight := FWindowBounds.H;
     NewWidth := Round(NewHeight * CLIENT_RATIO_LANDSCAPE);
@@ -213,7 +213,7 @@ end;
 
 procedure TPlacement.UpdateWindowCursor();
 begin
-  if FVideoEnabled or (FWindowSize = SIZE_FULLSCREEN) then
+  if FVideoEnabled or (FWindowSizeID = SIZE_FULLSCREEN) then
     SDL_ShowCursor(SDL_DISABLE)
   else
     SDL_ShowCursor(SDL_ENABLE);
@@ -222,7 +222,7 @@ end;
 
 procedure TPlacement.UpdateWindowHitTest();
 begin
-  if FVideoEnabled or (FWindowSize = SIZE_FULLSCREEN) then
+  if FVideoEnabled or (FWindowSizeID = SIZE_FULLSCREEN) then
     SDL_SetWindowHitTest(Window.Window, nil, nil)
   else
     SDL_SetWindowHitTest(Window.Window, @WindowHitTest, nil);
@@ -255,7 +255,7 @@ end;
 
 procedure TPlacement.UpdateBuffer();
 begin
-  if FVideoEnabled or (FWindowSize = SIZE_FULLSCREEN) then
+  if FVideoEnabled or (FWindowSizeID = SIZE_FULLSCREEN) then
     Buffers.Client := FWindowClient;
 end;
 
@@ -295,9 +295,9 @@ procedure TPlacement.EnlargeWindow();
 begin
   if FVideoEnabled then Exit;
 
-  if FWindowSize < SIZE_LAST then
+  if FWindowSizeID < SIZE_LAST then
   begin
-    FWindowSize += 1;
+    FWindowSizeID += 1;
 
     UpdateMonitor();
     UpdateWindow();
@@ -310,9 +310,9 @@ procedure TPlacement.ReduceWindow();
 begin
   if FVideoEnabled then Exit;
 
-  if FWindowSize > SIZE_FIRST then
+  if FWindowSizeID > SIZE_FIRST then
   begin
-    FWindowSize -= 1;
+    FWindowSizeID -= 1;
 
     UpdateMonitor();
     UpdateWindow();

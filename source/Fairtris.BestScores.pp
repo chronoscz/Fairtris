@@ -30,7 +30,7 @@ uses
 type
   TScoreEntry = class(TObject)
   private
-    FRegion: Integer;
+    FRegionID: Integer;
   private
     FLinesCleared: Integer;
     FLevelBegin: Integer;
@@ -42,7 +42,7 @@ type
   private
     procedure Validate();
   public
-    constructor Create(ARegion: Integer; AValid: Boolean = False);
+    constructor Create(ARegionID: Integer; AValid: Boolean = False);
   public
     procedure Load(AFile: TIniFile; const ASection: String);
     procedure Save(AFile: TIniFile; const ASection: String);
@@ -72,7 +72,7 @@ type
     function GetCount(): Integer;
     function GetBestScore(): Integer;
   public
-    constructor Create(const AFileName: String; ARegion: Integer);
+    constructor Create(const AFileName: String; ARegionID: Integer);
     destructor Destroy(); override;
   public
     procedure Load();
@@ -92,15 +92,15 @@ type
   private
     FRNGs: array [RNG_FIRST .. RNG_LAST] of TRNGEntries;
   private
-    function GetRNG(ARNG: Integer): TRNGEntries;
+    function GetRNG(ARNGID: Integer): TRNGEntries;
   public
-    constructor Create(const APath: String; ARegion: Integer);
+    constructor Create(const APath: String; ARegionID: Integer);
     destructor Destroy(); override;
   public
     procedure Load();
     procedure Save();
   public
-    property RNG[ARNG: Integer]: TRNGEntries read GetRNG; default;
+    property RNG[ARNGID: Integer]: TRNGEntries read GetRNG; default;
   end;
 
 
@@ -109,7 +109,7 @@ type
   private
     FRegions: array [REGION_FIRST .. REGION_LAST] of TRegionEntries;
   private
-    function GetRegion(ARegion: Integer): TRegionEntries;
+    function GetRegion(ARegionID: Integer): TRegionEntries;
   public
     constructor Create();
     destructor Destroy(); override;
@@ -117,7 +117,7 @@ type
     procedure Load();
     procedure Save();
   public
-    property Region[ARegion: Integer]: TRegionEntries read GetRegion; default;
+    property Region[ARegionID: Integer]: TRegionEntries read GetRegion; default;
   end;
 
 
@@ -137,7 +137,7 @@ procedure TScoreEntry.Validate();
 begin
   FValid := InRange(FLinesCleared, 0, 999);
 
-  FValid := FValid and InRange(FLevelBegin, LEVEL_FIRST, LEVEL_KILLSCREEN[FRegion]);
+  FValid := FValid and InRange(FLevelBegin, LEVEL_FIRST, LEVEL_KILLSCREEN[FRegionID]);
   FValid := FValid and InRange(FLevelEnd,   LEVEL_FIRST, 99);
 
   FValid := FValid and (FLevelBegin <= FLevelEnd);
@@ -147,9 +147,9 @@ begin
 end;
 
 
-constructor TScoreEntry.Create(ARegion: Integer; AValid: Boolean);
+constructor TScoreEntry.Create(ARegionID: Integer; AValid: Boolean);
 begin
-  FRegion := ARegion;
+  FRegionID := ARegionID;
   FValid := AValid;
 end;
 
@@ -180,12 +180,12 @@ begin
 end;
 
 
-constructor TRNGEntries.Create(const AFileName: String; ARegion: Integer);
+constructor TRNGEntries.Create(const AFileName: String; ARegionID: Integer);
 begin
   FScoresFile := TMemIniFile.Create(AFileName);
   FEntries := TScoreEntries.Create();
 
-  FRegion := ARegion;
+  FRegion := ARegionID;
 end;
 
 
@@ -267,12 +267,12 @@ begin
 end;
 
 
-constructor TRegionEntries.Create(const APath: String; ARegion: Integer);
+constructor TRegionEntries.Create(const APath: String; ARegionID: Integer);
 var
   Index: Integer;
 begin
   for Index := Low(FRNGs) to High(FRNGs) do
-    FRNGs[Index] := TRNGEntries.Create(APath + BEST_SCORES_FILENAME[Index], ARegion);
+    FRNGs[Index] := TRNGEntries.Create(APath + BEST_SCORES_FILENAME[Index], ARegionID);
 end;
 
 
@@ -305,9 +305,9 @@ begin
 end;
 
 
-function TRegionEntries.GetRNG(ARNG: Integer): TRNGEntries;
+function TRegionEntries.GetRNG(ARNGID: Integer): TRNGEntries;
 begin
-  Result := FRNGs[ARNG];
+  Result := FRNGs[ARNGID];
 end;
 
 
@@ -331,9 +331,9 @@ begin
 end;
 
 
-function TBestScores.GetRegion(ARegion: Integer): TRegionEntries;
+function TBestScores.GetRegion(ARegionID: Integer): TRegionEntries;
 begin
-  Result := FRegions[ARegion];
+  Result := FRegions[ARegionID];
 end;
 
 

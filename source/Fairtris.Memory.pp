@@ -31,7 +31,7 @@ type
   public
     procedure Initialize();
   public
-    FrameIndex: Integer;
+    HangTimer: Integer;
   end;
 
 
@@ -181,7 +181,7 @@ type
     KeyIndex: Integer;
   public
     Changing: Boolean;
-    SettingUp: Boolean;
+    Mapping: Boolean;
   public
     ScanCodes: TScanCodes;
   end;
@@ -201,7 +201,7 @@ type
     ButtonIndex: Integer;
   public
     Changing: Boolean;
-    SettingUp: Boolean;
+    Mapping: Boolean;
   public
     ScanCodes: TScanCodes;
   end;
@@ -215,7 +215,7 @@ type
   public
     procedure Initialize();
   public
-    FrameIndex: Integer;
+    HangTimer: Integer;
     Buffer: PSDL_Texture;
   end;
 
@@ -268,7 +268,7 @@ uses
 
 procedure TLegalMemory.Initialize();
 begin
-  FrameIndex := 0;
+  HangTimer := 0;
 end;
 
 
@@ -450,7 +450,7 @@ end;
 
 procedure TQuitMemory.Initialize();
 begin
-  FrameIndex := 0;
+  HangTimer := 0;
 end;
 
 

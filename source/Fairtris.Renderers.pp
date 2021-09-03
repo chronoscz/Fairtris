@@ -961,7 +961,7 @@ begin
     ITEM_Y_KEYBOARD_KEY[Memory.Keyboard.KeyIndex],
     ITEM_TEXT_KEYBOARD_KEY[Memory.Keyboard.KeyIndex],
     IfThen(
-      Memory.Keyboard.SettingUp,
+      Memory.Keyboard.Mapping,
       IfThen(Clock.FrameIndexInHalf, COLOR_DARK, COLOR_WHITE),
       COLOR_WHITE
     )
@@ -972,7 +972,7 @@ begin
     ITEM_Y_KEYBOARD_KEY[Memory.Keyboard.KeyIndex],
     ITEM_TEXT_MARKER,
     IfThen(
-      Memory.Keyboard.SettingUp,
+      Memory.Keyboard.Mapping,
       IfThen(Clock.FrameIndexInHalf, COLOR_DARK, COLOR_WHITE),
       COLOR_WHITE
     )
@@ -994,7 +994,7 @@ begin
         IfThen(
           Memory.Keyboard.KeyIndex = Index,
           IfThen(
-            Memory.Keyboard.SettingUp,
+            Memory.Keyboard.Mapping,
             IfThen(Clock.FrameIndexInHalf, COLOR_DARK, COLOR_WHITE),
             COLOR_WHITE
           ),
@@ -1055,7 +1055,7 @@ begin
     ITEM_Y_CONTROLLER_BUTTON[Memory.Controller.ButtonIndex],
     ITEM_TEXT_CONTROLLER_BUTTON[Memory.Controller.ButtonIndex],
     IfThen(
-      Memory.Controller.SettingUp,
+      Memory.Controller.Mapping,
       IfThen(Clock.FrameIndexInHalf, COLOR_DARK, COLOR_WHITE),
       COLOR_WHITE
     )
@@ -1066,7 +1066,7 @@ begin
     ITEM_Y_CONTROLLER_BUTTON[Memory.Controller.ButtonIndex],
     ITEM_TEXT_MARKER,
     IfThen(
-      Memory.Controller.SettingUp,
+      Memory.Controller.Mapping,
       IfThen(Clock.FrameIndexInHalf, COLOR_DARK, COLOR_WHITE),
       COLOR_WHITE
     )
@@ -1088,7 +1088,7 @@ begin
         IfThen(
           Memory.Controller.ButtonIndex = Index,
           IfThen(
-            Memory.Controller.SettingUp,
+            Memory.Controller.Mapping,
             IfThen(Clock.FrameIndexInHalf, COLOR_DARK, COLOR_WHITE),
             COLOR_WHITE
           ),

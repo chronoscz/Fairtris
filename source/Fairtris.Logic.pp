@@ -442,7 +442,7 @@ end;
 
 procedure TLogic.UpdateLegalHang();
 begin
-  Memory.Legal.FrameIndex += 1;
+  Memory.Legal.HangTimer += 1;
 end;
 
 
@@ -450,7 +450,7 @@ procedure TLogic.UpdateLegalScene();
 begin
   FScene.Validate();
 
-  if Memory.Legal.FrameIndex = DURATION_HANG_LEGAL * Clock.FrameRateLimit then
+  if Memory.Legal.HangTimer = DURATION_HANG_LEGAL * Clock.FrameRateLimit then
     FScene.Current := SCENE_MENU;
 end;
 
@@ -953,7 +953,7 @@ end;
 
 procedure TLogic.UpdateKeyboardItemSelection();
 begin
-  if Memory.Keyboard.Changing or Memory.Keyboard.SettingUp then Exit;
+  if Memory.Keyboard.Changing or Memory.Keyboard.Mapping then Exit;
 
   if InputMenuSetPrev() then
   begin
@@ -992,7 +992,7 @@ end;
 
 procedure TLogic.UpdateKeyboardKeySelection();
 begin
-  if not Memory.Keyboard.Changing or Memory.Keyboard.SettingUp then Exit;
+  if not Memory.Keyboard.Changing or Memory.Keyboard.Mapping then Exit;
 
   if InputMenuSetPrev() then
   begin
@@ -1019,7 +1019,7 @@ begin
   if Memory.Keyboard.KeyIndex in [ITEM_KEYBOARD_SCANCODE_FIRST .. ITEM_KEYBOARD_SCANCODE_LAST] then
     if InputMenuAccepted() then
     begin
-      Memory.Keyboard.SettingUp := True;
+      Memory.Keyboard.Mapping := True;
 
       Input.Keyboard.Validate();
       Sounds.PlaySound(SOUND_START);
@@ -1032,7 +1032,7 @@ begin
       Sounds.PlaySound(SOUND_DROP);
     end;
 
-  if not Memory.Keyboard.SettingUp then
+  if not Memory.Keyboard.Mapping then
     if InputMenuRejected() then
     begin
       Input.Device.B.Validate();
@@ -1048,11 +1048,11 @@ procedure TLogic.UpdateKeyboardKeyScanCode();
 var
   ScanCode: UInt8 = KEYBOARD_SCANCODE_KEY_NOT_MAPPED;
 begin
-  if not Memory.Keyboard.SettingUp then Exit;
+  if not Memory.Keyboard.Mapping then Exit;
 
   if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_CANCEL_MAPPING].JustPressed then
   begin
-    Memory.Keyboard.SettingUp := False;
+    Memory.Keyboard.Mapping := False;
     Sounds.PlaySound(SOUND_DROP);
 
     Exit;
@@ -1061,7 +1061,7 @@ begin
   if Input.Keyboard.CatchedOneKey(ScanCode) then
   begin
     Memory.Keyboard.ScanCodes[Memory.Keyboard.KeyIndex] := ScanCode;
-    Memory.Keyboard.SettingUp := False;
+    Memory.Keyboard.Mapping := False;
     Memory.Keyboard.RemoveDuplicates(ScanCode, Memory.Keyboard.KeyIndex);
 
     Sounds.PlaySound(SOUND_START);
@@ -1076,7 +1076,7 @@ begin
   if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_HELP_CONTROL].JustPressed then
   begin
     Memory.Keyboard.Changing := False;
-    Memory.Keyboard.SettingUp := False;
+    Memory.Keyboard.Mapping := False;
 
     FScene.Current := SCENE_OPTIONS;
     Exit;
@@ -1116,7 +1116,7 @@ end;
 
 procedure TLogic.UpdateControllerItemSelection();
 begin
-  if Memory.Controller.Changing or Memory.Controller.SettingUp then Exit;
+  if Memory.Controller.Changing or Memory.Controller.Mapping then Exit;
 
   if InputMenuSetPrev() then
   begin
@@ -1155,7 +1155,7 @@ end;
 
 procedure TLogic.UpdateControllerButtonSelection();
 begin
-  if not Memory.Controller.Changing or Memory.Controller.SettingUp then Exit;
+  if not Memory.Controller.Changing or Memory.Controller.Mapping then Exit;
 
   if InputMenuSetPrev() then
   begin
@@ -1182,7 +1182,7 @@ begin
   if Memory.Controller.ButtonIndex in [ITEM_CONTROLLER_SCANCODE_FIRST .. ITEM_CONTROLLER_SCANCODE_LAST] then
     if InputMenuAccepted() then
     begin
-      Memory.Controller.SettingUp := True;
+      Memory.Controller.Mapping := True;
 
       Input.Controller.Validate();
       Sounds.PlaySound(SOUND_START);
@@ -1195,7 +1195,7 @@ begin
       Sounds.PlaySound(SOUND_DROP);
     end;
 
-  if not Memory.Controller.SettingUp then
+  if not Memory.Controller.Mapping then
     if InputMenuRejected() then
     begin
       Input.Device.B.Validate();
@@ -1211,11 +1211,11 @@ procedure TLogic.UpdateControllerButtonScanCode();
 var
   ScanCode: UInt8 = CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED;
 begin
-  if not Memory.Controller.SettingUp then Exit;
+  if not Memory.Controller.Mapping then Exit;
 
   if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_CANCEL_MAPPING].JustPressed then
   begin
-    Memory.Controller.SettingUp := False;
+    Memory.Controller.Mapping := False;
     Sounds.PlaySound(SOUND_DROP);
 
     Exit;
@@ -1224,7 +1224,7 @@ begin
   if Input.Controller.CatchedOneButton(ScanCode) then
   begin
     Memory.Controller.ScanCodes[Memory.Controller.ButtonIndex] := ScanCode;
-    Memory.Controller.SettingUp := False;
+    Memory.Controller.Mapping := False;
     Memory.Controller.RemoveDuplicates(ScanCode, Memory.Controller.ButtonIndex);
 
     Sounds.PlaySound(SOUND_START);
@@ -1239,7 +1239,7 @@ begin
   if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_HELP_CONTROL].JustPressed then
   begin
     Memory.Keyboard.Changing := False;
-    Memory.Keyboard.SettingUp := False;
+    Memory.Keyboard.Mapping := False;
 
     FScene.Current := SCENE_OPTIONS;
     Exit;
@@ -1250,7 +1250,7 @@ begin
     FScene.Current := SCENE_OPTIONS;
 
     Memory.Controller.Changing := False;
-    Memory.Controller.SettingUp := False;
+    Memory.Controller.Mapping := False;
 
     Sounds.PlaySound(SOUND_TOP_OUT, True);
     Exit;
@@ -1290,7 +1290,7 @@ end;
 
 procedure TLogic.UpdateQuitHang();
 begin
-  Memory.Quit.FrameIndex += 1;
+  Memory.Quit.HangTimer += 1;
 end;
 
 
@@ -1298,7 +1298,7 @@ procedure TLogic.UpdateQuitScene();
 begin
   FScene.Validate();
 
-  if Memory.Quit.FrameIndex = DURATION_HANG_QUIT * Clock.FrameRateLimit then
+  if Memory.Quit.HangTimer = DURATION_HANG_QUIT * Clock.FrameRateLimit then
     FStopped := True;
 end;
 

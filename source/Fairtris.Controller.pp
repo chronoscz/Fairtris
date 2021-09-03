@@ -54,7 +54,7 @@ type
     procedure Attach();
     procedure Detach();
   public
-    property Button[AIndex: Integer]: TSwitch read GetButton; default;
+    property Button[AButtonID: Integer]: TSwitch read GetButton; default;
     property Connected: Boolean read FConnected;
   end;
 
