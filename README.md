@@ -31,7 +31,7 @@ Information on the license can be found in the **[LICENSE](LICENSE)** file. In g
 - keyboard and controller mapping support,
 - support for additional meters, such as **TRT**, **BRN** or gain meter,
 - stores the best results for each game region and RNG type,
-- has a pause menu with the ability to quickly restart the game,
+- has a pause menu with the ability to quickly restart the game and change settings,
 - shows the game summary screen after each game,
 - support for two themes (minimalistic dark and classic skin),
 - possibility to use it with **[NESTrisChamps](https://nestrischamps.herokuapp.com/)** and **[Maxout Club](https://maxoutclub.com/)**,
