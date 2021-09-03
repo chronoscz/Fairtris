@@ -11,6 +11,13 @@ Ready to play like a true Tetris master? **[Download](https://github.com/furious
 
 </br></br>
 
+# Compilation and developing
+
+**[Lazarus 2.0.12](https://sourceforge.net/projects/lazarus/)** was used to compile and work on the code, so you should use that as well (or a newer version if available). The **[headers for SDL2](https://github.com/PascalGameDevelopment/SDL2-for-Pascal)** are in the `source\sdl\` subdirectory, while the `.dll` libraries are in the `bin\` folder, where the executable file is created after compilation. So all you need to do is just open the project in **Lazarus** and hit the compile button.
+
+If you are using **Free Pascal IDE** abomination or regular text editor such as **Notepad++** or **Vim**, be sure to somehow add the **SDL** units path in the project settings and well... keep wasting your time.
+
+
 # What is Fairtris?
 
 **Fairtris** is a video game, a clone of the 35-year-old **[Tetris®](https://en.wikipedia.org/wiki/Tetris_(NES_video_game))** game produced by **[Nintendo](https://www.nintendo.com/)** for the **[Famicom](https://en.wikipedia.org/wiki/Nintendo_Entertainment_System)** and **[NES](https://en.wikipedia.org/wiki/Nintendo_Entertainment_System)** consoles, designed for modern Windows systems. **Fairtris is not an emulator** — it is a full-fledged game, created in **[Free Pascal](https://www.freepascal.org/)** language (using the **[Lazarus IDE](https://www.lazarus-ide.org/)**) and with **OpenGL** support via the **[SDL library](https://www.libsdl.org/)**. Thanks to this combination, it is super-fast and ultra-light.
@@ -40,9 +47,3 @@ Information on the license can be found in the **[LICENSE](LICENSE)** file. In g
 - and many more!
 
 More detailed information on how to use the game and its mechanics can be found further in this document.
-
-# Compilation and developing
-
-**[Lazarus 2.0.12](https://sourceforge.net/projects/lazarus/)** was used to compile and work on the code, so you should use that as well (or a newer version if available). The **[headers for SDL2](https://github.com/PascalGameDevelopment/SDL2-for-Pascal)** are in the `source\sdl\` subdirectory, while the `.dll` libraries are in the `bin\` folder, where the executable file is created after compilation. So all you need to do is just open the project in **Lazarus** and hit the compile button.
-
-If you are using **Free Pascal IDE** abomination or regular text editor such as **Notepad++**, be sure to somehow add the **SDL** units path in the project settings and well... keep wasting your time.
