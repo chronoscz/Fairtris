@@ -41,7 +41,7 @@ Information on the license can be found in the **[LICENSE](LICENSE)** file. In g
 - has a pause menu with the ability to quickly restart the game and change settings,
 - shows the game summary screen after each game,
 - support for two themes (minimalistic dark and classic skin),
-- possibility to use it with **[NESTrisChamps](https://nestrischamps.herokuapp.com/)** and **[Maxout Club](https://maxoutclub.com/)**,
+- possibility to use it with **[NestrisChamps](https://nestrischamps.herokuapp.com/)** and **[Maxout Club](https://maxoutclub.com/)**,
 - it's light and very fast — runs smoothly even on a heavily loaded PC,
 - it is fully portable, no installation required,
 - and many more!
