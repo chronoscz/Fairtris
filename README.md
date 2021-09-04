@@ -117,7 +117,19 @@ The `QUIT` option is used to close the game and return to the desktop. You can s
 
 ## Set up game
 
-*content needed*
+<img align="right" src="blob/readme/scene-set-up-game.png">
+
+The main gameplay settings menu. Use the <kbd>↑</kbd> <kbd>↓</kbd> buttons to navigate, <kbd>←</kbd> <kbd>→</kbd> buttons to change the value of the selected item, the <kbd>Start</kbd>/<kbd>A</kbd> button to choose the selected item and the <kbd>B</kbd> button to go back to the previous menu.
+
+The `REGION` option is used to select the regional version of the game. There are four basic versions available, and each of them has an additional extended version, which is characterized by a longer gameplay.
+
+The `RNG TYPE` option allows you to choose one of six different randomizing algorithms. Each algorithm is different and gives sequences of different quality — some easier with an even pieces distribution, and others more challanging, not avoiding drought and floods.
+
+The third option is `LEVEL`, which allows you to select the starting level of the game. It is possible to choose any level, so you can both play single games and train playing on killscreen. The range of levels that can be selected depends on the selected region.
+
+The best three results are displayed at the bottom of the screen, according to the selected regional version and RNG type. There is a separate list for each combination, so the game can store up to `48` results with basic information about the games played.
+
+If you want to start the game according to the selected settings, choose the `START` option. If you need to go back to the game main menu, choose the `BACK` option.
 
 </br>
 
