@@ -99,7 +99,7 @@ The game contains eight significant scenes that the player should become familia
 
 ## Prime menu
 
-<img align="left" src="blob/readme/scene-prime-menu.png">
+<img align="right" src="blob/readme/scene-prime-menu.png">
 
 The main menu of the game to choose what you want to do. Use the <kbd>↑</kbd> and <kbd>↓</kbd> buttons to navigate and the <kbd>Start</kbd> or <kbd>A</kbd> button to choose the selected item.
 
