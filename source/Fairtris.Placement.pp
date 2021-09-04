@@ -133,7 +133,6 @@ begin
   FWindowBounds.Y := Settings.General.Top;
 
   UpdateWindow();
-  UpdateBuffer();
 
   if FVideoEnabled then
     UpdateVideo();
@@ -208,6 +207,8 @@ begin
   end
   else
     FWindowClient := SDL_Rect(0, 0, FWindowBounds.W, FWindowBounds.H);
+
+  UpdateBuffer();
 end;
 
 
@@ -255,8 +256,7 @@ end;
 
 procedure TPlacement.UpdateBuffer();
 begin
-  if FVideoEnabled or (FWindowSizeID = SIZE_FULLSCREEN) then
-    Buffers.Client := FWindowClient;
+  Buffers.Client := FWindowClient;
 end;
 
 
