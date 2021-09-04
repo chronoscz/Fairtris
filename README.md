@@ -22,7 +22,7 @@ If you are using **Free Pascal IDE** abomination or regular text editor such as 
 
 **Fairtris** is a video game, a clone of the 35-year-old **[Tetris®](https://en.wikipedia.org/wiki/Tetris_(NES_video_game))** game produced by **[Nintendo](https://www.nintendo.com/)** for the **[Famicom](https://en.wikipedia.org/wiki/Nintendo_Entertainment_System)** and **[NES](https://en.wikipedia.org/wiki/Nintendo_Entertainment_System)** consoles, designed for modern Windows systems. **Fairtris is not an emulator** — it is a full-fledged game, created from scratch in **[Free Pascal](https://www.freepascal.org/)** language (using the **[Lazarus IDE](https://www.lazarus-ide.org/)**) and with **OpenGL** support via the **[SDL library](https://www.libsdl.org/)**. Thanks to this combination, it is super-fast and ultra-light.
 
-This project was initially created as a tool to test various RNG algorithms, but after some time it turned into a complete and rich video game that provides lots of fun. However, since **Tetris®** is a proprietary brand to which **[The Tetris Company](https://tetris.com/)** is entitled, **Fairtris is not a product**, so its source code and all binaries are public. It is a knowledge base for those who would like to know more about the internal mechanisms of the classic version of this game.
+This project was initially created as a tool to test various RNG algorithms, but after some time it turned into a complete and rich video game that provides lots of fun. However, since **Tetris®** is a proprietary brand to which **[The Tetris Company](https://tetris.com/)** is entitled, **Fairtris is not a product** — it is a knowledge base for those who would like to know more about the internal mechanisms of the classic version of this game.
 
 Information on the license can be found in the **[LICENSE](LICENSE)** file. In general, this project is completely free, you can use it for whatever purpose you want, both the entire game and parts of it. So play, share, fork, modify, sell — do what you want, I don't give a shit about it.</br></br>
 
@@ -32,10 +32,9 @@ Information on the license can be found in the **[LICENSE](LICENSE)** file. In g
 - extended mechanics with **hard-drop** and accumulation of soft-drop points,
 - support for **EIGHT** regional versions of the game, including original **NTSC** and **PAL** versions,
 - support for as many as **SIX** random piece generators, including the classic RNG,
-- the ability to start the game from any level, from level `0` up to the killscreen,
-- the ability to play on a keyboard or any USB controller,
+- the ability to start the game from any level up to the killscreen,
+- the ability to play on a keyboard or any USB controller (with input mapping support),
 - supports window mode and the low-resolution exclusive video mode,
-- keyboard and controller mapping support,
 - support for additional meters, such as **TRT**, **BRN** or gain meter,
 - stores the best results for each game region and RNG type,
 - has a pause menu with the ability to quickly restart the game and change settings,
