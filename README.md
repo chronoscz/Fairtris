@@ -32,7 +32,7 @@ Information on the license can be found in the **[LICENSE](LICENSE)** file. In g
 - extended mechanics with **hard-drop** and accumulation of soft-drop points,
 - support for **EIGHT** regional versions of the game, including original **NTSC** and **PAL** versions,
 - support for as many as **SIX** random piece generators, including the classic RNG,
-- the ability to start the game from any level, from level `0` up to the killscreen,
+- the ability to start the game from any level up to the killscreen,
 - the ability to play on a keyboard or any USB controller,
 - supports window mode and the low-resolution exclusive video mode,
 - keyboard and controller mapping support,
