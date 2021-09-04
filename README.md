@@ -137,7 +137,7 @@ If you want to start the game according to the selected settings, choose the `ST
 
 Even though the original **[Nintendo Tetris®](https://en.wikipedia.org/wiki/Tetris_(NES_video_game))** was only released in two regional versions (for **NTSC** and **PAL** television standards), **Fairtris** has four base versions. The additional two versions are modifications of the original ones, with different **[DAS](https://www.youtube.com/watch?v=JeccfAI_ujo)** speed and improved gravity. In addition, each base region has an additional, `EXTENDED` version that has the correct line count calculations for the transitions. Thanks to this, no matter what level we start from, killscreen always occurs at `290` lines.
 
-- `NTSC` — equivalent to original `NTSC` version, without any major modifications, running at 60 frames per second. The `EXTENDED` version is similar but with the correct line count for transition.
+- `NTSC` — equivalent to original `NTSC` version, without any major modifications, running at 60 frames per second. The `EXTENDED` version is similar but with the correct calculations of the transition lines count.
 
 - `JPN` — hypothetical version, it has gravity from the `NTSC` version, but the **[DAS](https://www.youtube.com/watch?v=JeccfAI_ujo)** speed is the same as in `PAL` version (faster by one frame, so it is possible to play on killscreen). The `EXTENDED` version additionally computes transition lines correctly. Also works at 60fps.
 
@@ -145,7 +145,7 @@ Even though the original **[Nintendo Tetris®](https://en.wikipedia.org/wiki/Tet
 
 - `EUR` — another hypothetical region, it runs at 50fps, the speed of the **[DAS](https://www.youtube.com/watch?v=JeccfAI_ujo)** speed is consistent with the `PAL` version, however the gravity for each level was calculated from scratch and is similar to that of the `NTSC` version. The feeling of the game is as if an American cartridge was inserted into the European console. The `EXTENDED` version additionally has the correct transition lines count calculations.
 
-For the regions `PAL` and `PAL EXTENDED`, you can select the start level from `0` to `19`, and for all other regions from `0` to `29`.
+For the regions `PAL` and `PAL EXTENDED`, you can select the start level up to `19`, and for all other regions up to `29`. In short, the highest possible level to choose from is always the first killscreen level of the selected regional version. 
 
 </br>
 
