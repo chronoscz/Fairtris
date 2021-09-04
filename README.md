@@ -17,6 +17,7 @@ Ready to play like a true Tetris master? **[Download the game](https://github.co
 
 If you are using **Free Pascal IDE** abomination or regular text editor such as **Notepad++** or **Vim**, be sure to somehow add the **SDL** units path in the project settings and well... keep torturing yourself.
 
+</br>
 
 # What is Fairtris?
 
@@ -47,6 +48,8 @@ Information on the license can be found in the **[LICENSE](LICENSE)** file. In g
 
 More detailed information on how to handle the game and its mechanics can be found further in this document.
 
+</br>
+
 # First launch
 
 After extracting the game files from the **[archive](https://github.com/furious-programming/Fairtris/releases/download/v2.0.0.2-beta/Fairtris_2.0_beta_release.zip)**, run the `fairtris.exe` file. For the first time, the game runs in an exclusive video mode with a resolution of `800×600` pixels, displaying the window on the entire main screen, maintaining the appropriate aspect ratio.
@@ -56,6 +59,8 @@ Video mode is used by default because it provides the best rendering efficiency.
 When the game is running in windowed mode (except fullscreen), you can drag the game window with the left mouse button anywhere on the desktop and on any screen. Additionally, you can change the size of the window with the mouse scroll — scroll forward to enlarge the window or backward to make it smaller. Don't worry — the state of the video mode as well as the size and position of the window are stored in the settings file, so they will be used the next time you start the game.
 
 You can close the game using the appropriate option in the main menu or by pressing <kbd>Alt+F4</kbd>.
+
+</br>
 
 # Default controls
 
@@ -82,7 +87,61 @@ In addition to the basic buttons, some keys have special functions assigned perm
 | <kbd>Backspace</kbd> | Used to remove an assigned key or button when mapping an input device. |
 | <kbd>Escape</kbd> | Cancels waiting for a key or button press when mapping an input device. |
 
-For more information about device mapping and the purpose of specific keys and buttons, see **[Set up keyboard]()** and **[Set up controller]()** sections.
+For more information about device mapping and the purpose of specific keys and buttons, see **[Set up keyboard](#set-up-keyboard)** and **[Set up controller](#set-up-controller)** sections.
+
+</br>
+
+# Game scenes
+
+The game contains eight significant scenes that the player should become familiar with. The game starts with a short intro with general information and then the main menu pops up. The main menus and submenus allow you to choose your gameplay configuration, as well as change display and sound settings, and the settings of input devices, before you start playing.
+
+</br>
+
+## Prime menu
+
+*content needed*
+
+</br>
+
+## Set up game
+
+*content needed*
+
+</br>
+
+## Gameplay
+
+*content needed*
+
+</br>
+
+## Game summary
+
+*content needed*
+
+</br>
+
+## Game pause
+
+*content needed*
+
+</br>
+
+## Game options
+
+*content needed*
+
+</br>
+
+## Set up keyboard
+
+*content needed*
+
+</br>
+
+## Set up controller
+
+*content needed*
 
 </br></br>
 
