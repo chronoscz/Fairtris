@@ -76,6 +76,8 @@ The basic set of buttons for operating the game is compatible with the buttons o
 | <kbd>B</kbd> | <kbd>X</kbd> | <kbd>Button 1</kbd> |
 | <kbd>A</kbd> | <kbd>C</kbd> | <kbd>Button 2</kbd> |
 
+Given that the keyboard and controller can be freely mapped, in the remainder of this document, when discussing the game scenes, general names of the buttons will be given (those listed in the table above, in the column `NES controller button`).
+
 In addition to the basic buttons, some keys have special functions assigned permanently. These keys cannot be used for any other purpose, therefore do not try to use them when mapping the keyboard.
 
 | Keyboard&nbsp;key | Assigned function |
@@ -101,11 +103,11 @@ The game contains eight significant scenes that the player should become familia
 
 <img align="right" src="blob/readme/scene-prime-menu.png">
 
-The main menu of the game to choose what you want to do. Use the <kbd>↑</kbd> and <kbd>↓</kbd> buttons to navigate and the <kbd>Start</kbd> or <kbd>A</kbd> button to choose the selected item.
+The main menu of the game to choose what you want to do. Use the <kbd>↑</kbd> <kbd>↓</kbd> buttons to navigate and the <kbd>Start</kbd>/<kbd>A</kbd> button to choose the selected item.
 
-By selecting the `PLAY` option, you will be taken to the gameplay configuration menu, where you will be able to select the game region, RNG type and starting level.
+By selecting the `PLAY` option, you will be taken to the gameplay configuration menu, where you will be able to select the game region, RNG type, starting level and of course start the game.
 
-If you select the `OPTIONS` item, you will be taken to the game settings menu. There you will be able to select the main input device, change the window size and mouse scroll behavior, as well as select the game skin or turn on or off the playback of sound effects. You will also find there an input mapping option.
+If you select the `OPTIONS` item, you will be taken to the game settings menu. There you will be able to select the main input device, change the window size and mouse scroll behavior, as well as select the game skin or enable/disable the sound effects. You will also find there an input mapping option.
 
 If you don't know how to operate the game or want to learn more about it, please select the `HELP` option or press the <kbd>F1</kbd> button to minimize the game window and open the user manual in your web browser.
 
