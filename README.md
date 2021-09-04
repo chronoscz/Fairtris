@@ -111,7 +111,7 @@ If you select the `OPTIONS` item, you will be taken to the game settings menu. T
 
 If you don't know how to operate the game or want to learn more about it, please select the `HELP` option or press the <kbd>F1</kbd> button to minimize the game window and open the user manual in your web browser.
 
-The `QUIT` option is used to close the game and return to the desktop. You can safely close the game at any time using the <kbd>Alt+F4</kbd> shortcut — all important game data will be saved, so don't worry.
+The `QUIT` option is used to close the game and return to the desktop. You can safely close the game at any time also using the <kbd>Alt+F4</kbd> shortcut — all important game data will be saved, so don't worry.
 
 </br>
 
