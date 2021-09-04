@@ -87,7 +87,7 @@ In addition to the basic buttons, some keys have special functions assigned perm
 | <kbd>Backspace</kbd> | Used to remove an assigned key or button when mapping an input device. |
 | <kbd>Escape</kbd> | Cancels waiting for a key or button press when mapping an input device. |
 
-For more information about device mapping and the purpose of specific keys and buttons, see **[Set up keyboard]()** and **[Set up controller]()** sections.
+For more information about device mapping and the purpose of specific keys and buttons, see **[Set up keyboard](#set-up-keyboard)** and **[Set up controller](set-up-controller)** sections.
 
 </br>
 
