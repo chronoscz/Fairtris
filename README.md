@@ -13,14 +13,14 @@ Ready to play like a true Tetris master? **[Download the game](https://github.co
 
 # Compilation and developing
 
-**[Lazarus 2.0.12](https://sourceforge.net/projects/lazarus/)** was used to compile and work on the code, so you should use that as well (or a newer version if available). The **[headers for SDL2](https://github.com/PascalGameDevelopment/SDL2-for-Pascal)** are in the `source\sdl\` subdirectory, while the `.dll` libraries are in the `bin\` folder, where the executable file is created after compilation. So all you need to do is just open the project in **Lazarus** and hit the compile button.
+**[Lazarus 2.0.12](https://sourceforge.net/projects/lazarus)** was used to compile and work on the code, so you should use that as well (or a newer version if available). The **[headers for SDL2](https://github.com/PascalGameDevelopment/SDL2-for-Pascal)** are in the `source\sdl\` subdirectory, while the `.dll` libraries are in the `bin\` folder, where the executable file is created after compilation. So all you need to do is just open the project in **Lazarus** and hit the compile button.
 
 If you are using **Free Pascal IDE** abomination or regular text editor such as **Notepad++** or **Vim**, be sure to somehow add the **SDL** units path in the project settings and well... keep torturing yourself.
 
 
 # What is Fairtris?
 
-**Fairtris** is a video game, a clone of the 35-year-old **[Tetris®](https://en.wikipedia.org/wiki/Tetris_(NES_video_game))** game produced by **[Nintendo](https://www.nintendo.com/)** for the **[Famicom](https://en.wikipedia.org/wiki/Nintendo_Entertainment_System)** and **[NES](https://en.wikipedia.org/wiki/Nintendo_Entertainment_System)** consoles, designed for modern Windows systems. **Fairtris is not an emulator** — it is a full-fledged game, created from scratch in **[Free Pascal](https://www.freepascal.org/)** language (using the **[Lazarus IDE](https://www.lazarus-ide.org/)**) and with **OpenGL** support via the **[SDL library](https://www.libsdl.org/)**. Thanks to this combination, it is super-fast and ultra-light.
+**Fairtris** is a video game, a clone of the 35-year-old **[Tetris®](https://en.wikipedia.org/wiki/Tetris_(NES_video_game))** game produced by **[Nintendo](https://www.nintendo.com)** for the **[Famicom](https://en.wikipedia.org/wiki/Nintendo_Entertainment_System)** and **[NES](https://en.wikipedia.org/wiki/Nintendo_Entertainment_System)** consoles, designed for modern Windows systems. **Fairtris is not an emulator** — it is a full-fledged game, created from scratch in **[Free Pascal](https://www.freepascal.org)** language (using the **[Lazarus IDE](https://www.lazarus-ide.org)**) and with **OpenGL** support via the **[SDL library](https://www.libsdl.org)**. Thanks to this combination, it is super-fast and ultra-light.
 
 This project was initially created as a tool to test various RNG algorithms, but after some time it turned into a complete and rich video game that provides lots of fun. However, since **Tetris®** is a proprietary brand to which **[The Tetris Company](https://tetris.com/)** is entitled, **Fairtris is not a product** — it is a knowledge base for those who would like to know more about the internal mechanisms of the classic version of this game.
 
@@ -40,7 +40,7 @@ Information on the license can be found in the **[LICENSE](LICENSE)** file. In g
 - has a pause menu with the ability to quickly restart the game and change settings,
 - shows the game summary screen after each game,
 - support for two themes (minimalistic dark and classic skin),
-- possibility to use it with **[NestrisChamps](https://nestrischamps.herokuapp.com/)** and **[Maxout Club](https://maxoutclub.com/)**,
+- possibility to use it with **[NestrisChamps](https://nestrischamps.herokuapp.com)** and **[Maxout Club](https://maxoutclub.com)**,
 - it's light and very fast — runs smoothly even on a heavily loaded PC,
 - it is fully portable, no installation required,
 - and many more!
@@ -56,6 +56,33 @@ Video mode is used by default because it provides the best rendering efficiency.
 When the game is running in windowed mode (except fullscreen), you can drag the game window with the left mouse button anywhere on the desktop and on any screen. Additionally, you can change the size of the window with the mouse scroll — scroll forward to enlarge the window or backward to make it smaller. Don't worry — the state of the video mode as well as the size and position of the window are stored in the settings file, so they will be used the next time you start the game.
 
 You can close the game using the appropriate option in the main menu or by pressing <kbd>Alt+F4</kbd>.
+
+# Default controls
+
+**Fairtris** is controlled by the keyboard by default, and if a game controller is plugged in and set as main input device, also with it. All the game menus can be operated with both devices, while the game can only be played using the main input device. The control looks the same as in emulators (e.g. in **FCEUX**), where one set of keyboard keys or controller buttons is used for navigating in the menu and for playing. There is no distinction between keys for menus and game keys, so you don't have to change your hand layout when switching between scenes.
+
+The basic set of buttons for operating the game is compatible with the buttons on the **[NES controller](https://en.wikipedia.org/wiki/Nintendo_Entertainment_System#Controllers)**.
+
+| NES controller button | Keyboard key equivalent | USB controller button equivalent |
+|---|---|---|
+| <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> | <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> | <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> (D-pad or left analog stick) |
+| <kbd>Select</kbd> | <kbd>V</kbd> | <kbd>Button 9</kbd> |
+| <kbd>Start</kbd> | <kbd>Z</kbd> | <kbd>Button 10</kbd> |
+| <kbd>B</kbd> | <kbd>X</kbd> | <kbd>Button 1</kbd> |
+| <kbd>A</kbd> | <kbd>C</kbd> | <kbd>Button 2</kbd> |
+
+In addition to the basic buttons, some keys have special functions assigned permanently. These keys cannot be used for any other purpose, therefore do not try to use them when mapping the keyboard.
+
+| Keyboard&nbsp;key | Assigned function |
+|---|---|
+| <kbd>F1</kbd> | Minimizes the game window and opens the user manual in the browser (actually: this document). This function is available in all game scenes. |
+| <kbd>F2</kbd> | Sets the keyboard as the default input device and restores the factory keyboard and controller mapping. This feature is available in every game scene and should be used when the player has no idea how to set the controls. |
+| <kbd>F10</kbd> | Toggles the rendering of black bars at the top and bottom of the game image. This function is intended to facilitate image calibration for **[NestrisChamps](https://nestrischamps.herokuapp.com)** and **[Maxout Club](https://maxoutclub.com)** and can be used in any scene. |
+| <kbd>F11</kbd> | Toggles low-resolution exclusive video mode, available at any time. |
+| <kbd>Backspace</kbd> | Used to remove an assigned key or button when mapping an input device. |
+| <kbd>Escape</kbd> | Cancels waiting for a key or button press when mapping an input device. |
+
+For more information about device mapping and the purpose of specific keys and buttons, see **[Set up keyboard]()** and **[Set up controller]()** sections.
 
 </br></br>
 
