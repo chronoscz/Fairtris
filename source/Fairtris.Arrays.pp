@@ -1040,7 +1040,7 @@ const
 
 
 const
-  MESSAGE_ERROR: array [ERROR_FIRST .. ERROR_LAST] of String = (
+  ERROR_MESSAGE: array [ERROR_FIRST .. ERROR_LAST] of String = (
     'SDL system failed to initialize',
     'SDL audio subsystem failed to initialize',
     'Unable to create SDL window',

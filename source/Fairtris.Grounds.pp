@@ -112,7 +112,7 @@ begin
       raise SDLException.CreateFmt(
         ERROR_MESSAGE_SDL,
         [
-          MESSAGE_ERROR[ERROR_SDL_LOAD_GROUND].Format([FGroundsPath + GROUND_FILENAME[Index]]),
+          ERROR_MESSAGE[ERROR_SDL_LOAD_GROUND].Format([FGroundsPath + GROUND_FILENAME[Index]]),
           Img_GetError()
         ]
       );

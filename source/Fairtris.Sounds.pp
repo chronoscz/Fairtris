@@ -114,7 +114,7 @@ begin
       raise SDLException.CreateFmt(
         ERROR_MESSAGE_SDL,
         [
-          MESSAGE_ERROR[ERROR_SDL_LOAD_SOUND].Format([FSoundsPath + SOUND_FILENAME[Index]]),
+          ERROR_MESSAGE[ERROR_SDL_LOAD_SOUND].Format([FSoundsPath + SOUND_FILENAME[Index]]),
           Mix_GetError()
         ]
       );

@@ -77,19 +77,19 @@ begin
   FWindow := SDL_CreateWindow('Fairtris', SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 0, 0, SDL_WINDOW_BORDERLESS);
 
   if FWindow = nil then
-    raise SDLException.CreateFmt(ERROR_MESSAGE_SDL, [MESSAGE_ERROR[ERROR_SDL_CREATE_WINDOW], SDL_GetError()]);
+    raise SDLException.CreateFmt(ERROR_MESSAGE_SDL, [ERROR_MESSAGE[ERROR_SDL_CREATE_WINDOW], SDL_GetError()]);
 
   FRenderer := SDL_CreateRenderer(FWindow, -1, SDL_RENDERER_ACCELERATED or SDL_RENDERER_TARGETTEXTURE);
 
   if FRenderer = nil then
-    raise SDLException.CreateFmt(ERROR_MESSAGE_SDL, [MESSAGE_ERROR[ERROR_SDL_CREATE_RENDERER], SDL_GetError()]);
+    raise SDLException.CreateFmt(ERROR_MESSAGE_SDL, [ERROR_MESSAGE[ERROR_SDL_CREATE_RENDERER], SDL_GetError()]);
 
   SDL_Version(SysInfo.Version);
 
   if SDL_GetWindowWMInfo(FWindow, @SysInfo) = SDL_TRUE then
     FHandle := SysInfo.Win.Window
   else
-    raise SDLException.CreateFmt(ERROR_MESSAGE_SDL, [MESSAGE_ERROR[ERROR_SDL_CREATE_HANDLE], SDL_GetError()]);
+    raise SDLException.CreateFmt(ERROR_MESSAGE_SDL, [ERROR_MESSAGE[ERROR_SDL_CREATE_HANDLE], SDL_GetError()]);
 end;
 
 
