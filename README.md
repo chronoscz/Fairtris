@@ -201,6 +201,8 @@ Pressing the <kbd>Select</kbd> button during the game allows you to show or hide
 
 Depending on the selected theme, different information is displayed around the playing field. The `CLASSIC` skin is same as in the original game and displays only basic information, such as the score and cleared lines counters, the level number and distribution statistics of individual pieces. The next piece and the best result are also shown. This theme is intended mainly for competitive play with tools such as **[NestrisChamps](https://nestrischamps.herokuapp.com)** and **[MaxoutClub](https://maxoutclub.com)**.
 
+<img align="right" src="blob/readme/scene-gameplay-topout.png">
+
 If you choose the `MODERN` theme, you will not only have access to more information, but also to a less bright, tiring and flashing interface. The modern interface doesn't have distribution statistics, but it additionally displays the number of lines burned from the previous tetris (named **BRN**), the percentage of tetris in the total number of lines cleared (called **TRT**), as well as the gain counter, which shows in real time how many points are added to the global score counter. And as if that was not enough, in the lower left corner it displays a controller thumbnail with pressed buttons.
 
 </br>
@@ -214,6 +216,8 @@ When you reach the topout, the game will wait for the <kbd>Start</kbd> button to
 <img align="right" src="blob/readme/scene-game-summary.png">
 
 Screen with the basic statistics of the game played. Use the <kbd>↑</kbd> <kbd>↓</kbd> buttons to navigate and the <kbd>Start</kbd>/<kbd>A</kbd> button to choose the selected item.
+
+
 
 </br>
 
