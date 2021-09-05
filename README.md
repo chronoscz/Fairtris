@@ -169,7 +169,7 @@ In order not to limit the possibilities of the game and not to spoil it like the
 
 All generators work on the basis of the 16-bit **[Linear-Feedback Shift Register](https://en.wikipedia.org/wiki/Linear-feedback_shift_register)** (**LFSR** in short), which is responsible for generating successive pseudo-random numbers used for various purposes by RNG algorithms. This register was used in the original game and therefore **Fairtris** uses it.
 
-If you want to know more about it, read the article **[Applying Artificial Intelligence to Nintendo Tetris](https://meatfighter.com/nintendotetrisai)**, section **[Picking Tetriminos](https://meatfighter.com/nintendotetrisai/#Picking_Tetriminos)**.
+If you want to know more about it, read the article **[Applying Artificial Intelligence to Nintendo Tetris](https://meatfighter.com/nintendotetrisai)**, section **[Picking Tetriminos](https://meatfighter.com/nintendotetrisai/#Picking_Tetriminos)**. If you want to know more about the **[TGM](https://tetris.fandom.com/wiki/Tetris_The_Grand_Master)** and **[TGM3](https://tetris.fandom.com/wiki/Tetris_The_Grand_Master_3_Terror-Instinct)** algorithms, see article **[The history of Tetris randomizers](https://simon.lc/the-history-of-tetris-randomizers)**.
 
 </br>
 
