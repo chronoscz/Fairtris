@@ -218,6 +218,8 @@ begin
       begin
         if Event.Wheel.Y < 0 then Placement.ReduceWindow();
         if Event.Wheel.Y > 0 then Placement.EnlargeWindow();
+
+        Memory.Options.Size := Placement.WindowSize;
       end;
     SDL_JOYDEVICEADDED:   Input.Controller.Attach();
     SDL_JOYDEVICEREMOVED: Input.Controller.Detach();
