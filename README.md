@@ -151,7 +151,7 @@ For the regions `PAL` and `PAL EXTENDED`, you can select the start level up to `
 
 ### RNG algorithms
 
-The original game has only one generator, characterized by the generation of shitty sequences, filled with frequent droughts and floods, which effectively and completely unfairly take away the player's point potential and, consequently, the desire to play. Many controllers have been smashed by how badly the Nintendo developers have broken their game.
+The original game has only one generator, characterized by the generation of shitty sequences, filled with frequent droughts and floods, which effectively and completely unfairly take away the player's score potential and, consequently, the desire to play. Many controllers have been smashed by how badly the Nintendo developers have broken their game.
 
 In order not to limit the possibilities of the game and not to spoil it like the original, **Fairtris**, in addition to supporting the classic generator, also implements five additional ones, providing different levels of difficulty.
 
