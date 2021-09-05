@@ -105,6 +105,8 @@ The game contains eight significant scenes that the player should become familia
 
 The main menu of the game to choose what you want to do. Use the <kbd>↑</kbd> <kbd>↓</kbd> buttons to navigate and the <kbd>Start</kbd>/<kbd>A</kbd> button to choose the selected item.
 
+</br>
+
 By selecting the `PLAY` option, you will be taken to the gameplay configuration menu, where you will be able to select the game region, RNG type, starting level and of course start the game.
 
 If you select the `OPTIONS` item, you will be taken to the game settings menu. There you will be able to select the main input device, change the window size and mouse scroll behavior, as well as select the game skin or enable/disable the sound effects. You will also find there an input mapping option.
@@ -120,6 +122,8 @@ The `QUIT` option is used to close the game and return to the desktop. You can s
 <img align="right" src="blob/readme/scene-set-up-game.png">
 
 The main gameplay settings menu. Use the <kbd>↑</kbd> <kbd>↓</kbd> buttons to navigate, <kbd>←</kbd> <kbd>→</kbd> buttons to change the value of the selected item, the <kbd>Start</kbd>/<kbd>A</kbd> button to choose the selected item and the <kbd>B</kbd> button to go back to the previous menu.
+
+</br>
 
 The `REGION` option is used to select the regional version of the game. There are four basic versions available, and each of them has an additional extended version, which is characterized by a longer gameplay. For more information, see **[Game regions](#game-regions)** section.
 
