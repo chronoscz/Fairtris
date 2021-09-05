@@ -189,7 +189,9 @@ If you want to know more about it, read the article **[Applying Artificial Intel
 
 <img align="right" src="blob/readme/scene-gameplay.png">
 
-The gameplay is almost the same as in the **NES** version. Use the <kbd>←</kbd> and <kbd>→</kbd> buttons to shift the pieces — you can press them quickly or use the automatic shifting function called **[DAS](https://www.youtube.com/watch?v=JeccfAI_ujo)**. The charging time of the **DAS** and the speed of shifting depends on the selected **[region](#game-regions)**. To rotate the pieces, use the <kbd>B</kbd> and <kbd>A</kbd> buttons (counterclockwise and clockwise respectively).
+The gameplay is almost the same as in the **NES** version.
+
+Use the <kbd>←</kbd> <kbd>→</kbd> buttons to shift the pieces — you can press them quickly or use the automatic shifting function called **[DAS](https://www.youtube.com/watch?v=JeccfAI_ujo)**. The charging time of the **DAS** and the speed of shifting depends on the selected **[region](#game-regions)**. To rotate the pieces, use the <kbd>B</kbd> and <kbd>A</kbd> buttons (counterclockwise and clockwise respectively).
 
 If you are a more advanced player or just want to play faster, you can use <kbd>↓</kbd> to drop pieces faster (this is called **soft-drop**). Unlike the original game, **Fairtris** also supports **hard-drop**, available under the <kbd>↑</kbd> button (but the *“ghost-piece”* is not visible). It allows you to achieve the highest playing speed, which is definitely useful for speedruns.
 
@@ -217,7 +219,13 @@ When you reach the topout, the game will wait for the <kbd>Start</kbd> button to
 
 Screen with the basic statistics of the game played. Use the <kbd>↑</kbd> <kbd>↓</kbd> buttons to navigate and the <kbd>Start</kbd>/<kbd>A</kbd> button to choose the selected item.
 
+The most important information in the summary is the total number of points earned, visible at the top of the screen. The second counter shows the number of points for the transition to level `19` (or `20` if you started the game from level `19`).
 
+The total number of lines cleared is displayed below, as well as the number of lines cleared in the other way than tetrising. The last row shows the percentage of tetrises in the total number of cleared lines. The value of this counter stops after reaching the killscreen, so if you achieve the **100%** tetris rate, then burning the lines on killscreen will not lower it.
+
+</br>
+
+If you are already familiar with the game statistics, choose the `PLAY AGAIN` option to start a new game. If you want to go back to the **[Set up game](#set-up-game)** menu, choose the `BACK TO MENU` item.
 
 </br>
 
