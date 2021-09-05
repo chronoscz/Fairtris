@@ -191,7 +191,7 @@ If you want to know more about it, read the article **[Applying Artificial Intel
 
 The gameplay is the same as in the **NES** version. Use the <kbd>←</kbd> and <kbd>→</kbd> buttons to shift the pieces — you can press them quickly or use the automatic shifting function called **[DAS](https://www.youtube.com/watch?v=JeccfAI_ujo)**. The charging time of the **DAS** and the speed of shifting depends on the selected **[region](#game-regions)**. To rotate the pieces, use the <kbd>B</kbd> and <kbd>A</kbd> buttons (counterclockwise and clockwise respectively).
 
-If you are a more advanced player or just want to play faster, you can use <kbd>↓</kbd> to drop pieces faster (this is called **soft-drop**). Unlike the original game, **Fairtris** also supports **hard-drop**, available under the <kbd>↑</kbd> button. It allows you to achieve the highest playing speed, which is definitely useful for speedruns.
+If you are a more advanced player or just want to play faster, you can use <kbd>↓</kbd> to drop pieces faster (this is called **soft-drop**). Unlike the original game, **Fairtris** also supports **hard-drop**, available under the <kbd>↑</kbd> button (but the “ghost-piece” is not visible). It allows you to achieve the highest playing speed, which is definitely useful for speedruns.
 
 Pressing the <kbd>Select</kbd> button during the game allows you to show or hide the next piece. The <kbd>Start</kbd> button is used to suspend the game and open a **[Game pause](#game-pause)** menu where you can conveniently restart the game, and if you need to, also enter the game settings panel or leave the current game and return to the **[Set up game](#set-up-game)** menu.
 
