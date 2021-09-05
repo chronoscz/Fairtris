@@ -141,7 +141,7 @@ The third option is `LEVEL`, which allows you to select the starting level of th
 
 The best three results are displayed at the bottom of the screen, according to the selected regional version and RNG type. There is a separate list for each combination, so the game can store up to `48` results with basic information about the games played.
 
-If you want to start the game according to the selected settings, choose the `START` option. If you need to go back to the game main menu, choose the `BACK` option.
+If you want to start the game according to the selected settings, choose the `START` option. If you need to go back to the game **[Prime menu](#prime-menu)**, choose the `BACK` option.
 
 </br>
 
