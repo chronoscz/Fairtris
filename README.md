@@ -213,6 +213,22 @@ When you reach the topout, the game will wait for the <kbd>Start</kbd> button to
 
 </br>
 
+## Game pause
+
+<img align="right" src="blob/readme/scene-game-pause.png">
+
+When you pause the game, this screen will appear. Use the <kbd>↑</kbd> <kbd>↓</kbd> buttons to navigate and the <kbd>Start</kbd>/<kbd>A</kbd> button to choose the selected option.
+
+</br>
+
+Select the `RESUME` option to resume a paused game. If you want to play again, select the `RESTART` option. If you unplug the main input device from your computer in the meantime, these two items will be disabled until you reconnect it or change the input device in the settings menu.
+
+Select the `OPTIONS` item to go to the game settings panel. This will open up exactly the same settings panel as the one available from the **[Prime menu](#prime-menu)** of the game, so you will be able to change the settings of all game functions, from the type and mapping of input devices and the theme, to the size of the window and the state of sound effects.
+
+If you don't want to play anymore or want to change the gameplay settings, select `BACK TO MENU` to return to the **[Set up game](set-up-game)** menu.
+
+</br>
+
 ## Game summary
 
 <img align="right" src="blob/readme/scene-game-summary.png">
@@ -226,12 +242,6 @@ The total number of lines cleared is displayed below, as well as the number of l
 </br>
 
 If you are already familiar with the game statistics, choose the `PLAY AGAIN` option to start a new game. If you want to go back to the **[Set up game](#set-up-game)** menu, choose the `BACK TO MENU` item.
-
-</br>
-
-## Game pause
-
-*content needed*
 
 </br>
 
