@@ -41,7 +41,7 @@ This project was initially created as a tool to test various RNG algorithms, but
 - has a pause menu with the ability to quickly restart the game and change settings,
 - shows the game summary screen after each game,
 - support for two themes (minimalistic dark and classic skin),
-- possibility to use it with **[NestrisChamps](https://nestrischamps.herokuapp.com)** and **[Maxout Club](https://maxoutclub.com)**,
+- possibility to use it with **[NestrisChamps](https://nestrischamps.herokuapp.com)** and **[MaxoutClub](https://maxoutclub.com)**,
 - it's light and very fast — runs smoothly even on a heavily loaded PC,
 - it is fully portable, no installation required,
 - and many more!
@@ -92,7 +92,7 @@ In addition to the basic buttons, some keys have special functions assigned perm
 |---|---|
 | <kbd>F1</kbd> | Minimizes the game window and opens the user manual in the browser (actually: this document). This function is available in all game scenes. |
 | <kbd>F2</kbd> | Sets the keyboard as the default input device and restores the factory keyboard and controller mapping. This feature is available in every game scene and should be used when the player has no idea how to set the controls. |
-| <kbd>F10</kbd> | Toggles the rendering of black bars at the top and bottom of the game image. This function is intended to facilitate image calibration for **[NestrisChamps](https://nestrischamps.herokuapp.com)** and **[Maxout Club](https://maxoutclub.com)** and can be used in any scene. |
+| <kbd>F10</kbd> | Toggles the rendering of black bars at the top and bottom of the game image. This function is intended to facilitate image calibration for **[NestrisChamps](https://nestrischamps.herokuapp.com)** and **[MaxoutClub](https://maxoutclub.com)** and can be used in any scene. |
 | <kbd>F11</kbd> | Toggles low-resolution exclusive video mode, available at any time. |
 | <kbd>Backspace</kbd> | Used to remove an assigned key or button when mapping an input device. |
 | <kbd>Escape</kbd> | Cancels waiting for a key or button press when mapping an input device. |
@@ -187,7 +187,19 @@ If you want to know more about it, read the article **[Applying Artificial Intel
 
 ## Gameplay
 
-*content needed*
+<img align="right" src="blob/readme/scene-gameplay.png">
+
+The gameplay is the same as in the **NES** version. Use the <kbd>←</kbd> and <kbd>→</kbd> buttons to shift the pieces — you can press them quickly or use the automatic movement function called **[DAS](https://www.youtube.com/watch?v=JeccfAI_ujo)**. The charging time of the **DAS** and the speed of shifting depends on the selected **[region](#game-regions)**. To rotate the pieces, use the <kbd>B</kbd> and <kbd>A</kbd> buttons (counterclockwise and clockwise respectively).
+
+If you are a more advanced player or just want to play faster, you can use <kbd>↓</kbd> to drop pieces faster (this is called **soft-drop**). Unlike the original game, **Fairtris** also supports **hard-drop**, available under the <kbd>↑</kbd> button. It allows you to achieve the highest playing speed, which is definitely useful for speedruns.
+
+Pressing the <kbd>Select</kbd> button during the game allows you to show or hide the next piece. The <kbd>Start</kbd> button is used to suspend the game and open a **[Game pause](#game-pause)** menu where you can conveniently restart the game, and if you need to, also enter the game settings panel or leave the current game and return to the **[Set up game](#set-up-game)** menu.
+
+Depending on the selected theme, different information is displayed around the playing field. The `CLASSIC` skin is same as in the original game and displays only basic information, such as the score and cleared lines counters, the level number and distribution statistics of individual pieces (also the best result is shown). This theme is intended mainly for competitive play with tools such as **[NestrisChamps](https://nestrischamps.herokuapp.com)** and **[MaxoutClub](https://maxoutclub.com)**.
+
+If you choose the `MODERN` theme, you will not only have access to more information, but also to a less bright, tiring and flashing interface. The modern interface doesn't have distribution statistics, but it additionally displays the number of lines burned from the previous tetris (named **BRN**), the percentage of tetris in the total number of lines cleared (called **TRT**), as well as the gain counter, which shows in real time how many points are added to the global score counter. And as if that was not enough, in the lower left corner it displays a controller thumbnail with pressed buttons.
+
+When you reach the topout, the game will wait for the <kbd>Start</kbd> button to be pressed, without covering the playing field. You can use this time to e.g. take a screenshot. After pressing the <kbd>Start</kbd> button, the **[Game summary](#game-summary)** screen will be displayed.
 
 </br>
 
