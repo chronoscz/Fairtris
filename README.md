@@ -221,7 +221,7 @@ Screen with the basic statistics of the game played. Use the <kbd>↑</kbd> <kbd
 
 The most important information in the summary is the total number of points earned, visible at the top of the screen. The second counter shows the number of points for the transition to level `19` (or `20` if you started the game from level `19`).
 
-The total number of lines cleared is displayed below, as well as the number of lines cleared in the other way than tetrising. The last row shows the percentage of tetrises in the total number of cleared lines. The value of this counter stops after reaching the killscreen, so if you achieve the **100%** tetris rate, then burning the lines on killscreen will not lower it.
+The total number of lines cleared is displayed below, as well as the number of lines burned (cleared in the other way than tetrising). The last row shows the percentage of tetrises in the total number of cleared lines. The value of this counter stops after reaching the killscreen, so if you achieve the **100%** tetris rate, then burning the lines on killscreen will not lower it.
 
 </br>
 
