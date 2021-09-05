@@ -139,11 +139,11 @@ Even though the original **[Nintendo Tetris®](https://en.wikipedia.org/wiki/Tet
 
 - `NTSC` — equivalent to original **NTSC** version, without any major modifications, running at 60 frames per second. The `EXTENDED` version is similar but with the correct calculations of the transition lines count.
 
-- `JPN` — hypothetical version, it has gravity from the **NTSC** version, but the **[DAS](https://www.youtube.com/watch?v=JeccfAI_ujo)** speed is the same as in **PAL** version (faster by one frame, so it is possible to play on killscreen). The `EXTENDED` version additionally computes transition lines correctly. Also works at 60fps.
+- `JPN` — hypothetical version, it has gravity from the **NTSC** version, but the **[DAS](https://www.youtube.com/watch?v=JeccfAI_ujo)** speed is the same as in **PAL** (faster by one frame, so it is possible to play on killscreen). The `EXTENDED` version additionally computes transition lines correctly. Also works at 60fps.
 
 - `PAL` — equivalent to the original **PAL** version, without any significant mechanics modifications. The `EXTENDED` version doesn't support the line count bug for transition, so the game is much longer. Just like the original, it works at 50 frames per second.
 
-- `EUR` — another hypothetical region, it runs at 50fps, the speed of the **[DAS](https://www.youtube.com/watch?v=JeccfAI_ujo)** is consistent with the **PAL** version, however the gravity for each level was calculated from scratch and is similar to that of the **NTSC** version. The feeling of the game is as if an American cartridge was inserted into the European console. The `EXTENDED` version additionally has the correct transition lines count calculations.
+- `EUR` — another hypothetical region, it runs at 50fps, the speed of the **[DAS](https://www.youtube.com/watch?v=JeccfAI_ujo)** is consistent with the **PAL** version, however the gravity for each level was calculated from scratch and is similar to that of the **NTSC**. The feeling of the game is as if an American cartridge was inserted into the European console. The `EXTENDED` version additionally has the correct transition lines count calculations.
 
 For the regions `PAL` and `PAL EXTENDED`, you can select the start level up to `19`, and for all other regions up to `29`. In short, the highest possible level to choose from is always the first killscreen level of the selected regional version. 
 
@@ -151,7 +151,25 @@ For the regions `PAL` and `PAL EXTENDED`, you can select the start level up to `
 
 ### RNG algorithms
 
-*content needed*
+The original game has only one generator, characterized by the generation of shitty sequences, filled with frequent droughts and floods, which effectively and completely unfairly take away the player's point potential and, consequently, the desire to play. Many controllers have been smashed by how badly the Nintendo developers have broken their game.
+
+In order not to limit the possibilities of the game and not to spoil it like the original, **Fairtris**, in addition to supporting the classic generator, also implements five additional ones, providing different levels of difficulty.
+
+- `7-BAG` — the pieces set (one of each type) is put in the bag and then the pieces are randomly pulled out of it, one by one. Once the bag is empty, the pieces go back in and the whole process is repeated. The history isn't used, therefore snake sequences are possible, albeit short. The maximum flood is `2`, the longest drought is `12`. Plus, it's predictable.
+
+- `MULTI-BAG` — a variation of the previous one, except that instead of one bag, seven are used, and in each of them, instead of seven pieces, there are eight (one piece type is duplicated). Since there are the same number of pieces of each type in all bags (eight in total), the distribution always tends to be equal. Due to the pieces duplication in the bags, the maximum flood is `3`, while the longest drought can be `14`. The sequence quality is slightly better than the **7-bag** and more challenging.
+
+- `CLASSIC` — implementation of the original generator, existing in **[Nintendo Tetris®](https://en.wikipedia.org/wiki/Tetris_(NES_video_game))**. Its operation is very naive — it generates a pseudo-random number and converts it into a Tetrimino type. If the newly selected piece is the same as the previous one, it generates the number once again and determines the piece type from it. Annoying RNG, because very often it generates floods up to `8` same pieces in a row, and in each game it causes long droughts that last up to even `80` (although in theory the drought can last forever). Additionally, its operation can be manipulated by using a **soft-drop**. Good job, Nintendo.
+
+- `TGM` — implementation of the generator known from the game **[Tetris: The Grand Master](https://tetris.fandom.com/wiki/Tetris_The_Grand_Master)** (**TGM**). Unlike the generator from the **NES** console, it uses the history of four pieces and randomizes a new one up to four times. As a result, floods are much less frequent, but also droughts, although these can still happen and destroy the game. Decent RNG.
+
+- `TGM TERROR` — the exact implementation of the generator known from the game **[Tetris: The Grand Master 3 - Terror-Instinct](https://tetris.fandom.com/wiki/Tetris_The_Grand_Master_3_Terror-Instinct)** (**TGM3**). Very advanced algorithm, producing the most interesting, demanding and fair sequences. It uses a pool of `35` pieces and the history of the last four, and tries up to six times when drawing a new piece. It largely solves the problems of the bag and the history, a decent compromise between these systems. If you want to have a good time, choose this RNG.
+
+- `UNFAIR` — this generator is the most unstable and unfair, mainly added as a joke. It works the same as `CLASSIC`, but with the difference that it never checks to see if a piece of the same type has been drawn again. As a result, droughts and floods can be incredibly long and the pieces distribution is always uneven. This generator is good for practicing stacking and dealing with difficult situations (and only for that).
+
+All generators work on the basis of the 16-bit **[Linear-Feedback Shift Register](https://en.wikipedia.org/wiki/Linear-feedback_shift_register)** (**LFSR** in short), which is responsible for generating successive pseudo-random numbers used for various purposes by RNG algorithms. This register was used in the original game and therefore **Fairtris** uses it.
+
+If you want to know more about it, read the article **[Applying Artificial Intelligence to Nintendo Tetris](https://meatfighter.com/nintendotetrisai)**, section **[Picking Tetriminos](https://meatfighter.com/nintendotetrisai/#Picking_Tetriminos)**.
 
 </br>
 
