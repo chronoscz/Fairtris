@@ -205,7 +205,9 @@ When you reach the topout, the game will wait for the <kbd>Start</kbd> button to
 
 ## Game summary
 
-*content needed*
+<img align="right" src="blob/readme/scene-game-summary.png">
+
+Screen with the basic statistics of the game played. Use the <kbd>↑</kbd> <kbd>↓</kbd> buttons to navigate and the <kbd>Start</kbd>/<kbd>A</kbd> button to choose the selected item.
 
 </br>
 
