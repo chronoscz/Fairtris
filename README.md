@@ -25,9 +25,9 @@ If you are using **Free Pascal IDE** abomination or regular text editor such as 
 
 This project was initially created as a tool to test various RNG algorithms, but after some time it turned into a complete and rich video game that provides lots of fun. However, since **Tetris®** is a proprietary brand to which **[The Tetris Company](https://tetris.com/)** is entitled, **Fairtris is not a product** — it is a knowledge base for those who would like to know more about the internal mechanisms of the classic version of this game.
 
-Information on the license can be found in the **[LICENSE](LICENSE)** file. In general, this project is completely free, you can use it for whatever purpose you want, both the entire game and parts of it. So play, share, fork, modify, sell — do what you want, I don't give a shit about it.</br></br>
+</br>
 
-**Important features:**
+## Important features
 
 - implementation of gameplay mechanics compatible with the **[Nintendo Tetris®](https://en.wikipedia.org/wiki/Tetris_(NES_video_game))** game,
 - extended mechanics with **hard-drop** and accumulation of soft-drop points,
@@ -47,6 +47,12 @@ Information on the license can be found in the **[LICENSE](LICENSE)** file. In g
 - and many more!
 
 More detailed information on how to handle the game and its mechanics can be found further in this document.
+
+</br>
+
+## License
+
+Information on the license can be found in the **[LICENSE](LICENSE)** file. In general, this project is completely free, you can use it for whatever purpose you want, both the entire game and parts of it. So play, share, fork, modify, sell — do what you want, I don't give a shit about it.</br></br>
 
 </br>
 
@@ -77,6 +83,8 @@ The basic set of buttons for operating the game is compatible with the buttons o
 | <kbd>A</kbd> | <kbd>C</kbd> | <kbd>Button 2</kbd> |
 
 Given that the keyboard and controller can be freely mapped, in the remainder of this document, when discussing the game scenes, general names of the buttons will be given (those listed in the table above, in the column `NES controller button`).
+
+</br>
 
 In addition to the basic buttons, some keys have special functions assigned permanently. These keys cannot be used for any other purpose, therefore do not try to use them when mapping the keyboard.
 
