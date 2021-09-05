@@ -203,7 +203,7 @@ Depending on the selected theme, different information is displayed around the p
 
 <img align="right" src="blob/readme/scene-gameplay-topout.png">
 
-If you choose the `MODERN` theme, you will not only have access to more information, but also to a less bright, tiring and flashing interface. The modern interface doesn't have distribution statistics, but it additionally displays the number of lines burned from the previous tetris (named **BRN**), the percentage of tetris in the total number of lines cleared (called **TRT**), as well as the gain counter, which shows in real time how many points are added to the global score counter. And as if that was not enough, in the lower left corner it displays a controller thumbnail with pressed buttons.
+If you choose the `MODERN` theme, you will not only have access to more information, but also to a less bright, tiring and flashing interface. The modern interface doesn't have pieces statistics, but it additionally displays the number of lines burned from the previous tetris, the percentage of tetris in the total number of lines cleared, as well as the gain counter, which shows in real time how many points was added to the score counter. And in the lower left corner it displays a controller thumbnail with pressed buttons.
 
 </br>
 
