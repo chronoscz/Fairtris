@@ -217,7 +217,7 @@ When you reach the topout, the game will wait for the <kbd>Start</kbd> button to
 
 <img align="right" src="blob/readme/scene-game-summary.png">
 
-Screen with the basic statistics of the game played. Use the <kbd>↑</kbd> <kbd>↓</kbd> buttons to navigate and the <kbd>Start</kbd>/<kbd>A</kbd> button to choose the selected item.
+Screen with the basic statistics of the game played. Use the <kbd>↑</kbd> <kbd>↓</kbd> buttons to navigate and the <kbd>Start</kbd>/<kbd>A</kbd> button to choose the selected item. You can also use the <kbd>B</kbd> button to go back to the **[Set up game](#set-up-game)** menu.
 
 The most important information in the summary is the total number of points earned, visible at the top of the screen. The second counter shows the number of points for the transition to level `19` (or `20` if you started the game from level `19`).
 
