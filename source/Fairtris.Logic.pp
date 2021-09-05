@@ -760,6 +760,12 @@ begin
       Exit;
     end;
 
+  if InputMenuRejected() then
+  begin
+    FScene.Current := SCENE_PLAY;
+    Sounds.PlaySound(SOUND_DROP);
+  end;
+
   case Memory.TopOut.ItemIndex of
     ITEM_TOP_OUT_PLAY:
       if InputMenuAccepted() then
