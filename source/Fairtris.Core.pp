@@ -310,6 +310,7 @@ begin
   end;
 
   UpdatePieceControlDropMove();
+  Memory.Game.FallSkipped := True;
 end;
 
 
@@ -634,6 +635,12 @@ begin
   begin
     if (Memory.Play.Level < 19) and (Memory.Game.Level = 19) then Memory.Game.Transition := Memory.Game.Score;
     if (Memory.Play.Level = 19) and (Memory.Game.Level = 20) then Memory.Game.Transition := Memory.Game.Score;
+  end;
+
+  if Memory.Game.FallSkipped then
+  begin
+    Memory.Game.FallPoints := 0;
+    Memory.Game.FallSkipped := False;
   end;
 
   Memory.Game.State := STATE_STACK_LOWER;

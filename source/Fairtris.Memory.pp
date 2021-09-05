@@ -88,6 +88,7 @@ type
     FallTimer: Integer;
     FallSpeed: Integer;
     FallPoints: Integer;
+    FallSkipped: Boolean;
   public
     LockRow: Integer;
     LockTimer: Integer;
@@ -314,6 +315,7 @@ begin
   FallTimer := 0;
   FallSpeed := 0;
   FallPoints := 0;
+  FallSkipped := False;
 
   LockRow := 0;
   LockTimer := 0;
