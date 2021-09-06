@@ -116,6 +116,7 @@ type
 implementation
 
 uses
+  Math,
   Fairtris.Memory,
   Fairtris.Settings;
 
@@ -150,6 +151,7 @@ begin
     FButtons[ButtonIndex].Pressed := SDL_JoystickGetButton(FJoystick, ButtonIndex) = 1;
 
   AxesCount := SDL_JoystickNumAxes(FJoystick);
+  AxesCount := Min(AxesCount, CONTROLLER_AXES_COUNT);
 
   for AxisIndex := 0 to AxesCount - 1 do
   begin
@@ -158,6 +160,8 @@ begin
     FButtons[CONTROLLER_ARROWS_OFFSET + AxisIndex * 2 + 0].Pressed := AxisValue < -JOYSTICK_AXIS_DEADZONE;
     FButtons[CONTROLLER_ARROWS_OFFSET + AxisIndex * 2 + 1].Pressed := AxisValue > +JOYSTICK_AXIS_DEADZONE;
   end;
+
+
 end;
 
 

@@ -530,7 +530,7 @@ const
     'BTN 25', 'BTN 26', 'BTN 27', 'BTN 28', 'BTN 29', 'BTN 30', 'BTN 31', 'BTN_32',
 
     'X NEG' , 'X POS' , 'Y NEG' , 'Y POS' , 'Z NEG' , 'Z POS' , 'R NEG' , 'R POS' ,
-    'U NEG' , 'U POS' , 'Z NEG' , 'Z POS' ,
+    'U NEG' , 'U POS' , 'Z NEG' , 'Z POS' , '7 NEG' , '7 POS' , '8 NEG' , '8 POS' ,
 
     ''
   );
