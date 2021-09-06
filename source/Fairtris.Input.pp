@@ -24,7 +24,8 @@ interface
 uses
   Fairtris.Interfaces,
   Fairtris.Keyboard,
-  Fairtris.Controller;
+  Fairtris.Controller,
+  Fairtris.Navigation;
 
 
 type
@@ -35,6 +36,7 @@ type
   private
     FKeyboard: IControllable;
     FController: IControllable;
+    FNavigation: TNavigation;
   private
     procedure SetDeviceID(ADeviceID: Integer);
     function GetDevices(ADeviceID: Integer): IControllable;
@@ -43,6 +45,7 @@ type
     function GetController(): TController;
   public
     constructor Create();
+    destructor Destroy(); override;
   public
     procedure Initialize();
   public
@@ -56,6 +59,7 @@ type
     property Devices[ADeviceID: Integer]: IControllable read GetDevices; default;
     property DeviceID: Integer read FDeviceID write SetDeviceID;
   public
+    property Fixed: TNavigation read FNavigation;
     property Keyboard: TKeyboard read GetKeyboard;
     property Controller: TController read GetController;
   end;
@@ -76,9 +80,17 @@ constructor TInput.Create();
 begin
   FKeyboard := TKeyboard.Create();
   FController := TController.Create();
+  FNavigation := TNavigation.Create();
 
   FDevice := FKeyboard;
   FDeviceID := INPUT_KEYBOARD;
+end;
+
+
+destructor TInput.Destroy();
+begin
+  FNavigation.Free();
+  inherited Destroy();
 end;
 
 
@@ -127,6 +139,8 @@ procedure TInput.Reset();
 begin
   GetKeyboard().Reset();
   GetController().Reset();
+
+  FNavigation.Reset();
 end;
 
 
@@ -134,6 +148,8 @@ procedure TInput.Update();
 begin
   GetKeyboard().Update();
   GetController().Update();
+
+  FNavigation.Update(GetKeyboard());
 end;
 
 
@@ -141,6 +157,8 @@ procedure TInput.Validate();
 begin
   GetKeyboard().Validate();
   GetController().Validate();
+
+  FNavigation.Validate();
 end;
 
 
@@ -148,6 +166,8 @@ procedure TInput.Invalidate();
 begin
   GetKeyboard().Invalidate();
   GetController().Invalidate();
+
+  FNavigation.Invalidate();
 end;
 
 

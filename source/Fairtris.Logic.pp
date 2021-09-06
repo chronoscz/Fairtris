@@ -44,6 +44,8 @@ type
   private
     function InputOptionSetPrev(): Boolean;
     function InputOptionSetNext(): Boolean;
+    function InputOptionRollPrev(): Boolean;
+    function InputOptionRollNext(): Boolean;
   private
     procedure HelpUnderstand();
     procedure HelpControl();
@@ -191,38 +193,49 @@ end;
 
 function TLogic.InputMenuSetPrev(): Boolean;
 begin
-  Result := Input.Device.Up.JustPressed or Input.Keyboard.Up.JustPressed;
+  Result := Input.Fixed.Up.JustPressed or Input.Controller.Up.JustPressed;
 end;
 
 
 function TLogic.InputMenuSetNext(): Boolean;
 begin
-  Result := Input.Device.Down.JustPressed or Input.Keyboard.Down.JustPressed;
+  Result := Input.Fixed.Down.JustPressed or Input.Controller.Down.JustPressed;
 end;
 
 
 function TLogic.InputMenuAccepted(): Boolean;
 begin
-  Result := Input.Device.Start.JustPressed or Input.Device.A.JustPressed or
-            Input.Keyboard.Start.JustPressed or Input.Keyboard.A.JustPressed;
+  Result := Input.Fixed.Accept.JustPressed or Input.Controller.Start.JustPressed or Input.Controller.A.JustPressed;
 end;
 
 
 function TLogic.InputMenuRejected(): Boolean;
 begin
-  Result := Input.Device.B.JustPressed or Input.Keyboard.B.JustPressed;
+  Result := Input.Fixed.Cancel.JustPressed or Input.Controller.B.JustPressed;
 end;
 
 
 function TLogic.InputOptionSetPrev(): Boolean;
 begin
-  Result := Input.Device.Left.JustPressed or Input.Keyboard.Left.JustPressed;
+  Result := Input.Fixed.Left.JustPressed or Input.Controller.Left.JustPressed;
 end;
 
 
 function TLogic.InputOptionSetNext(): Boolean;
 begin
-  Result := Input.Device.Right.JustPressed or Input.Keyboard.Right.JustPressed;
+  Result := Input.Fixed.Right.JustPressed or Input.Controller.Right.JustPressed;
+end;
+
+
+function TLogic.InputOptionRollPrev(): Boolean;
+begin
+  Result := Input.Fixed.Left.Pressed or Input.Controller.Left.Pressed;
+end;
+
+
+function TLogic.InputOptionRollNext(): Boolean;
+begin
+  Result := Input.Fixed.Right.Pressed or Input.Controller.Right.Pressed;
 end;
 
 
@@ -565,7 +578,7 @@ begin
     Sounds.PlaySound(SOUND_SHIFT);
   end
   else
-    if Input.Device.Left.Pressed or Input.Keyboard.Left.Pressed then
+    if InputOptionRollPrev() then
     begin
       Memory.Play.Autorepeat += 1;
 
@@ -586,7 +599,7 @@ begin
     Sounds.PlaySound(SOUND_SHIFT);
   end
   else
-    if Input.Device.Right.Pressed or Input.Keyboard.Right.Pressed then
+    if InputOptionRollNext() then
     begin
       Memory.Play.Autorepeat += 1;
 
@@ -1013,7 +1026,7 @@ begin
   end;
 
   if Memory.Keyboard.KeyIndex < ITEM_KEYBOARD_KEY_LAST then
-    if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_CLEAR_MAPPING].JustPressed then
+    if Input.Fixed.Clear.JustPressed then
       if Memory.Keyboard.ScanCodes[Memory.Keyboard.KeyIndex] <> KEYBOARD_SCANCODE_KEY_NOT_MAPPED then
       begin
         Memory.Keyboard.ScanCodes[Memory.Keyboard.KeyIndex] := KEYBOARD_SCANCODE_KEY_NOT_MAPPED;
@@ -1041,8 +1054,8 @@ begin
   if not Memory.Keyboard.Mapping then
     if InputMenuRejected() then
     begin
-      Input.Device.B.Validate();
-      Input.Keyboard.B.Validate();
+      Input.Fixed.Cancel.Validate();
+      Input.Controller.B.Validate();
 
       Memory.Keyboard.Changing := False;
       Sounds.PlaySound(SOUND_DROP);
@@ -1056,7 +1069,7 @@ var
 begin
   if not Memory.Keyboard.Mapping then Exit;
 
-  if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_CANCEL_MAPPING].JustPressed then
+  if Input.Fixed.Cancel.JustPressed then
   begin
     Memory.Keyboard.Mapping := False;
     Sounds.PlaySound(SOUND_DROP);
@@ -1079,7 +1092,7 @@ procedure TLogic.UpdateKeyboardScene();
 begin
   FScene.Validate();
 
-  if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_HELP_CONTROL].JustPressed then
+  if Input.Fixed.HelpControl.JustPressed then
   begin
     Memory.Keyboard.Changing := False;
     Memory.Keyboard.Mapping := False;
@@ -1176,7 +1189,7 @@ begin
   end;
 
   if Memory.Controller.ButtonIndex < ITEM_CONTROLLER_BUTTON_LAST then
-    if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_CLEAR_MAPPING].JustPressed then
+    if Input.Fixed.Clear.JustPressed then
       if Memory.Controller.ScanCodes[Memory.Controller.ButtonIndex] <> CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED then
       begin
         Memory.Controller.ScanCodes[Memory.Controller.ButtonIndex] := CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED;
@@ -1204,8 +1217,8 @@ begin
   if not Memory.Controller.Mapping then
     if InputMenuRejected() then
     begin
-      Input.Device.B.Validate();
-      Input.Keyboard.B.Validate();
+      Input.Fixed.Cancel.Validate();
+      Input.Controller.B.Validate();
 
       Memory.Controller.Changing := False;
       Sounds.PlaySound(SOUND_DROP);
@@ -1219,7 +1232,7 @@ var
 begin
   if not Memory.Controller.Mapping then Exit;
 
-  if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_CANCEL_MAPPING].JustPressed then
+  if Input.Fixed.Cancel.JustPressed then
   begin
     Memory.Controller.Mapping := False;
     Sounds.PlaySound(SOUND_DROP);
@@ -1242,7 +1255,7 @@ procedure TLogic.UpdateControllerScene();
 begin
   FScene.Validate();
 
-  if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_HELP_CONTROL].JustPressed then
+  if Input.Fixed.HelpControl.JustPressed then
   begin
     Memory.Keyboard.Changing := False;
     Memory.Keyboard.Mapping := False;
@@ -1311,17 +1324,11 @@ end;
 
 procedure TLogic.UpdateCommon();
 begin
-  if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_HELP_UNDERSTAND].JustPressed then
-    HelpUnderstand();
+  if Input.Fixed.HelpUnderstand.JustPressed then HelpUnderstand();
+  if Input.Fixed.HelpControl.JustPressed    then HelpControl();
 
-  if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_HELP_CONTROL].JustPressed then
-    HelpControl();
-
-  if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_TOGGLE_CLIP].JustPressed then
-    Renderers.ClipFrame := not Renderers.ClipFrame;
-
-  if Input.Keyboard.Device[KEYBOARD_SCANCODE_KEY_TOGGLE_VIDEO].JustPressed then
-    Placement.ToggleVideoMode();
+  if Input.Fixed.ToggleClip.JustPressed  then Renderers.ClipFrame := not Renderers.ClipFrame;
+  if Input.Fixed.ToggleVideo.JustPressed then Placement.ToggleVideoMode();
 
   if not Memory.Game.Started then
     Generators.Shuffle();

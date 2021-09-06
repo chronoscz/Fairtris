@@ -1,0 +1,119 @@
+unit Fairtris.Navigation;
+
+{$MODE OBJFPC}{$LONGSTRINGS ON}
+
+interface
+
+uses
+  Fairtris.Classes,
+  Fairtris.Keyboard,
+  Fairtris.Constants;
+
+
+type
+  TNavigation = class(TObject)
+  private
+    FKeys: array [KEYBOARD_KEY_FIXED_FIRST .. KEYBOARD_KEY_FIXED_LAST] of TSwitch;
+  private
+    function GetKey(AKeyID: Integer): TSwitch;
+  public
+    constructor Create();
+    destructor Destroy(); override;
+  public
+    procedure Reset();
+    procedure Update(AKeyboard: TKeyboard);
+  public
+    procedure Validate();
+    procedure Invalidate();
+  public
+    property Up: TSwitch index KEYBOARD_KEY_FIXED_UP read GetKey;
+    property Down: TSwitch index KEYBOARD_KEY_FIXED_DOWN read GetKey;
+    property Left: TSwitch index KEYBOARD_KEY_FIXED_LEFT read GetKey;
+    property Right: TSwitch index KEYBOARD_KEY_FIXED_RIGHT read GetKey;
+    property Accept: TSwitch index KEYBOARD_KEY_FIXED_ACCEPT read GetKey;
+    property Cancel: TSwitch index KEYBOARD_KEY_FIXED_CANCEL read GetKey;
+    property Clear: TSwitch index KEYBOARD_KEY_FIXED_CLEAR read GetKey;
+  public
+    property HelpUnderstand: TSwitch index KEYBOARD_KEY_FIXED_HELP_UNDERSTAND read GetKey;
+    property HelpControl: TSwitch index KEYBOARD_KEY_FIXED_HELP_CONTROL read GetKey;
+    property ToggleClip: TSwitch index KEYBOARD_KEY_FIXED_TOGGLE_CLIP read GetKey;
+    property ToggleVideo: TSwitch index KEYBOARD_KEY_FIXED_TOGGLE_VIDEO read GetKey;
+  end;
+
+
+implementation
+
+
+constructor TNavigation.Create();
+var
+  Index: Integer;
+begin
+  for Index := Low(FKeys) to High(FKeys) do
+    FKeys[Index] := TSwitch.Create(False);
+end;
+
+
+destructor TNavigation.Destroy();
+var
+  Index: Integer;
+begin
+  for Index := Low(FKeys) to High(FKeys) do
+    FKeys[Index].Free();
+
+  inherited Destroy();
+end;
+
+
+function TNavigation.GetKey(AKeyID: Integer): TSwitch;
+begin
+  Result := FKeys[AKeyID];
+end;
+
+
+procedure TNavigation.Reset();
+var
+  Index: Integer;
+begin
+  for Index := Low(FKeys) to High(FKeys) do
+    FKeys[Index].Reset();
+end;
+
+
+procedure TNavigation.Update(AKeyboard: TKeyboard);
+begin
+  FKeys[KEYBOARD_KEY_FIXED_UP].Pressed    := AKeyboard.Device[KEYBOARD_SCANCODE_KEY_FIXED_UP].Pressed;
+  FKeys[KEYBOARD_KEY_FIXED_DOWN].Pressed  := AKeyboard.Device[KEYBOARD_SCANCODE_KEY_FIXED_DOWN].Pressed;
+  FKeys[KEYBOARD_KEY_FIXED_LEFT].Pressed  := AKeyboard.Device[KEYBOARD_SCANCODE_KEY_FIXED_LEFT].Pressed;
+  FKeys[KEYBOARD_KEY_FIXED_RIGHT].Pressed := AKeyboard.Device[KEYBOARD_SCANCODE_KEY_FIXED_RIGHT].Pressed;
+
+  FKeys[KEYBOARD_KEY_FIXED_ACCEPT].Pressed := AKeyboard.Device[KEYBOARD_SCANCODE_KEY_FIXED_ACCEPT].Pressed;
+  FKeys[KEYBOARD_KEY_FIXED_CANCEL].Pressed := AKeyboard.Device[KEYBOARD_SCANCODE_KEY_FIXED_CANCEL].Pressed;
+  FKeys[KEYBOARD_KEY_FIXED_CLEAR].Pressed  := AKeyboard.Device[KEYBOARD_SCANCODE_KEY_FIXED_CLEAR].Pressed;
+
+  FKeys[KEYBOARD_KEY_FIXED_HELP_UNDERSTAND].Pressed := AKeyboard.Device[KEYBOARD_SCANCODE_KEY_FIXED_HELP_UNDERSTAND].Pressed;
+  FKeys[KEYBOARD_KEY_FIXED_HELP_CONTROL].Pressed    := AKeyboard.Device[KEYBOARD_SCANCODE_KEY_FIXED_HELP_CONTROL].Pressed;
+  FKeys[KEYBOARD_KEY_FIXED_TOGGLE_CLIP].Pressed     := AKeyboard.Device[KEYBOARD_SCANCODE_KEY_FIXED_TOGGLE_CLIP].Pressed;
+  FKeys[KEYBOARD_KEY_FIXED_TOGGLE_VIDEO].Pressed    := AKeyboard.Device[KEYBOARD_SCANCODE_KEY_FIXED_TOGGLE_VIDEO].Pressed;
+end;
+
+
+procedure TNavigation.Validate();
+var
+  Index: Integer;
+begin
+  for Index := Low(FKeys) to High(FKeys) do
+    FKeys[Index].Validate();
+end;
+
+
+procedure TNavigation.Invalidate();
+var
+  Index: Integer;
+begin
+  for Index := Low(FKeys) to High(FKeys) do
+    FKeys[Index].Invalidate();
+end;
+
+
+end.
+
