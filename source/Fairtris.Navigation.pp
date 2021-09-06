@@ -51,7 +51,8 @@ type
     property Cancel: TSwitch index KEYBOARD_KEY_FIXED_CANCEL read GetKey;
     property Clear: TSwitch index KEYBOARD_KEY_FIXED_CLEAR read GetKey;
   public
-    property HelpUnderstand: TSwitch index KEYBOARD_KEY_FIXED_HELP_UNDERSTAND read GetKey;
+    property Help: TSwitch index KEYBOARD_KEY_FIXED_HELP read GetKey;
+  public
     property ToggleClip: TSwitch index KEYBOARD_KEY_FIXED_TOGGLE_CLIP read GetKey;
     property ToggleVideo: TSwitch index KEYBOARD_KEY_FIXED_TOGGLE_VIDEO read GetKey;
   end;
@@ -106,9 +107,9 @@ begin
   FKeys[KEYBOARD_KEY_FIXED_CANCEL].Pressed := AKeyboard.Device[KEYBOARD_SCANCODE_KEY_FIXED_CANCEL].Pressed;
   FKeys[KEYBOARD_KEY_FIXED_CLEAR].Pressed  := AKeyboard.Device[KEYBOARD_SCANCODE_KEY_FIXED_CLEAR].Pressed;
 
-  FKeys[KEYBOARD_KEY_FIXED_HELP_UNDERSTAND].Pressed := AKeyboard.Device[KEYBOARD_SCANCODE_KEY_FIXED_HELP_UNDERSTAND].Pressed;
-  FKeys[KEYBOARD_KEY_FIXED_TOGGLE_CLIP].Pressed     := AKeyboard.Device[KEYBOARD_SCANCODE_KEY_FIXED_TOGGLE_CLIP].Pressed;
-  FKeys[KEYBOARD_KEY_FIXED_TOGGLE_VIDEO].Pressed    := AKeyboard.Device[KEYBOARD_SCANCODE_KEY_FIXED_TOGGLE_VIDEO].Pressed;
+  FKeys[KEYBOARD_KEY_FIXED_HELP].Pressed         := AKeyboard.Device[KEYBOARD_SCANCODE_KEY_FIXED_HELP].Pressed;
+  FKeys[KEYBOARD_KEY_FIXED_TOGGLE_CLIP].Pressed  := AKeyboard.Device[KEYBOARD_SCANCODE_KEY_FIXED_TOGGLE_CLIP].Pressed;
+  FKeys[KEYBOARD_KEY_FIXED_TOGGLE_VIDEO].Pressed := AKeyboard.Device[KEYBOARD_SCANCODE_KEY_FIXED_TOGGLE_VIDEO].Pressed;
 end;
 
 

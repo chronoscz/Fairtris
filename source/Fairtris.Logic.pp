@@ -47,8 +47,7 @@ type
     function InputOptionRollPrev(): Boolean;
     function InputOptionRollNext(): Boolean;
   private
-    procedure HelpUnderstand();
-    procedure HelpControl();
+    procedure OpenHelp();
   private
     procedure PreparePlaySelection();
   private
@@ -239,24 +238,12 @@ begin
 end;
 
 
-procedure TLogic.HelpUnderstand();
+procedure TLogic.OpenHelp();
 begin
   Sounds.PlaySound(SOUND_START);
 
   ShellExecute(0, 'open', 'https://github.com/furious-programming/fairtris', nil, nil, SW_SHOWNORMAL);
   SDL_MinimizeWindow(Window.Window);
-end;
-
-
-procedure TLogic.HelpControl();
-begin
-  Input.Keyboard.Restore();
-  Input.DeviceID := INPUT_KEYBOARD;
-
-  Memory.Options.Input := INPUT_KEYBOARD;
-
-  PrepareKeyboardScanCodes();
-  Sounds.PlaySound(SOUND_TRANSITION, True);
 end;
 
 
@@ -502,7 +489,7 @@ begin
       Sounds.PlaySound(SOUND_GLASS, True);
 
     if Memory.Menu.ItemIndex = ITEM_MENU_HELP then
-      HelpUnderstand();
+      OpenHelp();
   end;
 end;
 
@@ -1306,7 +1293,7 @@ end;
 
 procedure TLogic.UpdateCommon();
 begin
-  if Input.Fixed.HelpUnderstand.JustPressed then HelpUnderstand();
+  if Input.Fixed.Help.JustPressed then OpenHelp();
 
   if Input.Fixed.ToggleClip.JustPressed  then Renderers.ClipFrame := not Renderers.ClipFrame;
   if Input.Fixed.ToggleVideo.JustPressed then Placement.ToggleVideoMode();
