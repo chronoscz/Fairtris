@@ -70,34 +70,15 @@ You can close the game using the appropriate option in the main menu or by press
 
 # Default controls
 
-**Fairtris** is controlled by the keyboard by default, and if a game controller is plugged in and set as main input device, also with it. All the game menus can be operated with both devices, while the game can only be played using the main input device. The control looks the same as in emulators (e.g. in **FCEUX**), where one set of keyboard keys or controller buttons is used for navigating in the menu and for playing. There is no distinction between keys for menus and game keys, so you don't have to change your hand layout when switching between scenes.
+**Fairtris** is controlled by the keyboard by default, and if a game controller is plugged in and set as main input device, also with it. All the game menus can be operated with both devices, while the game can only be played using the main input device. The control looks the same as in emulators (e.g. in **FCEUX**), where one set of keyboard keys or controller buttons is used for navigating in the menu and for playing.
 
-The basic set of buttons for operating the game is compatible with the buttons on the **[NES controller](https://en.wikipedia.org/wiki/Nintendo_Entertainment_System#Controllers)**.
+To navigate in the menu, use the <kbd>↑</kbd> <kbd>↓</kbd> keys to change the selected item and <kbd>←</kbd> <kbd>→</kbd> to change the value of the current option. If you want to enter the selected option, press the <kbd>Enter</kbd> key. To go back to the previous menu, press the <kbd>Escape</kbd> key. When mapping keys and buttons, if you want to leave the button unmapped, use the <kbd>Backspace</kbd> key to clear the mapping.
 
-| NES controller button | Keyboard key equivalent | USB controller button equivalent |
-|---|---|---|
-| <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> | <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> | <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> (D-pad or left analog stick) |
-| <kbd>Select</kbd> | <kbd>V</kbd> | <kbd>Button 9</kbd> |
-| <kbd>Start</kbd> | <kbd>Z</kbd> | <kbd>Button 10</kbd> |
-| <kbd>B</kbd> | <kbd>X</kbd> | <kbd>Button 1</kbd> |
-| <kbd>A</kbd> | <kbd>C</kbd> | <kbd>Button 2</kbd> |
+The actual game can be controlled with a keyboard or any USB controller for which separate mappings are provided. The basic set of buttons for this purpose is compatible with the buttons on the **[NES controller](https://en.wikipedia.org/wiki/Nintendo_Entertainment_System#Controllers)** and can be freely mapped. By default, the <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd> keys are used to move and drop pieces, and the <kbd>X</kbd> and <kbd>C</kbd> keys are used to rotate them. The <kbd>Z</kbd> key is used to pause the game, while the <kbd>V</kbd> key is used to show or hide the next piece. The controller buttons are mapped by default according to the general button layout standards, where the `X` and `Y` axes are responsible for moving and dropping pieces, and the first two buttons for rotating them.
 
-Given that the keyboard and controller can be freely mapped, in the remainder of this document, when discussing the game scenes, general names of the buttons will be given (those listed in the table above, in the column `NES controller button`).
+In addition to the basic buttons, some keys have special functions assigned permanently and cannot be used when mapping. If you need help, press the <kbd>F1</kbd> key. To toggle the exclusive video mode, press <kbd>F11</kbd>. To toggle visibility of the first and last tiles row (for the **[NestrisChamps](https://nestrischamps.herokuapp.com)** and **[MaxoutClub](https://maxoutclub.com)** purposes), use the <kbd>F10</kbd> key.
 
-</br>
-
-In addition to the basic buttons, some keys have special functions assigned permanently. These keys cannot be used for any other purpose, therefore do not try to use them when mapping the keyboard.
-
-| Keyboard&nbsp;key | Assigned function |
-|---|---|
-| <kbd>F1</kbd> | Minimizes the game window and opens the user manual in the browser (actually: this document). This function is available in all game scenes. |
-| <kbd>F2</kbd> | Sets the keyboard as the default input device and restores the factory keyboard and controller mapping. This feature is available in every game scene and should be used when the player has no idea how to set the controls. |
-| <kbd>F10</kbd> | Toggles the rendering of black bars at the top and bottom of the game image. This function is intended to facilitate image calibration for **[NestrisChamps](https://nestrischamps.herokuapp.com)** and **[MaxoutClub](https://maxoutclub.com)** and can be used in any scene. |
-| <kbd>F11</kbd> | Toggles low-resolution exclusive video mode, available at any time. |
-| <kbd>Backspace</kbd> | Used to remove an assigned key or button when mapping an input device. |
-| <kbd>Escape</kbd> | Cancels waiting for a key or button press when mapping an input device. |
-
-For more information about device mapping and the purpose of specific keys and buttons, see **[Set up keyboard](#set-up-keyboard)** and **[Set up controller](#set-up-controller)** sections.
+Given that the keyboard and controller can be freely mapped, in the remainder of this document, when discussing the game scenes, general names of the buttons will be given. For more information about device mappings, see **[Set up keyboard](#set-up-keyboard)** and **[Set up controller](#set-up-controller)** sections.
 
 </br>
 
