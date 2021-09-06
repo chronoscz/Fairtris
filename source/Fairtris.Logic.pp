@@ -1092,15 +1092,6 @@ procedure TLogic.UpdateKeyboardScene();
 begin
   FScene.Validate();
 
-  if Input.Fixed.HelpControl.JustPressed then
-  begin
-    Memory.Keyboard.Changing := False;
-    Memory.Keyboard.Mapping := False;
-
-    FScene.Current := SCENE_OPTIONS;
-    Exit;
-  end;
-
   if not Memory.Keyboard.Changing then
   begin
     if InputMenuRejected() then
@@ -1255,15 +1246,6 @@ procedure TLogic.UpdateControllerScene();
 begin
   FScene.Validate();
 
-  if Input.Fixed.HelpControl.JustPressed then
-  begin
-    Memory.Keyboard.Changing := False;
-    Memory.Keyboard.Mapping := False;
-
-    FScene.Current := SCENE_OPTIONS;
-    Exit;
-  end;
-
   if not Input.Controller.Connected then
   begin
     FScene.Current := SCENE_OPTIONS;
@@ -1325,7 +1307,6 @@ end;
 procedure TLogic.UpdateCommon();
 begin
   if Input.Fixed.HelpUnderstand.JustPressed then HelpUnderstand();
-  if Input.Fixed.HelpControl.JustPressed    then HelpControl();
 
   if Input.Fixed.ToggleClip.JustPressed  then Renderers.ClipFrame := not Renderers.ClipFrame;
   if Input.Fixed.ToggleVideo.JustPressed then Placement.ToggleVideoMode();
