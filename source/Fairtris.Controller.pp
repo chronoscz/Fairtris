@@ -142,23 +142,22 @@ end;
 
 procedure TDevice.UpdateButtons();
 const
-  JOYSTICK_AXIS_X = 0;
-  JOYSTICK_AXIS_Y = 1;
-const
   JOYSTICK_AXIS_DEADZONE = 9999;
 var
-  AxisX, AxisY, Index: Integer;
+  AxesCount, AxisIndex, AxisValue, ButtonIndex: Integer;
 begin
-  for Index := Low(FButtons) to CONTROLLER_BUTTONS_COUNT - 1 do
-    FButtons[Index].Pressed := SDL_JoystickGetButton(FJoystick, Index) = 1;
+  for ButtonIndex := Low(FButtons) to CONTROLLER_BUTTONS_COUNT - 1 do
+    FButtons[ButtonIndex].Pressed := SDL_JoystickGetButton(FJoystick, ButtonIndex) = 1;
 
-  AxisX := SDL_JoystickGetAxis(FJoystick, JOYSTICK_AXIS_X);
-  AxisY := SDL_JoystickGetAxis(FJoystick, JOYSTICK_AXIS_Y);
+  AxesCount := SDL_JoystickNumAxes(FJoystick);
 
-  FButtons[CONTROLLER_ARROWS_OFFSET + CONTROLLER_BUTTON_UP].Pressed    := AxisY < -JOYSTICK_AXIS_DEADZONE;
-  FButtons[CONTROLLER_ARROWS_OFFSET + CONTROLLER_BUTTON_DOWN].Pressed  := AxisY > +JOYSTICK_AXIS_DEADZONE;
-  FButtons[CONTROLLER_ARROWS_OFFSET + CONTROLLER_BUTTON_LEFT].Pressed  := AxisX < -JOYSTICK_AXIS_DEADZONE;
-  FButtons[CONTROLLER_ARROWS_OFFSET + CONTROLLER_BUTTON_RIGHT].Pressed := AxisX > +JOYSTICK_AXIS_DEADZONE;
+  for AxisIndex := 0 to AxesCount - 1 do
+  begin
+    AxisValue := SDL_JoystickGetAxis(FJoystick, AxisIndex);
+
+    FButtons[CONTROLLER_ARROWS_OFFSET + AxisIndex * 2 + 0].Pressed := AxisValue < -JOYSTICK_AXIS_DEADZONE;
+    FButtons[CONTROLLER_ARROWS_OFFSET + AxisIndex * 2 + 1].Pressed := AxisValue > +JOYSTICK_AXIS_DEADZONE;
+  end;
 end;
 
 
