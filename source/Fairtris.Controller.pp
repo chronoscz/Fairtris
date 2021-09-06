@@ -31,7 +31,7 @@ uses
 type
   TDevice = class(TObject)
   private type
-    TButtons = array [0 .. CONTROLLER_BUTTONS_COUNT + CONTROLLER_ARROWS_COUNT] of TSwitch;
+    TButtons = array [CONTROLLER_SCANCODE_BUTTON_FIRST .. CONTROLLER_SCANCODE_BUTTON_LAST] of TSwitch;
   private
     FJoystick: PSDL_Joystick;
   private
@@ -39,6 +39,8 @@ type
     FConnected: Boolean;
   private
     procedure UpdateButtons();
+    procedure UpdateAxes();
+    procedure UpdateHats();
   private
     function GetButton(AButtonID: Integer): TSwitch;
   public
@@ -142,26 +144,51 @@ end;
 
 
 procedure TDevice.UpdateButtons();
+var
+  ButtonsCount, ButtonIndex: Integer;
+begin
+  ButtonsCount := Min(SDL_JoystickNumButtons(FJoystick), CONTROLLER_COUNT_BUTTONS);
+
+  for ButtonIndex := 0 to ButtonsCount - 1 do
+    FButtons[ButtonIndex].Pressed := SDL_JoystickGetButton(FJoystick, ButtonIndex) = 1;
+end;
+
+
+procedure TDevice.UpdateAxes();
 const
   JOYSTICK_AXIS_DEADZONE = 9999;
 var
   AxesCount, AxisIndex, AxisValue, ButtonIndex: Integer;
 begin
-  for ButtonIndex := Low(FButtons) to CONTROLLER_BUTTONS_COUNT - 1 do
-    FButtons[ButtonIndex].Pressed := SDL_JoystickGetButton(FJoystick, ButtonIndex) = 1;
-
-  AxesCount := SDL_JoystickNumAxes(FJoystick);
-  AxesCount := Min(AxesCount, CONTROLLER_AXES_COUNT);
+  AxesCount := Min(SDL_JoystickNumAxes(FJoystick), CONTROLLER_COUNT_AXES);
 
   for AxisIndex := 0 to AxesCount - 1 do
   begin
     AxisValue := SDL_JoystickGetAxis(FJoystick, AxisIndex);
+    ButtonIndex := CONTROLLER_OFFSET_ARROWS + AxisIndex * CONTROLLER_COUNT_BUTTONS_PER_AXIS;
 
-    FButtons[CONTROLLER_ARROWS_OFFSET + AxisIndex * 2 + 0].Pressed := AxisValue < -JOYSTICK_AXIS_DEADZONE;
-    FButtons[CONTROLLER_ARROWS_OFFSET + AxisIndex * 2 + 1].Pressed := AxisValue > +JOYSTICK_AXIS_DEADZONE;
+    FButtons[ButtonIndex + 0].Pressed := AxisValue < -JOYSTICK_AXIS_DEADZONE;
+    FButtons[ButtonIndex + 1].Pressed := AxisValue > +JOYSTICK_AXIS_DEADZONE;
   end;
+end;
 
-  // here update controller hats, if supported
+
+procedure TDevice.UpdateHats();
+var
+  HatsCount, HatIndex, HatValue, ButtonIndex: Integer;
+begin
+  HatsCount := Min(SDL_JoystickNumHats(FJoystick), CONTROLLER_COUNT_HATS);
+
+  for HatIndex := 0 to HatsCount - 1 do
+  begin
+    HatValue := SDL_JoystickGetHat(FJoystick, HatIndex);
+    ButtonIndex := CONTROLLER_OFFSET_HATS + HatIndex * CONTROLLER_COUNT_BUTTONS_PER_HAT;
+
+    FButtons[ButtonIndex + 0].Pressed := HatValue and SDL_HAT_LEFT  <> 0;
+    FButtons[ButtonIndex + 1].Pressed := HatValue and SDL_HAT_RIGHT <> 0;
+    FButtons[ButtonIndex + 2].Pressed := HatValue and SDL_HAT_UP    <> 0;
+    FButtons[ButtonIndex + 3].Pressed := HatValue and SDL_HAT_DOWN  <> 0;
+  end;
 end;
 
 
@@ -183,7 +210,11 @@ end;
 procedure TDevice.Update();
 begin
   if FConnected then
-    UpdateButtons()
+  begin
+    UpdateButtons();
+    UpdateAxes();
+    UpdateHats();
+  end
   else
     Reset();
 end;
