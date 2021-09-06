@@ -161,7 +161,7 @@ begin
     FButtons[CONTROLLER_ARROWS_OFFSET + AxisIndex * 2 + 1].Pressed := AxisValue > +JOYSTICK_AXIS_DEADZONE;
   end;
 
-
+  // here update controller hats, if supported
 end;
 
 
