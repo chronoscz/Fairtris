@@ -532,7 +532,7 @@ const
     'AX NEG' , 'AX POS' , 'AY NEG' , 'AY POS' , 'AZ NEG' , 'AZ POS' , 'AR NEG' , 'AR POS' ,
     'AU NEG' , 'AU POS' , 'AZ NEG' , 'AZ POS' , 'A7 NEG' , 'A7 POS' , 'A8 NEG' , 'A8 POS' ,
 
-    'H0 XNEG', 'H0 XPOS', 'H0 YNEG', 'H0 YPOS', 'H1 XNEG', 'H1 XPOS', 'H1 YNEG', 'H1 YPOS',
+    'H0 LEFT', 'H0 RGHT', 'H0 UP'  , 'H0 DOWN', 'H1 LEFT', 'H1 RGHT', 'H1 UP'  , 'H1 DOWN',
 
     ''
   );
