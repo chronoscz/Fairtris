@@ -31,7 +31,7 @@ uses
 type
   TDevice = class(TObject)
   private type
-    TButtons = array [CONTROLLER_SCANCODE_BUTTON_FIRST .. CONTROLLER_SCANCODE_BUTTON_LAST] of TSwitch;
+    TButtons = array [CONTROLLER_SCANCODE_BUTTON_FIRST .. CONTROLLER_SCANCODE_BUTTON_LAST + 1] of TSwitch;
   private
     FJoystick: PSDL_Joystick;
   private
