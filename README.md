@@ -228,7 +228,17 @@ If you are already familiar with the game statistics, choose the `PLAY AGAIN` op
 
 ## Game options
 
-*content needed*
+<img align="right" src="blob/readme/scene-game-options.png">
+
+This is the main game settings panel, available both from the **[Prime menu](#prime-menu)** of the game and in the **[Game pause](#game-pause)** menu. Use the <kbd>↑</kbd> <kbd>↓</kbd> keys to navigate, <kbd>←</kbd> <kbd>→</kbd> keys to change the value of the selected item, the <kbd>Enter</kbd> key to choose the selected item and the <kbd>Escape</kbd> key to go back to the previous menu.
+
+The first option in this menu is to set the main input device — if you want to play the keyboard, set it to `KEYBOARD`, and if you prefer to play with a controller, select the `CONTROLLER` option. To go to device mapping, go to the `SET UP` option — you will be taken to the **[Set up keybaord](#set-up-keyboard)** or **[Set up controller](#set-up-controller)** menu, depending on the selected device type. This option is disabled if the selected device is not connected or if it is not working properly.
+
+Another option is `WINDOW` which allows you to choose the size of the game window. Various sizes are available, from native to fullscreen. This option is disabled if exclusive video mode is active. The `THEME` option allows you to choose one of two graphic themes. If you want to play more conveniently and have access to additional statistics, choose the `MODERN` theme. However, if you prefer a classic skin or if you want to play with someone via **[NestrisChamps](https://nestrischamps.herokuapp.com)** or **[MaxoutClub](https://maxoutclub.com)** tools, choose the `CLASSIC` theme.
+
+Next we have the option `SOUNDS`, which allows you to enable or disable the playback of sound effects in all menus and during the game. The `SCROLL` option, on the other hand, allows you to unlock or block the ability to change the size of the window with the mouse wheel (this function is available only in windowed mode).
+
+Select `BACK` to go back to the previous menu.
 
 </br>
 
