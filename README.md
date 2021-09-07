@@ -42,7 +42,7 @@ This project was initially created as a tool to test various RNG algorithms, but
 - shows the game summary screen after each game,
 - support for two themes (minimalistic dark and classic skin),
 - possibility to use it with **[NestrisChamps](https://nestrischamps.herokuapp.com)** and **[MaxoutClub](https://maxoutclub.com)**,
-- it's light and very fast — runs smoothly even on a heavily loaded PC,
+- it's light and very fast — should run smoothly even on a heavily loaded PC,
 - it is fully portable, no installation required,
 - and many more!
 
