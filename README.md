@@ -280,7 +280,7 @@ During the development of the game, and in particular during the reconstruction 
 
 To test some of the behavior of the original game, I used the **[FCEUX](http://fceux.com)** emulator and some modified ROMs which was also very helpful. Thanks are also due to the authors of the **[NestrisChamps](https://nestrischamps.herokuapp.com)** and **[MaxoutClub](https://maxoutclub.com)** tools, thanks to which it is possible to use **Fairtris** for an online competitive game. Many thanks to the authors of **[Lazarus](https://www.lazarus-ide.org/)**, the **[SDL2 headers](https://github.com/PascalGameDevelopment/SDL2-for-Pascal)** and the **[SDL library](https://www.libsdl.org)**. These tools allowed for the convenient creation of the **Fairtris** in a light and super-fast form.
 
-The last dose of thanks goes to the Polish community putting a lot of work into the development of the Polish (and not only) classic **Tetris** scene, focused on the **[Classic Tetris Polska]()** server on **[Discord](https://discord.com/)**. Thanks are also due to the **[4programmers.net](https://4programmers.net/)** and **[Free Pascal](https://forum.lazarus.freepascal.org/)** community for testing the game and feedback.
+The last dose of thanks goes to the Polish community putting a lot of work into the development of the Polish (and not only) classic **Tetris** scene, focused on the **[Classic Tetris Polska](https://discord.gg/QXPv3RSZ)** server on **[Discord](https://discord.com/)**. Thanks are also due to the **[4programmers.net](https://4programmers.net/)** and **[Free Pascal](https://forum.lazarus.freepascal.org/)** community for testing the game and feedback.
 
 </br></br>
 
