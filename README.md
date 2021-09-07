@@ -260,7 +260,17 @@ When changing the key mapping in the right-hand menu, the newly assigned keys ar
 
 ## Set up controller
 
-*content needed*
+<img align="right" src="blob/readme/scene-set-up-controller.png">
+
+The functionality of this menu is identical to the **[Set up keyboard](#set-up-keyboard)** menu, except for mapping USB controllers. Use the <kbd>↑</kbd> <kbd>↓</kbd> keys to navigate and the <kbd>Enter</kbd> key to choose the selected item. You can also use the <kbd>Escape</kbd> key to go back to the **[Game options](#game-options)** menu.
+
+Select the `CHANGE` option to start mapping the controller buttons. To change the mapping of a given function, select the appropriate item in the menu on the right and press the <kbd>Enter</kbd> key — when the item starts blinking, press one button on the controller (or <kbd>Escape</kbd> to cancel the setting). If the same button is used again, the duplicate will be cleared. To clear the mapping of a function, highlight it and press the <kbd>Backspace</kbd> key. When finished, select the `BACK` option or press the <kbd>Escape</kbd> key to return to the left menu.
+
+If you want to restore the factory mapping of the controller, please select the `RESTORE` option. To save your changes, select the `SAVE` option — the mapping will be saved and introduced, and you will be taken to the **[Game options](#game-options)** menu. If you do not want to save the changes made, select the `CANCEL` option or press the <kbd>Escape</kbd>.
+
+### Important!
+
+Newly assigned buttons for functions in the right-hand menu are not applied immediately. The changes made will be saved only after going back to the left menu and selecting the `SAVE` option. If you don't want to, you don't have to assign buttons to all functions. You can skip the mapping of the `UP`, `DOWN` and `SELECT` functions, but thus you won't be able to drop pieces faster or show/hide the next piece. If you don't assign buttons to all required functions, the `SAVE` option will be disabled.
 
 </br></br>
 
