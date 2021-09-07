@@ -244,7 +244,17 @@ Select `BACK` to go back to the previous menu.
 
 ## Set up keyboard
 
-*content needed*
+<img align="right" src="blob/readme/scene-set-up-keyboard.png">
+
+Keyboard key mapping menu. Use the <kbd>↑</kbd> <kbd>↓</kbd> keys to navigate and the <kbd>Enter</kbd> key to choose the selected item. You can also use the <kbd>Escape</kbd> key to go back to the **[Game options](#game-options)** menu.
+
+Enter the `CHANGE` option to activate the right menu. To change the key assigned to a function, highlight the desired item, then press <kbd>Enter</kbd> key — the item will start blinking and then press the key you want to assign to that function (or <kbd>Escape</kbd> to cancel the setting). If you need to remove a key assignment, highlight the item and press the <kbd>Backspace</kbd> key. If the selected key is already assigned to another function, the key will be set for the current one and the duplicate will be cleared. After setting the mapping, select the `BACK` option or press the <kbd>Escape</kbd> key to activate the menu on the left.
+
+If you want to restore the factory keyboard mapping, select the `RESTORE` option. To save your changes, select the `SAVE` option — the new settings will be saved and you will be taken to the **[Game options](#game-options)** menu. To cancel the changes made and return to the previous menu, select the `CANCEL` option or press the <kbd>Escape</kbd> key again.
+
+### Important!
+
+When changing the key mapping in the right-hand menu, the newly assigned keys are not active yet. The changes will be applied only after returning to the left menu and selecting the `SAVE` option. Not all keys need to be mapped — the <kbd>Select</kbd> function may not have a key assigned to it. However, if not all the required keys are set, the saving changes will be disabled.
 
 </br>
 
