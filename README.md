@@ -78,7 +78,7 @@ The actual game can be controlled with a keyboard or any USB controller for whic
 
 In addition to the basic buttons, some keys have special functions assigned permanently and cannot be used when mapping. If you need help, press the <kbd>F1</kbd> key. To toggle the exclusive video mode, press <kbd>F11</kbd>. To toggle visibility of the first and last tiles row (for the **[NestrisChamps](https://nestrischamps.herokuapp.com)** and **[MaxoutClub](https://maxoutclub.com)** purposes), use the <kbd>F10</kbd> key.
 
-Given that the keyboard and controller can be freely mapped, in the remainder of this document, when discussing the game scenes, general names of the buttons will be given. For more information about device mappings, see **[Set up keyboard](#set-up-keyboard)** and **[Set up controller](#set-up-controller)** sections.
+Given that the keyboard and controller can be freely mapped, in the remainder of this document, when discussing the **[Gameplay](#gameplay)** scene, general names of the buttons will be given. For more information about device mappings, see **[Set up keyboard](#set-up-keyboard)** and **[Set up controller](#set-up-controller)** sections.
 
 </br>
 
@@ -92,7 +92,7 @@ The game contains eight significant scenes that the player should become familia
 
 <img align="right" src="blob/readme/scene-prime-menu.png">
 
-The main menu of the game to choose what you want to do. Use the <kbd>↑</kbd> <kbd>↓</kbd> buttons to navigate and the <kbd>Start</kbd>/<kbd>A</kbd> button to choose the selected item.
+The main menu of the game to choose what you want to do. Use the <kbd>↑</kbd> <kbd>↓</kbd> keys to navigate and the <kbd>Enter</kbd> key to choose the selected item.
 
 </br>
 
@@ -110,7 +110,7 @@ The `QUIT` option is used to close the game and return to the desktop. You can s
 
 <img align="right" src="blob/readme/scene-set-up-game.png">
 
-The main gameplay settings menu. Use the <kbd>↑</kbd> <kbd>↓</kbd> buttons to navigate, <kbd>←</kbd> <kbd>→</kbd> buttons to change the value of the selected item, the <kbd>Start</kbd>/<kbd>A</kbd> button to choose the selected item and the <kbd>B</kbd> button to go back to the previous menu.
+The main gameplay settings menu. Use the <kbd>↑</kbd> <kbd>↓</kbd> keys to navigate, <kbd>←</kbd> <kbd>→</kbd> keys to change the value of the selected item, the <kbd>Enter</kbd> key to choose the selected item and the <kbd>Escape</kbd> key to go back to the previous menu.
 
 </br>
 
@@ -174,7 +174,7 @@ The gameplay is almost the same as in the **NES** version.
 
 Use the <kbd>←</kbd> <kbd>→</kbd> buttons to shift the pieces — you can press them quickly or use the automatic shifting function called **[DAS](https://www.youtube.com/watch?v=JeccfAI_ujo)**. The charging time of the **DAS** and the speed of shifting depends on the selected **[region](#game-regions)**. To rotate the pieces, use the <kbd>B</kbd> and <kbd>A</kbd> buttons (counterclockwise and clockwise respectively).
 
-If you are a more advanced player or just want to play faster, you can use <kbd>↓</kbd> to drop pieces faster (this is called **soft-drop**). Unlike the original game, **Fairtris** also supports **hard-drop**, available under the <kbd>↑</kbd> button (but the *“ghost-piece”* is not visible). It allows you to achieve the highest playing speed, which is definitely useful for speedruns.
+If you are a more advanced player or just want to play faster, you can use <kbd>↓</kbd> to drop pieces faster (this is called **soft-drop**). Unlike the original game, **Fairtris** also supports **hard-drop**, available under the <kbd>↑</kbd> button (but the *“ghost-piece”* is never visible). It allows you to achieve the highest playing speed, which is definitely useful for true speedruns.
 
 The **soft-drop** feature, unlike in the original game, correctly calculates *“push-down”* points. Not only that, it is not reset between spawns, so *“push-down”* points can be accumulated, which is a small reward for the player to play faster and smarter. Skill should always be rewarded.
 
@@ -198,7 +198,7 @@ When you reach the topout, the game will wait for the <kbd>Start</kbd> button to
 
 <img align="right" src="blob/readme/scene-game-pause.png">
 
-When you pause the game, this screen will appear. Use the <kbd>↑</kbd> <kbd>↓</kbd> buttons to navigate and the <kbd>Start</kbd>/<kbd>A</kbd> button to choose the selected option.
+When you pause the game, this screen will appear. Use the <kbd>↑</kbd> <kbd>↓</kbd> keys to navigate and the <kbd>Enter</kbd> key or <kbd>Start</kbd> button to choose the selected option.
 
 </br>
 
@@ -214,7 +214,7 @@ If you don't want to play anymore or want to change the gameplay settings, selec
 
 <img align="right" src="blob/readme/scene-game-summary.png">
 
-Screen with the basic statistics of the game played. Use the <kbd>↑</kbd> <kbd>↓</kbd> buttons to navigate and the <kbd>Start</kbd>/<kbd>A</kbd> button to choose the selected item. You can also use the <kbd>B</kbd> button to go back to the **[Set up game](#set-up-game)** menu.
+Screen with the basic statistics of the game played. Use the <kbd>↑</kbd> <kbd>↓</kbd> keys to navigate and the <kbd>Enter</kbd> key to choose the selected item. You can also use the <kbd>Escape</kbd> key to go back to the **[Set up game](#set-up-game)** menu.
 
 The most important information in the summary is the total number of points earned, visible at the top of the screen. The second counter shows the number of points for the transition to level `19` (or `20` if you started the game from level `19`).
 
