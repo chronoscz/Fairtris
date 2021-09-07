@@ -699,14 +699,12 @@ begin
       Exit;
     end;
 
-  if Memory.Pause.ItemIndex = ITEM_PAUSE_RESUME then
+  if Memory.Pause.ItemIndex in [ITEM_PAUSE_RESUME, ITEM_PAUSE_RESTART] then
     if Input.Device.Start.JustPressed or Input.Keyboard.Start.JustPressed then
       FScene.Current := Memory.Pause.FromScene;
 
   if InputMenuAccepted() then
   case Memory.Pause.ItemIndex of
-    ITEM_PAUSE_RESUME:
-      FScene.Current := Memory.Pause.FromScene;
     ITEM_PAUSE_RESTART:
     begin
       FScene.Current := SCENE_PLAY;
