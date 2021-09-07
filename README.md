@@ -272,6 +272,16 @@ If you want to restore the factory mapping of the controller, please select the 
 
 Newly assigned buttons for functions in the right-hand menu are not applied immediately. The changes made will be saved only after going back to the left menu and selecting the `SAVE` option. If you don't want to, you don't have to assign buttons to all functions. You can skip the mapping of the `UP`, `DOWN` and `SELECT` functions, but thus you won't be able to drop pieces faster or show/hide the next piece. If you don't assign buttons to all required functions, the `SAVE` option will be disabled.
 
+</br>
+
+# Acknowledgments and useful links
+
+Many thanks go to the Polish community putting a lot of work into the development of the Polish (and not only) classic **Tetris** scene, focused on the **[Classic Tetris Polska]()** server on **[Discord](https://discord.com/)**. Thanks are also due to the **[4programmers.net](https://4programmers.net/)** and **[Free Pascal](https://forum.lazarus.freepascal.org/)** community for testing the game and feedback.
+
+During the development of the game, and in particular during the reconstruction of the original **[Nintendo Tetris®](https://en.wikipedia.org/wiki/Tetris_(NES_video_game))** mechanics and the `CLASSIC` random piece generator used in it, I relied heavily on the knowledge contained in the article **[Applying Artificial Intelligence to Nintendo Tetris](https://meatfighter.com/nintendotetrisai)** and the source code from the **[TetrisNESDisasm](https://github.com/CelestialAmber/TetrisNESDisasm)** repository. In addition, the source code for the `TMG` and `TGM TERROR` generators was written based on the **[The history of Tetris randomizers](https://simon.lc/the-history-of-tetris-randomizers)** article. Huge thanks the authors of these materials for sharing their valuable knowledge.
+
+To test some of the behavior of the original game, I used the **[FCEUX](http://fceux.com)** emulator and some modified ROMs which was also very helpful. Thanks are also due to the authors of the **[NestrisChamps](https://nestrischamps.herokuapp.com)** and **[MaxoutClub](https://maxoutclub.com)** tools, thanks to which it is possible to use **Fairtris** for an online competitive game. And to all the other good people who supported this game.
+
 </br></br>
 
 *The content of this document is not finished yet, so stay tuned.*
