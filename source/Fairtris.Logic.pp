@@ -242,7 +242,7 @@ procedure TLogic.OpenHelp();
 begin
   Sounds.PlaySound(SOUND_START);
 
-  ShellExecute(0, 'open', 'https://github.com/furious-programming/fairtris', nil, nil, SW_SHOWNORMAL);
+  ShellExecute(0, 'open', 'https://github.com/furious-programming/fairtris/wiki', nil, nil, SW_SHOWNORMAL);
   SDL_MinimizeWindow(Window.Window);
 end;
 
