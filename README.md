@@ -46,7 +46,7 @@ This project was initially created as a tool to test various RNG algorithms, but
 - it is fully portable, no installation required,
 - and many more!
 
-More detailed information on how to handle the game and its mechanics can be found further in this document and also on **[wiki pages](https://github.com/furious-programming/Fairtris/wiki)**.
+More detailed information on how to handle the game and its mechanics can be found further in this document and also on **[wiki pages](https://github.com/furious-programming/Fairtris/wiki)**. If you want, you can also check out the **[FAQ](https://github.com/furious-programming/Fairtris/wiki/faq)** page where you will find answers to basic questions.
 
 </br>
 
