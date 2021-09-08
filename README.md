@@ -148,7 +148,7 @@ If you want to learn more, check out page **[RNG algorithms](https://github.com/
 
 <img align="right" src="blob/readme/scene-gameplay.png">
 
-The gameplay is almost the same as in the **NES** version.
+The gameplay is almost the same as in the **[Nintendo Tetris®](https://en.wikipedia.org/wiki/Tetris_(NES_video_game))**.
 
 Use the <kbd>←</kbd> <kbd>→</kbd> buttons to shift the pieces — you can press them quickly or use the automatic shifting function called **[DAS](https://www.youtube.com/watch?v=JeccfAI_ujo)**. The charging time of the **DAS** and the speed of shifting depends on the selected **[region](#game-regions)**. To rotate the pieces, use the <kbd>B</kbd> and <kbd>A</kbd> buttons (counterclockwise and clockwise respectively).
 
