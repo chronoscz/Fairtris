@@ -184,6 +184,8 @@ Select the `RESUME` option to resume a paused game. If you want to play again, s
 
 Select the `OPTIONS` item to go to the game settings panel. This will open up exactly the same settings panel as the one available from the **[Prime menu](#prime-menu)** of the game, so you will be able to change the settings of all game functions, from the type and mapping of input devices and the theme, to the size of the window and the state of sound effects.
 
+</br>
+
 If you don't want to play anymore or want to change the gameplay settings, select `BACK TO MENU` to return to the **[Set up game](#set-up-game)** menu.
 
 </br>
