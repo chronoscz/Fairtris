@@ -58,7 +58,7 @@ Information on the license can be found in the **[LICENSE](LICENSE)** file. In g
 
 # First launch
 
-After extracting the game files from the **[archive](https://github.com/furious-programming/Fairtris/releases/download/v2.0.0.5-beta.2/fairtris_2.0_beta_2_release.zip)**, run the `fairtris.exe` file. For the first time, the game runs in an exclusive video mode with a resolution of `800×600` pixels, displaying the window on the entire main screen, maintaining the appropriate aspect ratio.
+After extracting the game files from the **[release archive](https://github.com/furious-programming/Fairtris/releases/download/v2.0.0.5-beta.2/fairtris_2.0_beta_2_release.zip)**, run the `fairtris.exe` file. For the first time, the game runs in an exclusive video mode with a resolution of `800×600` pixels, displaying the window on the entire main screen, maintaining the appropriate aspect ratio.
 
 Video mode is used by default because it provides the best rendering efficiency. If you prefer the game to be displayed in a small window or generally in windowed mode, so that you can conveniently switch between different applications, turn off video mode by pressing the <kbd>F11</kbd> key. But remember, the rendering performance in windowed mode is always lower.
 
