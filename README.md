@@ -70,7 +70,7 @@ You can close the game using the appropriate option in the main menu or by press
 
 # Default controls
 
-**Fairtris** is controlled by the keyboard by default, and if a game controller is plugged in and set as main input device, also with it. All the game menus can be operated with both devices, while the game can only be played using the main input device. The control looks the same as in emulators (e.g. in **FCEUX**), where one set of keyboard keys or controller buttons is used for navigating in the menu and for playing.
+**Fairtris** is controlled by the keyboard by default, and if a game controller is plugged in and set as main input device, also with it. All the game menus can be operated with both devices, while the game can only be played using the main input device, selected in the **[Game options](game-options)** menu. The control looks the same as in emulators (e.g. in **[FCEUX](http://fceux.com/)**), where one set of keys or controller buttons is used for navigating in the game menu and for playing.
 
 To navigate in the menu, use the <kbd>↑</kbd> <kbd>↓</kbd> keys to change the selected item and <kbd>←</kbd> <kbd>→</kbd> to change the value of the current option. If you want to enter the selected option, press the <kbd>Enter</kbd> key. To go back to the previous menu, press the <kbd>Escape</kbd> key. When mapping keys and buttons, if you want to leave the button unmapped, use the <kbd>Backspace</kbd> key to clear the mapping.
 
