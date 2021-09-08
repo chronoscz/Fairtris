@@ -184,8 +184,6 @@ Select the `RESUME` option to resume a paused game. If you want to play again, s
 
 Select the `OPTIONS` item to go to the game settings panel. This will open up exactly the same settings panel as the one available from the **[Prime menu](#prime-menu)** of the game, so you will be able to change the settings of all game functions, from the type and mapping of input devices and the theme, to the size of the window and the state of sound effects.
 
-</br>
-
 If you don't want to play anymore or want to change the gameplay settings, select `BACK TO MENU` to return to the **[Set up game](#set-up-game)** menu.
 
 </br>
@@ -199,8 +197,6 @@ Screen with the basic statistics of the game played. Use the <kbd>↑</kbd> <kbd
 The most important information in the summary is the total number of points earned, visible at the top of the screen. The second counter shows the number of points for the transition to level `19` (or `20` if you started the game from level `19`).
 
 The total number of lines cleared is displayed below, as well as the number of lines burned (cleared in the other way than tetrising). The last row shows the percentage of tetrises in the total number of cleared lines. The value of this counter freezes after reaching the killscreen, so if you achieve the **100%** tetris rate, then burning the lines on killscreen will not lower it.
-
-</br>
 
 If you are already familiar with the game statistics, choose the `PLAY AGAIN` option to start a new game. If you want to go back to the **[Set up game](#set-up-game)** menu, choose the `BACK TO MENU` item.
 
