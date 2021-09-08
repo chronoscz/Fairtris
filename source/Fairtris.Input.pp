@@ -116,10 +116,10 @@ end;
 
 function TInput.GetDevices(ADeviceID: Integer): IControllable;
 begin
-  case ADeviceID of
-    INPUT_KEYBOARD:   Result := FKeyboard;
-    INPUT_CONTROLLER: Result := FController;
-  end;
+  if ADeviceID = INPUT_CONTROLLER then
+    Result := FController
+  else
+    Result := FKeyboard;
 end;
 
 

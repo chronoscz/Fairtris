@@ -127,6 +127,8 @@ end;
 
 function TCore.CanShiftPiece(ADirection: Integer): Boolean;
 begin
+  Result := False;
+
   case ADirection of
     PIECE_SHIFT_LEFT:  Result := Memory.Game.PieceX > PIECE_SHIFT_X_MIN[Memory.Game.PieceID, Memory.Game.PieceOrientation];
     PIECE_SHIFT_RIGHT: Result := Memory.Game.PieceX < PIECE_SHIFT_X_MAX[Memory.Game.PieceID, Memory.Game.PieceOrientation];

@@ -209,6 +209,7 @@ procedure TGame.UpdateQueue();
 var
   Event: TSDL_Event;
 begin
+  Event := Default(TSDL_Event);
   SDL_PumpEvents();
 
   while SDL_PollEvent(@Event) = 1 do

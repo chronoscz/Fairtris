@@ -384,6 +384,7 @@ var
   Catched: Boolean = False;
 begin
   Result := False;
+  CatchedScanCode := CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED;
 
   for Index := CONTROLLER_SCANCODE_BUTTON_FIRST to CONTROLLER_SCANCODE_BUTTON_LAST do
     if FDevice[Index].JustPressed then

@@ -581,6 +581,8 @@ begin
     5: Result := $0E;
     6: Result := $12;
     7: Result := $02;
+  otherwise
+    Result := $02;
   end;
 end;
 
@@ -595,6 +597,8 @@ begin
     $0B: Result := PIECE_S;
     $0E: Result := PIECE_L;
     $12: Result := PIECE_I;
+  otherwise
+    Result := PIECE_T;
   end;
 end;
 
