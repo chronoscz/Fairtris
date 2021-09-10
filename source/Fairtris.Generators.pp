@@ -730,6 +730,9 @@ procedure TTGM3Generator.Prepare();
 begin
   inherited Prepare();
 
+  FPool.Free();
+  FPool := TPool.Create(TGM3_POOL_POOL);
+
   FHistory.Free();
   FHistory := TPool.Create(TGM3_POOL_HISTORY);
 
