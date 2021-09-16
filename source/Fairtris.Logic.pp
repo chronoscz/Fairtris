@@ -699,9 +699,17 @@ begin
       Exit;
     end;
 
-  if Memory.Pause.ItemIndex in [ITEM_PAUSE_RESUME, ITEM_PAUSE_RESTART] then
-    if Input.Device.Start.JustPressed or Input.Keyboard.Start.JustPressed then
+  if Input.Device.Start.JustPressed or Input.Keyboard.Start.JustPressed then
+  case Memory.Pause.ItemIndex of
+    ITEM_PAUSE_RESUME:
       FScene.Current := Memory.Pause.FromScene;
+    ITEM_PAUSE_RESTART:
+    begin
+      FScene.Current := SCENE_PLAY;
+      FScene.Current := SCENE_GAME_NORMAL;
+      Sounds.PlaySound(SOUND_START);
+    end;
+  end;
 
   if InputMenuAccepted() then
   case Memory.Pause.ItemIndex of
