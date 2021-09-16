@@ -152,7 +152,6 @@ implementation
 
 uses
   SDL2,
-  Windows,
   Math,
   Fairtris.Window,
   Fairtris.Clock,
@@ -166,6 +165,7 @@ uses
   Fairtris.BestScores,
   Fairtris.Generators,
   Fairtris.Core,
+  Fairtris.Help,
   Fairtris.Utils,
   Fairtris.Arrays,
   Fairtris.Constants;
@@ -242,8 +242,14 @@ procedure TLogic.OpenHelp();
 begin
   Sounds.PlaySound(SOUND_START);
 
-  ShellExecute(0, 'open', 'https://github.com/furious-programming/fairtris/wiki', nil, nil, SW_SHOWNORMAL);
-  SDL_MinimizeWindow(Window.Window);
+  if Placement.VideoEnabled then
+    Placement.ToggleVideoMode();
+
+  with THelpThread.Create(True) do
+  begin
+    FreeOnTerminate := True;
+    Start();
+  end;
 end;
 
 
