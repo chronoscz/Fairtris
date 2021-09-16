@@ -78,7 +78,7 @@
       <FormatVersion Value="2"/>
       <Modes Count="0"/>
     </RunParams>
-    <Units Count="27">
+    <Units Count="28">
       <Unit0>
         <Filename Value="Fairtris.Main.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -187,6 +187,10 @@
         <Filename Value="Fairtris.Navigation.pp"/>
         <IsPartOfProject Value="True"/>
       </Unit26>
+      <Unit27>
+        <Filename Value="Fairtris.Help.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit27>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
