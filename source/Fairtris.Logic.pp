@@ -762,22 +762,21 @@ begin
     Sounds.PlaySound(SOUND_DROP);
   end;
 
-  case Memory.TopOut.ItemIndex of
-    ITEM_TOP_OUT_PLAY:
-      if InputMenuAccepted() then
-      begin
-        Memory.Game.Reset();
+  if InputMenuAccepted() or Input.Device.Start.JustPressed or Input.Keyboard.Start.JustPressed then
+    if Memory.TopOut.ItemIndex = ITEM_TOP_OUT_PLAY then
+    begin
+      Memory.Game.Reset();
 
-        FScene.Current := SCENE_GAME_NORMAL;
-        Sounds.PlaySound(SOUND_START);
-      end;
-    ITEM_TOP_OUT_BACK:
-      if InputMenuAccepted() then
-      begin
-        FScene.Current := SCENE_PLAY;
-        Sounds.PlaySound(SOUND_DROP);
-      end;
-  end;
+      FScene.Current := SCENE_GAME_NORMAL;
+      Sounds.PlaySound(SOUND_START);
+    end;
+
+  if InputMenuAccepted() then
+    if Memory.TopOut.ItemIndex = ITEM_TOP_OUT_BACK then
+    begin
+      FScene.Current := SCENE_PLAY;
+      Sounds.PlaySound(SOUND_DROP);
+    end;
 end;
 
 
