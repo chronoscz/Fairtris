@@ -72,15 +72,27 @@ You can close the game using the appropriate option in the main menu or by press
 
 **Fairtris** is controlled by the keyboard by default, and if a game controller is plugged in and set as main input device, also with it. All the game menus can be operated with both devices, while the game can only be played using the main input device, selected in the **[Game options](game-options)** menu. The control looks the same as in emulators (e.g. in **[FCEUX](http://fceux.com/)**), where one set of keys or controller buttons is used for navigating in the game menu and for playing.
 
+Given that the keyboard and controller can be freely mapped, in the remainder of this document, when discussing the **[Gameplay](#gameplay)** scene, general names of the buttons will be given. For more information about device mappings, see **[Set up keyboard](#set-up-keyboard)** and **[Set up controller](#set-up-controller)** sections.
+
+</br>
+
+## Menu screens
+
 To navigate in the menu, use the <kbd>↑</kbd> <kbd>↓</kbd> keys to change the selected item and <kbd>←</kbd> <kbd>→</kbd> to change the value of the current option. If you want to enter the selected option, press the <kbd>Enter</kbd> key. To go back to the previous menu, press the <kbd>Escape</kbd> key. When mapping keys and buttons, if you want to leave the button unmapped, use the <kbd>Backspace</kbd> key to clear the mapping.
+
+</br>
+
+## Gameplay
 
 The actual game can be controlled with a keyboard or any USB controller for which separate mappings are provided. The basic set of buttons for this purpose is compatible with the buttons on the **[NES controller](https://en.wikipedia.org/wiki/Nintendo_Entertainment_System#Controllers)** and can be freely mapped. By default, the <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd> keys are used to move and drop pieces, and the <kbd>X</kbd> and <kbd>C</kbd> keys are used to rotate them. The <kbd>Z</kbd> key is used to pause the game, while the <kbd>V</kbd> key is used to show or hide the next piece. The controller buttons are mapped by default according to the general button layout standards, where the `X` and `Y` axes are responsible for moving and dropping pieces, and the first two buttons for rotating them.
 
 If after connecting the controller for the first time, you cannot control the game, use the keyboard and go to the **[Set up game](#set-up-game)** screen, select the controller as the main input device, and then go to the **[Set up controller](#set-up-controller)** screen, where you can set the controller mapping your way.
 
-In addition to the basic buttons, some keys have special functions assigned permanently and cannot be used when mapping. If you need help, press the <kbd>F1</kbd> key. To toggle the exclusive video mode, press <kbd>F11</kbd>. To toggle visibility of the first and last tiles row (for the **[NestrisChamps](https://nestrischamps.herokuapp.com)** and **[MaxoutClub](https://maxoutclub.com)** purposes), use the <kbd>F10</kbd> key.
+</br>
 
-Given that the keyboard and controller can be freely mapped, in the remainder of this document, when discussing the **[Gameplay](#gameplay)** scene, general names of the buttons will be given. For more information about device mappings, see **[Set up keyboard](#set-up-keyboard)** and **[Set up controller](#set-up-controller)** sections.
+## Special functions
+
+In addition to the basic buttons, some keys have special functions assigned permanently and cannot be used when mapping. If you need help, press the <kbd>F1</kbd> key. To toggle the exclusive video mode, press <kbd>F11</kbd>. To toggle visibility of the first and last tiles row (for the **[NestrisChamps](https://nestrischamps.herokuapp.com)** and **[MaxoutClub](https://maxoutclub.com)** purposes), use the <kbd>F10</kbd> key.
 
 </br>
 
