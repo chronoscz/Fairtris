@@ -232,7 +232,7 @@ Enter the `CHANGE` option to activate the right menu. To change the key assigned
 
 If you want to restore the factory keyboard mapping, select the `RESTORE` option. To save your changes, select the `SAVE` option — the new settings will be saved and you will be taken to the **[Game options](#game-options)** menu. To cancel the changes made and return to the previous menu, select the `CANCEL` option or press the <kbd>Escape</kbd> key again.
 
-### IMPORTANT!
+### IMPORTANT
 
 When changing the key mapping in the right-hand menu, the newly assigned keys are not active yet. The changes will be applied only after returning to the left menu and selecting the `SAVE` option. Not all keys need to be mapped — the <kbd>Select</kbd> function may not have a key assigned to it. However, if not all the required keys are set, the saving changes will be disabled.
 
@@ -248,7 +248,7 @@ Select the `CHANGE` option to start mapping the controller buttons. To change th
 
 If you want to restore the factory mapping of the controller, please select the `RESTORE` option. To save your changes, select the `SAVE` option — the mapping will be saved and introduced, and you will be taken to the **[Game options](#game-options)** menu. If you do not want to save the changes made, select the `CANCEL` option or press the <kbd>Escape</kbd>.
 
-### IMPORTANT!
+### IMPORTANT
 
 Newly assigned buttons for functions in the right-hand menu are not applied immediately. The changes made will be saved only after going back to the left menu and selecting the `SAVE` option. If you don't want to, you don't have to assign buttons to all functions. You can skip the mapping of the `UP`, `DOWN` and `SELECT` functions, but thus you won't be able to drop pieces faster or show/hide the next piece. If you don't assign buttons to all required functions, the `SAVE` option will be disabled.
 
