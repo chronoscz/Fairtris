@@ -277,6 +277,7 @@ begin
 
   repeat
     OpenFrame();
+      UpdateWindow();
       UpdateQueue();
       UpdateInput();
       UpdateLogic();
@@ -284,7 +285,6 @@ begin
       if not Logic.Scene.Changed and not Logic.Stopped then
         UpdateBuffer();
 
-      UpdateWindow();
       UpdateTaskbar();
     CloseFrame();
   until Logic.Stopped;
