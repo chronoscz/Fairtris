@@ -138,6 +138,7 @@ const
     '7-bag.ini',
     'multi-bag.ini',
     'classic.ini',
+    'balanced.ini',
     'tgm.ini',
     'tgm3.ini',
     'unfair.ini'
@@ -400,6 +401,7 @@ const
     ITEM_TEXT_PLAY_GENERATOR_7_BAG,
     ITEM_TEXT_PLAY_GENERATOR_MULTIBAG,
     ITEM_TEXT_PLAY_GENERATOR_CLASSIC,
+    ITEM_TEXT_PLAY_GENERATOR_BALANCED,
     ITEM_TEXT_PLAY_GENERATOR_TGM,
     ITEM_TEXT_PLAY_GENERATOR_TGM3,
     ITEM_TEXT_PLAY_GENERATOR_UNFAIR
