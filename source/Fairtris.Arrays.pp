@@ -1013,6 +1013,10 @@ const
     PIECE_Z, PIECE_Z, PIECE_Z, PIECE_S, PIECE_S, PIECE_S, PIECE_O, PIECE_O, PIECE_O, PIECE_I
   );
 
+  BALANCED_DROUGHT_COUNTS: array [PIECE_FIRST .. PIECE_LAST] of Integer = (
+    0, 0, 0, 0, 0, 0, 0
+  );
+
 
 const
   TGM_POOL_PIECES: array [TGM_POOL_PIECE_FIRST .. TGM_POOL_PIECE_LAST] of Integer = (
