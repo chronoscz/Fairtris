@@ -163,7 +163,9 @@ type
 type
   TBalancedGenerator = class(TCustomGenerator)
   private
+    FSpawnID: UInt8;
     FSpawnCount: UInt8;
+  private
     FHistoryIndex: Integer;
   private
     FHistory: array [BALANCED_HISTORY_PIECE_FIRST .. BALANCED_HISTORY_PIECE_LAST] of Integer;
@@ -728,21 +730,32 @@ end;
 
 
 function TBalancedGenerator.Pick(): Integer;
+var
+  Index: UInt8;
+  Roll: Boolean;
 begin
   {$PUSH}{$RANGECHECKS OFF}
   FSpawnCount += 1;
   {$POP}
 
-  Result := DroughtedPiece();
+  Index := DroughtedPiece();
 
-  if Result = PIECE_UNKNOWN then
-  repeat
-    Result := (Hi(FRegister.Seed) + FSpawnCount) mod PIECE_LAST + PIECE_FIRST;
-    FRegister.Step();
-  until not FloodedPiece(Result);
+  if Index = PIECE_UNKNOWN then
+    for Roll in Boolean do
+    begin
+      repeat
+        Index := (Hi(FRegister.Seed) + FSpawnCount) mod PIECE_LAST + PIECE_FIRST;
+        FRegister.Step();
+      until not FloodedPiece(Index);
 
-  UpdateHistory(Result);
-  UpdateDrought(Result);
+      if Index <> FSpawnID then Break;
+    end;
+
+  UpdateHistory(Index);
+  UpdateDrought(Index);
+
+  FSpawnID := Index;
+  Result := FSpawnID;
 end;
 
 
