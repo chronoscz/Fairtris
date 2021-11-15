@@ -666,7 +666,7 @@ function TBalancedGenerator.DroughtedPiece(): Integer;
 var
   Index: Integer;
 begin
-  for Index := Low(FDrought) to High(FDrought) do
+  for Index := High(FDrought) downto Low(FDrought) do
     if FDrought[Index] >= BALANCED_DROUGHT_COUNT then
       Exit(Index);
 
