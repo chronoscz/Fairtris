@@ -164,11 +164,15 @@ type
   TBalancedGenerator = class(TCustomGenerator)
   private
     FSpawnCount: UInt8;
+    FHistoryIndex: Integer;
   private
     FHistory: array [BALANCED_HISTORY_PIECE_FIRST .. BALANCED_HISTORY_PIECE_LAST] of Integer;
     FDrought: array [PIECE_FIRST .. PIECE_LAST] of Integer;
   private
     function DroughtedPiece(): Integer;
+  private
+    procedure UpdateHistory(APiece: Integer);
+    procedure UpdateDrought(APiece: Integer);
   public
     procedure Prepare(); override;
   public
@@ -261,7 +265,8 @@ implementation
 uses
   Fairtris.Clock,
   Fairtris.Settings,
-  Fairtris.Arrays;
+  Fairtris.Arrays,
+  Fairtris.Utils;
 
 
 procedure TShiftRegister.Initialize();
@@ -663,6 +668,25 @@ begin
       Exit(Index);
 
   Result := PIECE_UNKNOWN;
+end;
+
+
+procedure TBalancedGenerator.UpdateHistory(APiece: Integer);
+begin
+  FHistory[FHistoryIndex] := APiece;
+  FHistoryIndex := WrapAround(FHistoryIndex, BALANCED_HISTORY_PIECES_COUNT, 1);
+end;
+
+
+procedure TBalancedGenerator.UpdateDrought(APiece: Integer);
+var
+  Index: Integer;
+begin
+  for Index := Low(FDrought) to High(FDrought) do
+    if Index = APiece then
+      FDrought[Index] := 0
+    else
+      FDrought[Index] += 1;
 end;
 
 
