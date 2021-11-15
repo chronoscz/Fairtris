@@ -710,6 +710,8 @@ begin
 
   FHistory := BALANCED_HISTORY_PIECES;
   FDrought := BALANCED_DROUGHT_COUNTS;
+
+  FHistoryIndex := 0;
 end;
 
 
