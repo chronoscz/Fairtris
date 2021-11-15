@@ -167,6 +167,8 @@ type
   private
     FHistory: array [BALANCED_HISTORY_PIECE_FIRST .. BALANCED_HISTORY_PIECE_LAST] of Integer;
     FDrought: array [PIECE_FIRST .. PIECE_LAST] of Integer;
+  private
+    function DroughtedPiece(): Integer;
   public
     procedure Prepare(); override;
   public
@@ -649,6 +651,18 @@ begin
 
   FSpawnID := IndexToSpawnID(Index);
   Result := SpawnIDToPieceID(FSpawnID);
+end;
+
+
+function TBalancedGenerator.DroughtedPiece(): Integer;
+var
+  Index: Integer;
+begin
+  for Index := Low(FDrought) to High(FDrought) do
+    if FDrought[Index] >= BALANCED_DROUGHT_COUNT then
+      Exit(Index);
+
+  Result := PIECE_UNKNOWN;
 end;
 
 
