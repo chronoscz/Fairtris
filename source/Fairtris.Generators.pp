@@ -647,13 +647,13 @@ end;
 
 procedure TBalancedGenerator.Shuffle();
 begin
-
+  FRegister.Step();
 end;
 
 
 procedure TBalancedGenerator.Step();
 begin
-
+  FRegister.Step();
 end;
 
 
