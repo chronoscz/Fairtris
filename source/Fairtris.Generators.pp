@@ -162,6 +162,9 @@ type
 
 type
   TBalancedGenerator = class(TCustomGenerator)
+  private
+    FHistory: array [BALANCED_HISTORY_PIECE_FIRST .. BALANCED_HISTORY_PIECE_LAST] of Integer;
+    FDrought: array [PIECE_FIRST .. PIECE_LAST] of Integer;
   public
     procedure Shuffle(); override;
     procedure Step(); override;
