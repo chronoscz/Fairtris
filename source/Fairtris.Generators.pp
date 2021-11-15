@@ -163,6 +163,8 @@ type
 type
   TBalancedGenerator = class(TCustomGenerator)
   private
+    FSpawnCount: UInt8;
+  private
     FHistory: array [BALANCED_HISTORY_PIECE_FIRST .. BALANCED_HISTORY_PIECE_LAST] of Integer;
     FDrought: array [PIECE_FIRST .. PIECE_LAST] of Integer;
   public
