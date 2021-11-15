@@ -919,6 +919,7 @@ begin
   FGenerators[GENERATOR_7_BAG]    := T7BagGenerator.Create();
   FGenerators[GENERATOR_MULTIBAG] := TMultiBagGenerator.Create();
   FGenerators[GENERATOR_CLASSIC]  := TClassicGenerator.Create();
+  FGenerators[GENERATOR_BALANCED] := TBalancedGenerator.Create();
   FGenerators[GENERATOR_TGM]      := TTGMGenerator.Create();
   FGenerators[GENERATOR_TGM3]     := TTGM3Generator.Create();
   FGenerators[GENERATOR_UNFAIR]   := TUnfairGenerator.Create();
