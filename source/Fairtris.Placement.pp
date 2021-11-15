@@ -85,7 +85,6 @@ var
 implementation
 
 uses
-  Math,
   Fairtris.Window,
   Fairtris.Buffers,
   Fairtris.Settings,
