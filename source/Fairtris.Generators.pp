@@ -161,6 +161,16 @@ type
 
 
 type
+  TBalancedGenerator = class(TCustomGenerator)
+  public
+    procedure Shuffle(); override;
+    procedure Step(); override;
+  public
+    function Pick(): Integer; override;
+  end;
+
+
+type
   TTGMGenerator = class(TCustomGenerator)
   private
     FPieces: TPool;
@@ -632,6 +642,24 @@ begin
 
   FSpawnID := IndexToSpawnID(Index);
   Result := SpawnIDToPieceID(FSpawnID);
+end;
+
+
+procedure TBalancedGenerator.Shuffle();
+begin
+
+end;
+
+
+procedure TBalancedGenerator.Step();
+begin
+
+end;
+
+
+function TBalancedGenerator.Pick(): Integer;
+begin
+
 end;
 
 
