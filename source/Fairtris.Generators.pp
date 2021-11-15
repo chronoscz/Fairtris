@@ -727,7 +727,20 @@ end;
 
 function TBalancedGenerator.Pick(): Integer;
 begin
+  {$PUSH}{$RANGECHECKS OFF}
+  FSpawnCount += 1;
+  {$POP}
 
+  Result := DroughtedPiece();
+
+  if Result = PIECE_UNKNOWN then
+  repeat
+    Result := (Hi(FRegister.Seed) + FSpawnCount) mod PIECE_LAST + PIECE_FIRST;
+    FRegister.Step();
+  until not FloodedPiece(Result);
+
+  UpdateHistory(Result);
+  UpdateDrought(Result);
 end;
 
 
