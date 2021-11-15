@@ -170,6 +170,7 @@ type
     FDrought: array [PIECE_FIRST .. PIECE_LAST] of Integer;
   private
     function DroughtedPiece(): Integer;
+    function FloodedPiece(APiece: Integer): Boolean;
   private
     procedure UpdateHistory(APiece: Integer);
     procedure UpdateDrought(APiece: Integer);
@@ -668,6 +669,19 @@ begin
       Exit(Index);
 
   Result := PIECE_UNKNOWN;
+end;
+
+
+function TBalancedGenerator.FloodedPiece(APiece: Integer): Boolean;
+var
+  Index: Integer;
+  Count: Integer = 0;
+begin
+  for Index := Low(FHistory) to High(FHistory) do
+    if FHistory[Index] = APiece then
+      Count += 1;
+
+  Result := Count >= BALANCED_FLOOD_COUNT;
 end;
 
 
