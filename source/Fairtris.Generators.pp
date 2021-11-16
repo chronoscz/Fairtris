@@ -703,10 +703,10 @@ procedure TBalancedGenerator.UpdateDrought(APiece: Integer);
 var
   Index: Integer;
 begin
+  FDrought[APiece] := 0;
+
   for Index := High(FDrought) downto Low(FDrought) do
-    if Index = APiece then
-      FDrought[Index] := 0
-    else
+    if Index <> APiece then
       FDrought[Index] += 1;
 end;
 
