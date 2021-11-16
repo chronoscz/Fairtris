@@ -463,10 +463,7 @@ begin
   if Input.Device.Left.Pressed and Input.Device.Right.Pressed then Exit;
   if not Input.Device.Left.Pressed and not Input.Device.Right.Pressed then Exit;
 
-  if Input.Device.Left.JustPressed or Input.Device.Right.JustPressed then
-    Memory.Game.AutorepeatX := 0
-  else
-    Memory.Game.AutorepeatX := Min(Memory.Game.AutorepeatX + 1, AUTOSHIFT_FRAMES_CHARGE[Memory.Play.Region]);
+  Memory.Game.AutorepeatX := Min(Memory.Game.AutorepeatX + 1, AUTOSHIFT_FRAMES_CHARGE[Memory.Play.Region]);
 end;
 
 
