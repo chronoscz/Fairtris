@@ -79,6 +79,7 @@ var
 implementation
 
 uses
+  Math,
   Fairtris.Clock,
   Fairtris.Input,
   Fairtris.Sounds,
@@ -404,33 +405,49 @@ end;
 
 
 procedure TCore.UpdatePieceControlRotate();
+var
+  Rotation: Integer;
 begin
   if Input.Device.B.JustPressed and Input.Device.A.JustPressed then Exit;
 
   if Input.Device.B.JustReleased or Input.Device.A.JustReleased then
-    Memory.Game.Autospin := False;
+    Memory.Game.AutospinCharged := False;
 
-  if Input.Device.B.JustPressed or Memory.Game.Autospin then
-    if CanRotatePiece(PIECE_ROTATE_COUNTERCLOCKWISE) then
+  if Input.Device.B.JustPressed or Memory.Game.AutospinCharged then
+  begin
+    Rotation := IfThen(Memory.Game.AutospinCharged, Memory.Game.AutospinRotation, PIECE_ROTATE_COUNTERCLOCKWISE);
+
+    if CanRotatePiece(Rotation) then
     begin
-      RotatePiece(PIECE_ROTATE_COUNTERCLOCKWISE);
+      RotatePiece(Rotation);
       Sounds.PlaySound(SOUND_SPIN);
 
-      Memory.Game.Autospin := False;
+      Memory.Game.AutospinCharged := False;
     end
     else
-      Memory.Game.Autospin := True;
-
-  if Input.Device.A.JustPressed or Memory.Game.Autospin then
-    if CanRotatePiece(PIECE_ROTATE_CLOCKWISE) then
     begin
-      RotatePiece(PIECE_ROTATE_CLOCKWISE);
+      Memory.Game.AutospinCharged := True;
+      Memory.Game.AutospinRotation := Rotation;
+    end;
+  end;
+
+  if Input.Device.A.JustPressed or Memory.Game.AutospinCharged then
+  begin
+    Rotation := IfThen(Memory.Game.AutospinCharged, Memory.Game.AutospinRotation, PIECE_ROTATE_CLOCKWISE);
+
+    if CanRotatePiece(Rotation) then
+    begin
+      RotatePiece(Rotation);
       Sounds.PlaySound(SOUND_SPIN);
 
-      Memory.Game.Autospin := False;
+      Memory.Game.AutospinCharged := False;
     end
     else
-      Memory.Game.Autospin := True;
+    begin
+      Memory.Game.AutospinCharged := True;
+      Memory.Game.AutospinRotation := Rotation;
+    end;
+  end;
 end;
 
 
@@ -488,7 +505,7 @@ end;
 
 procedure TCore.UpdatePieceLock();
 begin
-  Memory.Game.Autospin := False;
+  Memory.Game.AutospinCharged := False;
   Memory.Game.LockTimer -= 1;
 
   if Memory.Game.LockTimer = 0 then
