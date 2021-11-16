@@ -84,6 +84,7 @@ type
   public
     AutorepeatX: Integer;
     AutorepeatY: Integer;
+    Autospin: Boolean;
   public
     FallTimer: Integer;
     FallSpeed: Integer;
@@ -311,6 +312,7 @@ begin
 
   AutorepeatX := 0;
   AutorepeatY := 0;
+  Autospin := False;
 
   FallTimer := 0;
   FallSpeed := 0;
