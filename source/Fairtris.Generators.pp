@@ -663,12 +663,14 @@ end;
 
 
 function TBalancedGenerator.DroughtedPiece(): Integer;
-var
-  Index: Integer;
 begin
-  for Index := High(FDrought) downto Low(FDrought) do
-    if FDrought[Index] >= BALANCED_DROUGHT_COUNT then
-      Exit(Index);
+  if FDrought[PIECE_I] >= BALANCED_DROUGHT_COUNT then Exit(PIECE_I);
+  if FDrought[PIECE_J] >= BALANCED_DROUGHT_COUNT then Exit(PIECE_J);
+  if FDrought[PIECE_L] >= BALANCED_DROUGHT_COUNT then Exit(PIECE_L);
+  if FDrought[PIECE_O] >= BALANCED_DROUGHT_COUNT then Exit(PIECE_O);
+  if FDrought[PIECE_S] >= BALANCED_DROUGHT_COUNT then Exit(PIECE_S);
+  if FDrought[PIECE_T] >= BALANCED_DROUGHT_COUNT then Exit(PIECE_T);
+  if FDrought[PIECE_Z] >= BALANCED_DROUGHT_COUNT then Exit(PIECE_Z);
 
   Result := PIECE_UNKNOWN;
 end;
@@ -683,7 +685,10 @@ begin
     if FHistory[Index] = APiece then
       Count += 1;
 
-  Result := Count >= BALANCED_FLOOD_COUNT;
+  if APiece = PIECE_I then
+    Result := Count >= BALANCED_FLOOD_COUNT_LONGBAR
+  else
+    Result := Count >= BALANCED_FLOOD_COUNT_PIECE;
 end;
 
 
