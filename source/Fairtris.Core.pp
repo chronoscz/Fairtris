@@ -55,7 +55,7 @@ type
     procedure UpdatePieceControlShift();
     procedure UpdatePieceControlRotate();
     procedure UpdatePieceControlDrop();
-    procedure UpdatePieceControlWait();
+    procedure UpdatePieceControlDelay();
   private
     procedure UpdateCommon();
     procedure UpdatePieceControl();
@@ -79,7 +79,6 @@ var
 implementation
 
 uses
-  Math,
   Fairtris.Clock,
   Fairtris.Input,
   Fairtris.Sounds,
@@ -456,14 +455,14 @@ begin
 end;
 
 
-procedure TCore.UpdatePieceControlWait();
+procedure TCore.UpdatePieceControlDelay();
 begin
   if Input.Device.Up.Pressed or Input.Device.Down.Pressed then Exit;
 
   if Input.Device.Left.Pressed and Input.Device.Right.Pressed then Exit;
   if not Input.Device.Left.Pressed and not Input.Device.Right.Pressed then Exit;
 
-  Memory.Game.AutorepeatX := Min(Memory.Game.AutorepeatX + 1, AUTOSHIFT_FRAMES_CHARGE[Memory.Play.Region]);
+  Memory.Game.AutorepeatX := AUTOSHIFT_FRAMES_CHARGE[Memory.Play.Region];
 end;
 
 
@@ -724,7 +723,7 @@ begin
   end;
 
   if not (Memory.Game.State in [STATE_PIECE_CONTROL, STATE_UPDATE_TOP_OUT]) then
-    UpdatePieceControlWait();
+    UpdatePieceControlDelay();
 end;
 
 
