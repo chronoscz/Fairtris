@@ -408,19 +408,30 @@ procedure TCore.UpdatePieceControlRotate();
 begin
   if Input.Device.B.JustPressed and Input.Device.A.JustPressed then Exit;
 
-  if Input.Device.B.JustPressed then
+  if Input.Device.B.JustReleased or Input.Device.A.JustReleased then
+    Memory.Game.Autospin := False;
+
+  if Input.Device.B.JustPressed or Memory.Game.Autospin then
     if CanRotatePiece(PIECE_ROTATE_COUNTERCLOCKWISE) then
     begin
       RotatePiece(PIECE_ROTATE_COUNTERCLOCKWISE);
       Sounds.PlaySound(SOUND_SPIN);
-    end;
 
-  if Input.Device.A.JustPressed then
+      Memory.Game.Autospin := False;
+    end
+    else
+      Memory.Game.Autospin := True;
+
+  if Input.Device.A.JustPressed or Memory.Game.Autospin then
     if CanRotatePiece(PIECE_ROTATE_CLOCKWISE) then
     begin
       RotatePiece(PIECE_ROTATE_CLOCKWISE);
       Sounds.PlaySound(SOUND_SPIN);
-    end;
+
+      Memory.Game.Autospin := False;
+    end
+    else
+      Memory.Game.Autospin := True;
 end;
 
 
@@ -478,6 +489,7 @@ end;
 
 procedure TCore.UpdatePieceLock();
 begin
+  Memory.Game.Autospin := False;
   Memory.Game.LockTimer -= 1;
 
   if Memory.Game.LockTimer = 0 then
