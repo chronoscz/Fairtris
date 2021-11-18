@@ -7,7 +7,7 @@ Copyleft 2021 furious programming. All rights reversed.
 
 PC version of the official classic **[Nintendo Tetris®](https://en.wikipedia.org/wiki/Tetris_(NES_video_game))** game for the **[NES](https://en.wikipedia.org/wiki/Nintendo_Entertainment_System)** console, intended for Windows systems. It implements and slightly extends the original mechanics, supports two themes and includes many regional versions and several random piece generators. All in one native executable file!
 
-Ready to play like a true master? **[Download the game](https://github.com/furious-programming/Fairtris/releases/download/v2.0.0.7/fairtris_2.0_release.zip)** and show off!
+Ready to play like a true master? **[Download the game](https://github.com/furious-programming/Fairtris/releases/download/v2.1.0.1/fairtris_2.1_release.zip)** and show off!
 
 </br></br>
 
@@ -30,9 +30,10 @@ This project was initially created as a tool to test various RNG algorithms, but
 ## Important features
 
 - implementation of gameplay mechanics compatible with the **[Nintendo Tetris®](https://en.wikipedia.org/wiki/Tetris_(NES_video_game))** game,
+- **DAS** mechanics fixed and spin buffering added, making the controls fabulously responsive,
 - extended mechanics with **hard-drop** and accumulation of soft-drop points,
 - support for **EIGHT** regional versions of the game, including original **NTSC** and **PAL** versions,
-- support for as many as **SIX** random piece generators, including the classic RNG,
+- support for as many as **SEVEN** random piece generators, including the classic RNG,
 - the ability to start the game from any level up to the killscreen,
 - the ability to play on a keyboard or any USB controller (with input mapping support),
 - supports window mode and the low-resolution exclusive video mode,
@@ -126,11 +127,11 @@ The main gameplay settings menu. Use the <kbd>↑</kbd> <kbd>↓</kbd> keys to n
 
 The `REGION` option is used to select the regional version of the game. There are four basic versions available, and each of them has an additional extended version, which is characterized by a longer gameplay. For more information, see **[Game regions](#game-regions)** section.
 
-The `RNG TYPE` option allows you to choose one of six different randomizing algorithms. Each algorithm is different and gives sequences of different quality — some easier with an even pieces distribution, and others more challanging, not avoiding drought and floods. See **[RNG algorithms](#rng-algorithms)** for more details.
+The `RNG TYPE` option allows you to choose one of seven different randomizing algorithms. Each algorithm is different and gives sequences of different quality — some easier with an even pieces distribution, and others more challanging, not avoiding drought and floods. See **[RNG algorithms](#rng-algorithms)** for more details.
 
 The third option is `LEVEL`, which allows you to select the starting level of the game. It is possible to choose any level, so you can both play single games and train playing on killscreen. The range of levels that can be selected depends on the selected region.
 
-The best three results are displayed at the bottom of the screen, according to the selected regional version and RNG type. There is a separate list for each combination, so the game can store up to `48` results with basic information about the games played.
+The best three results are displayed at the bottom of the screen, according to the selected regional version and RNG type. There is a separate list for each combination, so the game can store up to `168` results with basic information about the games played.
 
 If you want to start the game according to the selected settings, choose the `START` option. If you need to go back to the game **[Prime menu](#prime-menu)**, choose the `BACK` option.
 
@@ -148,7 +149,7 @@ If you want to know more about the available regions, check out page **[Game reg
 
 The original game has only one generator, characterized by the generation of shitty sequences, filled with frequent droughts and floods, which effectively and completely unfairly take away the player's score potential and, consequently, the desire to play. Many controllers have been smashed by how badly the Nintendo developers have broken their game.
 
-In order not to limit the possibilities of the game and not to spoil it like the original, **Fairtris**, in addition to supporting the classic generator, also implements five additional ones, providing different levels of difficulty.
+In order not to limit the possibilities of the game and not to spoil it like the original, **Fairtris**, in addition to supporting the classic generator, also implements six additional ones, providing different levels of difficulty.
 
 If you want to learn more, check out page **[RNG algorithms](https://github.com/furious-programming/Fairtris/wiki/rng-algorithms)** in the **[wiki](https://github.com/furious-programming/Fairtris/wiki)**.
 
