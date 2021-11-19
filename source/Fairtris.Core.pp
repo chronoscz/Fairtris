@@ -147,20 +147,26 @@ end;
 
 function TCore.CanRotatePiece(ADirection: Integer): Boolean;
 var
-  OldOrientation: Integer;
+  OldPosition, OldOrientation: Integer;
 begin
   if Memory.Game.PieceID = PIECE_O then Exit(False);
 
+  OldPosition := Memory.Game.PieceX;
   OldOrientation := Memory.Game.PieceOrientation;
+
   Memory.Game.PieceOrientation := WrapAround(Memory.Game.PieceOrientation, PIECE_ORIENTATION_COUNT, ADirection);
 
-  Result := (Memory.Game.PieceX >= PIECE_ROTATION_X_MIN[Memory.Game.PieceID, Memory.Game.PieceOrientation]) and
-            (Memory.Game.PieceX <= PIECE_ROTATION_X_MAX[Memory.Game.PieceID, Memory.Game.PieceOrientation]) and
-            (Memory.Game.PieceY <= PIECE_ROTATION_Y_MAX[Memory.Game.PieceID, Memory.Game.PieceOrientation]);
+  if Memory.Game.PieceY <= PIECE_ROTATION_Y_MAX[Memory.Game.PieceID, Memory.Game.PieceOrientation] then
+  begin
+    Memory.Game.PieceX := Max(Memory.Game.PieceX, PIECE_ROTATION_X_MIN[Memory.Game.PieceID, Memory.Game.PieceOrientation]);
+    Memory.Game.PieceX := Min(Memory.Game.PieceX, PIECE_ROTATION_X_MAX[Memory.Game.PieceID, Memory.Game.PieceOrientation]);
 
-  if Result then
     Result := CanPlacePiece();
+  end
+  else
+    Result := False;
 
+  Memory.Game.PieceX := OldPosition;
   Memory.Game.PieceOrientation := OldOrientation;
 end;
 
@@ -243,6 +249,9 @@ end;
 procedure TCore.RotatePiece(ADirection: Integer);
 begin
   Memory.Game.PieceOrientation := WrapAround(Memory.Game.PieceOrientation, PIECE_ORIENTATION_COUNT, ADirection);
+
+  Memory.Game.PieceX := Max(Memory.Game.PieceX, PIECE_ROTATION_X_MIN[Memory.Game.PieceID, Memory.Game.PieceOrientation]);
+  Memory.Game.PieceX := Min(Memory.Game.PieceX, PIECE_ROTATION_X_MAX[Memory.Game.PieceID, Memory.Game.PieceOrientation]);
 end;
 
 
