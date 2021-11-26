@@ -256,11 +256,7 @@ end;
 
 procedure TGame.UpdateWindow();
 begin
-  if Placement.VideoEnabled then
-    SDL_RenderCopy(Window.Renderer, Buffers.Native, nil, nil)
-  else
-    SDL_RenderCopy(Window.Renderer, Buffers.Native, nil, @Buffers.Client);
-
+  SDL_RenderCopy(Window.Renderer, Buffers.Native, nil, @Buffers.Client);
   SDL_RenderPresent(Window.Renderer);
 end;
 

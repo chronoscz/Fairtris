@@ -85,6 +85,7 @@ var
 implementation
 
 uses
+  Math,
   Fairtris.Window,
   Fairtris.Buffers,
   Fairtris.Settings,
@@ -185,21 +186,24 @@ end;
 
 procedure TPlacement.UpdateWindowClient();
 var
-  NewWidth, NewHeight: Integer;
+  CurrentWidth, CurrentHeight, NewWidth, NewHeight: Integer;
 begin
   if FVideoEnabled or (FWindowSizeID = SIZE_FULLSCREEN) then
   begin
-    NewHeight := FWindowBounds.H;
+    CurrentWidth := IfThen(FVideoEnabled, FMonitorBounds.W, FWindowBounds.W);
+    CurrentHeight := IfThen(FVideoEnabled, FMonitorBounds.H, FWindowBounds.H);
+
+    NewHeight := CurrentHeight;
     NewWidth := Round(NewHeight * CLIENT_RATIO_LANDSCAPE);
 
-    if NewWidth > FWindowBounds.W then
+    if NewWidth > CurrentWidth then
     begin
-      NewWidth := FWindowBounds.W;
+      NewWidth := CurrentWidth;
       NewHeight := Round(NewWidth * CLIENT_RATIO_PORTRAIT);
     end;
 
-    FWindowClient.X := (FWindowBounds.W - NewWidth) div 2;
-    FWindowClient.Y := (FWindowBounds.H - NewHeight) div 2;
+    FWindowClient.X := (CurrentWidth - NewWidth) div 2;
+    FWindowClient.Y := (CurrentHeight - NewHeight) div 2;
 
     FWindowClient.W := NewWidth;
     FWindowClient.H := NewHeight;
@@ -266,7 +270,7 @@ begin
     SDL_ShowCursor(SDL_DISABLE);
     SDL_SetWindowHitTest(Window.Window, nil, nil);
 
-    SDL_SetWindowSize(Window.Window, FVideoWidth, FVideoHeight);
+    SDL_SetWindowSize(Window.Window, FMonitorBounds.W, FMonitorBounds.H);
     SDL_SetWindowFullScreen(Window.Window, SDL_WINDOW_FULLSCREEN);
   end
   else
