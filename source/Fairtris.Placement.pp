@@ -333,6 +333,8 @@ end;
 procedure TPlacement.ToggleVideoMode();
 begin
   FVideoEnabled := not FVideoEnabled;
+
+  UpdateWindowClient();
   UpdateVideo();
 end;
 
