@@ -304,7 +304,6 @@ begin
 
     UpdateMonitor();
     UpdateWindow();
-    UpdateBuffer();
   end;
 end;
 
