@@ -37,8 +37,6 @@ type
   TVideoSettings = class(TCustomSettings)
   private
     FEnabled: Boolean;
-    FWidth: Integer;
-    FHeight: Integer;
   private
     procedure Collect();
   public
@@ -46,15 +44,11 @@ type
     procedure Save(AFile: TIniFile; const ASection: String);
   public
     property Enabled: Boolean read FEnabled;
-    property Width: Integer read FWidth;
-    property Height: Integer read FHeight;
   end;
 
 
 type
   TGeneralSettings = class(TCustomSettings)
-  private
-    FDeflored: Boolean;
   private
     FMonitor: Integer;
     FLeft: Integer;
@@ -82,8 +76,6 @@ type
   public
     procedure Load(AFile: TIniFile; const ASection: String);
     procedure Save(AFile: TIniFile; const ASection: String);
-  public
-    property Deflored: Boolean read FDeflored;
   public
     property Monitor: Integer read FMonitor;
     property Left: Integer read FLeft;
@@ -181,27 +173,18 @@ end;
 procedure TVideoSettings.Collect();
 begin
   FEnabled := Placement.VideoEnabled;
-
-  FWidth := Placement.VideoWidth;
-  FHeight := Placement.VideoHeight;
 end;
 
 
 procedure TVideoSettings.Load(AFile: TIniFile; const ASection: String);
 begin
   FEnabled := AFile.ReadBool(ASection, SETTINGS_KEY_VIDEO_ENABLED, SETTINGS_VALUE_VIDEO_ENABLED);
-
-  FWidth  := AFile.ReadInteger(ASection, SETTINGS_KEY_VIDEO_WIDTH,  SETTINGS_VALUE_VIDEO_WIDTH);
-  FHeight := AFile.ReadInteger(ASection, SETTINGS_KEY_VIDEO_HEIGHT, SETTINGS_VALUE_VIDEO_HEIGHT);
 end;
 
 
 procedure TVideoSettings.Save(AFile: TIniFile; const ASection: String);
 begin
   AFile.WriteBool(ASection, SETTINGS_KEY_VIDEO_ENABLED, FEnabled);
-
-  AFile.WriteInteger(ASection, SETTINGS_KEY_VIDEO_WIDTH,  FWidth);
-  AFile.WriteInteger(ASection, SETTINGS_KEY_VIDEO_HEIGHT, FHeight);
 end;
 
 
@@ -287,8 +270,6 @@ end;
 
 procedure TGeneralSettings.Collect();
 begin
-  FDeflored := Placement.Deflored;
-
   FMonitor := DetermineMonitor();
   FSize := Placement.WindowSize;
   FLeft := Placement.WindowBounds.X;
@@ -307,8 +288,6 @@ end;
 
 procedure TGeneralSettings.Load(AFile: TIniFile; const ASection: String);
 begin
-  FDeflored := AFile.ReadBool(ASection, SETTINGS_KEY_GENERAL_DEFLORED, SETTINGS_VALUE_GENERAL_DEFLORED);
-
   FMonitor := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_MONITOR, SETTINGS_VALUE_GENERAL_MONITOR);
   FLeft    := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_LEFT,    SETTINGS_VALUE_GENERAL_LEFT);
   FTop     := AFile.ReadInteger(ASection, SETTINGS_KEY_GENERAL_TOP,     SETTINGS_VALUE_GENERAL_TOP);
@@ -329,8 +308,6 @@ end;
 
 procedure TGeneralSettings.Save(AFile: TIniFile; const ASection: String);
 begin
-  AFile.WriteBool(ASection, SETTINGS_KEY_GENERAL_DEFLORED, FDeflored);
-
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_MONITOR, FMonitor);
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_LEFT,    FLeft);
   AFile.WriteInteger(ASection, SETTINGS_KEY_GENERAL_TOP,     FTop);

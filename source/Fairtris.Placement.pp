@@ -30,11 +30,9 @@ type
   TPlacement = class(TObject)
   private
     FInitialized: Boolean;
-    FDeflored: Boolean;
   private
     FVideoEnabled: Boolean;
-    FVideoWidth: Integer;
-    FVideoHeight: Integer;
+    FVideoBounds: TSDL_Rect;
   private
     FMonitorIndex: Integer;
     FMonitorBounds: TSDL_Rect;
@@ -66,11 +64,7 @@ type
   public
     procedure ToggleVideoMode();
   public
-    property Deflored: Boolean read FDeflored;
-  public
     property VideoEnabled: Boolean read FVideoEnabled;
-    property VideoWidth: Integer read FVideoWidth;
-    property VideoHeight: Integer read FVideoHeight;
   public
     property WindowSize: Integer read FWindowSizeID write SetWindowSize;
     property WindowBounds: TSDL_Rect read FWindowBounds;
@@ -108,22 +102,18 @@ end;
 constructor TPlacement.Create();
 begin
   FMonitorIndex := 0;
-  SDL_GetDisplayBounds(FMonitorIndex, @FMonitorBounds);
-
   FWindowSizeID := SIZE_DEFAULT;
 
-  UpdateWindowBounds();
-  UpdateWindowClient();
+  SDL_GetDisplayBounds(0, @FVideoBounds);
+  SDL_GetDisplayBounds(0, @FMonitorBounds);
+
+  UpdateWindow();
 end;
 
 
 procedure TPlacement.Initialize();
 begin
-  FDeflored := Settings.General.Deflored;
-
   FVideoEnabled := Settings.Video.Enabled;
-  FVideoWidth := Settings.Video.Width;
-  FVideoHeight := Settings.Video.Height;
 
   FMonitorIndex := Settings.General.Monitor;
   SDL_GetDisplayBounds(FMonitorIndex, @FMonitorBounds);
@@ -159,7 +149,7 @@ var
   NewWidth, NewHeight: Integer;
 begin
   if FVideoEnabled then
-    FWindowBounds := SDL_Rect(0, 0, FVideoWidth, FVideoHeight)
+    FWindowBounds := FVideoBounds
   else
   case FWindowSizeID of
     SIZE_NATIVE, SIZE_ZOOM_2X, SIZE_ZOOM_3X, SIZE_ZOOM_4X:
@@ -270,26 +260,17 @@ begin
     SDL_ShowCursor(SDL_DISABLE);
     SDL_SetWindowHitTest(Window.Window, nil, nil);
 
-    SDL_SetWindowSize(Window.Window, FMonitorBounds.W, FMonitorBounds.H);
+    SDL_SetWindowSize(Window.Window, FVideoBounds.W, FVideoBounds.H);
+    SDL_SetWindowPosition(Window.Window, FVideoBounds.X, FVideoBounds.Y);
     SDL_SetWindowFullScreen(Window.Window, SDL_WINDOW_FULLSCREEN);
+
+    UpdateMonitor();
+    UpdateWindowClient();
   end
   else
   begin
     SDL_SetWindowFullScreen(Window.Window, SDL_DISABLE);
-
-    if FDeflored then
-    begin
-      SDL_SetWindowSize(Window.Window, FWindowBounds.W, FWindowBounds.H);
-      SDL_SetWindowPosition(Window.Window, FWindowBounds.X, FWindowBounds.Y);
-
-      SDL_ShowCursor(SDL_ENABLE);
-      SDL_SetWindowHitTest(Window.Window, @WindowHitTest, nil);
-    end
-    else
-    begin
-      FDeflored := True;
-      UpdateWindow();
-    end;
+    UpdateWindow();
   end;
 end;
 
@@ -332,8 +313,6 @@ end;
 procedure TPlacement.ToggleVideoMode();
 begin
   FVideoEnabled := not FVideoEnabled;
-
-  UpdateWindowClient();
   UpdateVideo();
 end;
 
