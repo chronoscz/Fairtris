@@ -7,7 +7,7 @@ Copyleft 2021 furious programming. All rights reversed.
 
 PC version of the official classic **[Nintendo Tetris®](https://en.wikipedia.org/wiki/Tetris_(NES_video_game))** game for the **[NES](https://en.wikipedia.org/wiki/Nintendo_Entertainment_System)** console, intended for Windows systems. It implements and slightly extends the original mechanics, supports two themes and includes many regional versions and several random piece generators. All in one native executable file!
 
-Ready to play like a true master? **[Download the game](https://github.com/furious-programming/Fairtris/releases/download/v2.3.0.1/fairtris_2.3_release.zip)** and show off!
+Ready to play like a true master? **[Download the game](https://github.com/furious-programming/Fairtris/releases/download/v2.3.1.2/fairtris_2.3.1_release.zip)** and show off!
 
 </br></br>
 
@@ -59,7 +59,7 @@ Information on the license can be found in the **[LICENSE](LICENSE)** file. In g
 
 # First launch
 
-After extracting the game files from the **[release archive](https://github.com/furious-programming/Fairtris/releases/download/v2.3.0.1/fairtris_2.3_release.zip)**, run the `fairtris.exe` file. For the first time, the game starts in the exclusive video mode on the main screen and with the current resolution of that screen, maintaining the appropriate aspect ratio.
+After extracting the game files from the **[release archive](https://github.com/furious-programming/Fairtris/releases/download/v2.3.1.2/fairtris_2.3.1_release.zip)**, run the `fairtris.exe` file. For the first time, the game starts in the exclusive video mode on the main screen and with the current resolution of that screen, maintaining the appropriate aspect ratio.
 
 Video mode is used by default because it provides the best rendering efficiency. If you prefer the game to be displayed in a small window or generally in windowed mode, so that you can conveniently switch between different applications, turn off video mode by pressing the <kbd>F11</kbd> key. But remember, the rendering performance in windowed mode is always lower.
 
