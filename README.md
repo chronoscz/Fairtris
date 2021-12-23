@@ -36,7 +36,7 @@ This project was initially created as a tool to test various RNG algorithms, but
 - support for as many as **SEVEN** random piece generators, including the classic RNG,
 - the ability to start the game from any level up to the killscreen,
 - the ability to play on a keyboard or any USB controller (with input mapping support),
-- supports window mode and the exclusive video mode,
+- supports window mode and exclusive video mode,
 - support for additional meters, such as **TRT**, **BRN** or gain meter,
 - stores the best results for each game region and RNG type,
 - has a pause menu with the ability to quickly restart the game and change settings,
