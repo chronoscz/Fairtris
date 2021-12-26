@@ -1299,6 +1299,12 @@ begin
   if Input.Fixed.ToggleClip.JustPressed  then Renderers.ClipFrame := not Renderers.ClipFrame;
   if Input.Fixed.ToggleVideo.JustPressed then Placement.ToggleVideoMode();
 
+  if Input.Fixed.ToggleTheme.JustPressed then
+  begin
+    Memory.Options.Theme := WrapAround(Memory.Options.Theme, THEME_COUNT, 1);
+    Renderers.ThemeID := Memory.Options.Theme;
+  end;
+
   if not Memory.Game.Started then
     Generators.Shuffle();
 end;
