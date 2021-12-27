@@ -105,7 +105,12 @@ type
     procedure RenderMenu();
     procedure RenderModes();
     procedure RenderSinglePlayer();
+    procedure RenderTournamentQuals();
+    procedure RenderTournamentMatch();
+    procedure RenderSpeedrunQuals();
+    procedure RenderSpeedrunMatch();
     procedure RenderGame();
+    procedure RenderSpeedrun();
     procedure RenderPause();
     procedure RenderTopOut();
     procedure RenderOptions();
@@ -128,7 +133,12 @@ type
     procedure RenderMenu();
     procedure RenderModes();
     procedure RenderSinglePlayer();
+    procedure RenderTournamentQuals();
+    procedure RenderTournamentMatch();
+    procedure RenderSpeedrunQuals();
+    procedure RenderSpeedrunMatch();
     procedure RenderGame();
+    procedure RenderSpeedrun();
     procedure RenderPause();
     procedure RenderTopOut();
     procedure RenderOptions();
@@ -1216,6 +1226,30 @@ begin
 end;
 
 
+procedure TModernRenderer.RenderTournamentQuals();
+begin
+
+end;
+
+
+procedure TModernRenderer.RenderTournamentMatch();
+begin
+
+end;
+
+
+procedure TModernRenderer.RenderSpeedrunQuals();
+begin
+
+end;
+
+
+procedure TModernRenderer.RenderSpeedrunMatch();
+begin
+
+end;
+
+
 procedure TModernRenderer.RenderGame();
 begin
   RenderGameBest();
@@ -1230,6 +1264,12 @@ begin
   RenderGameTetrises();
   RenderGameGain();
   RenderGameInput();
+end;
+
+
+procedure TModernRenderer.RenderSpeedrun();
+begin
+
 end;
 
 
@@ -1286,18 +1326,24 @@ begin
   RenderGround(ASceneID);
 
   case ASceneID of
-    SCENE_LEGAL:         RenderLegal();
-    SCENE_MENU:          RenderMenu();
-    SCENE_MODES:         RenderModes();
-    SCENE_SINGLE_PLAYER: RenderSinglePlayer();
-    SCENE_GAME_NORMAL:   RenderGame();
-    SCENE_GAME_FLASH:    RenderGame();
-    SCENE_PAUSE:         RenderPause();
-    SCENE_TOP_OUT:       RenderTopOut();
-    SCENE_OPTIONS:       RenderOptions();
-    SCENE_KEYBOARD:      RenderKeyboard();
-    SCENE_CONTROLLER:    RenderController();
-    SCENE_QUIT:          RenderQuit();
+    SCENE_LEGAL:            RenderLegal();
+    SCENE_MENU:             RenderMenu();
+    SCENE_MODES:            RenderModes();
+    SCENE_SINGLE_PLAYER:    RenderSinglePlayer();
+    SCENE_TOURNAMENT_QUALS: RenderTournamentQuals();
+    SCENE_TOURNAMENT_MATCH: RenderTournamentMatch();
+    SCENE_SPEEDRUN_QUALS:   RenderSpeedrunQuals();
+    SCENE_SPEEDRUN_MATCH:   RenderSpeedrunMatch();
+    SCENE_GAME_NORMAL:      RenderGame();
+    SCENE_GAME_FLASH:       RenderGame();
+    SCENE_SPEEDRUN_NORMAL:  RenderSpeedrun();
+    SCENE_SPEEDRUN_FLASH:   RenderSpeedrun();
+    SCENE_PAUSE:            RenderPause();
+    SCENE_TOP_OUT:          RenderTopOut();
+    SCENE_OPTIONS:          RenderOptions();
+    SCENE_KEYBOARD:         RenderKeyboard();
+    SCENE_CONTROLLER:       RenderController();
+    SCENE_QUIT:             RenderQuit();
   end;
 
   RenderEnd();
@@ -1379,6 +1425,30 @@ begin
 end;
 
 
+procedure TClassicRenderer.RenderTournamentQuals();
+begin
+
+end;
+
+
+procedure TClassicRenderer.RenderTournamentMatch();
+begin
+
+end;
+
+
+procedure TClassicRenderer.RenderSpeedrunQuals();
+begin
+
+end;
+
+
+procedure TClassicRenderer.RenderSpeedrunMatch();
+begin
+
+end;
+
+
 procedure TClassicRenderer.RenderGame();
 begin
   RenderGameBest();
@@ -1390,6 +1460,12 @@ begin
   RenderGamePiece();
 
   RenderGameStats();
+end;
+
+
+procedure TClassicRenderer.RenderSpeedrun();
+begin
+
 end;
 
 
@@ -1446,18 +1522,24 @@ begin
   RenderGround(ASceneID);
 
   case ASceneID of
-    SCENE_LEGAL:         RenderLegal();
-    SCENE_MENU:          RenderMenu();
-    SCENE_MODES:         RenderModes();
-    SCENE_SINGLE_PLAYER: RenderSinglePlayer();
-    SCENE_GAME_NORMAL:   RenderGame();
-    SCENE_GAME_FLASH:    RenderGame();
-    SCENE_PAUSE:         RenderPause();
-    SCENE_TOP_OUT:       RenderTopOut();
-    SCENE_OPTIONS:       RenderOptions();
-    SCENE_KEYBOARD:      RenderKeyboard();
-    SCENE_CONTROLLER:    RenderController();
-    SCENE_QUIT:          RenderQuit();
+    SCENE_LEGAL:            RenderLegal();
+    SCENE_MENU:             RenderMenu();
+    SCENE_MODES:            RenderModes();
+    SCENE_SINGLE_PLAYER:    RenderSinglePlayer();
+    SCENE_TOURNAMENT_QUALS: RenderTournamentQuals();
+    SCENE_TOURNAMENT_MATCH: RenderTournamentMatch();
+    SCENE_SPEEDRUN_QUALS:   RenderSpeedrunQuals();
+    SCENE_SPEEDRUN_MATCH:   RenderSpeedrunMatch();
+    SCENE_GAME_NORMAL:      RenderGame();
+    SCENE_GAME_FLASH:       RenderGame();
+    SCENE_SPEEDRUN_NORMAL:  RenderSpeedrun();
+    SCENE_SPEEDRUN_FLASH:   RenderSpeedrun();
+    SCENE_PAUSE:            RenderPause();
+    SCENE_TOP_OUT:          RenderTopOut();
+    SCENE_OPTIONS:          RenderOptions();
+    SCENE_KEYBOARD:         RenderKeyboard();
+    SCENE_CONTROLLER:       RenderController();
+    SCENE_QUIT:             RenderQuit();
   end;
 
   RenderEnd();
