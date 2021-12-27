@@ -544,7 +544,8 @@ begin
   if InputMenuAccepted() then
   begin
     case Memory.Modes.ItemIndex of
-      ITEM_MODES_BACK: FScene.Current := SCENE_MENU;
+      ITEM_MODES_SINGLE_PLAYER: FScene.Current := SCENE_PLAY;
+      ITEM_MODES_BACK:          FScene.Current := SCENE_MENU;
     end;
 
     if Memory.Modes.ItemIndex <> ITEM_MODES_BACK then
@@ -683,7 +684,7 @@ begin
 
   if InputMenuRejected() then
   begin
-    FScene.Current := SCENE_MENU;
+    FScene.Current := SCENE_MODES;
     Sounds.PlaySound(SOUND_DROP);
   end;
 
@@ -696,7 +697,7 @@ begin
     end;
     ITEM_PLAY_BACK:
     begin
-      FScene.Current := SCENE_MENU;
+      FScene.Current := SCENE_MODES;
       Sounds.PlaySound(SOUND_DROP);
     end;
   end;
