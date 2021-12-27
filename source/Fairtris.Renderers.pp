@@ -1286,18 +1286,18 @@ begin
   RenderGround(ASceneID);
 
   case ASceneID of
-    SCENE_LEGAL:       RenderLegal();
-    SCENE_MENU:        RenderMenu();
-    SCENE_MODES:       RenderModes();
-    SCENE_PLAY:        RenderPlay();
-    SCENE_GAME_NORMAL: RenderGame();
-    SCENE_GAME_FLASH:  RenderGame();
-    SCENE_PAUSE:       RenderPause();
-    SCENE_TOP_OUT:     RenderTopOut();
-    SCENE_OPTIONS:     RenderOptions();
-    SCENE_KEYBOARD:    RenderKeyboard();
-    SCENE_CONTROLLER:  RenderController();
-    SCENE_QUIT:        RenderQuit();
+    SCENE_LEGAL:         RenderLegal();
+    SCENE_MENU:          RenderMenu();
+    SCENE_MODES:         RenderModes();
+    SCENE_SINGLE_PLAYER: RenderPlay();
+    SCENE_GAME_NORMAL:   RenderGame();
+    SCENE_GAME_FLASH:    RenderGame();
+    SCENE_PAUSE:         RenderPause();
+    SCENE_TOP_OUT:       RenderTopOut();
+    SCENE_OPTIONS:       RenderOptions();
+    SCENE_KEYBOARD:      RenderKeyboard();
+    SCENE_CONTROLLER:    RenderController();
+    SCENE_QUIT:          RenderQuit();
   end;
 
   RenderEnd();
@@ -1446,18 +1446,18 @@ begin
   RenderGround(ASceneID);
 
   case ASceneID of
-    SCENE_LEGAL:       RenderLegal();
-    SCENE_MENU:        RenderMenu();
-    SCENE_MODES:       RenderModes();
-    SCENE_PLAY:        RenderPlay();
-    SCENE_GAME_NORMAL: RenderGame();
-    SCENE_GAME_FLASH:  RenderGame();
-    SCENE_PAUSE:       RenderPause();
-    SCENE_TOP_OUT:     RenderTopOut();
-    SCENE_OPTIONS:     RenderOptions();
-    SCENE_KEYBOARD:    RenderKeyboard();
-    SCENE_CONTROLLER:  RenderController();
-    SCENE_QUIT:        RenderQuit();
+    SCENE_LEGAL:         RenderLegal();
+    SCENE_MENU:          RenderMenu();
+    SCENE_MODES:         RenderModes();
+    SCENE_SINGLE_PLAYER: RenderPlay();
+    SCENE_GAME_NORMAL:   RenderGame();
+    SCENE_GAME_FLASH:    RenderGame();
+    SCENE_PAUSE:         RenderPause();
+    SCENE_TOP_OUT:       RenderTopOut();
+    SCENE_OPTIONS:       RenderOptions();
+    SCENE_KEYBOARD:      RenderKeyboard();
+    SCENE_CONTROLLER:    RenderController();
+    SCENE_QUIT:          RenderQuit();
   end;
 
   RenderEnd();

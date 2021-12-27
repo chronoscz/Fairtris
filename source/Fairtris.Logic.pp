@@ -544,7 +544,7 @@ begin
   if InputMenuAccepted() then
   begin
     case Memory.Modes.ItemIndex of
-      ITEM_MODES_SINGLE_PLAYER: FScene.Current := SCENE_PLAY;
+      ITEM_MODES_SINGLE_PLAYER: FScene.Current := SCENE_SINGLE_PLAYER;
       ITEM_MODES_BACK:          FScene.Current := SCENE_MENU;
     end;
 
@@ -773,7 +773,7 @@ begin
       FScene.Current := Memory.Pause.FromScene;
     ITEM_PAUSE_RESTART:
     begin
-      FScene.Current := SCENE_PLAY;
+      FScene.Current := SCENE_SINGLE_PLAYER;
       FScene.Current := SCENE_GAME_NORMAL;
       Sounds.PlaySound(SOUND_START);
     end;
@@ -788,7 +788,7 @@ begin
     end;
     ITEM_PAUSE_BACK:
     begin
-      FScene.Current := SCENE_PLAY;
+      FScene.Current := SCENE_SINGLE_PLAYER;
       Sounds.PlaySound(SOUND_DROP);
     end;
   end;
@@ -826,7 +826,7 @@ begin
 
   if InputMenuRejected() then
   begin
-    FScene.Current := SCENE_PLAY;
+    FScene.Current := SCENE_SINGLE_PLAYER;
     Sounds.PlaySound(SOUND_DROP);
   end;
 
@@ -842,7 +842,7 @@ begin
   if InputMenuAccepted() then
     if Memory.TopOut.ItemIndex = ITEM_TOP_OUT_BACK then
     begin
-      FScene.Current := SCENE_PLAY;
+      FScene.Current := SCENE_SINGLE_PLAYER;
       Sounds.PlaySound(SOUND_DROP);
     end;
 end;
@@ -1481,18 +1481,18 @@ begin
   UpdateCommon();
 
   case FScene.Current of
-    SCENE_LEGAL:       UpdateLegal();
-    SCENE_MENU:        UpdateMenu();
-    SCENE_MODES:       UpdateModes();
-    SCENE_PLAY:        UpdatePlay();
-    SCENE_GAME_NORMAL: UpdateGame();
-    SCENE_GAME_FLASH:  UpdateGame();
-    SCENE_PAUSE:       UpdatePause();
-    SCENE_TOP_OUT:     UpdateTopOut();
-    SCENE_OPTIONS:     UpdateOptions();
-    SCENE_KEYBOARD:    UpdateKeyboard();
-    SCENE_CONTROLLER:  UpdateController();
-    SCENE_QUIT:        UpdateQuit();
+    SCENE_LEGAL:         UpdateLegal();
+    SCENE_MENU:          UpdateMenu();
+    SCENE_MODES:         UpdateModes();
+    SCENE_SINGLE_PLAYER: UpdatePlay();
+    SCENE_GAME_NORMAL:   UpdateGame();
+    SCENE_GAME_FLASH:    UpdateGame();
+    SCENE_PAUSE:         UpdatePause();
+    SCENE_TOP_OUT:       UpdateTopOut();
+    SCENE_OPTIONS:       UpdateOptions();
+    SCENE_KEYBOARD:      UpdateKeyboard();
+    SCENE_CONTROLLER:    UpdateController();
+    SCENE_QUIT:          UpdateQuit();
   end;
 end;
 
