@@ -53,16 +53,17 @@ const
 const
   SCENE_LEGAL       = 0;
   SCENE_MENU        = 1;
-  SCENE_PLAY        = 2;
-  SCENE_GAME_NORMAL = 3;
-  SCENE_GAME_FLASH  = 4;
-  SCENE_PAUSE       = 5;
-  SCENE_TOP_OUT     = 6;
-  SCENE_OPTIONS     = 7;
-  SCENE_KEYBOARD    = 8;
-  SCENE_CONTROLLER  = 9;
-  SCENE_QUIT        = 10;
-  SCENE_STOP        = 11;
+  SCENE_MODES       = 2;
+  SCENE_PLAY        = 3;
+  SCENE_GAME_NORMAL = 4;
+  SCENE_GAME_FLASH  = 5;
+  SCENE_PAUSE       = 6;
+  SCENE_TOP_OUT     = 7;
+  SCENE_OPTIONS     = 8;
+  SCENE_KEYBOARD    = 9;
+  SCENE_CONTROLLER  = 10;
+  SCENE_QUIT        = 11;
+  SCENE_STOP        = 12;
 
   SCENE_FIRST = SCENE_LEGAL;
   SCENE_LAST  = SCENE_QUIT;

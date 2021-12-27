@@ -83,6 +83,9 @@ type
     procedure UpdateMenuSelection();
     procedure UpdateMenuScene();
   private
+    procedure UpdateModesSelection();
+    procedure UpdateModesScene();
+  private
     procedure UpdatePlaySelection();
     procedure UpdatePlayRegion();
     procedure UpdatePlayGenerator();
@@ -123,6 +126,7 @@ type
     procedure UpdateCommon();
     procedure UpdateLegal();
     procedure UpdateMenu();
+    procedure UpdateModes();
     procedure UpdatePlay();
     procedure UpdateGame();
     procedure UpdatePause();
@@ -484,7 +488,7 @@ begin
   if InputMenuAccepted() then
   begin
     case Memory.Menu.ItemIndex of
-      ITEM_MENU_PLAY:    FScene.Current := SCENE_PLAY;
+      ITEM_MENU_PLAY:    FScene.Current := SCENE_MODES;
       ITEM_MENU_OPTIONS: FScene.Current := SCENE_OPTIONS;
       ITEM_MENU_QUIT:    FScene.Current := SCENE_QUIT;
     end;
@@ -497,6 +501,18 @@ begin
     if Memory.Menu.ItemIndex = ITEM_MENU_HELP then
       OpenHelp();
   end;
+end;
+
+
+procedure TLogic.UpdateModesSelection();
+begin
+
+end;
+
+
+procedure TLogic.UpdateModesScene();
+begin
+
 end;
 
 
@@ -1322,6 +1338,13 @@ begin
 end;
 
 
+procedure TLogic.UpdateModes();
+begin
+  UpdateModesSelection();
+  UpdateModesScene();
+end;
+
+
 procedure TLogic.UpdatePlay();
 begin
   PreparePlay();
@@ -1412,6 +1435,7 @@ begin
   case FScene.Current of
     SCENE_LEGAL:       UpdateLegal();
     SCENE_MENU:        UpdateMenu();
+    SCENE_MODES:       UpdateModes();
     SCENE_PLAY:        UpdatePlay();
     SCENE_GAME_NORMAL: UpdateGame();
     SCENE_GAME_FLASH:  UpdateGame();
