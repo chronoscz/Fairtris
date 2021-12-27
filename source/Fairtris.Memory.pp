@@ -301,7 +301,7 @@ end;
 
 procedure TPlayMemory.Initialize();
 begin
-  ItemIndex := ITEM_PLAY_FIRST;
+  ItemIndex := ITEM_SINGLE_PLAYER_FIRST;
   Autorepeat := 0;
 
   Region := Settings.General.Region;

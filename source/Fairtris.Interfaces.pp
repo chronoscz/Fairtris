@@ -52,7 +52,7 @@ type
   IRenderable = interface(IInterface)
     procedure RenderLegal();
     procedure RenderMenu();
-    procedure RenderPlay();
+    procedure RenderSinglePlayer();
     procedure RenderGame();
     procedure RenderPause();
     procedure RenderTopOut();

@@ -50,7 +50,7 @@ type
     procedure OpenHelp();
   private
     procedure PrepareModesSelection();
-    procedure PreparePlaySelection();
+    procedure PrepareSinglePlayerSelection();
   private
     procedure PrepareGameScene();
   private
@@ -71,7 +71,7 @@ type
     procedure PrepareControllerScanCodes();
   private
     procedure PrepareModes();
-    procedure PreparePlay();
+    procedure PrepareSinglePlayer();
     procedure PreparePause();
     procedure PrepareTopOut();
     procedure PreapreOptions();
@@ -88,11 +88,11 @@ type
     procedure UpdateModesSelection();
     procedure UpdateModesScene();
   private
-    procedure UpdatePlaySelection();
-    procedure UpdatePlayRegion();
-    procedure UpdatePlayGenerator();
-    procedure UpdatePlayLevel();
-    procedure UpdatePlayScene();
+    procedure UpdateSinglePlayerSelection();
+    procedure UpdateSinglePlayerRegion();
+    procedure UpdateSinglePlayerGenerator();
+    procedure UpdateSinglePlayerLevel();
+    procedure UpdateSinglePlayerScene();
   private
     procedure UpdateGameState();
     procedure UpdateGameScene();
@@ -129,7 +129,7 @@ type
     procedure UpdateLegal();
     procedure UpdateMenu();
     procedure UpdateModes();
-    procedure UpdatePlay();
+    procedure UpdateSinglePlayer();
     procedure UpdateGame();
     procedure UpdatePause();
     procedure UpdateTopOut();
@@ -265,9 +265,9 @@ begin
 end;
 
 
-procedure TLogic.PreparePlaySelection();
+procedure TLogic.PrepareSinglePlayerSelection();
 begin
-  Memory.Play.ItemIndex := ITEM_PLAY_START;
+  Memory.Play.ItemIndex := ITEM_SINGLE_PLAYER_START;
 end;
 
 
@@ -379,12 +379,12 @@ begin
 end;
 
 
-procedure TLogic.PreparePlay();
+procedure TLogic.PrepareSinglePlayer();
 begin
   if not FScene.Changed then Exit;
 
   if FScene.Previous = SCENE_MODES then
-    PreparePlaySelection();
+    PrepareSinglePlayerSelection();
 
   Memory.Game.Started := False;
 end;
@@ -562,25 +562,25 @@ begin
 end;
 
 
-procedure TLogic.UpdatePlaySelection();
+procedure TLogic.UpdateSinglePlayerSelection();
 begin
   if InputMenuSetPrev() then
   begin
-    UpdateItemIndex(Memory.Play.ItemIndex, ITEM_PLAY_COUNT, ITEM_PREV);
+    UpdateItemIndex(Memory.Play.ItemIndex, ITEM_SINGLE_PLAYER_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_BLIP);
   end;
 
   if InputMenuSetNext() then
   begin
-    UpdateItemIndex(Memory.Play.ItemIndex, ITEM_PLAY_COUNT, ITEM_NEXT);
+    UpdateItemIndex(Memory.Play.ItemIndex, ITEM_SINGLE_PLAYER_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_BLIP);
   end;
 end;
 
 
-procedure TLogic.UpdatePlayRegion();
+procedure TLogic.UpdateSinglePlayerRegion();
 begin
-  if Memory.Play.ItemIndex <> ITEM_PLAY_REGION then Exit;
+  if Memory.Play.ItemIndex <> ITEM_SINGLE_PLAYER_REGION then Exit;
 
   if InputOptionSetPrev() then
   begin
@@ -601,9 +601,9 @@ begin
 end;
 
 
-procedure TLogic.UpdatePlayGenerator();
+procedure TLogic.UpdateSinglePlayerGenerator();
 begin
-  if Memory.Play.ItemIndex <> ITEM_PLAY_GENERATOR then Exit;
+  if Memory.Play.ItemIndex <> ITEM_SINGLE_PLAYER_GENERATOR then Exit;
 
   if InputOptionSetPrev() then
   begin
@@ -621,9 +621,9 @@ begin
 end;
 
 
-procedure TLogic.UpdatePlayLevel();
+procedure TLogic.UpdateSinglePlayerLevel();
 begin
-  if Memory.Play.ItemIndex <> ITEM_PLAY_LEVEL then Exit;
+  if Memory.Play.ItemIndex <> ITEM_SINGLE_PLAYER_LEVEL then Exit;
 
   if InputOptionSetPrev() then
   begin
@@ -669,12 +669,12 @@ begin
 end;
 
 
-procedure TLogic.UpdatePlayScene();
+procedure TLogic.UpdateSinglePlayerScene();
 begin
   FScene.Validate();
 
   if not Input.Device.Connected then
-    if Memory.Play.ItemIndex = ITEM_PLAY_START then
+    if Memory.Play.ItemIndex = ITEM_SINGLE_PLAYER_START then
     begin
       if InputMenuAccepted() then
         Sounds.PlaySound(SOUND_DROP);
@@ -690,12 +690,12 @@ begin
 
   if InputMenuAccepted() then
   case Memory.Play.ItemIndex of
-    ITEM_PLAY_START:
+    ITEM_SINGLE_PLAYER_START:
     begin
       FScene.Current := SCENE_GAME_NORMAL;
       Sounds.PlaySound(SOUND_START);
     end;
-    ITEM_PLAY_BACK:
+    ITEM_SINGLE_PLAYER_BACK:
     begin
       FScene.Current := SCENE_MODES;
       Sounds.PlaySound(SOUND_DROP);
@@ -1393,15 +1393,15 @@ begin
 end;
 
 
-procedure TLogic.UpdatePlay();
+procedure TLogic.UpdateSinglePlayer();
 begin
-  PreparePlay();
+  PrepareSinglePlayer();
 
-  UpdatePlaySelection();
-  UpdatePlayRegion();
-  UpdatePlayGenerator();
-  UpdatePlayLevel();
-  UpdatePlayScene();
+  UpdateSinglePlayerSelection();
+  UpdateSinglePlayerRegion();
+  UpdateSinglePlayerGenerator();
+  UpdateSinglePlayerLevel();
+  UpdateSinglePlayerScene();
 end;
 
 
@@ -1484,7 +1484,7 @@ begin
     SCENE_LEGAL:         UpdateLegal();
     SCENE_MENU:          UpdateMenu();
     SCENE_MODES:         UpdateModes();
-    SCENE_SINGLE_PLAYER: UpdatePlay();
+    SCENE_SINGLE_PLAYER: UpdateSinglePlayer();
     SCENE_GAME_NORMAL:   UpdateGame();
     SCENE_GAME_FLASH:    UpdateGame();
     SCENE_PAUSE:         UpdatePause();

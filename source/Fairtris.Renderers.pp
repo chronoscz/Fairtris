@@ -46,10 +46,10 @@ type
     procedure RenderMenuSelection();
     procedure RenderModesSelection();
   protected
-    procedure RenderPlaySelection();
-    procedure RenderPlayItems();
-    procedure RenderPlayParameters();
-    procedure RenderPlayBestScores();
+    procedure RenderSinglePlayerSelection();
+    procedure RenderSinglePlayerItems();
+    procedure RenderSinglePlayerParameters();
+    procedure RenderSinglePlayerBestScores();
   protected
     procedure RenderGameBest();
     procedure RenderGameScore();
@@ -104,7 +104,7 @@ type
     procedure RenderLegal();
     procedure RenderMenu();
     procedure RenderModes();
-    procedure RenderPlay();
+    procedure RenderSinglePlayer();
     procedure RenderGame();
     procedure RenderPause();
     procedure RenderTopOut();
@@ -127,7 +127,7 @@ type
     procedure RenderLegal();
     procedure RenderMenu();
     procedure RenderModes();
-    procedure RenderPlay();
+    procedure RenderSinglePlayer();
     procedure RenderGame();
     procedure RenderPause();
     procedure RenderTopOut();
@@ -351,20 +351,20 @@ begin
 end;
 
 
-procedure TRenderer.RenderPlaySelection();
+procedure TRenderer.RenderSinglePlayerSelection();
 begin
   RenderText(
-    ITEM_X_PLAY[Memory.Play.ItemIndex],
-    ITEM_Y_PLAY[Memory.Play.ItemIndex],
-    ITEM_TEXT_PLAY[Memory.Play.ItemIndex]
+    ITEM_X_SINGLE_PLAYER[Memory.Play.ItemIndex],
+    ITEM_Y_SINGLE_PLAYER[Memory.Play.ItemIndex],
+    ITEM_TEXT_SINGLE_PLAYER[Memory.Play.ItemIndex]
   );
 
   RenderText(
-    ITEM_X_PLAY[Memory.Play.ItemIndex] - ITEM_X_MARKER,
-    ITEM_Y_PLAY[Memory.Play.ItemIndex],
+    ITEM_X_SINGLE_PLAYER[Memory.Play.ItemIndex] - ITEM_X_MARKER,
+    ITEM_Y_SINGLE_PLAYER[Memory.Play.ItemIndex],
     ITEM_TEXT_MARKER,
     IfThen(
-      Memory.Play.ItemIndex = ITEM_PLAY_START,
+      Memory.Play.ItemIndex = ITEM_SINGLE_PLAYER_START,
       IfThen(Input.Device.Connected, COLOR_WHITE, COLOR_DARK),
       COLOR_WHITE
     )
@@ -372,16 +372,16 @@ begin
 end;
 
 
-procedure TRenderer.RenderPlayItems();
+procedure TRenderer.RenderSinglePlayerItems();
 begin
   RenderText(
-    ITEM_X_PLAY_START,
-    ITEM_Y_PLAY_START,
-    ITEM_TEXT_PLAY_START,
+    ITEM_X_SINGLE_PLAYER_START,
+    ITEM_Y_SINGLE_PLAYER_START,
+    ITEM_TEXT_SINGLE_PLAYER_START,
     IfThen(
       Input.Device.Connected,
       IfThen(
-        Memory.Play.ItemIndex = ITEM_PLAY_START,
+        Memory.Play.ItemIndex = ITEM_SINGLE_PLAYER_START,
         COLOR_WHITE,
         IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
       ),
@@ -391,36 +391,36 @@ begin
 end;
 
 
-procedure TRenderer.RenderPlayParameters();
+procedure TRenderer.RenderSinglePlayerParameters();
 begin
   RenderText(
-    ITEM_X_PLAY_PARAM,
-    ITEM_Y_PLAY_REGION,
+    ITEM_X_SINGLE_PLAYER_PARAM,
+    ITEM_Y_SINGLE_PLAYER_REGION,
     ITEM_TEXT_PLAY_REGION[Memory.Play.Region],
     IfThen(
-      Memory.Play.ItemIndex = ITEM_PLAY_REGION,
+      Memory.Play.ItemIndex = ITEM_SINGLE_PLAYER_REGION,
       COLOR_WHITE,
       IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
     )
   );
 
   RenderText(
-    ITEM_X_PLAY_PARAM,
-    ITEM_Y_PLAY_GENERATOR,
+    ITEM_X_SINGLE_PLAYER_PARAM,
+    ITEM_Y_SINGLE_PLAYER_GENERATOR,
     ITEM_TEXT_PLAY_GENERATOR[Memory.Play.Generator],
     IfThen(
-      Memory.Play.ItemIndex = ITEM_PLAY_GENERATOR,
+      Memory.Play.ItemIndex = ITEM_SINGLE_PLAYER_GENERATOR,
       COLOR_WHITE,
       IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
     )
   );
 
   RenderText(
-    ITEM_X_PLAY_PARAM,
-    ITEM_Y_PLAY_LEVEL,
+    ITEM_X_SINGLE_PLAYER_PARAM,
+    ITEM_Y_SINGLE_PLAYER_LEVEL,
     Memory.Play.Level.ToString(),
     IfThen(
-      Memory.Play.ItemIndex = ITEM_PLAY_LEVEL,
+      Memory.Play.ItemIndex = ITEM_SINGLE_PLAYER_LEVEL,
       COLOR_WHITE,
       IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
     )
@@ -428,22 +428,22 @@ begin
 end;
 
 
-procedure TRenderer.RenderPlayBestScores();
+procedure TRenderer.RenderSinglePlayerBestScores();
 var
   Index: Integer;
 begin
   for Index := BEST_SCORES_FIRST to BEST_SCORES_LAST do
     if Index < BestScores[Memory.Play.Region][Memory.Play.Generator].Count then
       RenderText(
-        ITEM_X_PLAY_BEST_SCORE,
-        ITEM_Y_PLAY_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
+        ITEM_X_SINGLE_PLAYER_BEST_SCORE,
+        ITEM_Y_SINGLE_PLAYER_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
         ScoreEntryToString(BestScores[Memory.Play.Region][Memory.Play.Generator].Entry[Index]),
         IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
       )
     else
       RenderText(
-        ITEM_X_PLAY_BEST_SCORE,
-        ITEM_Y_PLAY_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
+        ITEM_X_SINGLE_PLAYER_BEST_SCORE,
+        ITEM_Y_SINGLE_PLAYER_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
         EmptyEntryToString(),
         COLOR_DARK
       );
@@ -1207,12 +1207,12 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderPlay();
+procedure TModernRenderer.RenderSinglePlayer();
 begin
-  RenderPlaySelection();
-  RenderPlayItems();
-  RenderPlayParameters();
-  RenderPlayBestScores();
+  RenderSinglePlayerSelection();
+  RenderSinglePlayerItems();
+  RenderSinglePlayerParameters();
+  RenderSinglePlayerBestScores();
 end;
 
 
@@ -1289,7 +1289,7 @@ begin
     SCENE_LEGAL:         RenderLegal();
     SCENE_MENU:          RenderMenu();
     SCENE_MODES:         RenderModes();
-    SCENE_SINGLE_PLAYER: RenderPlay();
+    SCENE_SINGLE_PLAYER: RenderSinglePlayer();
     SCENE_GAME_NORMAL:   RenderGame();
     SCENE_GAME_FLASH:    RenderGame();
     SCENE_PAUSE:         RenderPause();
@@ -1370,12 +1370,12 @@ begin
 end;
 
 
-procedure TClassicRenderer.RenderPlay();
+procedure TClassicRenderer.RenderSinglePlayer();
 begin
-  RenderPlaySelection();
-  RenderPlayItems();
-  RenderPlayParameters();
-  RenderPlayBestScores();
+  RenderSinglePlayerSelection();
+  RenderSinglePlayerItems();
+  RenderSinglePlayerParameters();
+  RenderSinglePlayerBestScores();
 end;
 
 
@@ -1449,7 +1449,7 @@ begin
     SCENE_LEGAL:         RenderLegal();
     SCENE_MENU:          RenderMenu();
     SCENE_MODES:         RenderModes();
-    SCENE_SINGLE_PLAYER: RenderPlay();
+    SCENE_SINGLE_PLAYER: RenderSinglePlayer();
     SCENE_GAME_NORMAL:   RenderGame();
     SCENE_GAME_FLASH:    RenderGame();
     SCENE_PAUSE:         RenderPause();
