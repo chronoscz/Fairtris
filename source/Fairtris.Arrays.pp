@@ -66,7 +66,7 @@ const
     'legal.bmp',
     'menu.bmp',
     'game modes.bmp',
-    'play.bmp',
+    'single player.bmp',
     'game normal.bmp',
     'game flash.bmp',
     'pause.bmp',
