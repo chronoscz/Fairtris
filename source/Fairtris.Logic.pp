@@ -383,7 +383,7 @@ procedure TLogic.PreparePlay();
 begin
   if not FScene.Changed then Exit;
 
-  if FScene.Previous = SCENE_MENU then
+  if FScene.Previous = SCENE_MODES then
     PreparePlaySelection();
 
   Memory.Game.Started := False;
