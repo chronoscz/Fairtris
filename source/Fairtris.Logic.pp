@@ -49,6 +49,7 @@ type
   private
     procedure OpenHelp();
   private
+    procedure PrepareModesSelection();
     procedure PreparePlaySelection();
   private
     procedure PrepareGameScene();
@@ -69,6 +70,7 @@ type
     procedure PrepareControllerSelection();
     procedure PrepareControllerScanCodes();
   private
+    procedure PrepareModes();
     procedure PreparePlay();
     procedure PreparePause();
     procedure PrepareTopOut();
@@ -257,6 +259,12 @@ begin
 end;
 
 
+procedure TLogic.PrepareModesSelection();
+begin
+  Memory.Modes.ItemIndex := ITEM_MODES_SINGLE_PLAYER;
+end;
+
+
 procedure TLogic.PreparePlaySelection();
 begin
   Memory.Play.ItemIndex := ITEM_PLAY_START;
@@ -359,6 +367,15 @@ var
 begin
   for Index := Low(Memory.Controller.ScanCodes) to High(Memory.Controller.ScanCodes) do
     Memory.Controller.ScanCodes[Index] := Input.Controller.ScanCode[Index];
+end;
+
+
+procedure TLogic.PrepareModes();
+begin
+  if not FScene.Changed then Exit;
+
+  if FScene.Previous = SCENE_MENU then
+    PrepareModesSelection();
 end;
 
 
@@ -523,6 +540,18 @@ end;
 procedure TLogic.UpdateModesScene();
 begin
   FScene.Validate();
+
+  if InputMenuAccepted() then
+  begin
+    case Memory.Modes.ItemIndex of
+      ITEM_MODES_BACK: FScene.Current := SCENE_MENU;
+    end;
+
+    if Memory.Modes.ItemIndex <> ITEM_MODES_BACK then
+      Sounds.PlaySound(SOUND_START)
+    else
+      Sounds.PlaySound(SOUND_DROP);
+  end;
 
   if InputMenuRejected() then
   begin
@@ -1356,6 +1385,8 @@ end;
 
 procedure TLogic.UpdateModes();
 begin
+  PrepareModes();
+
   UpdateModesSelection();
   UpdateModesScene();
 end;
