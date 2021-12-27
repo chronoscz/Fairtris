@@ -45,6 +45,15 @@ type
 
 
 type
+  TModesMemory = class(TObject)
+  public
+    procedure Initialize();
+  public
+    ItemIndex: Integer;
+  end;
+
+
+type
   TPlayMemory = class(TObject)
   public      
     procedure Initialize();
@@ -279,6 +288,12 @@ end;
 procedure TMenuMemory.Initialize();
 begin
   ItemIndex := ITEM_MENU_FIRST;
+end;
+
+
+procedure TModesMemory.Initialize();
+begin
+  ItemIndex := ITEM_MODES_FIRST;
 end;
 
 
