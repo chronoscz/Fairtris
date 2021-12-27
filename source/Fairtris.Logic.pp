@@ -130,6 +130,10 @@ type
     procedure UpdateMenu();
     procedure UpdateModes();
     procedure UpdateSinglePlayer();
+    procedure UpdateTournamentQuals();
+    procedure UpdateTournamentMatch();
+    procedure UpdateSpeedrunQuals();
+    procedure UpdateSpeedrunMatch();
     procedure UpdateGame();
     procedure UpdatePause();
     procedure UpdateTopOut();
@@ -1405,6 +1409,30 @@ begin
 end;
 
 
+procedure TLogic.UpdateTournamentQuals();
+begin
+
+end;
+
+
+procedure TLogic.UpdateTournamentMatch();
+begin
+
+end;
+
+
+procedure TLogic.UpdateSpeedrunQuals();
+begin
+
+end;
+
+
+procedure TLogic.UpdateSpeedrunMatch();
+begin
+
+end;
+
+
 procedure TLogic.UpdateGame();
 begin
   UpdateGameState();
@@ -1481,18 +1509,24 @@ begin
   UpdateCommon();
 
   case FScene.Current of
-    SCENE_LEGAL:         UpdateLegal();
-    SCENE_MENU:          UpdateMenu();
-    SCENE_MODES:         UpdateModes();
-    SCENE_SINGLE_PLAYER: UpdateSinglePlayer();
-    SCENE_GAME_NORMAL:   UpdateGame();
-    SCENE_GAME_FLASH:    UpdateGame();
-    SCENE_PAUSE:         UpdatePause();
-    SCENE_TOP_OUT:       UpdateTopOut();
-    SCENE_OPTIONS:       UpdateOptions();
-    SCENE_KEYBOARD:      UpdateKeyboard();
-    SCENE_CONTROLLER:    UpdateController();
-    SCENE_QUIT:          UpdateQuit();
+    SCENE_LEGAL:            UpdateLegal();
+    SCENE_MENU:             UpdateMenu();
+    SCENE_MODES:            UpdateModes();
+    SCENE_SINGLE_PLAYER:    UpdateSinglePlayer();
+    SCENE_TOURNAMENT_QUALS: UpdateTournamentQuals();
+    SCENE_TOURNAMENT_MATCH: UpdateTournamentMatch();
+    SCENE_SPEEDRUN_QUALS:   UpdateSpeedrunQuals();
+    SCENE_SPEEDRUN_MATCH:   UpdateSpeedrunMatch();
+    SCENE_GAME_NORMAL:      UpdateGame();
+    SCENE_GAME_FLASH:       UpdateGame();
+    SCENE_SPEEDRUN_NORMAL:  UpdateGame();
+    SCENE_SPEEDRUN_FLASH:   UpdateGame();
+    SCENE_PAUSE:            UpdatePause();
+    SCENE_TOP_OUT:          UpdateTopOut();
+    SCENE_OPTIONS:          UpdateOptions();
+    SCENE_KEYBOARD:         UpdateKeyboard();
+    SCENE_CONTROLLER:       UpdateController();
+    SCENE_QUIT:             UpdateQuit();
   end;
 end;
 
