@@ -354,17 +354,17 @@ end;
 procedure TRenderer.RenderSinglePlayerSelection();
 begin
   RenderText(
-    ITEM_X_SINGLE_PLAYER[Memory.Play.ItemIndex],
-    ITEM_Y_SINGLE_PLAYER[Memory.Play.ItemIndex],
-    ITEM_TEXT_SINGLE_PLAYER[Memory.Play.ItemIndex]
+    ITEM_X_SINGLE_PLAYER[Memory.SinglePlayer.ItemIndex],
+    ITEM_Y_SINGLE_PLAYER[Memory.SinglePlayer.ItemIndex],
+    ITEM_TEXT_SINGLE_PLAYER[Memory.SinglePlayer.ItemIndex]
   );
 
   RenderText(
-    ITEM_X_SINGLE_PLAYER[Memory.Play.ItemIndex] - ITEM_X_MARKER,
-    ITEM_Y_SINGLE_PLAYER[Memory.Play.ItemIndex],
+    ITEM_X_SINGLE_PLAYER[Memory.SinglePlayer.ItemIndex] - ITEM_X_MARKER,
+    ITEM_Y_SINGLE_PLAYER[Memory.SinglePlayer.ItemIndex],
     ITEM_TEXT_MARKER,
     IfThen(
-      Memory.Play.ItemIndex = ITEM_SINGLE_PLAYER_START,
+      Memory.SinglePlayer.ItemIndex = ITEM_SINGLE_PLAYER_START,
       IfThen(Input.Device.Connected, COLOR_WHITE, COLOR_DARK),
       COLOR_WHITE
     )
@@ -381,7 +381,7 @@ begin
     IfThen(
       Input.Device.Connected,
       IfThen(
-        Memory.Play.ItemIndex = ITEM_SINGLE_PLAYER_START,
+        Memory.SinglePlayer.ItemIndex = ITEM_SINGLE_PLAYER_START,
         COLOR_WHITE,
         IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
       ),
@@ -398,7 +398,7 @@ begin
     ITEM_Y_SINGLE_PLAYER_REGION,
     ITEM_TEXT_PLAY_REGION[Memory.Play.Region],
     IfThen(
-      Memory.Play.ItemIndex = ITEM_SINGLE_PLAYER_REGION,
+      Memory.SinglePlayer.ItemIndex = ITEM_SINGLE_PLAYER_REGION,
       COLOR_WHITE,
       IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
     )
@@ -409,7 +409,7 @@ begin
     ITEM_Y_SINGLE_PLAYER_GENERATOR,
     ITEM_TEXT_PLAY_GENERATOR[Memory.Play.Generator],
     IfThen(
-      Memory.Play.ItemIndex = ITEM_SINGLE_PLAYER_GENERATOR,
+      Memory.SinglePlayer.ItemIndex = ITEM_SINGLE_PLAYER_GENERATOR,
       COLOR_WHITE,
       IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
     )
@@ -420,7 +420,7 @@ begin
     ITEM_Y_SINGLE_PLAYER_LEVEL,
     Memory.Play.Level.ToString(),
     IfThen(
-      Memory.Play.ItemIndex = ITEM_SINGLE_PLAYER_LEVEL,
+      Memory.SinglePlayer.ItemIndex = ITEM_SINGLE_PLAYER_LEVEL,
       COLOR_WHITE,
       IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
     )

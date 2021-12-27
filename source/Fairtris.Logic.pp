@@ -267,7 +267,7 @@ end;
 
 procedure TLogic.PrepareSinglePlayerSelection();
 begin
-  Memory.Play.ItemIndex := ITEM_SINGLE_PLAYER_START;
+  Memory.SinglePlayer.ItemIndex := ITEM_SINGLE_PLAYER_START;
 end;
 
 
@@ -566,13 +566,13 @@ procedure TLogic.UpdateSinglePlayerSelection();
 begin
   if InputMenuSetPrev() then
   begin
-    UpdateItemIndex(Memory.Play.ItemIndex, ITEM_SINGLE_PLAYER_COUNT, ITEM_PREV);
+    UpdateItemIndex(Memory.SinglePlayer.ItemIndex, ITEM_SINGLE_PLAYER_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_BLIP);
   end;
 
   if InputMenuSetNext() then
   begin
-    UpdateItemIndex(Memory.Play.ItemIndex, ITEM_SINGLE_PLAYER_COUNT, ITEM_NEXT);
+    UpdateItemIndex(Memory.SinglePlayer.ItemIndex, ITEM_SINGLE_PLAYER_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_BLIP);
   end;
 end;
@@ -580,7 +580,7 @@ end;
 
 procedure TLogic.UpdateSinglePlayerRegion();
 begin
-  if Memory.Play.ItemIndex <> ITEM_SINGLE_PLAYER_REGION then Exit;
+  if Memory.SinglePlayer.ItemIndex <> ITEM_SINGLE_PLAYER_REGION then Exit;
 
   if InputOptionSetPrev() then
   begin
@@ -603,7 +603,7 @@ end;
 
 procedure TLogic.UpdateSinglePlayerGenerator();
 begin
-  if Memory.Play.ItemIndex <> ITEM_SINGLE_PLAYER_GENERATOR then Exit;
+  if Memory.SinglePlayer.ItemIndex <> ITEM_SINGLE_PLAYER_GENERATOR then Exit;
 
   if InputOptionSetPrev() then
   begin
@@ -623,11 +623,11 @@ end;
 
 procedure TLogic.UpdateSinglePlayerLevel();
 begin
-  if Memory.Play.ItemIndex <> ITEM_SINGLE_PLAYER_LEVEL then Exit;
+  if Memory.SinglePlayer.ItemIndex <> ITEM_SINGLE_PLAYER_LEVEL then Exit;
 
   if InputOptionSetPrev() then
   begin
-    Memory.Play.Autorepeat := 0;
+    Memory.SinglePlayer.Autorepeat := 0;
 
     UpdateItemIndex(Memory.Play.Level, LEVEL_COUNT[Memory.Play.Region], ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
@@ -635,11 +635,11 @@ begin
   else
     if InputOptionRollPrev() then
     begin
-      Memory.Play.Autorepeat += 1;
+      Memory.SinglePlayer.Autorepeat += 1;
 
-      if Memory.Play.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.Play.Region] then
+      if Memory.SinglePlayer.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.Play.Region] then
       begin
-        Memory.Play.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Play.Region];
+        Memory.SinglePlayer.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Play.Region];
 
         UpdateItemIndex(Memory.Play.Level, LEVEL_COUNT[Memory.Play.Region], ITEM_PREV);
         Sounds.PlaySound(SOUND_SHIFT);
@@ -648,7 +648,7 @@ begin
 
   if InputOptionSetNext() then
   begin
-    Memory.Play.Autorepeat := 0;
+    Memory.SinglePlayer.Autorepeat := 0;
 
     UpdateItemIndex(Memory.Play.Level, LEVEL_COUNT[Memory.Play.Region], ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
@@ -656,11 +656,11 @@ begin
   else
     if InputOptionRollNext() then
     begin
-      Memory.Play.Autorepeat += 1;
+      Memory.SinglePlayer.Autorepeat += 1;
 
-      if Memory.Play.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.Play.Region] then
+      if Memory.SinglePlayer.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.Play.Region] then
       begin
-        Memory.Play.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Play.Region];
+        Memory.SinglePlayer.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Play.Region];
 
         UpdateItemIndex(Memory.Play.Level, LEVEL_COUNT[Memory.Play.Region], ITEM_NEXT);
         Sounds.PlaySound(SOUND_SHIFT);
@@ -674,7 +674,7 @@ begin
   FScene.Validate();
 
   if not Input.Device.Connected then
-    if Memory.Play.ItemIndex = ITEM_SINGLE_PLAYER_START then
+    if Memory.SinglePlayer.ItemIndex = ITEM_SINGLE_PLAYER_START then
     begin
       if InputMenuAccepted() then
         Sounds.PlaySound(SOUND_DROP);
@@ -689,7 +689,7 @@ begin
   end;
 
   if InputMenuAccepted() then
-  case Memory.Play.ItemIndex of
+  case Memory.SinglePlayer.ItemIndex of
     ITEM_SINGLE_PLAYER_START:
     begin
       FScene.Current := SCENE_GAME_NORMAL;

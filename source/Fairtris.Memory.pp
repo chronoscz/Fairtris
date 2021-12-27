@@ -54,12 +54,19 @@ type
 
 
 type
-  TPlayMemory = class(TObject)
-  public      
+  TSinglePlayerMemory = class(TObject)
+  public
     procedure Initialize();
   public
     ItemIndex: Integer;
     Autorepeat: Integer;
+  end;
+
+
+type
+  TPlayMemory = class(TObject)
+  public      
+    procedure Initialize();
   public
     Region: Integer;
     Generator: Integer;
@@ -239,6 +246,7 @@ type
     FLegal: TLegalMemory;
     FMenu: TMenuMemory;
     FModes: TModesMemory;
+    FSinglePlayer: TSinglePlayerMemory;
     FPlay: TPlayMemory;
     FGame: TGameMemory;
     FPause: TPauseMemory;
@@ -256,6 +264,7 @@ type
     property Legal: TLegalMemory read FLegal;
     property Menu: TMenuMemory read FMenu;
     property Modes: TModesMemory read FModes;
+    property SinglePlayer: TSinglePlayerMemory read FSinglePlayer;
     property Play: TPlayMemory read FPlay;
     property Game: TGameMemory read FGame;
     property Pause: TPauseMemory read FPause;
@@ -299,11 +308,15 @@ begin
 end;
 
 
+procedure TSinglePlayerMemory.Initialize();
+begin
+  ItemIndex := ITEM_SINGLE_PLAYER_START;
+  Autorepeat := 0;
+end;
+
+
 procedure TPlayMemory.Initialize();
 begin
-  ItemIndex := ITEM_SINGLE_PLAYER_FIRST;
-  Autorepeat := 0;
-
   Region := Settings.General.Region;
   Generator := Settings.General.Generator;
   Level := Settings.General.Level;
@@ -483,6 +496,7 @@ begin
   FLegal := TLegalMemory.Create();
   FMenu := TMenuMemory.Create();
   FModes := TModesMemory.Create();
+  FSinglePlayer := TSinglePlayerMemory.Create();
   FPlay := TPlayMemory.Create();
   FGame := TGameMemory.Create();
   FPause := TPauseMemory.Create();
@@ -499,6 +513,7 @@ begin
   FLegal.Free();
   FMenu.Free();
   FModes.Free();
+  FSinglePlayer.Free();
   FPlay.Free();
   FGame.Free();
   FPause.Free();
@@ -517,6 +532,7 @@ begin
   FLegal.Initialize();
   FMenu.Initialize();
   FModes.Initialize();
+  FSinglePlayer.Initialize();
   FPlay.Initialize();
   FPause.Initialize();
   FOptions.Initialize();
