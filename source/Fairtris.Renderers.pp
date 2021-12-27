@@ -396,7 +396,7 @@ begin
   RenderText(
     ITEM_X_SINGLE_PLAYER_PARAM,
     ITEM_Y_SINGLE_PLAYER_REGION,
-    ITEM_TEXT_PLAY_REGION[Memory.Core.Region],
+    ITEM_TEXT_CORE_REGION[Memory.Core.Region],
     IfThen(
       Memory.SinglePlayer.ItemIndex = ITEM_SINGLE_PLAYER_REGION,
       COLOR_WHITE,
@@ -407,7 +407,7 @@ begin
   RenderText(
     ITEM_X_SINGLE_PLAYER_PARAM,
     ITEM_Y_SINGLE_PLAYER_GENERATOR,
-    ITEM_TEXT_PLAY_GENERATOR[Memory.Core.Generator],
+    ITEM_TEXT_CORE_GENERATOR[Memory.Core.Generator],
     IfThen(
       Memory.SinglePlayer.ItemIndex = ITEM_SINGLE_PLAYER_GENERATOR,
       COLOR_WHITE,
