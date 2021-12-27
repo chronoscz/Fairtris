@@ -522,7 +522,13 @@ end;
 
 procedure TLogic.UpdateModesScene();
 begin
+  FScene.Validate();
 
+  if InputMenuRejected() then
+  begin
+    FScene.Current := SCENE_MENU;
+    Sounds.PlaySound(SOUND_DROP);
+  end;
 end;
 
 
