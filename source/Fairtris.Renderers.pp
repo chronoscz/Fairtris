@@ -44,6 +44,7 @@ type
     procedure RenderGround(ASceneID: Integer);
   protected
     procedure RenderMenuSelection();
+    procedure RenderModesSelection();
   protected
     procedure RenderPlaySelection();
     procedure RenderPlayItems();
@@ -102,6 +103,7 @@ type
   private
     procedure RenderLegal();
     procedure RenderMenu();
+    procedure RenderModes();
     procedure RenderPlay();
     procedure RenderGame();
     procedure RenderPause();
@@ -124,6 +126,7 @@ type
   private
     procedure RenderLegal();
     procedure RenderMenu();
+    procedure RenderModes();
     procedure RenderPlay();
     procedure RenderGame();
     procedure RenderPause();
@@ -327,6 +330,22 @@ begin
   RenderText(
     ITEM_X_MENU[Memory.Menu.ItemIndex] - ITEM_X_MARKER,
     ITEM_Y_MENU[Memory.Menu.ItemIndex],
+    ITEM_TEXT_MARKER
+  );
+end;
+
+
+procedure TRenderer.RenderModesSelection();
+begin
+  RenderText(
+    ITEM_X_MODES[Memory.Modes.ItemIndex],
+    ITEM_Y_MODES[Memory.Modes.ItemIndex],
+    ITEM_TEXT_MODES[Memory.Modes.ItemIndex]
+  );
+
+  RenderText(
+    ITEM_X_MODES[Memory.Modes.ItemIndex] - ITEM_X_MARKER,
+    ITEM_Y_MODES[Memory.Modes.ItemIndex],
     ITEM_TEXT_MARKER
   );
 end;
@@ -1182,6 +1201,12 @@ begin
 end;
 
 
+procedure TModernRenderer.RenderModes();
+begin
+  RenderModesSelection();
+end;
+
+
 procedure TModernRenderer.RenderPlay();
 begin
   RenderPlaySelection();
@@ -1263,6 +1288,7 @@ begin
   case ASceneID of
     SCENE_LEGAL:       RenderLegal();
     SCENE_MENU:        RenderMenu();
+    SCENE_MODES:       RenderModes();
     SCENE_PLAY:        RenderPlay();
     SCENE_GAME_NORMAL: RenderGame();
     SCENE_GAME_FLASH:  RenderGame();
@@ -1335,6 +1361,12 @@ end;
 procedure TClassicRenderer.RenderMenu();
 begin
   RenderMenuSelection();
+end;
+
+
+procedure TClassicRenderer.RenderModes();
+begin
+  RenderModesSelection();
 end;
 
 
@@ -1416,6 +1448,7 @@ begin
   case ASceneID of
     SCENE_LEGAL:       RenderLegal();
     SCENE_MENU:        RenderMenu();
+    SCENE_MODES:       RenderModes();
     SCENE_PLAY:        RenderPlay();
     SCENE_GAME_NORMAL: RenderGame();
     SCENE_GAME_FLASH:  RenderGame();
