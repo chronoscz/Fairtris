@@ -72,6 +72,10 @@ type
   private
     procedure PrepareModes();
     procedure PrepareSinglePlayer();
+    procedure PrepareTournamentQuals();
+    procedure PrepareTournamentMatch();
+    procedure PrepareSpeedrunQuals();
+    procedure PrepareSpeedrunMatch();
     procedure PreparePause();
     procedure PrepareTopOut();
     procedure PreapreOptions();
@@ -93,6 +97,32 @@ type
     procedure UpdateSinglePlayerGenerator();
     procedure UpdateSinglePlayerLevel();
     procedure UpdateSinglePlayerScene();
+  private
+    procedure UpdateTournamentQualsSelection();
+    procedure UpdateTournamentQualsRegion();
+    procedure UpdateTournamentQualsGenerator();
+    procedure UpdateTournamentQualsLevel();
+    procedure UpdateTournamentQualsTimer();
+    procedure UpdateTournamentQualsScene();
+  private
+    procedure UpdateTournamentMatchSelection();
+    procedure UpdateTournamentMatchRegion();
+    procedure UpdateTournamentMatchGenerator();
+    procedure UpdateTournamentMatchLevel();
+    procedure UpdateTournamentMatchSeed();
+    procedure UpdateTournamentMatchScene();
+  private
+    procedure UpdateSpeedrunQualsSelection();
+    procedure UpdateSpeedrunQualsRegion();
+    procedure UpdateSpeedrunQualsGenerator();
+    procedure UpdateSpeedrunQualsTimer();
+    procedure UpdateSpeedrunQualsScene();
+  private
+    procedure UpdateSpeedrunMatchSelection();
+    procedure UpdateSpeedrunMatchRegion();
+    procedure UpdateSpeedrunMatchGenerator();
+    procedure UpdateSpeedrunMatchSeed();
+    procedure UpdateSpeedrunMatchScene();
   private
     procedure UpdateGameState();
     procedure UpdateGameScene();
@@ -391,6 +421,30 @@ begin
     PrepareSinglePlayerSelection();
 
   Memory.Game.Started := False;
+end;
+
+
+procedure TLogic.PrepareTournamentQuals();
+begin
+
+end;
+
+
+procedure TLogic.PrepareTournamentMatch();
+begin
+
+end;
+
+
+procedure TLogic.PrepareSpeedrunQuals();
+begin
+
+end;
+
+
+procedure TLogic.PrepareSpeedrunMatch();
+begin
+
 end;
 
 
@@ -708,6 +762,162 @@ begin
       FScene.Current := SCENE_MODES;
       Sounds.PlaySound(SOUND_DROP);
     end;
+  end;
+end;
+
+
+procedure TLogic.UpdateTournamentQualsSelection();
+begin
+
+end;
+
+
+procedure TLogic.UpdateTournamentQualsRegion();
+begin
+
+end;
+
+
+procedure TLogic.UpdateTournamentQualsGenerator();
+begin
+
+end;
+
+
+procedure TLogic.UpdateTournamentQualsLevel();
+begin
+
+end;
+
+
+procedure TLogic.UpdateTournamentQualsTimer();
+begin
+
+end;
+
+
+procedure TLogic.UpdateTournamentQualsScene();
+begin
+  FScene.Validate();
+
+  if InputMenuRejected() then
+  begin
+    FScene.Current := SCENE_MODES;
+    Sounds.PlaySound(SOUND_DROP);
+  end;
+end;
+
+
+procedure TLogic.UpdateTournamentMatchSelection();
+begin
+
+end;
+
+
+procedure TLogic.UpdateTournamentMatchRegion();
+begin
+
+end;
+
+
+procedure TLogic.UpdateTournamentMatchGenerator();
+begin
+
+end;
+
+
+procedure TLogic.UpdateTournamentMatchLevel();
+begin
+
+end;
+
+
+procedure TLogic.UpdateTournamentMatchSeed();
+begin
+
+end;
+
+
+procedure TLogic.UpdateTournamentMatchScene();
+begin
+  FScene.Validate();
+
+  if InputMenuRejected() then
+  begin
+    FScene.Current := SCENE_MODES;
+    Sounds.PlaySound(SOUND_DROP);
+  end;
+end;
+
+
+procedure TLogic.UpdateSpeedrunQualsSelection();
+begin
+
+end;
+
+
+procedure TLogic.UpdateSpeedrunQualsRegion();
+begin
+
+end;
+
+
+procedure TLogic.UpdateSpeedrunQualsGenerator();
+begin
+
+end;
+
+
+procedure TLogic.UpdateSpeedrunQualsTimer();
+begin
+
+end;
+
+
+procedure TLogic.UpdateSpeedrunQualsScene();
+begin
+  FScene.Validate();
+
+  if InputMenuRejected() then
+  begin
+    FScene.Current := SCENE_MODES;
+    Sounds.PlaySound(SOUND_DROP);
+  end;
+end;
+
+
+procedure TLogic.UpdateSpeedrunMatchSelection();
+begin
+
+end;
+
+
+procedure TLogic.UpdateSpeedrunMatchRegion();
+begin
+
+end;
+
+
+procedure TLogic.UpdateSpeedrunMatchGenerator();
+begin
+
+end;
+
+
+procedure TLogic.UpdateSpeedrunMatchSeed();
+begin
+
+end;
+
+
+procedure TLogic.UpdateSpeedrunMatchScene();
+begin
+  FScene.Validate();
+
+  if InputMenuRejected() then
+  begin
+    FScene.Current := SCENE_MODES;
+    Sounds.PlaySound(SOUND_DROP);
   end;
 end;
 
@@ -1415,25 +1625,51 @@ end;
 
 procedure TLogic.UpdateTournamentQuals();
 begin
+  PrepareTournamentQuals();
 
+  UpdateTournamentQualsSelection();
+  UpdateTournamentQualsRegion();
+  UpdateTournamentQualsGenerator();
+  UpdateTournamentQualsLevel();
+  UpdateTournamentQualsTimer();
+  UpdateTournamentQualsScene();
 end;
 
 
 procedure TLogic.UpdateTournamentMatch();
 begin
+  PrepareTournamentMatch();
 
+  UpdateTournamentMatchSelection();
+  UpdateTournamentMatchRegion();
+  UpdateTournamentMatchGenerator();
+  UpdateTournamentMatchLevel();
+  UpdateTournamentMatchSeed();
+  UpdateTournamentMatchScene();
 end;
 
 
 procedure TLogic.UpdateSpeedrunQuals();
 begin
+  PrepareSpeedrunQuals();
 
+  UpdateSpeedrunQualsSelection();
+  UpdateSpeedrunQualsRegion();
+  UpdateSpeedrunQualsGenerator();
+  UpdateSpeedrunQualsTimer();
+  UpdateSpeedrunQualsScene();
 end;
 
 
 procedure TLogic.UpdateSpeedrunMatch();
 begin
+  PrepareSpeedrunMatch();
 
+  UpdateSpeedrunMatchSelection();
+  UpdateSpeedrunMatchRegion();
+  UpdateSpeedrunMatchGenerator();
+  UpdateSpeedrunMatchSeed();
+  UpdateSpeedrunMatchScene();
 end;
 
 
