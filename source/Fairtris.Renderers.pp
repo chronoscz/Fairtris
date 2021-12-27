@@ -110,7 +110,6 @@ type
     procedure RenderSpeedrunQuals();
     procedure RenderSpeedrunMatch();
     procedure RenderGame();
-    procedure RenderSpeedrun();
     procedure RenderPause();
     procedure RenderTopOut();
     procedure RenderOptions();
@@ -138,7 +137,6 @@ type
     procedure RenderSpeedrunQuals();
     procedure RenderSpeedrunMatch();
     procedure RenderGame();
-    procedure RenderSpeedrun();
     procedure RenderPause();
     procedure RenderTopOut();
     procedure RenderOptions();
@@ -1267,12 +1265,6 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderSpeedrun();
-begin
-
-end;
-
-
 procedure TModernRenderer.RenderPause();
 begin
   RenderPauseSelection();
@@ -1336,8 +1328,8 @@ begin
     SCENE_SPEEDRUN_MATCH:   RenderSpeedrunMatch();
     SCENE_GAME_NORMAL:      RenderGame();
     SCENE_GAME_FLASH:       RenderGame();
-    SCENE_SPEEDRUN_NORMAL:  RenderSpeedrun();
-    SCENE_SPEEDRUN_FLASH:   RenderSpeedrun();
+    SCENE_SPEEDRUN_NORMAL:  RenderGame();
+    SCENE_SPEEDRUN_FLASH:   RenderGame();
     SCENE_PAUSE:            RenderPause();
     SCENE_TOP_OUT:          RenderTopOut();
     SCENE_OPTIONS:          RenderOptions();
@@ -1463,12 +1455,6 @@ begin
 end;
 
 
-procedure TClassicRenderer.RenderSpeedrun();
-begin
-
-end;
-
-
 procedure TClassicRenderer.RenderPause();
 begin
   RenderPauseSelection();
@@ -1532,8 +1518,8 @@ begin
     SCENE_SPEEDRUN_MATCH:   RenderSpeedrunMatch();
     SCENE_GAME_NORMAL:      RenderGame();
     SCENE_GAME_FLASH:       RenderGame();
-    SCENE_SPEEDRUN_NORMAL:  RenderSpeedrun();
-    SCENE_SPEEDRUN_FLASH:   RenderSpeedrun();
+    SCENE_SPEEDRUN_NORMAL:  RenderGame();
+    SCENE_SPEEDRUN_FLASH:   RenderGame();
     SCENE_PAUSE:            RenderPause();
     SCENE_TOP_OUT:          RenderTopOut();
     SCENE_OPTIONS:          RenderOptions();
