@@ -506,7 +506,17 @@ end;
 
 procedure TLogic.UpdateModesSelection();
 begin
+  if InputMenuSetPrev() then
+  begin
+    UpdateItemIndex(Memory.Modes.ItemIndex, ITEM_MODES_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_BLIP);
+  end;
 
+  if InputMenuSetNext() then
+  begin
+    UpdateItemIndex(Memory.Modes.ItemIndex, ITEM_MODES_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_BLIP);
+  end;
 end;
 
 
