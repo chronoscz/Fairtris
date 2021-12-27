@@ -238,6 +238,7 @@ type
   private
     FLegal: TLegalMemory;
     FMenu: TMenuMemory;
+    FModes: TModesMemory;
     FPlay: TPlayMemory;
     FGame: TGameMemory;
     FPause: TPauseMemory;
@@ -254,6 +255,7 @@ type
   public
     property Legal: TLegalMemory read FLegal;
     property Menu: TMenuMemory read FMenu;
+    property Modes: TModesMemory read FModes;
     property Play: TPlayMemory read FPlay;
     property Game: TGameMemory read FGame;
     property Pause: TPauseMemory read FPause;
@@ -480,6 +482,7 @@ constructor TMemory.Create();
 begin
   FLegal := TLegalMemory.Create();
   FMenu := TMenuMemory.Create();
+  FModes := TModesMemory.Create();
   FPlay := TPlayMemory.Create();
   FGame := TGameMemory.Create();
   FPause := TPauseMemory.Create();
@@ -495,6 +498,7 @@ destructor TMemory.Destroy();
 begin
   FLegal.Free();
   FMenu.Free();
+  FModes.Free();
   FPlay.Free();
   FGame.Free();
   FPause.Free();
@@ -512,6 +516,7 @@ procedure TMemory.Initialize();
 begin
   FLegal.Initialize();
   FMenu.Initialize();
+  FModes.Initialize();
   FPlay.Initialize();
   FPause.Initialize();
   FOptions.Initialize();
