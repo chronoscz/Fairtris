@@ -65,7 +65,7 @@ const
   GROUND_FILENAME: array [SCENE_FIRST .. SCENE_LAST] of String = (
     'legal.bmp',
     'menu.bmp',
-    'game modes.bmp',
+    'modes.bmp',
     'single player.bmp',
     'tournament quals.bmp',
     'tournament match.bmp',
