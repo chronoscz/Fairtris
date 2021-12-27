@@ -280,9 +280,9 @@ begin
   FSounds := Memory.Options.Sounds;
   FScroll := Memory.Options.Scroll;
 
-  FRegion := Memory.Play.Region;
-  FGenerator := Memory.Play.Generator;
-  FLevel := Memory.Play.Level;
+  FRegion := Memory.Core.Region;
+  FGenerator := Memory.Core.Generator;
+  FLevel := Memory.Core.Level;
 end;
 
 

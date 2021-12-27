@@ -396,7 +396,7 @@ begin
   RenderText(
     ITEM_X_SINGLE_PLAYER_PARAM,
     ITEM_Y_SINGLE_PLAYER_REGION,
-    ITEM_TEXT_PLAY_REGION[Memory.Play.Region],
+    ITEM_TEXT_PLAY_REGION[Memory.Core.Region],
     IfThen(
       Memory.SinglePlayer.ItemIndex = ITEM_SINGLE_PLAYER_REGION,
       COLOR_WHITE,
@@ -407,7 +407,7 @@ begin
   RenderText(
     ITEM_X_SINGLE_PLAYER_PARAM,
     ITEM_Y_SINGLE_PLAYER_GENERATOR,
-    ITEM_TEXT_PLAY_GENERATOR[Memory.Play.Generator],
+    ITEM_TEXT_PLAY_GENERATOR[Memory.Core.Generator],
     IfThen(
       Memory.SinglePlayer.ItemIndex = ITEM_SINGLE_PLAYER_GENERATOR,
       COLOR_WHITE,
@@ -418,7 +418,7 @@ begin
   RenderText(
     ITEM_X_SINGLE_PLAYER_PARAM,
     ITEM_Y_SINGLE_PLAYER_LEVEL,
-    Memory.Play.Level.ToString(),
+    Memory.Core.Level.ToString(),
     IfThen(
       Memory.SinglePlayer.ItemIndex = ITEM_SINGLE_PLAYER_LEVEL,
       COLOR_WHITE,
@@ -433,11 +433,11 @@ var
   Index: Integer;
 begin
   for Index := BEST_SCORES_FIRST to BEST_SCORES_LAST do
-    if Index < BestScores[Memory.Play.Region][Memory.Play.Generator].Count then
+    if Index < BestScores[Memory.Core.Region][Memory.Core.Generator].Count then
       RenderText(
         ITEM_X_SINGLE_PLAYER_BEST_SCORE,
         ITEM_Y_SINGLE_PLAYER_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
-        ScoreEntryToString(BestScores[Memory.Play.Region][Memory.Play.Generator].Entry[Index]),
+        ScoreEntryToString(BestScores[Memory.Core.Region][Memory.Core.Generator].Entry[Index]),
         IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
       )
     else

@@ -367,7 +367,7 @@ begin
   Memory.Game.FallSpeed := 1;
 
   if Memory.Game.Level < LEVEL_LAST then
-    Memory.Game.FallSpeed := AUTOFALL_FRAMES[Memory.Play.Region, Memory.Game.Level];
+    Memory.Game.FallSpeed := AUTOFALL_FRAMES[Memory.Core.Region, Memory.Game.Level];
 
   if Memory.Game.FallTimer >= Memory.Game.FallSpeed then
     UpdatePieceControlDropMove();
@@ -387,10 +387,10 @@ begin
   begin
     Memory.Game.AutorepeatX += 1;
 
-    if Memory.Game.AutorepeatX < AUTOSHIFT_FRAMES_CHARGE[Memory.Play.Region] then
+    if Memory.Game.AutorepeatX < AUTOSHIFT_FRAMES_CHARGE[Memory.Core.Region] then
       Exit
     else
-      Memory.Game.AutorepeatX := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Play.Region];
+      Memory.Game.AutorepeatX := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Core.Region];
   end;
 
   if Input.Device.Left.Pressed then
@@ -400,7 +400,7 @@ begin
       Sounds.PlaySound(SOUND_SHIFT);
     end
     else
-      Memory.Game.AutorepeatX := AUTOSHIFT_FRAMES_CHARGE[Memory.Play.Region];
+      Memory.Game.AutorepeatX := AUTOSHIFT_FRAMES_CHARGE[Memory.Core.Region];
 
   if Input.Device.Right.Pressed then
     if CanShiftPiece(PIECE_SHIFT_RIGHT) then
@@ -409,7 +409,7 @@ begin
       Sounds.PlaySound(SOUND_SHIFT);
     end
     else
-      Memory.Game.AutorepeatX := AUTOSHIFT_FRAMES_CHARGE[Memory.Play.Region];
+      Memory.Game.AutorepeatX := AUTOSHIFT_FRAMES_CHARGE[Memory.Core.Region];
 end;
 
 
@@ -488,7 +488,7 @@ begin
   if Input.Device.Left.Pressed and Input.Device.Right.Pressed then Exit;
   if not Input.Device.Left.Pressed and not Input.Device.Right.Pressed then Exit;
 
-  Memory.Game.AutorepeatX := AUTOSHIFT_FRAMES_CHARGE[Memory.Play.Region];
+  Memory.Game.AutorepeatX := AUTOSHIFT_FRAMES_CHARGE[Memory.Core.Region];
 end;
 
 
@@ -537,7 +537,7 @@ begin
   else
   begin
     Memory.Game.State := STATE_UPDATE_TOP_OUT;
-    Memory.Game.TopOutTimer := TOP_OUT_FRAMES[Memory.Play.Region];
+    Memory.Game.TopOutTimer := TOP_OUT_FRAMES[Memory.Core.Region];
 
     Sounds.PlaySound(SOUND_TOP_OUT, True);
   end;
@@ -631,7 +631,7 @@ begin
   if Memory.Game.ClearCount > 0 then
   begin
     if not Memory.Game.AfterTransition then
-      if Memory.Game.Lines + Memory.Game.ClearCount >= TRANSITION_LINES[Memory.Play.Region, Memory.Play.Level] then
+      if Memory.Game.Lines + Memory.Game.ClearCount >= TRANSITION_LINES[Memory.Core.Region, Memory.Core.Level] then
         HappenedFirstTransition := True;
 
     if Memory.Game.AfterTransition then
@@ -640,7 +640,7 @@ begin
         HappenedLaterTransition := True;
 
       if HappenedLaterTransition then
-        if Memory.Game.Lines + Memory.Game.ClearCount >= KILLSCREEN_LINES[Memory.Play.Region, Memory.Play.Level] then
+        if Memory.Game.Lines + Memory.Game.ClearCount >= KILLSCREEN_LINES[Memory.Core.Region, Memory.Core.Level] then
           HappenedKillScreen := True;
     end;
 
@@ -685,8 +685,8 @@ begin
 
   if HappenedFirstTransition or HappenedLaterTransition then
   begin
-    if (Memory.Play.Level < 19) and (Memory.Game.Level = 19) then Memory.Game.Transition := Memory.Game.Score;
-    if (Memory.Play.Level = 19) and (Memory.Game.Level = 20) then Memory.Game.Transition := Memory.Game.Score;
+    if (Memory.Core.Level < 19) and (Memory.Game.Level = 19) then Memory.Game.Transition := Memory.Game.Score;
+    if (Memory.Core.Level = 19) and (Memory.Game.Level = 20) then Memory.Game.Transition := Memory.Game.Score;
   end;
 
   if Memory.Game.FallSkipped then
@@ -717,7 +717,7 @@ procedure TCore.Reset();
 begin
   Memory.Game.Reset();
   Memory.Game.Started := True;
-  Memory.Game.AutorepeatY := PIECE_FRAMES_HANG[Memory.Play.Region];
+  Memory.Game.AutorepeatY := PIECE_FRAMES_HANG[Memory.Core.Region];
 
   Generators.Generator.Prepare();
   Generators.Generator.Step();
@@ -726,10 +726,10 @@ begin
   Generators.Generator.Step();
   Memory.Game.Next := Generators.Generator.Pick();
 
-  Memory.Game.Level := Memory.Play.Level;
+  Memory.Game.Level := Memory.Core.Level;
   Memory.Game.Stats[Memory.Game.PieceID] += 1;
 
-  Memory.Game.Best := BestScores[Memory.Play.Region][Memory.Play.Generator].BestScore;
+  Memory.Game.Best := BestScores[Memory.Core.Region][Memory.Core.Generator].BestScore;
 end;
 
 

@@ -313,15 +313,15 @@ procedure TLogic.PrepareTopOutBestScore();
 var
   Entry: TScoreEntry;
 begin
-  Entry := TScoreEntry.Create(Memory.Play.Region, True);
+  Entry := TScoreEntry.Create(Memory.Core.Region, True);
 
   Entry.LinesCleared := Memory.Game.LinesCleared;
-  Entry.LevelBegin := Memory.Play.Level;
+  Entry.LevelBegin := Memory.Core.Level;
   Entry.LevelEnd := Memory.Game.Level;
   Entry.TetrisRate := Memory.Game.TetrisRate;
   Entry.TotalScore := Memory.Game.Score;
 
-  BestScores[Memory.Play.Region][Memory.Play.Generator].Add(Entry);
+  BestScores[Memory.Core.Region][Memory.Core.Generator].Add(Entry);
 end;
 
 
@@ -584,20 +584,20 @@ begin
 
   if InputOptionSetPrev() then
   begin
-    UpdateItemIndex(Memory.Play.Region, REGION_COUNT, ITEM_PREV);
+    UpdateItemIndex(Memory.Core.Region, REGION_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if InputOptionSetNext() then
   begin
-    UpdateItemIndex(Memory.Play.Region, REGION_COUNT, ITEM_NEXT);
+    UpdateItemIndex(Memory.Core.Region, REGION_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
-  Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.Play.Region];
+  Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.Core.Region];
 
-  if Memory.Play.Region in [REGION_PAL .. REGION_PAL_EXTENDED] then
-    Memory.Play.Level := Min(Memory.Play.Level, LEVEL_LAST_PAL);
+  if Memory.Core.Region in [REGION_PAL .. REGION_PAL_EXTENDED] then
+    Memory.Core.Level := Min(Memory.Core.Level, LEVEL_LAST_PAL);
 end;
 
 
@@ -607,17 +607,17 @@ begin
 
   if InputOptionSetPrev() then
   begin
-    UpdateItemIndex(Memory.Play.Generator, GENERATOR_COUNT, ITEM_PREV);
+    UpdateItemIndex(Memory.Core.Generator, GENERATOR_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if InputOptionSetNext() then
   begin
-    UpdateItemIndex(Memory.Play.Generator, GENERATOR_COUNT, ITEM_NEXT);
+    UpdateItemIndex(Memory.Core.Generator, GENERATOR_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
-  Generators.GeneratorID := Memory.Play.Generator;
+  Generators.GeneratorID := Memory.Core.Generator;
 end;
 
 
@@ -629,7 +629,7 @@ begin
   begin
     Memory.SinglePlayer.Autorepeat := 0;
 
-    UpdateItemIndex(Memory.Play.Level, LEVEL_COUNT[Memory.Play.Region], ITEM_PREV);
+    UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT[Memory.Core.Region], ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
   end
   else
@@ -637,11 +637,11 @@ begin
     begin
       Memory.SinglePlayer.Autorepeat += 1;
 
-      if Memory.SinglePlayer.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.Play.Region] then
+      if Memory.SinglePlayer.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.Core.Region] then
       begin
-        Memory.SinglePlayer.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Play.Region];
+        Memory.SinglePlayer.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Core.Region];
 
-        UpdateItemIndex(Memory.Play.Level, LEVEL_COUNT[Memory.Play.Region], ITEM_PREV);
+        UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT[Memory.Core.Region], ITEM_PREV);
         Sounds.PlaySound(SOUND_SHIFT);
       end;
     end;
@@ -650,7 +650,7 @@ begin
   begin
     Memory.SinglePlayer.Autorepeat := 0;
 
-    UpdateItemIndex(Memory.Play.Level, LEVEL_COUNT[Memory.Play.Region], ITEM_NEXT);
+    UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT[Memory.Core.Region], ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end
   else
@@ -658,11 +658,11 @@ begin
     begin
       Memory.SinglePlayer.Autorepeat += 1;
 
-      if Memory.SinglePlayer.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.Play.Region] then
+      if Memory.SinglePlayer.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.Core.Region] then
       begin
-        Memory.SinglePlayer.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Play.Region];
+        Memory.SinglePlayer.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Core.Region];
 
-        UpdateItemIndex(Memory.Play.Level, LEVEL_COUNT[Memory.Play.Region], ITEM_NEXT);
+        UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT[Memory.Core.Region], ITEM_NEXT);
         Sounds.PlaySound(SOUND_SHIFT);
       end;
     end;

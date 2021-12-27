@@ -64,7 +64,7 @@ type
 
 
 type
-  TPlayMemory = class(TObject)
+  TCoreMemory = class(TObject)
   public      
     procedure Initialize();
   public
@@ -247,7 +247,7 @@ type
     FMenu: TMenuMemory;
     FModes: TModesMemory;
     FSinglePlayer: TSinglePlayerMemory;
-    FPlay: TPlayMemory;
+    FPlay: TCoreMemory;
     FGame: TGameMemory;
     FPause: TPauseMemory;
     FTopOut: TTopOutMemory;
@@ -265,7 +265,7 @@ type
     property Menu: TMenuMemory read FMenu;
     property Modes: TModesMemory read FModes;
     property SinglePlayer: TSinglePlayerMemory read FSinglePlayer;
-    property Play: TPlayMemory read FPlay;
+    property Core: TCoreMemory read FPlay;
     property Game: TGameMemory read FGame;
     property Pause: TPauseMemory read FPause;
     property TopOut: TTopOutMemory read FTopOut;
@@ -315,7 +315,7 @@ begin
 end;
 
 
-procedure TPlayMemory.Initialize();
+procedure TCoreMemory.Initialize();
 begin
   Region := Settings.General.Region;
   Generator := Settings.General.Generator;
@@ -497,7 +497,7 @@ begin
   FMenu := TMenuMemory.Create();
   FModes := TModesMemory.Create();
   FSinglePlayer := TSinglePlayerMemory.Create();
-  FPlay := TPlayMemory.Create();
+  FPlay := TCoreMemory.Create();
   FGame := TGameMemory.Create();
   FPause := TPauseMemory.Create();
   FTopOut := TTopOutMemory.Create();
