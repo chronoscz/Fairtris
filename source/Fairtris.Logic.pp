@@ -545,6 +545,12 @@ procedure TLogic.UpdateModesScene();
 begin
   FScene.Validate();
 
+  if InputMenuRejected() then
+  begin
+    FScene.Current := SCENE_MENU;
+    Sounds.PlaySound(SOUND_DROP);
+  end;
+
   if InputMenuAccepted() then
   begin
     case Memory.Modes.ItemIndex of
@@ -560,12 +566,6 @@ begin
       Sounds.PlaySound(SOUND_START)
     else
       Sounds.PlaySound(SOUND_DROP);
-  end;
-
-  if InputMenuRejected() then
-  begin
-    FScene.Current := SCENE_MENU;
-    Sounds.PlaySound(SOUND_DROP);
   end;
 end;
 
