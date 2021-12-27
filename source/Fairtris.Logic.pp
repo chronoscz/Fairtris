@@ -548,8 +548,12 @@ begin
   if InputMenuAccepted() then
   begin
     case Memory.Modes.ItemIndex of
-      ITEM_MODES_SINGLE_PLAYER: FScene.Current := SCENE_SINGLE_PLAYER;
-      ITEM_MODES_BACK:          FScene.Current := SCENE_MENU;
+      ITEM_MODES_SINGLE_PLAYER:    FScene.Current := SCENE_SINGLE_PLAYER;
+      ITEM_MODES_TOURNAMENT_QUALS: FScene.Current := SCENE_TOURNAMENT_QUALS;
+      ITEM_MODES_TOURNAMENT_MATCH: FScene.Current := SCENE_TOURNAMENT_MATCH;
+      ITEM_MODES_SPEEDRUN_QUALS:   FScene.Current := SCENE_SPEEDRUN_QUALS;
+      ITEM_MODES_SPEEDRUN_MATCH:   FScene.Current := SCENE_SPEEDRUN_MATCH;
+      ITEM_MODES_BACK:             FScene.Current := SCENE_MENU;
     end;
 
     if Memory.Modes.ItemIndex <> ITEM_MODES_BACK then
