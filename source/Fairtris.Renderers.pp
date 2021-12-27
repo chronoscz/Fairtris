@@ -31,8 +31,6 @@ uses
 type
   TRenderer = class(TInterfacedObject)
   private
-    FClipFrame: Boolean;
-  private
     function CharToIndex(AChar: Char): Integer;
   protected
     function EmptyEntryToString(): String;
@@ -87,12 +85,8 @@ type
     procedure RenderControllerButtonSelection();
     procedure RenderControllerButtonScanCodes();
   protected
-    procedure RenderClipping();
-  protected
     procedure RenderBegin();
     procedure RenderEnd();
-  protected
-    property ClipFrame: Boolean read FClipFrame write FClipFrame;
   end;
 
 
@@ -152,12 +146,7 @@ type
     FModern: IRenderable;
     FClassic: IRenderable;
   private
-    FClipFrame: Boolean;
-  private
-    function GetClipFrame(): Boolean;
-  private
     procedure SetThemeID(AThemeID: Integer);
-    procedure SetClipFrame(AClipFrame: Boolean);
   private
     function GetModern(): TModernRenderer;
     function GetClassic(): TClassicRenderer;
@@ -171,8 +160,6 @@ type
   public
     property Modern: TModernRenderer read GetModern;
     property Classic: TClassicRenderer read GetClassic;
-  public
-    property ClipFrame: Boolean read GetClipFrame write SetClipFrame;
   end;
 
 
@@ -1100,23 +1087,6 @@ begin
 end;
 
 
-procedure TRenderer.RenderClipping();
-var
-  StripeTop, StripeBottom: TSDL_Rect;
-begin
-  if FClipFrame then
-  begin
-    StripeTop := SDL_Rect(0, 0, BUFFER_WIDTH, BUFFER_CLIPPING);
-    StripeBottom := SDL_Rect(0, BUFFER_HEIGHT - BUFFER_CLIPPING, BUFFER_WIDTH, BUFFER_CLIPPING);
-
-    SDL_SetRenderDrawColor(Window.Renderer, 0, 0, 0, 255);
-
-    SDL_RenderFillRect(Window.Renderer, @StripeTop);
-    SDL_RenderFillRect(Window.Renderer, @StripeBottom);
-  end;
-end;
-
-
 procedure TRenderer.RenderBegin();
 begin
   SDL_SetRenderTarget(Window.Renderer, Buffers.Native);
@@ -1304,7 +1274,6 @@ begin
     SCENE_QUIT:        RenderQuit();
   end;
 
-  RenderClipping();
   RenderEnd();
 end;
 
@@ -1458,7 +1427,6 @@ begin
     SCENE_QUIT:        RenderQuit();
   end;
 
-  RenderClipping();
   RenderEnd();
 end;
 
@@ -1473,12 +1441,6 @@ begin
 end;
 
 
-function TRenderers.GetClipFrame(): Boolean;
-begin
-  Result := FClipFrame;
-end;
-
-
 procedure TRenderers.SetThemeID(AThemeID: Integer);
 begin
   FThemeID := AThemeID;
@@ -1487,15 +1449,6 @@ begin
     THEME_MODERN:  FTheme := FModern;
     THEME_CLASSIC: FTheme := FClassic;
   end;
-end;
-
-
-procedure TRenderers.SetClipFrame(AClipFrame: Boolean);
-begin
-  FClipFrame := AClipFrame;
-
-  GetModern().ClipFrame := FClipFrame;
-  GetClassic().ClipFrame := FClipFrame;
 end;
 
 

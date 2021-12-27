@@ -1295,8 +1295,6 @@ end;
 procedure TLogic.UpdateCommon();
 begin
   if Input.Fixed.Help.JustPressed then OpenHelp();
-
-  if Input.Fixed.ToggleClip.JustPressed  then Renderers.ClipFrame := not Renderers.ClipFrame;
   if Input.Fixed.ToggleVideo.JustPressed then Placement.ToggleVideoMode();
 
   if Input.Fixed.ToggleTheme.JustPressed then
