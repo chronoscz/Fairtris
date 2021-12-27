@@ -51,19 +51,25 @@ const
 
 
 const
-  SCENE_LEGAL         = 0;
-  SCENE_MENU          = 1;
-  SCENE_MODES         = 2;
-  SCENE_SINGLE_PLAYER = 3;
-  SCENE_GAME_NORMAL   = 4;
-  SCENE_GAME_FLASH    = 5;
-  SCENE_PAUSE         = 6;
-  SCENE_TOP_OUT       = 7;
-  SCENE_OPTIONS       = 8;
-  SCENE_KEYBOARD      = 9;
-  SCENE_CONTROLLER    = 10;
-  SCENE_QUIT          = 11;
-  SCENE_STOP          = 12;
+  SCENE_LEGAL            = 0;
+  SCENE_MENU             = 1;
+  SCENE_MODES            = 2;
+  SCENE_SINGLE_PLAYER    = 3;
+  SCENE_TOURNAMENT_QUALS = 4;
+  SCENE_TOURNAMENT_MATCH = 5;
+  SCENE_SPEEDRUN_QUALS   = 6;
+  SCENE_SPEEDRUN_MATCH   = 7;
+  SCENE_GAME_NORMAL      = 8;
+  SCENE_GAME_FLASH       = 9;
+  SCENE_SPEEDRUN_NORMAL  = 10;
+  SCENE_SPEEDRUN_FLASH   = 11;
+  SCENE_PAUSE            = 12;
+  SCENE_TOP_OUT          = 13;
+  SCENE_OPTIONS          = 14;
+  SCENE_KEYBOARD         = 15;
+  SCENE_CONTROLLER       = 16;
+  SCENE_QUIT             = 17;
+  SCENE_STOP             = 18;
 
   SCENE_FIRST = SCENE_LEGAL;
   SCENE_LAST  = SCENE_QUIT;
