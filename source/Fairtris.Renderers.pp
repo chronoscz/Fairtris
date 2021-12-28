@@ -501,19 +501,63 @@ end;
 
 procedure TRenderer.RenderTournamentQualsItems();
 begin
-
+  RenderText(
+    ITEM_X_GAME_MODE_START,
+    ITEM_Y_GAME_MODE_START,
+    ITEM_TEXT_GAME_MODE_START,
+    IfThen(
+      Input.Device.Connected,
+      IfThen(
+        Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_START,
+        COLOR_WHITE,
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      ),
+      COLOR_DARK
+    )
+  );
 end;
 
 
 procedure TRenderer.RenderTournamentQualsParameters();
 begin
+  RenderText(
+    ITEM_X_GAME_MODE_PARAM,
+    ITEM_Y_GAME_MODE_REGION,
+    ITEM_TEXT_GAME_MODE_REGION[Memory.Core.Region],
+    IfThen(
+      Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_REGION,
+      COLOR_WHITE,
+      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+    )
+  );
 
+  RenderText(
+    ITEM_X_GAME_MODE_PARAM,
+    ITEM_Y_GAME_MODE_GENERATOR,
+    ITEM_TEXT_GAME_MODE_GENERATOR[Memory.Core.Generator],
+    IfThen(
+      Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_GENERATOR,
+      COLOR_WHITE,
+      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+    )
+  );
+
+  RenderText(
+    ITEM_X_GAME_MODE_PARAM,
+    ITEM_Y_GAME_MODE_LEVEL,
+    Memory.Core.Level.ToString(),
+    IfThen(
+      Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_LEVEL,
+      COLOR_WHITE,
+      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+    )
+  );
 end;
 
 
 procedure TRenderer.RenderTournamentQualsBestScores();
 begin
-
+  // render best qualifying scores if any
 end;
 
 
