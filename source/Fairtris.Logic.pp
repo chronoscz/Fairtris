@@ -1283,6 +1283,8 @@ end;
 
 procedure TLogic.UpdateSpeedrunMatchSelection();
 begin
+  if Memory.GameModes.SeedChanging then Exit;
+
   if InputMenuSetPrev() then
   begin
     UpdateItemIndex(Memory.SpeedrunMatch.ItemIndex, ITEM_SPEEDRUN_MATCH_COUNT, ITEM_PREV);
@@ -1293,6 +1295,14 @@ begin
   begin
     UpdateItemIndex(Memory.SpeedrunMatch.ItemIndex, ITEM_SPEEDRUN_MATCH_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_BLIP);
+  end;
+
+  if (Memory.SpeedrunMatch.ItemIndex = ITEM_SPEEDRUN_MATCH_START) and InputOptionSetNext() then
+  begin
+    Memory.GameModes.SeedChanging := True;
+    Memory.GameModes.SeedEditor := SEED_DEFAULT_EDITOR;
+
+    Sounds.PlaySound(SOUND_START);
   end;
 end;
 
@@ -1339,7 +1349,7 @@ end;
 
 procedure TLogic.UpdateSpeedrunMatchSeed();
 begin
-  { TODO : implement seed editor }
+  UpdateMatchSeed();
 end;
 
 
@@ -1355,6 +1365,8 @@ begin
 
       Exit;
     end;
+
+  if Memory.GameModes.SeedChanging then Exit;
 
   if InputMenuRejected() then
   begin
