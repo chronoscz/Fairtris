@@ -311,25 +311,25 @@ end;
 
 procedure TLogic.PrepareTournamentQualsSelection();
 begin
-
+  Memory.TournamentQuals.ItemIndex := ITEM_TOURNAMENT_QUALS_START;
 end;
 
 
 procedure TLogic.PrepareTournamentMatchSelection();
 begin
-
+  Memory.TournamentMatch.ItemIndex := ITEM_TOURNAMENT_MATCH_START;
 end;
 
 
 procedure TLogic.PrepareSpeedrunQualsSelection();
 begin
-
+  Memory.SpeedrunQuals.ItemIndex := ITEM_SPEEDRUN_QUALS_START;
 end;
 
 
 procedure TLogic.PrepareSpeedrunMatchSelection();
 begin
-
+  Memory.SpeedrunMatch.ItemIndex := ITEM_SPEEDRUN_MATCH_START;
 end;
 
 
