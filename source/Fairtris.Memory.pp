@@ -420,8 +420,6 @@ end;
 
 procedure TGameMemory.Reset();
 begin
-  FromScene := SCENE_SINGLE_PLAYER;
-
   Started := False;
   Ended := False;
 
