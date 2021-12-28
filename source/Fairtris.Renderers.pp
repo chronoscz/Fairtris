@@ -638,13 +638,13 @@ begin
     )
   );
 
-  // render current timer time
+  // render current seed
 end;
 
 
 procedure TRenderer.RenderTournamentMatchBestScores();
 begin
-  // render best qualifying scores if any
+  // render best match scores if any
 end;
 
 
