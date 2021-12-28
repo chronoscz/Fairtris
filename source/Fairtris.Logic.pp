@@ -51,6 +51,10 @@ type
   private
     procedure PrepareModesSelection();
     procedure PrepareSinglePlayerSelection();
+    procedure PrepareTournamentQualsSelection();
+    procedure PrepareTournamentMatchSelection();
+    procedure PrepareSpeedrunQualsSelection();
+    procedure PrepareSpeedrunMatchSelection();
   private
     procedure PrepareGameScene();
   private
@@ -305,6 +309,30 @@ begin
 end;
 
 
+procedure TLogic.PrepareTournamentQualsSelection();
+begin
+
+end;
+
+
+procedure TLogic.PrepareTournamentMatchSelection();
+begin
+
+end;
+
+
+procedure TLogic.PrepareSpeedrunQualsSelection();
+begin
+
+end;
+
+
+procedure TLogic.PrepareSpeedrunMatchSelection();
+begin
+
+end;
+
+
 procedure TLogic.PrepareGameScene();
 begin
   if not (FScene.Previous in [SCENE_GAME_NORMAL, SCENE_GAME_FLASH, SCENE_PAUSE]) then
@@ -426,25 +454,45 @@ end;
 
 procedure TLogic.PrepareTournamentQuals();
 begin
+  if not FScene.Changed then Exit;
 
+  if FScene.Previous = SCENE_MODES then
+    PrepareTournamentQualsSelection();
+
+  Memory.Game.Started := False;
 end;
 
 
 procedure TLogic.PrepareTournamentMatch();
 begin
+  if not FScene.Changed then Exit;
 
+  if FScene.Previous = SCENE_MODES then
+    PrepareTournamentMatchSelection();
+
+  Memory.Game.Started := False;
 end;
 
 
 procedure TLogic.PrepareSpeedrunQuals();
 begin
+  if not FScene.Changed then Exit;
 
+  if FScene.Previous = SCENE_MODES then
+    PrepareSpeedrunQualsSelection();
+
+  Memory.Game.Started := False;
 end;
 
 
 procedure TLogic.PrepareSpeedrunMatch();
 begin
+  if not FScene.Changed then Exit;
 
+  if FScene.Previous = SCENE_MODES then
+    PrepareSpeedrunMatchSelection();
+
+  Memory.Game.Started := False;
 end;
 
 
