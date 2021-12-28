@@ -32,6 +32,8 @@ type
     function BurnedToString(ABurned: Integer): String;
     function TetrisesToString(ATetrises: Integer): String;
     function GainToString(AGain: Integer): String;
+  public
+    procedure SeedEditorToStrings(const ASeedEditor: String; out ADigits, APlaceholder: String);
   end;
 
 
@@ -106,6 +108,13 @@ end;
 function TConverter.GainToString(AGain: Integer): String;
 begin
   Result := AGain.ToString();
+end;
+
+
+procedure TConverter.SeedEditorToStrings(const ASeedEditor: String; out ADigits, APlaceholder: String);
+begin
+  ADigits := ASeedEditor;
+  APlaceholder := SEED_PLACEHOLDER.Substring(ADigits.Length);
 end;
 
 

@@ -45,6 +45,7 @@ type
   protected
     procedure RenderMenuSelection();
     procedure RenderModesSelection();
+    procedure RenderGameModeSeed();
   protected
     procedure RenderSinglePlayerSelection();
     procedure RenderSinglePlayerItems();
@@ -379,6 +380,37 @@ begin
 end;
 
 
+procedure TRenderer.RenderGameModeSeed();
+var
+  Digits, Placeholder: String;
+begin
+  if not Memory.GameModes.SeedChanging then
+    RenderText(
+      ITEM_X_GAME_MODE_PARAM,
+      ITEM_Y_GAME_MODE_SEED,
+      Memory.GameModes.SeedData,
+      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+    )
+  else
+  begin
+    Converter.SeedEditorToStrings(Memory.GameModes.SeedEditor, Digits, Placeholder);
+
+    RenderText(
+      ITEM_X_GAME_MODE_PARAM,
+      ITEM_Y_GAME_MODE_SEED,
+      Digits
+    );
+
+    RenderText(
+      ITEM_X_GAME_MODE_PARAM + Digits.Length * CHAR_WIDTH,
+      ITEM_Y_GAME_MODE_SEED,
+      Placeholder,
+      IfThen(Clock.FrameIndexInHalf, COLOR_WHITE, COLOR_DARK)
+    );
+  end;
+end;
+
+
 procedure TRenderer.RenderSinglePlayerSelection();
 begin
   RenderText(
@@ -638,20 +670,7 @@ begin
     )
   );
 
-  RenderText(
-    ITEM_X_GAME_MODE_PARAM,
-    ITEM_Y_GAME_MODE_SEED,
-    Memory.GameModes.SeedData.ToUpper(),
-    IfThen(
-      Memory.TournamentMatch.ItemIndex = ITEM_TOURNAMENT_MATCH_START,
-      IfThen(
-        Memory.GameModes.SeedChanging,
-        COLOR_WHITE,
-        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
-      ),
-      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
-    )
-  );
+  RenderGameModeSeed();
 end;
 
 

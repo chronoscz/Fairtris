@@ -654,7 +654,9 @@ const
 
 const
   SEED_DEFAULT_DATA   = '000000';
-  SEED_DEFAULT_EDITOR = '------';
+  SEED_DEFAULT_EDITOR = '';
+
+  SEED_PLACEHOLDER = '------';
 
 
 const
