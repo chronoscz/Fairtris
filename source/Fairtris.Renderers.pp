@@ -768,6 +768,8 @@ end;
 
 procedure TRenderer.RenderSpeedrunMatchSelection();
 begin
+  if Memory.GameModes.SeedChanging then Exit;
+
   RenderText(
     ITEM_X_SPEEDRUN_MATCH[Memory.SpeedrunMatch.ItemIndex],
     ITEM_Y_SPEEDRUN_MATCH[Memory.SpeedrunMatch.ItemIndex],
@@ -797,7 +799,10 @@ begin
       Input.Device.Connected,
       IfThen(
         Memory.SpeedrunMatch.ItemIndex = ITEM_SPEEDRUN_MATCH_START,
-        COLOR_WHITE,
+        IfThen(Memory.GameModes.SeedChanging,
+          IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE),
+          COLOR_WHITE
+        ),
         IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
       ),
       COLOR_DARK
