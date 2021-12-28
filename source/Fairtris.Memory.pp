@@ -116,6 +116,10 @@ type
     SeedData: String;
     SeedEditor: String;
     SeedChanging: Boolean;
+  public
+    TimerData: String;
+    TimerEditor: String;
+    TimerChanging: Boolean;
   end;
 
 
@@ -409,6 +413,10 @@ begin
   SeedData := SEED_DEFAULT_DATA;
   SeedEditor := SEED_DEFAULT_EDITOR;
   SeedChanging := False;
+
+  TimerData := TIMER_DEFAULT_DATA;
+  TimerEditor := TIMER_DEFAULT_EDITOR;
+  TimerChanging := False;
 end;
 
 

@@ -660,6 +660,14 @@ const
 
   SEED_PLACEHOLDER = '------';
 
+const
+  TIMER_LENGTH = 7;
+
+  TIMER_DEFAULT_DATA   = '0:00:00';
+  TIMER_DEFAULT_EDITOR = '';
+
+  TIMER_PLACEHOLDER = '-:--:--';
+
 
 const
   BEST_SCORES_FIRST = 0;
