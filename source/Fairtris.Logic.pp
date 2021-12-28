@@ -1076,10 +1076,33 @@ procedure TLogic.UpdateTournamentMatchScene();
 begin
   FScene.Validate();
 
+  if not Input.Device.Connected then
+    if Memory.TournamentMatch.ItemIndex = ITEM_TOURNAMENT_MATCH_START then
+    begin
+      if InputMenuAccepted() then
+        Sounds.PlaySound(SOUND_DROP);
+
+      Exit;
+    end;
+
   if InputMenuRejected() then
   begin
     FScene.Current := SCENE_MODES;
     Sounds.PlaySound(SOUND_DROP);
+  end;
+
+  if InputMenuAccepted() then
+  case Memory.TournamentMatch.ItemIndex of
+    ITEM_TOURNAMENT_MATCH_START:
+    begin
+      FScene.Current := SCENE_GAME_NORMAL;
+      Sounds.PlaySound(SOUND_START);
+    end;
+    ITEM_TOURNAMENT_MATCH_BACK:
+    begin
+      FScene.Current := SCENE_MODES;
+      Sounds.PlaySound(SOUND_DROP);
+    end;
   end;
 end;
 
@@ -1183,25 +1206,63 @@ end;
 
 procedure TLogic.UpdateSpeedrunMatchSelection();
 begin
+  if InputMenuSetPrev() then
+  begin
+    UpdateItemIndex(Memory.SpeedrunMatch.ItemIndex, ITEM_SPEEDRUN_MATCH_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_BLIP);
+  end;
 
+  if InputMenuSetNext() then
+  begin
+    UpdateItemIndex(Memory.SpeedrunMatch.ItemIndex, ITEM_SPEEDRUN_MATCH_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_BLIP);
+  end;
 end;
 
 
 procedure TLogic.UpdateSpeedrunMatchRegion();
 begin
+  if Memory.SpeedrunMatch.ItemIndex <> ITEM_SPEEDRUN_MATCH_REGION then Exit;
 
+  if InputOptionSetPrev() then
+  begin
+    UpdateItemIndex(Memory.Core.Region, REGION_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end;
+
+  if InputOptionSetNext() then
+  begin
+    UpdateItemIndex(Memory.Core.Region, REGION_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end;
+
+  Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.Core.Region];
 end;
 
 
 procedure TLogic.UpdateSpeedrunMatchGenerator();
 begin
+  if Memory.SpeedrunMatch.ItemIndex <> ITEM_SPEEDRUN_MATCH_GENERATOR then Exit;
 
+  if InputOptionSetPrev() then
+  begin
+    UpdateItemIndex(Memory.Core.Generator, GENERATOR_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end;
+
+  if InputOptionSetNext() then
+  begin
+    UpdateItemIndex(Memory.Core.Generator, GENERATOR_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end;
+
+  Generators.GeneratorID := Memory.Core.Generator;
 end;
 
 
 procedure TLogic.UpdateSpeedrunMatchSeed();
 begin
-
+  // implement seed editor
 end;
 
 
@@ -1209,10 +1270,33 @@ procedure TLogic.UpdateSpeedrunMatchScene();
 begin
   FScene.Validate();
 
+  if not Input.Device.Connected then
+    if Memory.SpeedrunMatch.ItemIndex = ITEM_SPEEDRUN_MATCH_START then
+    begin
+      if InputMenuAccepted() then
+        Sounds.PlaySound(SOUND_DROP);
+
+      Exit;
+    end;
+
   if InputMenuRejected() then
   begin
     FScene.Current := SCENE_MODES;
     Sounds.PlaySound(SOUND_DROP);
+  end;
+
+  if InputMenuAccepted() then
+  case Memory.SpeedrunMatch.ItemIndex of
+    ITEM_SPEEDRUN_MATCH_START:
+    begin
+      FScene.Current := SCENE_SPEEDRUN_NORMAL;
+      Sounds.PlaySound(SOUND_START);
+    end;
+    ITEM_SPEEDRUN_MATCH_BACK:
+    begin
+      FScene.Current := SCENE_MODES;
+      Sounds.PlaySound(SOUND_DROP);
+    end;
   end;
 end;
 
