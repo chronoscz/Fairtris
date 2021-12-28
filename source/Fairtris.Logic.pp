@@ -855,7 +855,7 @@ end;
 
 procedure TLogic.UpdateTournamentQualsGenerator();
 begin
-  if Memory.SinglePlayer.ItemIndex <> ITEM_TOURNAMENT_QUALS_GENERATOR then Exit;
+  if Memory.TournamentQuals.ItemIndex <> ITEM_TOURNAMENT_QUALS_GENERATOR then Exit;
 
   if InputOptionSetPrev() then
   begin
@@ -875,7 +875,7 @@ end;
 
 procedure TLogic.UpdateTournamentQualsLevel();
 begin
-  if Memory.SinglePlayer.ItemIndex <> ITEM_TOURNAMENT_QUALS_LEVEL then Exit;
+  if Memory.TournamentQuals.ItemIndex <> ITEM_TOURNAMENT_QUALS_LEVEL then Exit;
 
   if InputOptionSetPrev() then
   begin
