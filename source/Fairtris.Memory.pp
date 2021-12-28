@@ -112,6 +112,10 @@ type
     Region: Integer;
     Generator: Integer;
     Level: Integer;
+  public
+    SeedData: String;
+    SeedEditor: String;
+    SeedChanging: Boolean;
   end;
 
 
@@ -401,6 +405,10 @@ begin
   Region := Settings.General.Region;
   Generator := Settings.General.Generator;
   Level := Settings.General.Level;
+
+  SeedData := SEED_DEFAULT_DATA;
+  SeedEditor := SEED_DEFAULT_EDITOR;
+  SeedChanging := False;
 end;
 
 
