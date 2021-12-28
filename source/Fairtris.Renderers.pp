@@ -638,7 +638,20 @@ begin
     )
   );
 
-  { TODO : render current seed }
+  RenderText(
+    ITEM_X_GAME_MODE_PARAM,
+    ITEM_Y_GAME_MODE_SEED,
+    Memory.GameModes.SeedData.ToUpper(),
+    IfThen(
+      Memory.TournamentMatch.ItemIndex = ITEM_TOURNAMENT_MATCH_START,
+      IfThen(
+        Memory.GameModes.SeedChanging,
+        COLOR_WHITE,
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      ),
+      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+    )
+  );
 end;
 
 
