@@ -552,6 +552,8 @@ begin
       IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
     )
   );
+
+  // render current timer time
 end;
 
 
@@ -635,6 +637,8 @@ begin
       IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
     )
   );
+
+  // render current timer time
 end;
 
 
