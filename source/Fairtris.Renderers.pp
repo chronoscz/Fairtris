@@ -45,6 +45,7 @@ type
   protected
     procedure RenderMenuSelection();
     procedure RenderModesSelection();
+  protected
     procedure RenderGameModeSeed();
   protected
     procedure RenderSinglePlayerSelection();
