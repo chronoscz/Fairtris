@@ -424,7 +424,7 @@ begin
   RenderText(
     ITEM_X_GAME_MODE_PARAM,
     ITEM_Y_GAME_MODE_REGION,
-    ITEM_TEXT_GAME_MODE_REGION[Memory.Core.Region],
+    ITEM_TEXT_GAME_MODE_REGION[Memory.GameModes.Region],
     IfThen(
       Memory.SinglePlayer.ItemIndex = ITEM_SINGLE_PLAYER_REGION,
       COLOR_WHITE,
@@ -435,7 +435,7 @@ begin
   RenderText(
     ITEM_X_GAME_MODE_PARAM,
     ITEM_Y_GAME_MODE_GENERATOR,
-    ITEM_TEXT_GAME_MODE_GENERATOR[Memory.Core.Generator],
+    ITEM_TEXT_GAME_MODE_GENERATOR[Memory.GameModes.Generator],
     IfThen(
       Memory.SinglePlayer.ItemIndex = ITEM_SINGLE_PLAYER_GENERATOR,
       COLOR_WHITE,
@@ -446,7 +446,7 @@ begin
   RenderText(
     ITEM_X_GAME_MODE_PARAM,
     ITEM_Y_GAME_MODE_LEVEL,
-    Memory.Core.Level.ToString(),
+    Memory.GameModes.Level.ToString(),
     IfThen(
       Memory.SinglePlayer.ItemIndex = ITEM_SINGLE_PLAYER_LEVEL,
       COLOR_WHITE,
@@ -461,11 +461,11 @@ var
   Index: Integer;
 begin
   for Index := BEST_SCORES_FIRST to BEST_SCORES_LAST do
-    if Index < BestScores[Memory.Core.Region][Memory.Core.Generator].Count then
+    if Index < BestScores[Memory.GameModes.Region][Memory.GameModes.Generator].Count then
       RenderText(
         ITEM_X_GAME_MODE_BEST_SCORE,
         ITEM_Y_GAME_MODE_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
-        ScoreEntryToString(BestScores[Memory.Core.Region][Memory.Core.Generator].Entry[Index]),
+        ScoreEntryToString(BestScores[Memory.GameModes.Region][Memory.GameModes.Generator].Entry[Index]),
         IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
       )
     else
@@ -523,7 +523,7 @@ begin
   RenderText(
     ITEM_X_GAME_MODE_PARAM,
     ITEM_Y_GAME_MODE_REGION,
-    ITEM_TEXT_GAME_MODE_REGION[Memory.Core.Region],
+    ITEM_TEXT_GAME_MODE_REGION[Memory.GameModes.Region],
     IfThen(
       Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_REGION,
       COLOR_WHITE,
@@ -534,7 +534,7 @@ begin
   RenderText(
     ITEM_X_GAME_MODE_PARAM,
     ITEM_Y_GAME_MODE_GENERATOR,
-    ITEM_TEXT_GAME_MODE_GENERATOR[Memory.Core.Generator],
+    ITEM_TEXT_GAME_MODE_GENERATOR[Memory.GameModes.Generator],
     IfThen(
       Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_GENERATOR,
       COLOR_WHITE,
@@ -545,7 +545,7 @@ begin
   RenderText(
     ITEM_X_GAME_MODE_PARAM,
     ITEM_Y_GAME_MODE_LEVEL,
-    Memory.Core.Level.ToString(),
+    Memory.GameModes.Level.ToString(),
     IfThen(
       Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_LEVEL,
       COLOR_WHITE,
@@ -608,7 +608,7 @@ begin
   RenderText(
     ITEM_X_GAME_MODE_PARAM,
     ITEM_Y_GAME_MODE_REGION,
-    ITEM_TEXT_GAME_MODE_REGION[Memory.Core.Region],
+    ITEM_TEXT_GAME_MODE_REGION[Memory.GameModes.Region],
     IfThen(
       Memory.TournamentMatch.ItemIndex = ITEM_TOURNAMENT_MATCH_REGION,
       COLOR_WHITE,
@@ -619,7 +619,7 @@ begin
   RenderText(
     ITEM_X_GAME_MODE_PARAM,
     ITEM_Y_GAME_MODE_GENERATOR,
-    ITEM_TEXT_GAME_MODE_GENERATOR[Memory.Core.Generator],
+    ITEM_TEXT_GAME_MODE_GENERATOR[Memory.GameModes.Generator],
     IfThen(
       Memory.TournamentMatch.ItemIndex = ITEM_TOURNAMENT_MATCH_GENERATOR,
       COLOR_WHITE,
@@ -630,7 +630,7 @@ begin
   RenderText(
     ITEM_X_GAME_MODE_PARAM,
     ITEM_Y_GAME_MODE_LEVEL,
-    Memory.Core.Level.ToString(),
+    Memory.GameModes.Level.ToString(),
     IfThen(
       Memory.TournamentMatch.ItemIndex = ITEM_TOURNAMENT_MATCH_LEVEL,
       COLOR_WHITE,
@@ -693,7 +693,7 @@ begin
   RenderText(
     ITEM_X_GAME_MODE_PARAM,
     ITEM_Y_GAME_MODE_REGION,
-    ITEM_TEXT_GAME_MODE_REGION[Memory.Core.Region],
+    ITEM_TEXT_GAME_MODE_REGION[Memory.GameModes.Region],
     IfThen(
       Memory.SpeedrunQuals.ItemIndex = ITEM_SPEEDRUN_QUALS_REGION,
       COLOR_WHITE,
@@ -704,7 +704,7 @@ begin
   RenderText(
     ITEM_X_GAME_MODE_PARAM,
     ITEM_Y_GAME_MODE_GENERATOR,
-    ITEM_TEXT_GAME_MODE_GENERATOR[Memory.Core.Generator],
+    ITEM_TEXT_GAME_MODE_GENERATOR[Memory.GameModes.Generator],
     IfThen(
       Memory.SpeedrunQuals.ItemIndex = ITEM_SPEEDRUN_QUALS_GENERATOR,
       COLOR_WHITE,
@@ -767,7 +767,7 @@ begin
   RenderText(
     ITEM_X_GAME_MODE_PARAM,
     ITEM_Y_GAME_MODE_REGION,
-    ITEM_TEXT_GAME_MODE_REGION[Memory.Core.Region],
+    ITEM_TEXT_GAME_MODE_REGION[Memory.GameModes.Region],
     IfThen(
       Memory.SpeedrunMatch.ItemIndex = ITEM_SPEEDRUN_MATCH_REGION,
       COLOR_WHITE,
@@ -778,7 +778,7 @@ begin
   RenderText(
     ITEM_X_GAME_MODE_PARAM,
     ITEM_Y_GAME_MODE_GENERATOR,
-    ITEM_TEXT_GAME_MODE_GENERATOR[Memory.Core.Generator],
+    ITEM_TEXT_GAME_MODE_GENERATOR[Memory.GameModes.Generator],
     IfThen(
       Memory.SpeedrunMatch.ItemIndex = ITEM_SPEEDRUN_MATCH_GENERATOR,
       COLOR_WHITE,

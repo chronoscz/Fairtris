@@ -104,7 +104,7 @@ type
 
 
 type
-  TCoreMemory = class(TObject)
+  TGameModesMemory = class(TObject)
   public      
     procedure Initialize();
   public
@@ -291,7 +291,7 @@ type
     FTournamentMatch: TTournamentMatchMemory;
     FSpeedrunQuals: TSpeedrunQualsMemory;
     FSpeedrunMatch: TSpeedrunMatchMemory;
-    FCore: TCoreMemory;
+    FGameModes: TGameModesMemory;
     FGame: TGameMemory;
     FPause: TPauseMemory;
     FTopOut: TTopOutMemory;
@@ -313,7 +313,7 @@ type
     property TournamentMatch: TTournamentMatchMemory read FTournamentMatch;
     property SpeedrunQuals: TSpeedrunQualsMemory read FSpeedrunQuals;
     property SpeedrunMatch: TSpeedrunMatchMemory read FSpeedrunMatch;
-    property Core: TCoreMemory read FCore;
+    property GameModes: TGameModesMemory read FGameModes;
     property Game: TGameMemory read FGame;
     property Pause: TPauseMemory read FPause;
     property TopOut: TTopOutMemory read FTopOut;
@@ -391,7 +391,7 @@ begin
 end;
 
 
-procedure TCoreMemory.Initialize();
+procedure TGameModesMemory.Initialize();
 begin
   Region := Settings.General.Region;
   Generator := Settings.General.Generator;
@@ -577,7 +577,7 @@ begin
   FTournamentMatch := TTournamentMatchMemory.Create();
   FSpeedrunQuals := TSpeedrunQualsMemory.Create();
   FSpeedrunMatch := TSpeedrunMatchMemory.Create();
-  FCore := TCoreMemory.Create();
+  FGameModes := TGameModesMemory.Create();
   FGame := TGameMemory.Create();
   FPause := TPauseMemory.Create();
   FTopOut := TTopOutMemory.Create();
@@ -598,7 +598,7 @@ begin
   FTournamentMatch.Free();
   FSpeedrunQuals.Free();
   FSpeedrunMatch.Free();
-  FCore.Free();
+  FGameModes.Free();
   FGame.Free();
   FPause.Free();
   FTopOut.Free();
@@ -621,7 +621,7 @@ begin
   FTournamentMatch.Initialize();
   FSpeedrunQuals.Initialize();
   FSpeedrunMatch.Initialize();
-  FCore.Initialize();
+  FGameModes.Initialize();
   FPause.Initialize();
   FOptions.Initialize();
   FKeyboard.Initialize();

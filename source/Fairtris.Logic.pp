@@ -375,15 +375,15 @@ procedure TLogic.PrepareTopOutBestScore();
 var
   Entry: TScoreEntry;
 begin
-  Entry := TScoreEntry.Create(Memory.Core.Region, True);
+  Entry := TScoreEntry.Create(Memory.GameModes.Region, True);
 
   Entry.LinesCleared := Memory.Game.LinesCleared;
-  Entry.LevelBegin := Memory.Core.Level;
+  Entry.LevelBegin := Memory.GameModes.Level;
   Entry.LevelEnd := Memory.Game.Level;
   Entry.TetrisRate := Memory.Game.TetrisRate;
   Entry.TotalScore := Memory.Game.Score;
 
-  BestScores[Memory.Core.Region][Memory.Core.Generator].Add(Entry);
+  BestScores[Memory.GameModes.Region][Memory.GameModes.Generator].Add(Entry);
 end;
 
 
@@ -694,20 +694,20 @@ begin
 
   if InputOptionSetPrev() then
   begin
-    UpdateItemIndex(Memory.Core.Region, REGION_COUNT, ITEM_PREV);
+    UpdateItemIndex(Memory.GameModes.Region, REGION_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if InputOptionSetNext() then
   begin
-    UpdateItemIndex(Memory.Core.Region, REGION_COUNT, ITEM_NEXT);
+    UpdateItemIndex(Memory.GameModes.Region, REGION_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
-  Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.Core.Region];
+  Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.GameModes.Region];
 
-  if Memory.Core.Region in [REGION_PAL .. REGION_PAL_EXTENDED] then
-    Memory.Core.Level := Min(Memory.Core.Level, LEVEL_LAST_SINGLE_PAL);
+  if Memory.GameModes.Region in [REGION_PAL .. REGION_PAL_EXTENDED] then
+    Memory.GameModes.Level := Min(Memory.GameModes.Level, LEVEL_LAST_SINGLE_PAL);
 end;
 
 
@@ -717,17 +717,17 @@ begin
 
   if InputOptionSetPrev() then
   begin
-    UpdateItemIndex(Memory.Core.Generator, GENERATOR_COUNT, ITEM_PREV);
+    UpdateItemIndex(Memory.GameModes.Generator, GENERATOR_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if InputOptionSetNext() then
   begin
-    UpdateItemIndex(Memory.Core.Generator, GENERATOR_COUNT, ITEM_NEXT);
+    UpdateItemIndex(Memory.GameModes.Generator, GENERATOR_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
-  Generators.GeneratorID := Memory.Core.Generator;
+  Generators.GeneratorID := Memory.GameModes.Generator;
 end;
 
 
@@ -739,7 +739,7 @@ begin
   begin
     Memory.SinglePlayer.Autorepeat := 0;
 
-    UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_SINGLE[Memory.Core.Region], ITEM_PREV);
+    UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_SINGLE[Memory.GameModes.Region], ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
   end
   else
@@ -747,11 +747,11 @@ begin
     begin
       Memory.SinglePlayer.Autorepeat += 1;
 
-      if Memory.SinglePlayer.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.Core.Region] then
+      if Memory.SinglePlayer.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region] then
       begin
-        Memory.SinglePlayer.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Core.Region];
+        Memory.SinglePlayer.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
 
-        UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_SINGLE[Memory.Core.Region], ITEM_PREV);
+        UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_SINGLE[Memory.GameModes.Region], ITEM_PREV);
         Sounds.PlaySound(SOUND_SHIFT);
       end;
     end;
@@ -760,7 +760,7 @@ begin
   begin
     Memory.SinglePlayer.Autorepeat := 0;
 
-    UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_SINGLE[Memory.Core.Region], ITEM_NEXT);
+    UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_SINGLE[Memory.GameModes.Region], ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end
   else
@@ -768,11 +768,11 @@ begin
     begin
       Memory.SinglePlayer.Autorepeat += 1;
 
-      if Memory.SinglePlayer.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.Core.Region] then
+      if Memory.SinglePlayer.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region] then
       begin
-        Memory.SinglePlayer.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Core.Region];
+        Memory.SinglePlayer.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
 
-        UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_SINGLE[Memory.Core.Region], ITEM_NEXT);
+        UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_SINGLE[Memory.GameModes.Region], ITEM_NEXT);
         Sounds.PlaySound(SOUND_SHIFT);
       end;
     end;
@@ -836,17 +836,17 @@ begin
 
   if InputOptionSetPrev() then
   begin
-    UpdateItemIndex(Memory.Core.Region, REGION_COUNT, ITEM_PREV);
+    UpdateItemIndex(Memory.GameModes.Region, REGION_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if InputOptionSetNext() then
   begin
-    UpdateItemIndex(Memory.Core.Region, REGION_COUNT, ITEM_NEXT);
+    UpdateItemIndex(Memory.GameModes.Region, REGION_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
-  Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.Core.Region];
+  Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.GameModes.Region];
 end;
 
 
@@ -856,17 +856,17 @@ begin
 
   if InputOptionSetPrev() then
   begin
-    UpdateItemIndex(Memory.Core.Generator, GENERATOR_COUNT, ITEM_PREV);
+    UpdateItemIndex(Memory.GameModes.Generator, GENERATOR_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if InputOptionSetNext() then
   begin
-    UpdateItemIndex(Memory.Core.Generator, GENERATOR_COUNT, ITEM_NEXT);
+    UpdateItemIndex(Memory.GameModes.Generator, GENERATOR_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
-  Generators.GeneratorID := Memory.Core.Generator;
+  Generators.GeneratorID := Memory.GameModes.Generator;
 end;
 
 
@@ -878,7 +878,7 @@ begin
   begin
     Memory.TournamentQuals.Autorepeat := 0;
 
-    UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_QUALS[Memory.Core.Region], ITEM_PREV);
+    UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_QUALS[Memory.GameModes.Region], ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
   end
   else
@@ -886,11 +886,11 @@ begin
     begin
       Memory.TournamentQuals.Autorepeat += 1;
 
-      if Memory.TournamentQuals.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.Core.Region] then
+      if Memory.TournamentQuals.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region] then
       begin
-        Memory.TournamentQuals.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Core.Region];
+        Memory.TournamentQuals.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
 
-        UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_QUALS[Memory.Core.Region], ITEM_PREV);
+        UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_QUALS[Memory.GameModes.Region], ITEM_PREV);
         Sounds.PlaySound(SOUND_SHIFT);
       end;
     end;
@@ -899,7 +899,7 @@ begin
   begin
     Memory.TournamentQuals.Autorepeat := 0;
 
-    UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_QUALS[Memory.Core.Region], ITEM_NEXT);
+    UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_QUALS[Memory.GameModes.Region], ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end
   else
@@ -907,11 +907,11 @@ begin
     begin
       Memory.TournamentQuals.Autorepeat += 1;
 
-      if Memory.TournamentQuals.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.Core.Region] then
+      if Memory.TournamentQuals.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region] then
       begin
-        Memory.TournamentQuals.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Core.Region];
+        Memory.TournamentQuals.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
 
-        UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_QUALS[Memory.Core.Region], ITEM_NEXT);
+        UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_QUALS[Memory.GameModes.Region], ITEM_NEXT);
         Sounds.PlaySound(SOUND_SHIFT);
       end;
     end;
@@ -981,20 +981,20 @@ begin
 
   if InputOptionSetPrev() then
   begin
-    UpdateItemIndex(Memory.Core.Region, REGION_COUNT, ITEM_PREV);
+    UpdateItemIndex(Memory.GameModes.Region, REGION_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if InputOptionSetNext() then
   begin
-    UpdateItemIndex(Memory.Core.Region, REGION_COUNT, ITEM_NEXT);
+    UpdateItemIndex(Memory.GameModes.Region, REGION_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
-  Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.Core.Region];
+  Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.GameModes.Region];
 
-  if Memory.Core.Region in [REGION_PAL .. REGION_PAL_EXTENDED] then
-    Memory.Core.Level := Min(Memory.Core.Level, LEVEL_LAST_SINGLE_PAL);
+  if Memory.GameModes.Region in [REGION_PAL .. REGION_PAL_EXTENDED] then
+    Memory.GameModes.Level := Min(Memory.GameModes.Level, LEVEL_LAST_SINGLE_PAL);
 end;
 
 
@@ -1004,17 +1004,17 @@ begin
 
   if InputOptionSetPrev() then
   begin
-    UpdateItemIndex(Memory.Core.Generator, GENERATOR_COUNT, ITEM_PREV);
+    UpdateItemIndex(Memory.GameModes.Generator, GENERATOR_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if InputOptionSetNext() then
   begin
-    UpdateItemIndex(Memory.Core.Generator, GENERATOR_COUNT, ITEM_NEXT);
+    UpdateItemIndex(Memory.GameModes.Generator, GENERATOR_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
-  Generators.GeneratorID := Memory.Core.Generator;
+  Generators.GeneratorID := Memory.GameModes.Generator;
 end;
 
 
@@ -1026,7 +1026,7 @@ begin
   begin
     Memory.TournamentMatch.Autorepeat := 0;
 
-    UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_SINGLE[Memory.Core.Region], ITEM_PREV);
+    UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_SINGLE[Memory.GameModes.Region], ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
   end
   else
@@ -1034,11 +1034,11 @@ begin
     begin
       Memory.TournamentMatch.Autorepeat += 1;
 
-      if Memory.TournamentMatch.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.Core.Region] then
+      if Memory.TournamentMatch.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region] then
       begin
-        Memory.TournamentMatch.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Core.Region];
+        Memory.TournamentMatch.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
 
-        UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_SINGLE[Memory.Core.Region], ITEM_PREV);
+        UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_SINGLE[Memory.GameModes.Region], ITEM_PREV);
         Sounds.PlaySound(SOUND_SHIFT);
       end;
     end;
@@ -1047,7 +1047,7 @@ begin
   begin
     Memory.TournamentMatch.Autorepeat := 0;
 
-    UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_SINGLE[Memory.Core.Region], ITEM_NEXT);
+    UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_SINGLE[Memory.GameModes.Region], ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end
   else
@@ -1055,11 +1055,11 @@ begin
     begin
       Memory.TournamentMatch.Autorepeat += 1;
 
-      if Memory.TournamentMatch.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.Core.Region] then
+      if Memory.TournamentMatch.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region] then
       begin
-        Memory.TournamentMatch.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Core.Region];
+        Memory.TournamentMatch.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
 
-        UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_SINGLE[Memory.Core.Region], ITEM_NEXT);
+        UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_SINGLE[Memory.GameModes.Region], ITEM_NEXT);
         Sounds.PlaySound(SOUND_SHIFT);
       end;
     end;
@@ -1129,17 +1129,17 @@ begin
 
   if InputOptionSetPrev() then
   begin
-    UpdateItemIndex(Memory.Core.Region, REGION_COUNT, ITEM_PREV);
+    UpdateItemIndex(Memory.GameModes.Region, REGION_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if InputOptionSetNext() then
   begin
-    UpdateItemIndex(Memory.Core.Region, REGION_COUNT, ITEM_NEXT);
+    UpdateItemIndex(Memory.GameModes.Region, REGION_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
-  Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.Core.Region];
+  Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.GameModes.Region];
 end;
 
 
@@ -1149,17 +1149,17 @@ begin
 
   if InputOptionSetPrev() then
   begin
-    UpdateItemIndex(Memory.Core.Generator, GENERATOR_COUNT, ITEM_PREV);
+    UpdateItemIndex(Memory.GameModes.Generator, GENERATOR_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if InputOptionSetNext() then
   begin
-    UpdateItemIndex(Memory.Core.Generator, GENERATOR_COUNT, ITEM_NEXT);
+    UpdateItemIndex(Memory.GameModes.Generator, GENERATOR_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
-  Generators.GeneratorID := Memory.Core.Generator;
+  Generators.GeneratorID := Memory.GameModes.Generator;
 end;
 
 
@@ -1226,17 +1226,17 @@ begin
 
   if InputOptionSetPrev() then
   begin
-    UpdateItemIndex(Memory.Core.Region, REGION_COUNT, ITEM_PREV);
+    UpdateItemIndex(Memory.GameModes.Region, REGION_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if InputOptionSetNext() then
   begin
-    UpdateItemIndex(Memory.Core.Region, REGION_COUNT, ITEM_NEXT);
+    UpdateItemIndex(Memory.GameModes.Region, REGION_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
-  Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.Core.Region];
+  Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.GameModes.Region];
 end;
 
 
@@ -1246,17 +1246,17 @@ begin
 
   if InputOptionSetPrev() then
   begin
-    UpdateItemIndex(Memory.Core.Generator, GENERATOR_COUNT, ITEM_PREV);
+    UpdateItemIndex(Memory.GameModes.Generator, GENERATOR_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
   if InputOptionSetNext() then
   begin
-    UpdateItemIndex(Memory.Core.Generator, GENERATOR_COUNT, ITEM_NEXT);
+    UpdateItemIndex(Memory.GameModes.Generator, GENERATOR_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 
-  Generators.GeneratorID := Memory.Core.Generator;
+  Generators.GeneratorID := Memory.GameModes.Generator;
 end;
 
 
