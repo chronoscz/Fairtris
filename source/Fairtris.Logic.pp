@@ -1006,25 +1006,63 @@ end;
 
 procedure TLogic.UpdateSpeedrunQualsSelection();
 begin
+  if InputMenuSetPrev() then
+  begin
+    UpdateItemIndex(Memory.SpeedrunQuals.ItemIndex, ITEM_SPEEDRUN_QUALS_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_BLIP);
+  end;
 
+  if InputMenuSetNext() then
+  begin
+    UpdateItemIndex(Memory.SpeedrunQuals.ItemIndex, ITEM_SPEEDRUN_QUALS_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_BLIP);
+  end;
 end;
 
 
 procedure TLogic.UpdateSpeedrunQualsRegion();
 begin
+  if Memory.SpeedrunQuals.ItemIndex <> ITEM_SPEEDRUN_QUALS_REGION then Exit;
 
+  if InputOptionSetPrev() then
+  begin
+    UpdateItemIndex(Memory.Core.Region, REGION_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end;
+
+  if InputOptionSetNext() then
+  begin
+    UpdateItemIndex(Memory.Core.Region, REGION_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end;
+
+  Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.Core.Region];
 end;
 
 
 procedure TLogic.UpdateSpeedrunQualsGenerator();
 begin
+  if Memory.SpeedrunQuals.ItemIndex <> ITEM_SPEEDRUN_QUALS_GENERATOR then Exit;
 
+  if InputOptionSetPrev() then
+  begin
+    UpdateItemIndex(Memory.Core.Generator, GENERATOR_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end;
+
+  if InputOptionSetNext() then
+  begin
+    UpdateItemIndex(Memory.Core.Generator, GENERATOR_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end;
+
+  Generators.GeneratorID := Memory.Core.Generator;
 end;
 
 
 procedure TLogic.UpdateSpeedrunQualsTimer();
 begin
-
+  // implement timer editor
 end;
 
 
@@ -1032,10 +1070,33 @@ procedure TLogic.UpdateSpeedrunQualsScene();
 begin
   FScene.Validate();
 
+  if not Input.Device.Connected then
+    if Memory.SpeedrunQuals.ItemIndex = ITEM_SPEEDRUN_QUALS_START then
+    begin
+      if InputMenuAccepted() then
+        Sounds.PlaySound(SOUND_DROP);
+
+      Exit;
+    end;
+
   if InputMenuRejected() then
   begin
     FScene.Current := SCENE_MODES;
     Sounds.PlaySound(SOUND_DROP);
+  end;
+
+  if InputMenuAccepted() then
+  case Memory.SpeedrunQuals.ItemIndex of
+    ITEM_SPEEDRUN_QUALS_START:
+    begin
+      FScene.Current := SCENE_SPEEDRUN_NORMAL;
+      Sounds.PlaySound(SOUND_START);
+    end;
+    ITEM_SPEEDRUN_QUALS_BACK:
+    begin
+      FScene.Current := SCENE_MODES;
+      Sounds.PlaySound(SOUND_DROP);
+    end;
   end;
 end;
 
