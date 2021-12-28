@@ -408,6 +408,12 @@ begin
       Placeholder,
       IfThen(Clock.FrameIndexInHalf, COLOR_WHITE, COLOR_DARK)
     );
+
+    RenderText(
+      ITEM_X_GAME_MODE_PARAM - ITEM_X_MARKER,
+      ITEM_Y_GAME_MODE_SEED,
+      ITEM_TEXT_MARKER
+    );
   end;
 end;
 
@@ -598,6 +604,8 @@ end;
 
 procedure TRenderer.RenderTournamentMatchSelection();
 begin
+  if Memory.GameModes.SeedChanging then Exit;
+
   RenderText(
     ITEM_X_TOURNAMENT_MATCH[Memory.TournamentMatch.ItemIndex],
     ITEM_Y_TOURNAMENT_MATCH[Memory.TournamentMatch.ItemIndex],
@@ -627,7 +635,10 @@ begin
       Input.Device.Connected,
       IfThen(
         Memory.TournamentMatch.ItemIndex = ITEM_TOURNAMENT_MATCH_START,
-        COLOR_WHITE,
+        IfThen(Memory.GameModes.SeedChanging,
+          IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE),
+          COLOR_WHITE
+        ),
         IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
       ),
       COLOR_DARK
