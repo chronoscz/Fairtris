@@ -342,8 +342,11 @@ end;
 
 procedure TLogic.PrepareGameScene();
 begin
-  if not (FScene.Previous in [SCENE_GAME_NORMAL, SCENE_GAME_FLASH, SCENE_PAUSE]) then
+  if not (FScene.Previous in [SCENE_GAME_NORMAL .. SCENE_SPEEDRUN_FLASH, SCENE_PAUSE]) then
+  begin
+    Memory.Game.FromScene := FScene.Previous;
     Core.Reset();
+  end;
 end;
 
 
@@ -456,6 +459,7 @@ begin
     PrepareSinglePlayerSelection();
 
   Memory.Game.Started := False;
+  Memory.GameModes.Mode := MODE_SINGLE_PLAYER;
 end;
 
 
@@ -470,6 +474,7 @@ begin
   end;
 
   Memory.Game.Started := False;
+  Memory.GameModes.Mode := MODE_TOURNAMENT_QUALS;
 end;
 
 
@@ -481,6 +486,7 @@ begin
     PrepareTournamentMatchSelection();
 
   Memory.Game.Started := False;
+  Memory.GameModes.Mode := MODE_TOURNAMENT_MATCH;
 end;
 
 
@@ -492,6 +498,7 @@ begin
     PrepareSpeedrunQualsSelection();
 
   Memory.Game.Started := False;
+  Memory.GameModes.Mode := MODE_SPEEDRUN_QUALS;
 end;
 
 
@@ -503,6 +510,7 @@ begin
     PrepareSpeedrunMatchSelection();
 
   Memory.Game.Started := False;
+  Memory.GameModes.Mode := MODE_SPEEDRUN_MATCH;
 end;
 
 
@@ -1380,7 +1388,7 @@ begin
       FScene.Current := Memory.Pause.FromScene;
     ITEM_PAUSE_RESTART:
     begin
-      FScene.Current := SCENE_SINGLE_PLAYER;
+      FScene.Current := Memory.Game.FromScene;
       FScene.Current := SCENE_GAME_NORMAL;
       Sounds.PlaySound(SOUND_START);
     end;
@@ -1395,7 +1403,7 @@ begin
     end;
     ITEM_PAUSE_BACK:
     begin
-      FScene.Current := SCENE_SINGLE_PLAYER;
+      FScene.Current := Memory.Game.FromScene;
       Sounds.PlaySound(SOUND_DROP);
     end;
   end;
@@ -1433,7 +1441,7 @@ begin
 
   if InputMenuRejected() then
   begin
-    FScene.Current := SCENE_SINGLE_PLAYER;
+    FScene.Current := Memory.Game.FromScene;
     Sounds.PlaySound(SOUND_DROP);
   end;
 
@@ -1449,7 +1457,7 @@ begin
   if InputMenuAccepted() then
     if Memory.TopOut.ItemIndex = ITEM_TOP_OUT_BACK then
     begin
-      FScene.Current := SCENE_SINGLE_PLAYER;
+      FScene.Current := Memory.Game.FromScene;
       Sounds.PlaySound(SOUND_DROP);
     end;
 end;
