@@ -383,9 +383,9 @@ end;
 procedure TRenderer.RenderSinglePlayerItems();
 begin
   RenderText(
-    ITEM_X_SINGLE_PLAYER_START,
-    ITEM_Y_SINGLE_PLAYER_START,
-    ITEM_TEXT_SINGLE_PLAYER_START,
+    ITEM_X_GAME_MODE_START,
+    ITEM_Y_GAME_MODE_START,
+    ITEM_TEXT_GAME_MODE_START,
     IfThen(
       Input.Device.Connected,
       IfThen(
@@ -402,9 +402,9 @@ end;
 procedure TRenderer.RenderSinglePlayerParameters();
 begin
   RenderText(
-    ITEM_X_SINGLE_PLAYER_PARAM,
-    ITEM_Y_SINGLE_PLAYER_REGION,
-    ITEM_TEXT_CORE_REGION[Memory.Core.Region],
+    ITEM_X_GAME_MODE_PARAM,
+    ITEM_Y_GAME_MODE_REGION,
+    ITEM_TEXT_GAME_MODE_REGION[Memory.Core.Region],
     IfThen(
       Memory.SinglePlayer.ItemIndex = ITEM_SINGLE_PLAYER_REGION,
       COLOR_WHITE,
@@ -413,9 +413,9 @@ begin
   );
 
   RenderText(
-    ITEM_X_SINGLE_PLAYER_PARAM,
-    ITEM_Y_SINGLE_PLAYER_GENERATOR,
-    ITEM_TEXT_CORE_GENERATOR[Memory.Core.Generator],
+    ITEM_X_GAME_MODE_PARAM,
+    ITEM_Y_GAME_MODE_GENERATOR,
+    ITEM_TEXT_GAME_MODE_GENERATOR[Memory.Core.Generator],
     IfThen(
       Memory.SinglePlayer.ItemIndex = ITEM_SINGLE_PLAYER_GENERATOR,
       COLOR_WHITE,
@@ -424,8 +424,8 @@ begin
   );
 
   RenderText(
-    ITEM_X_SINGLE_PLAYER_PARAM,
-    ITEM_Y_SINGLE_PLAYER_LEVEL,
+    ITEM_X_GAME_MODE_PARAM,
+    ITEM_Y_GAME_MODE_LEVEL,
     Memory.Core.Level.ToString(),
     IfThen(
       Memory.SinglePlayer.ItemIndex = ITEM_SINGLE_PLAYER_LEVEL,
@@ -443,15 +443,15 @@ begin
   for Index := BEST_SCORES_FIRST to BEST_SCORES_LAST do
     if Index < BestScores[Memory.Core.Region][Memory.Core.Generator].Count then
       RenderText(
-        ITEM_X_SINGLE_PLAYER_BEST_SCORE,
-        ITEM_Y_SINGLE_PLAYER_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
+        ITEM_X_GAME_MODE_BEST_SCORE,
+        ITEM_Y_GAME_MODE_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
         ScoreEntryToString(BestScores[Memory.Core.Region][Memory.Core.Generator].Entry[Index]),
         IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
       )
     else
       RenderText(
-        ITEM_X_SINGLE_PLAYER_BEST_SCORE,
-        ITEM_Y_SINGLE_PLAYER_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
+        ITEM_X_GAME_MODE_BEST_SCORE,
+        ITEM_Y_GAME_MODE_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
         EmptyEntryToString(),
         COLOR_DARK
       );
