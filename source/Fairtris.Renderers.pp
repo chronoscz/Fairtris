@@ -1342,25 +1342,37 @@ end;
 
 procedure TModernRenderer.RenderTournamentQuals();
 begin
-
+  RenderTournamentQualsSelection();
+  RenderTournamentQualsItems();
+  RenderTournamentQualsParameters();
+  RenderTournamentQualsBestScores();
 end;
 
 
 procedure TModernRenderer.RenderTournamentMatch();
 begin
-
+  RenderTournamentMatchSelection();
+  RenderTournamentMatchItems();
+  RenderTournamentMatchParameters();
+  RenderTournamentMatchBestScores();
 end;
 
 
 procedure TModernRenderer.RenderSpeedrunQuals();
 begin
-
+  RenderSpeedrunQualsSelection();
+  RenderSpeedrunQualsItems();
+  RenderSpeedrunQualsParameters();
+  RenderSpeedrunQualsBestScores();
 end;
 
 
 procedure TModernRenderer.RenderSpeedrunMatch();
 begin
-
+  RenderSpeedrunMatchSelection();
+  RenderSpeedrunMatchItems();
+  RenderSpeedrunMatchParameters();
+  RenderSpeedrunMatchBestScores();
 end;
 
 
