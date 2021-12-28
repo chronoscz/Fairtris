@@ -923,7 +923,7 @@ end;
 
 procedure TLogic.UpdateTournamentQualsTimer();
 begin
-
+  // implement timer editor
 end;
 
 
