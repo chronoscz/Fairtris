@@ -235,10 +235,10 @@ begin
 
   case Result of
     REGION_NTSC .. REGION_JPN_EXTENDED, REGION_EUR .. REGION_EUR_EXTENDED:
-      if (Result < LEVEL_FIRST_NTSC) or (Result > LEVEL_LAST_NTSC) then
+      if (Result < LEVEL_FIRST_NTSC) or (Result > LEVEL_LAST_SINGLE_NTSC) then
         Result := LEVEL_DEFAULT;
     REGION_PAL .. REGION_PAL_EXTENDED:
-      if (Result < LEVEL_FIRST_PAL) or (Result > LEVEL_LAST_PAL) then
+      if (Result < LEVEL_FIRST_PAL) or (Result > LEVEL_LAST_SINGLE_PAL) then
         Result := LEVEL_DEFAULT;
   end;
 end;
