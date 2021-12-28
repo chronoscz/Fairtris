@@ -480,7 +480,22 @@ end;
 
 procedure TRenderer.RenderTournamentQualsSelection();
 begin
+  RenderText(
+    ITEM_X_TOURNAMENT_QUALS[Memory.TournamentQuals.ItemIndex],
+    ITEM_Y_TOURNAMENT_QUALS[Memory.TournamentQuals.ItemIndex],
+    ITEM_TEXT_TOURNAMENT_QUALS[Memory.TournamentQuals.ItemIndex]
+  );
 
+  RenderText(
+    ITEM_X_TOURNAMENT_QUALS[Memory.TournamentQuals.ItemIndex] - ITEM_X_MARKER,
+    ITEM_Y_TOURNAMENT_QUALS[Memory.TournamentQuals.ItemIndex],
+    ITEM_TEXT_MARKER,
+    IfThen(
+      Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_START,
+      IfThen(Input.Device.Connected, COLOR_WHITE, COLOR_DARK),
+      COLOR_WHITE
+    )
+  );
 end;
 
 
