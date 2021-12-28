@@ -709,8 +709,8 @@ begin
       Sounds.PlaySound(SOUND_SHIFT);
     end;
 
-  if Memory.GameModes.SeedEditor.Length = SEED_LENGTH then
-    if Input.Fixed.Accept.JustPressed then
+  if Input.Fixed.Accept.JustPressed then
+    if Memory.GameModes.SeedEditor.Length = SEED_LENGTH then
     begin
       Input.Fixed.Accept.Validate();
 
@@ -718,7 +718,9 @@ begin
       Memory.GameModes.SeedChanging := False;
 
       Sounds.PlaySound(SOUND_TETRIS);
-    end;
+    end
+    else
+      Sounds.PlaySound(SOUND_DROP);
 
   if Input.Fixed.Clear.JustPressed then
     if Memory.GameModes.SeedEditor.Length > 0 then
