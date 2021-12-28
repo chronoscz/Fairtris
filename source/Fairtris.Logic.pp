@@ -739,7 +739,7 @@ begin
   begin
     Memory.SinglePlayer.Autorepeat := 0;
 
-    UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT[Memory.Core.Region], ITEM_PREV);
+    UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_SINGLE[Memory.Core.Region], ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
   end
   else
@@ -751,7 +751,7 @@ begin
       begin
         Memory.SinglePlayer.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Core.Region];
 
-        UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT[Memory.Core.Region], ITEM_PREV);
+        UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_SINGLE[Memory.Core.Region], ITEM_PREV);
         Sounds.PlaySound(SOUND_SHIFT);
       end;
     end;
@@ -760,7 +760,7 @@ begin
   begin
     Memory.SinglePlayer.Autorepeat := 0;
 
-    UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT[Memory.Core.Region], ITEM_NEXT);
+    UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_SINGLE[Memory.Core.Region], ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end
   else
@@ -772,7 +772,7 @@ begin
       begin
         Memory.SinglePlayer.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Core.Region];
 
-        UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT[Memory.Core.Region], ITEM_NEXT);
+        UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_SINGLE[Memory.Core.Region], ITEM_NEXT);
         Sounds.PlaySound(SOUND_SHIFT);
       end;
     end;
