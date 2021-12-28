@@ -847,9 +847,6 @@ begin
   end;
 
   Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.Core.Region];
-
-  if Memory.Core.Region in [REGION_PAL .. REGION_PAL_EXTENDED] then
-    Memory.Core.Level := Min(Memory.Core.Level, LEVEL_LAST_SINGLE_PAL);
 end;
 
 
