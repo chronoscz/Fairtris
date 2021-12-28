@@ -108,6 +108,7 @@ type
   public      
     procedure Initialize();
   public
+    Mode: Integer;
     Region: Integer;
     Generator: Integer;
     Level: Integer;
@@ -127,6 +128,8 @@ type
     constructor Create();
   public
     procedure Reset();
+  public
+    FromScene: Integer;
   public
     Started: Boolean;
     Ended: Boolean;
@@ -393,6 +396,8 @@ end;
 
 procedure TGameModesMemory.Initialize();
 begin
+  Mode := MODE_DEFAULT;
+
   Region := Settings.General.Region;
   Generator := Settings.General.Generator;
   Level := Settings.General.Level;
@@ -407,6 +412,8 @@ end;
 
 procedure TGameMemory.Reset();
 begin
+  FromScene := SCENE_SINGLE_PLAYER;
+
   Started := False;
   Ended := False;
 
