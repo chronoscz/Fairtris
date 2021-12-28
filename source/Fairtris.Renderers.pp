@@ -553,13 +553,13 @@ begin
     )
   );
 
-  // render current timer time
+  { TODO : render current timer time }
 end;
 
 
 procedure TRenderer.RenderTournamentQualsBestScores();
 begin
-  // render best qualifying scores if any
+  { TODO : render best qualifying scores if any }
 end;
 
 
@@ -638,13 +638,13 @@ begin
     )
   );
 
-  // render current seed
+  { TODO : render current seed }
 end;
 
 
 procedure TRenderer.RenderTournamentMatchBestScores();
 begin
-  // render best match scores if any
+  { TODO : render best match scores if any }
 end;
 
 
@@ -712,13 +712,13 @@ begin
     )
   );
 
-  // render current timer time
+  { TODO : render current timer time }
 end;
 
 
 procedure TRenderer.RenderSpeedrunQualsBestScores();
 begin
-  // render best qualifying times if any
+  { TODO : render best qualifying times if any }
 end;
 
 
@@ -786,13 +786,13 @@ begin
     )
   );
 
-  // render current seed
+  { TODO : render current seed }
 end;
 
 
 procedure TRenderer.RenderSpeedrunMatchBestScores();
 begin
-  // render best match times if any
+  { TODO : render best match times if any }
 end;
 
 

@@ -920,7 +920,7 @@ end;
 
 procedure TLogic.UpdateTournamentQualsTimer();
 begin
-  // implement timer editor
+  { TODO : implement timer editor }
 end;
 
 
@@ -1068,7 +1068,7 @@ end;
 
 procedure TLogic.UpdateTournamentMatchSeed();
 begin
-  // implement seed editor
+  { TODO : implement seed editor }
 end;
 
 
@@ -1165,7 +1165,7 @@ end;
 
 procedure TLogic.UpdateSpeedrunQualsTimer();
 begin
-  // implement timer editor
+  { TODO : implement timer editor }
 end;
 
 
@@ -1262,7 +1262,7 @@ end;
 
 procedure TLogic.UpdateSpeedrunMatchSeed();
 begin
-  // implement seed editor
+  { TODO : implement seed editor }
 end;
 
 
