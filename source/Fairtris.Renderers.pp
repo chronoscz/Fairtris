@@ -818,7 +818,7 @@ begin
     )
   );
 
-  { TODO : render current seed }
+  RenderGameModeSeed();
 end;
 
 
