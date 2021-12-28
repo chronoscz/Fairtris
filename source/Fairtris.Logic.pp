@@ -816,25 +816,108 @@ end;
 
 procedure TLogic.UpdateTournamentQualsSelection();
 begin
+  if InputMenuSetPrev() then
+  begin
+    UpdateItemIndex(Memory.TournamentQuals.ItemIndex, ITEM_TOURNAMENT_QUALS_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_BLIP);
+  end;
 
+  if InputMenuSetNext() then
+  begin
+    UpdateItemIndex(Memory.TournamentQuals.ItemIndex, ITEM_TOURNAMENT_QUALS_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_BLIP);
+  end;
 end;
 
 
 procedure TLogic.UpdateTournamentQualsRegion();
 begin
+  if Memory.TournamentQuals.ItemIndex <> ITEM_TOURNAMENT_QUALS_REGION then Exit;
 
+  if InputOptionSetPrev() then
+  begin
+    UpdateItemIndex(Memory.Core.Region, REGION_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end;
+
+  if InputOptionSetNext() then
+  begin
+    UpdateItemIndex(Memory.Core.Region, REGION_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end;
+
+  Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.Core.Region];
+
+  if Memory.Core.Region in [REGION_PAL .. REGION_PAL_EXTENDED] then
+    Memory.Core.Level := Min(Memory.Core.Level, LEVEL_LAST_SINGLE_PAL);
 end;
 
 
 procedure TLogic.UpdateTournamentQualsGenerator();
 begin
+  if Memory.SinglePlayer.ItemIndex <> ITEM_TOURNAMENT_QUALS_GENERATOR then Exit;
 
+  if InputOptionSetPrev() then
+  begin
+    UpdateItemIndex(Memory.Core.Generator, GENERATOR_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end;
+
+  if InputOptionSetNext() then
+  begin
+    UpdateItemIndex(Memory.Core.Generator, GENERATOR_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end;
+
+  Generators.GeneratorID := Memory.Core.Generator;
 end;
 
 
 procedure TLogic.UpdateTournamentQualsLevel();
 begin
+  if Memory.SinglePlayer.ItemIndex <> ITEM_TOURNAMENT_QUALS_LEVEL then Exit;
 
+  if InputOptionSetPrev() then
+  begin
+    Memory.TournamentQuals.Autorepeat := 0;
+
+    UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_QUALS[Memory.Core.Region], ITEM_PREV);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end
+  else
+    if InputOptionRollPrev() then
+    begin
+      Memory.TournamentQuals.Autorepeat += 1;
+
+      if Memory.TournamentQuals.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.Core.Region] then
+      begin
+        Memory.TournamentQuals.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Core.Region];
+
+        UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_QUALS[Memory.Core.Region], ITEM_PREV);
+        Sounds.PlaySound(SOUND_SHIFT);
+      end;
+    end;
+
+  if InputOptionSetNext() then
+  begin
+    Memory.TournamentQuals.Autorepeat := 0;
+
+    UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_QUALS[Memory.Core.Region], ITEM_NEXT);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end
+  else
+    if InputOptionRollNext() then
+    begin
+      Memory.TournamentQuals.Autorepeat += 1;
+
+      if Memory.TournamentQuals.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.Core.Region] then
+      begin
+        Memory.TournamentQuals.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Core.Region];
+
+        UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_QUALS[Memory.Core.Region], ITEM_NEXT);
+        Sounds.PlaySound(SOUND_SHIFT);
+      end;
+    end;
 end;
 
 
@@ -848,10 +931,33 @@ procedure TLogic.UpdateTournamentQualsScene();
 begin
   FScene.Validate();
 
+  if not Input.Device.Connected then
+    if Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_START then
+    begin
+      if InputMenuAccepted() then
+        Sounds.PlaySound(SOUND_DROP);
+
+      Exit;
+    end;
+
   if InputMenuRejected() then
   begin
     FScene.Current := SCENE_MODES;
     Sounds.PlaySound(SOUND_DROP);
+  end;
+
+  if InputMenuAccepted() then
+  case Memory.TournamentQuals.ItemIndex of
+    ITEM_TOURNAMENT_QUALS_START:
+    begin
+      FScene.Current := SCENE_GAME_NORMAL;
+      Sounds.PlaySound(SOUND_START);
+    end;
+    ITEM_TOURNAMENT_QUALS_BACK:
+    begin
+      FScene.Current := SCENE_MODES;
+      Sounds.PlaySound(SOUND_DROP);
+    end;
   end;
 end;
 
