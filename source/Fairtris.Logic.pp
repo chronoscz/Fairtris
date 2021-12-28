@@ -97,6 +97,8 @@ type
     procedure UpdateModesSelection();
     procedure UpdateModesScene();
   private
+    procedure UpdateMatchSeed();
+  private
     procedure UpdateSinglePlayerSelection();
     procedure UpdateSinglePlayerRegion();
     procedure UpdateSinglePlayerGenerator();
@@ -198,12 +200,14 @@ implementation
 uses
   SDL2,
   Math,
+  SysUtils,
   Fairtris.Window,
   Fairtris.Clock,
   Fairtris.Buffers,
   Fairtris.Input,
   Fairtris.Memory,
   Fairtris.Placement,
+  Fairtris.Converter,
   Fairtris.Renderers,
   Fairtris.Grounds,
   Fairtris.Sounds,
@@ -343,10 +347,7 @@ end;
 procedure TLogic.PrepareGameScene();
 begin
   if not (FScene.Previous in [SCENE_GAME_NORMAL .. SCENE_SPEEDRUN_FLASH, SCENE_PAUSE]) then
-  begin
-    Memory.Game.FromScene := FScene.Previous;
     Core.Reset();
-  end;
 end;
 
 
@@ -358,7 +359,7 @@ end;
 
 procedure TLogic.PreparePauseScene();
 begin
-  if FScene.Previous in [SCENE_GAME_NORMAL, SCENE_GAME_FLASH] then
+  if FScene.Previous in [SCENE_GAME_NORMAL .. SCENE_SPEEDRUN_FLASH] then
     Memory.Pause.FromScene := FScene.Previous;
 end;
 
@@ -459,6 +460,7 @@ begin
     PrepareSinglePlayerSelection();
 
   Memory.Game.Started := False;
+  Memory.Game.FromScene := SCENE_SINGLE_PLAYER;
   Memory.GameModes.Mode := MODE_SINGLE_PLAYER;
 end;
 
@@ -474,6 +476,7 @@ begin
   end;
 
   Memory.Game.Started := False;
+  Memory.Game.FromScene := SCENE_TOURNAMENT_QUALS;
   Memory.GameModes.Mode := MODE_TOURNAMENT_QUALS;
 end;
 
@@ -486,6 +489,7 @@ begin
     PrepareTournamentMatchSelection();
 
   Memory.Game.Started := False;
+  Memory.Game.FromScene := SCENE_TOURNAMENT_MATCH;
   Memory.GameModes.Mode := MODE_TOURNAMENT_MATCH;
 end;
 
@@ -498,6 +502,7 @@ begin
     PrepareSpeedrunQualsSelection();
 
   Memory.Game.Started := False;
+  Memory.Game.FromScene := SCENE_SPEEDRUN_QUALS;
   Memory.GameModes.Mode := MODE_SPEEDRUN_QUALS;
 end;
 
@@ -510,6 +515,7 @@ begin
     PrepareSpeedrunMatchSelection();
 
   Memory.Game.Started := False;
+  Memory.Game.FromScene := SCENE_SPEEDRUN_MATCH;
   Memory.GameModes.Mode := MODE_SPEEDRUN_MATCH;
 end;
 
@@ -686,6 +692,47 @@ begin
       Sounds.PlaySound(SOUND_START)
     else
       Sounds.PlaySound(SOUND_DROP);
+  end;
+end;
+
+
+procedure TLogic.UpdateMatchSeed();
+var
+  ScanCode: UInt8 = KEYBOARD_SCANCODE_KEY_NOT_MAPPED;
+begin
+  if not Memory.GameModes.SeedChanging then Exit;
+
+  if Memory.GameModes.SeedEditor.Length < SEED_LENGTH then
+    if Input.Keyboard.CatchedOneHexDigit(ScanCode) then
+    begin
+      Memory.GameModes.SeedEditor += Converter.ScanCodeToChar(ScanCode);
+      Sounds.PlaySound(SOUND_SHIFT);
+    end;
+
+  if Memory.GameModes.SeedEditor.Length = SEED_LENGTH then
+    if Input.Fixed.Accept.JustPressed then
+    begin
+      Input.Fixed.Accept.Validate();
+
+      Memory.GameModes.SeedData := Memory.GameModes.SeedEditor;
+      Memory.GameModes.SeedChanging := False;
+
+      Sounds.PlaySound(SOUND_TETRIS);
+    end;
+
+  if Input.Fixed.Clear.JustPressed then
+    if Memory.GameModes.SeedEditor.Length > 0 then
+    begin
+      SetLength(Memory.GameModes.SeedEditor, Memory.GameModes.SeedEditor.Length - 1);
+      Sounds.PlaySound(SOUND_SPIN);
+    end;
+
+  if Input.Fixed.Cancel.JustPressed then
+  begin
+    Input.Fixed.Cancel.Validate();
+
+    Memory.GameModes.SeedChanging := False;
+    Sounds.PlaySound(SOUND_DROP);
   end;
 end;
 
@@ -979,6 +1026,8 @@ end;
 
 procedure TLogic.UpdateTournamentMatchSelection();
 begin
+  if Memory.GameModes.SeedChanging then Exit;
+
   if InputMenuSetPrev() then
   begin
     UpdateItemIndex(Memory.TournamentMatch.ItemIndex, ITEM_TOURNAMENT_MATCH_COUNT, ITEM_PREV);
@@ -989,6 +1038,14 @@ begin
   begin
     UpdateItemIndex(Memory.TournamentMatch.ItemIndex, ITEM_TOURNAMENT_MATCH_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_BLIP);
+  end;
+
+  if (Memory.TournamentMatch.ItemIndex = ITEM_TOURNAMENT_MATCH_START) and InputOptionSetNext() then
+  begin
+    Memory.GameModes.SeedChanging := True;
+    Memory.GameModes.SeedEditor := SEED_DEFAULT_EDITOR;
+
+    Sounds.PlaySound(SOUND_START);
   end;
 end;
 
@@ -1086,7 +1143,7 @@ end;
 
 procedure TLogic.UpdateTournamentMatchSeed();
 begin
-  { TODO : implement seed editor }
+  UpdateMatchSeed();
 end;
 
 
@@ -1102,6 +1159,8 @@ begin
 
       Exit;
     end;
+
+  if Memory.GameModes.SeedChanging then Exit;
 
   if InputMenuRejected() then
   begin

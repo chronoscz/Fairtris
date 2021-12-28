@@ -21,9 +21,14 @@ unit Fairtris.Converter;
 
 interface
 
+uses
+  SDL2;
+
 
 type
   TConverter = class(TObject)
+  public
+    function ScanCodeToChar(AScanCode: TSDL_ScanCode): Char;
   public
     function PiecesToString(APieces: Integer): String;
     function ScoreToString(AScore: Integer): String;
@@ -46,7 +51,19 @@ implementation
 uses
   SysUtils,
   Fairtris.Memory,
+  Fairtris.Arrays,
   Fairtris.Constants;
+
+
+function TConverter.ScanCodeToChar(AScanCode: TSDL_ScanCode): Char;
+begin
+  Result := #0;
+
+  if AScanCode = SDL_SCANCODE_0 then Exit('0');
+
+  if AScanCode in [SDL_SCANCODE_1 .. SDL_SCANCODE_9] then Exit(Chr(AScanCode - SDL_SCANCODE_1 + Ord('1')));
+  if AScanCode in [SDL_SCANCODE_A .. SDL_SCANCODE_F] then Exit(Chr(AScanCode - SDL_SCANCODE_A + Ord('A')));
+end;
 
 
 function TConverter.PiecesToString(APieces: Integer): String;
