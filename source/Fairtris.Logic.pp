@@ -52,6 +52,7 @@ type
     procedure PrepareModesSelection();
     procedure PrepareSinglePlayerSelection();
     procedure PrepareTournamentQualsSelection();
+    procedure PrepareTournamentQualsLevel();
     procedure PrepareTournamentMatchSelection();
     procedure PrepareSpeedrunQualsSelection();
     procedure PrepareSpeedrunMatchSelection();
@@ -315,6 +316,12 @@ begin
 end;
 
 
+procedure TLogic.PrepareTournamentQualsLevel();
+begin
+  Memory.GameModes.Level := Min(Memory.GameModes.Level, LEVEL_LAST_QUALS);
+end;
+
+
 procedure TLogic.PrepareTournamentMatchSelection();
 begin
   Memory.TournamentMatch.ItemIndex := ITEM_TOURNAMENT_MATCH_START;
@@ -457,7 +464,10 @@ begin
   if not FScene.Changed then Exit;
 
   if FScene.Previous = SCENE_MODES then
+  begin
     PrepareTournamentQualsSelection();
+    PrepareTournamentQualsLevel();
+  end;
 
   Memory.Game.Started := False;
 end;
