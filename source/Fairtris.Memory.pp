@@ -64,6 +64,46 @@ type
 
 
 type
+  TTournamentQualsMemory = class(TObject)
+  public
+    procedure Initialize();
+  public
+    ItemIndex: Integer;
+    Autorepeat: Integer;
+  end;
+
+
+type
+  TTournamentMatchMemory = class(TObject)
+  public
+    procedure Initialize();
+  public
+    ItemIndex: Integer;
+    Autorepeat: Integer;
+  end;
+
+
+type
+  TSpeedrunQualsMemory = class(TObject)
+  public
+    procedure Initialize();
+  public
+    ItemIndex: Integer;
+    Autorepeat: Integer;
+  end;
+
+
+type
+  TSpeedrunMatchMemory = class(TObject)
+  public
+    procedure Initialize();
+  public
+    ItemIndex: Integer;
+    Autorepeat: Integer;
+  end;
+
+
+type
   TCoreMemory = class(TObject)
   public      
     procedure Initialize();
@@ -247,7 +287,11 @@ type
     FMenu: TMenuMemory;
     FModes: TModesMemory;
     FSinglePlayer: TSinglePlayerMemory;
-    FPlay: TCoreMemory;
+    FTournamentQuals: TTournamentQualsMemory;
+    FTournamentMatch: TTournamentMatchMemory;
+    FSpeedrunQuals: TSpeedrunQualsMemory;
+    FSpeedrunMatch: TSpeedrunMatchMemory;
+    FCore: TCoreMemory;
     FGame: TGameMemory;
     FPause: TPauseMemory;
     FTopOut: TTopOutMemory;
@@ -265,7 +309,11 @@ type
     property Menu: TMenuMemory read FMenu;
     property Modes: TModesMemory read FModes;
     property SinglePlayer: TSinglePlayerMemory read FSinglePlayer;
-    property Core: TCoreMemory read FPlay;
+    property TournamentQuals: TTournamentQualsMemory read FTournamentQuals;
+    property TournamentMatch: TTournamentMatchMemory read FTournamentMatch;
+    property SpeedrunQuals: TSpeedrunQualsMemory read FSpeedrunQuals;
+    property SpeedrunMatch: TSpeedrunMatchMemory read FSpeedrunMatch;
+    property Core: TCoreMemory read FCore;
     property Game: TGameMemory read FGame;
     property Pause: TPauseMemory read FPause;
     property TopOut: TTopOutMemory read FTopOut;
@@ -311,6 +359,34 @@ end;
 procedure TSinglePlayerMemory.Initialize();
 begin
   ItemIndex := ITEM_SINGLE_PLAYER_START;
+  Autorepeat := 0;
+end;
+
+
+procedure TTournamentQualsMemory.Initialize();
+begin
+  ItemIndex := ITEM_TOURNAMENT_QUALS_START;
+  Autorepeat := 0;
+end;
+
+
+procedure TTournamentMatchMemory.Initialize();
+begin
+  ItemIndex := ITEM_TOURNAMENT_MATCH_START;
+  Autorepeat := 0;
+end;
+
+
+procedure TSpeedrunQualsMemory.Initialize();
+begin
+  ItemIndex := ITEM_SPEEDRUN_QUALS_START;
+  Autorepeat := 0;
+end;
+
+
+procedure TSpeedrunMatchMemory.Initialize();
+begin
+  ItemIndex := ITEM_SPEEDRUN_MATCH_START;
   Autorepeat := 0;
 end;
 
@@ -497,7 +573,11 @@ begin
   FMenu := TMenuMemory.Create();
   FModes := TModesMemory.Create();
   FSinglePlayer := TSinglePlayerMemory.Create();
-  FPlay := TCoreMemory.Create();
+  FTournamentQuals := TTournamentQualsMemory.Create();
+  FTournamentMatch := TTournamentMatchMemory.Create();
+  FSpeedrunQuals := TSpeedrunQualsMemory.Create();
+  FSpeedrunMatch := TSpeedrunMatchMemory.Create();
+  FCore := TCoreMemory.Create();
   FGame := TGameMemory.Create();
   FPause := TPauseMemory.Create();
   FTopOut := TTopOutMemory.Create();
@@ -514,7 +594,11 @@ begin
   FMenu.Free();
   FModes.Free();
   FSinglePlayer.Free();
-  FPlay.Free();
+  FTournamentQuals.Free();
+  FTournamentMatch.Free();
+  FSpeedrunQuals.Free();
+  FSpeedrunMatch.Free();
+  FCore.Free();
   FGame.Free();
   FPause.Free();
   FTopOut.Free();
@@ -533,7 +617,11 @@ begin
   FMenu.Initialize();
   FModes.Initialize();
   FSinglePlayer.Initialize();
-  FPlay.Initialize();
+  FTournamentQuals.Initialize();
+  FTournamentMatch.Initialize();
+  FSpeedrunQuals.Initialize();
+  FSpeedrunMatch.Initialize();
+  FCore.Initialize();
   FPause.Initialize();
   FOptions.Initialize();
   FKeyboard.Initialize();
