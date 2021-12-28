@@ -51,6 +51,26 @@ type
     procedure RenderSinglePlayerParameters();
     procedure RenderSinglePlayerBestScores();
   protected
+    procedure RenderTournamentQualsSelection();
+    procedure RenderTournamentQualsItems();
+    procedure RenderTournamentQualsParameters();
+    procedure RenderTournamentQualsBestScores();
+  protected
+    procedure RenderTournamentMatchSelection();
+    procedure RenderTournamentMatchItems();
+    procedure RenderTournamentMatchParameters();
+    procedure RenderTournamentMatchBestScores();
+  protected
+    procedure RenderSpeedrunQualsSelection();
+    procedure RenderSpeedrunQualsItems();
+    procedure RenderSpeedrunQualsParameters();
+    procedure RenderSpeedrunQualsBestScores();
+  protected
+    procedure RenderSpeedrunMatchSelection();
+    procedure RenderSpeedrunMatchItems();
+    procedure RenderSpeedrunMatchParameters();
+    procedure RenderSpeedrunMatchBestScores();
+  protected
     procedure RenderGameBest();
     procedure RenderGameScore();
     procedure RenderGameLines();
@@ -455,6 +475,102 @@ begin
         EmptyEntryToString(),
         COLOR_DARK
       );
+end;
+
+
+procedure TRenderer.RenderTournamentQualsSelection();
+begin
+
+end;
+
+
+procedure TRenderer.RenderTournamentQualsItems();
+begin
+
+end;
+
+
+procedure TRenderer.RenderTournamentQualsParameters();
+begin
+
+end;
+
+
+procedure TRenderer.RenderTournamentQualsBestScores();
+begin
+
+end;
+
+
+procedure TRenderer.RenderTournamentMatchSelection();
+begin
+
+end;
+
+
+procedure TRenderer.RenderTournamentMatchItems();
+begin
+
+end;
+
+
+procedure TRenderer.RenderTournamentMatchParameters();
+begin
+
+end;
+
+
+procedure TRenderer.RenderTournamentMatchBestScores();
+begin
+
+end;
+
+
+procedure TRenderer.RenderSpeedrunQualsSelection();
+begin
+
+end;
+
+
+procedure TRenderer.RenderSpeedrunQualsItems();
+begin
+
+end;
+
+
+procedure TRenderer.RenderSpeedrunQualsParameters();
+begin
+
+end;
+
+
+procedure TRenderer.RenderSpeedrunQualsBestScores();
+begin
+
+end;
+
+
+procedure TRenderer.RenderSpeedrunMatchSelection();
+begin
+
+end;
+
+
+procedure TRenderer.RenderSpeedrunMatchItems();
+begin
+
+end;
+
+
+procedure TRenderer.RenderSpeedrunMatchParameters();
+begin
+
+end;
+
+
+procedure TRenderer.RenderSpeedrunMatchBestScores();
+begin
+
 end;
 
 
@@ -1419,25 +1535,37 @@ end;
 
 procedure TClassicRenderer.RenderTournamentQuals();
 begin
-
+  RenderTournamentQualsSelection();
+  RenderTournamentQualsItems();
+  RenderTournamentQualsParameters();
+  RenderTournamentQualsBestScores();
 end;
 
 
 procedure TClassicRenderer.RenderTournamentMatch();
 begin
-
+  RenderTournamentMatchSelection();
+  RenderTournamentMatchItems();
+  RenderTournamentMatchParameters();
+  RenderTournamentMatchBestScores();
 end;
 
 
 procedure TClassicRenderer.RenderSpeedrunQuals();
 begin
-
+  RenderSpeedrunQualsSelection();
+  RenderSpeedrunQualsItems();
+  RenderSpeedrunQualsParameters();
+  RenderSpeedrunQualsBestScores();
 end;
 
 
 procedure TClassicRenderer.RenderSpeedrunMatch();
 begin
-
+  RenderSpeedrunMatchSelection();
+  RenderSpeedrunMatchItems();
+  RenderSpeedrunMatchParameters();
+  RenderSpeedrunMatchBestScores();
 end;
 
 
