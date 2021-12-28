@@ -961,31 +961,110 @@ end;
 
 procedure TLogic.UpdateTournamentMatchSelection();
 begin
+  if InputMenuSetPrev() then
+  begin
+    UpdateItemIndex(Memory.TournamentMatch.ItemIndex, ITEM_TOURNAMENT_MATCH_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_BLIP);
+  end;
 
+  if InputMenuSetNext() then
+  begin
+    UpdateItemIndex(Memory.TournamentMatch.ItemIndex, ITEM_TOURNAMENT_MATCH_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_BLIP);
+  end;
 end;
 
 
 procedure TLogic.UpdateTournamentMatchRegion();
 begin
+  if Memory.TournamentMatch.ItemIndex <> ITEM_TOURNAMENT_MATCH_REGION then Exit;
+
+  if InputOptionSetPrev() then
+  begin
+    UpdateItemIndex(Memory.Core.Region, REGION_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end;
+
+  if InputOptionSetNext() then
+  begin
+    UpdateItemIndex(Memory.Core.Region, REGION_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end;
 
 end;
 
 
 procedure TLogic.UpdateTournamentMatchGenerator();
 begin
+  if Memory.TournamentMatch.ItemIndex <> ITEM_TOURNAMENT_MATCH_GENERATOR then Exit;
 
+  if InputOptionSetPrev() then
+  begin
+    UpdateItemIndex(Memory.Core.Generator, GENERATOR_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end;
+
+  if InputOptionSetNext() then
+  begin
+    UpdateItemIndex(Memory.Core.Generator, GENERATOR_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end;
+
+  Generators.GeneratorID := Memory.Core.Generator;
 end;
 
 
 procedure TLogic.UpdateTournamentMatchLevel();
 begin
+  if Memory.TournamentMatch.ItemIndex <> ITEM_TOURNAMENT_MATCH_LEVEL then Exit;
 
+  if InputOptionSetPrev() then
+  begin
+    Memory.TournamentMatch.Autorepeat := 0;
+
+    UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_SINGLE[Memory.Core.Region], ITEM_PREV);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end
+  else
+    if InputOptionRollPrev() then
+    begin
+      Memory.TournamentMatch.Autorepeat += 1;
+
+      if Memory.TournamentMatch.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.Core.Region] then
+      begin
+        Memory.TournamentMatch.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Core.Region];
+
+        UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_SINGLE[Memory.Core.Region], ITEM_PREV);
+        Sounds.PlaySound(SOUND_SHIFT);
+      end;
+    end;
+
+  if InputOptionSetNext() then
+  begin
+    Memory.TournamentMatch.Autorepeat := 0;
+
+    UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_SINGLE[Memory.Core.Region], ITEM_NEXT);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end
+  else
+    if InputOptionRollNext() then
+    begin
+      Memory.TournamentMatch.Autorepeat += 1;
+
+      if Memory.TournamentMatch.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.Core.Region] then
+      begin
+        Memory.TournamentMatch.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.Core.Region];
+
+        UpdateItemIndex(Memory.Core.Level, LEVEL_COUNT_SINGLE[Memory.Core.Region], ITEM_NEXT);
+        Sounds.PlaySound(SOUND_SHIFT);
+      end;
+    end;
 end;
 
 
 procedure TLogic.UpdateTournamentMatchSeed();
 begin
-
+  // implement seed editor
 end;
 
 
