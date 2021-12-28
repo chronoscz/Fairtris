@@ -650,25 +650,75 @@ end;
 
 procedure TRenderer.RenderSpeedrunQualsSelection();
 begin
+  RenderText(
+    ITEM_X_SPEEDRUN_QUALS[Memory.SpeedrunQuals.ItemIndex],
+    ITEM_Y_SPEEDRUN_QUALS[Memory.SpeedrunQuals.ItemIndex],
+    ITEM_TEXT_SPEEDRUN_QUALS[Memory.SpeedrunQuals.ItemIndex]
+  );
 
+  RenderText(
+    ITEM_X_SPEEDRUN_QUALS[Memory.SpeedrunQuals.ItemIndex] - ITEM_X_MARKER,
+    ITEM_Y_SPEEDRUN_QUALS[Memory.SpeedrunQuals.ItemIndex],
+    ITEM_TEXT_MARKER,
+    IfThen(
+      Memory.SpeedrunQuals.ItemIndex = ITEM_SPEEDRUN_QUALS_START,
+      IfThen(Input.Device.Connected, COLOR_WHITE, COLOR_DARK),
+      COLOR_WHITE
+    )
+  );
 end;
 
 
 procedure TRenderer.RenderSpeedrunQualsItems();
 begin
-
+  RenderText(
+    ITEM_X_GAME_MODE_START,
+    ITEM_Y_GAME_MODE_START,
+    ITEM_TEXT_GAME_MODE_START,
+    IfThen(
+      Input.Device.Connected,
+      IfThen(
+        Memory.SpeedrunQuals.ItemIndex = ITEM_SPEEDRUN_QUALS_START,
+        COLOR_WHITE,
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      ),
+      COLOR_DARK
+    )
+  );
 end;
 
 
 procedure TRenderer.RenderSpeedrunQualsParameters();
 begin
+  RenderText(
+    ITEM_X_GAME_MODE_PARAM,
+    ITEM_Y_GAME_MODE_REGION,
+    ITEM_TEXT_GAME_MODE_REGION[Memory.Core.Region],
+    IfThen(
+      Memory.SpeedrunQuals.ItemIndex = ITEM_SPEEDRUN_QUALS_REGION,
+      COLOR_WHITE,
+      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+    )
+  );
 
+  RenderText(
+    ITEM_X_GAME_MODE_PARAM,
+    ITEM_Y_GAME_MODE_GENERATOR,
+    ITEM_TEXT_GAME_MODE_GENERATOR[Memory.Core.Generator],
+    IfThen(
+      Memory.SpeedrunQuals.ItemIndex = ITEM_SPEEDRUN_QUALS_GENERATOR,
+      COLOR_WHITE,
+      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+    )
+  );
+
+  // render current timer time
 end;
 
 
 procedure TRenderer.RenderSpeedrunQualsBestScores();
 begin
-
+  // render best qualifying times if any
 end;
 
 
