@@ -772,24 +772,17 @@ begin
     if Memory.GameModes.TimerEditor.Length < TIMER_LENGTH then
       Sounds.PlaySound(SOUND_DROP)
     else
+    begin
+      Input.Fixed.Accept.Validate();
+
+      Memory.GameModes.TimerData := Memory.GameModes.TimerEditor;
+      Memory.GameModes.TimerChanging := False;
+
       if Converter.StringToTimerSeconds(Memory.GameModes.TimerEditor) = 0 then
-      begin
-        Input.Fixed.Accept.Validate();
-
-        Memory.GameModes.TimerData := Memory.GameModes.TimerEditor;
-        Memory.GameModes.TimerChanging := False;
-
-        Sounds.PlaySound(SOUND_BURN);
-      end
+        Sounds.PlaySound(SOUND_BURN)
       else
-      begin
-        Input.Fixed.Accept.Validate();
-
-        Memory.GameModes.TimerData := Memory.GameModes.TimerEditor;
-        Memory.GameModes.TimerChanging := False;
-
         Sounds.PlaySound(SOUND_TETRIS);
-      end;
+    end;
 
   if Input.Fixed.Clear.JustPressed then
     if Memory.GameModes.TimerEditor.Length > 0 then
