@@ -500,7 +500,10 @@ begin
     Memory.Game.GainTimer -= 1;
 
   if Input.Device.Select.JustPressed then
+  begin
     Memory.Game.NextVisible := not Memory.Game.NextVisible;
+    Sounds.PlaySound(SOUND_COIN);
+  end;
 end;
 
 
