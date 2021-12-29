@@ -46,6 +46,7 @@ type
     function InputOptionSetNext(): Boolean;
     function InputOptionRollPrev(): Boolean;
     function InputOptionRollNext(): Boolean;
+    function InputOptionPaste(): Boolean;
   private
     procedure OpenHelp();
   private
@@ -87,6 +88,8 @@ type
     procedure PrepareKeyboard();
     procedure PrepareController();
     procedure PrepareQuit();
+  private
+    function IntroduceClipboardSeed(): Boolean;
   private
     procedure UpdateLegalHang();
     procedure UpdateLegalScene();
@@ -285,6 +288,15 @@ end;
 function TLogic.InputOptionRollNext(): Boolean;
 begin
   Result := Input.Fixed.Right.Pressed or Input.Controller.Right.Pressed;
+end;
+
+
+function TLogic.InputOptionPaste(): Boolean;
+begin
+  Result := Input.Keyboard.Device[SDL_SCANCODE_INSERT].JustPressed;
+
+  if not Result then
+    Result := Input.Keyboard.Device[SDL_SCANCODE_LCTRL].Pressed and Input.Keyboard.Device[SDL_SCANCODE_V].JustPressed;
 end;
 
 
@@ -598,6 +610,32 @@ begin
 end;
 
 
+function TLogic.IntroduceClipboardSeed(): Boolean;
+var
+  SeedData: String;
+begin
+  Result := False;
+
+  if SDL_HasClipboardText() = SDL_FALSE then
+    Sounds.PlaySound(SOUND_DROP)
+  else
+  begin
+    SeedData := Converter.TextToSeed(SDL_GetClipboardText());
+
+    if SeedData = '' then
+      Sounds.PlaySound(SOUND_DROP)
+    else
+    begin
+      Memory.GameModes.SeedData := SeedData;
+      Memory.GameModes.SeedChanging := False;
+
+      Sounds.PlaySound(SOUND_TRANSITION);
+      Result := True;
+    end;
+  end;
+end;
+
+
 procedure TLogic.UpdateLegalHang();
 begin
   Memory.Legal.HangTimer += 1;
@@ -701,6 +739,10 @@ procedure TLogic.UpdateMatchSeed();
 var
   ScanCode: UInt8 = KEYBOARD_SCANCODE_KEY_NOT_MAPPED;
 begin
+  if InputOptionPaste() then
+    if IntroduceClipboardSeed() then
+      Exit;
+
   if not Memory.GameModes.SeedChanging then Exit;
 
   if Memory.GameModes.SeedEditor.Length < SEED_LENGTH then

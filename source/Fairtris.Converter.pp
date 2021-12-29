@@ -30,6 +30,8 @@ type
   public
     function ScanCodeToChar(AScanCode: TSDL_ScanCode): Char;
   public
+    function TextToSeed(const AText: String): String;
+  public
     function PiecesToString(APieces: Integer): String;
     function ScoreToString(AScore: Integer): String;
     function LinesToString(ALines: Integer): String;
@@ -67,6 +69,23 @@ begin
 
   if AScanCode in [SDL_SCANCODE_1 .. SDL_SCANCODE_9] then Exit(Chr(AScanCode - SDL_SCANCODE_1 + Ord('1')));
   if AScanCode in [SDL_SCANCODE_A .. SDL_SCANCODE_F] then Exit(Chr(AScanCode - SDL_SCANCODE_A + Ord('A')));
+end;
+
+
+function TConverter.TextToSeed(const AText: String): String;
+var
+  Digit: Char;
+begin
+  Result := '';
+
+  if AText.Length = SEED_LENGTH then
+  begin
+    Result := AText.ToUpper();
+
+    for Digit in Result do
+      if not (Digit in TEXT_HEX_DIGITS) then
+        Exit('');
+  end;
 end;
 
 
