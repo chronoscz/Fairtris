@@ -753,7 +753,7 @@ begin
     if Input.Keyboard.CatchedOneDigit(ScanCode) then
     begin
       DigitChar := Converter.ScanCodeToChar(ScanCode);
-      DigitMax := TIMER_PATTERN[Memory.GameModes.TimerEditor.Length + 1];
+      DigitMax := TIMER_MAX_DIGITS[Memory.GameModes.TimerEditor.Length + 1];
 
       if DigitChar <= DigitMax then
       begin
