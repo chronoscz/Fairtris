@@ -634,7 +634,7 @@ begin
   Result := not Memory.GameModes.SeedChanging;
   Result := Result and (SDL_SetClipboardText(PChar(Memory.GameModes.SeedData)) = 0);
 
-  Sounds.PlaySound(IfThen(Result, SOUND_TRANSITION, SOUND_HUM));
+  Sounds.PlaySound(IfThen(Result, SOUND_COIN, SOUND_HUM));
 end;
 
 
@@ -657,7 +657,7 @@ begin
       Memory.GameModes.SeedData := SeedData;
       Memory.GameModes.SeedChanging := False;
 
-      Sounds.PlaySound(SOUND_TRANSITION);
+      Sounds.PlaySound(SOUND_COIN);
       Result := True;
     end;
   end;
@@ -688,7 +688,7 @@ begin
       if TimerData = TIMER_DEFAULT_DATA then
         Sounds.PlaySound(SOUND_BURN)
       else
-        Sounds.PlaySound(SOUND_TRANSITION);
+        Sounds.PlaySound(SOUND_COIN);
     end;
   end;
 end;
