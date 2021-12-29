@@ -564,13 +564,12 @@ end;
 
 procedure TRenderer.RenderTournamentQualsSelection();
 begin
-  if Memory.GameModes.TimerChanging then Exit;
-
-  RenderText(
-    ITEM_X_TOURNAMENT_QUALS[Memory.TournamentQuals.ItemIndex],
-    ITEM_Y_TOURNAMENT_QUALS[Memory.TournamentQuals.ItemIndex],
-    ITEM_TEXT_TOURNAMENT_QUALS[Memory.TournamentQuals.ItemIndex]
-  );
+  if not Memory.GameModes.TimerChanging then
+    RenderText(
+      ITEM_X_TOURNAMENT_QUALS[Memory.TournamentQuals.ItemIndex],
+      ITEM_Y_TOURNAMENT_QUALS[Memory.TournamentQuals.ItemIndex],
+      ITEM_TEXT_TOURNAMENT_QUALS[Memory.TournamentQuals.ItemIndex]
+    );
 
   RenderText(
     ITEM_X_TOURNAMENT_QUALS[Memory.TournamentQuals.ItemIndex] - ITEM_X_MARKER,
@@ -578,7 +577,19 @@ begin
     ITEM_TEXT_MARKER,
     IfThen(
       Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_START,
-      IfThen(Input.Device.Connected, COLOR_WHITE, COLOR_DARK),
+      IfThen(
+        Input.Device.Connected,
+        IfThen(
+          Memory.GameModes.TimerChanging,
+          IfThen(
+            Memory.GameModes.TimerData <> TIMER_DEFAULT_DATA,
+            IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE),
+            COLOR_DARK
+          ),
+          IfThen(Memory.GameModes.TimerData <> TIMER_DEFAULT_DATA, COLOR_WHITE, COLOR_DARK)
+        ),
+        COLOR_DARK
+      ),
       COLOR_WHITE
     )
   );
@@ -597,10 +608,18 @@ begin
         Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_START,
         IfThen(
           Memory.GameModes.TimerChanging,
-          IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE),
-          COLOR_WHITE
+          IfThen(
+            Memory.GameModes.TimerData <> TIMER_DEFAULT_DATA,
+            IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE),
+            COLOR_DARK
+          ),
+          IfThen(Memory.GameModes.TimerData <> TIMER_DEFAULT_DATA, COLOR_WHITE, COLOR_DARK)
         ),
-        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+        IfThen(
+          Memory.GameModes.TimerData <> TIMER_DEFAULT_DATA,
+          IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE),
+          COLOR_DARK
+        )
       ),
       COLOR_DARK
     )
@@ -746,13 +765,12 @@ end;
 
 procedure TRenderer.RenderSpeedrunQualsSelection();
 begin
-  if Memory.GameModes.TimerChanging then Exit;
-
-  RenderText(
-    ITEM_X_SPEEDRUN_QUALS[Memory.SpeedrunQuals.ItemIndex],
-    ITEM_Y_SPEEDRUN_QUALS[Memory.SpeedrunQuals.ItemIndex],
-    ITEM_TEXT_SPEEDRUN_QUALS[Memory.SpeedrunQuals.ItemIndex]
-  );
+  if not Memory.GameModes.TimerChanging then
+    RenderText(
+      ITEM_X_SPEEDRUN_QUALS[Memory.SpeedrunQuals.ItemIndex],
+      ITEM_Y_SPEEDRUN_QUALS[Memory.SpeedrunQuals.ItemIndex],
+      ITEM_TEXT_SPEEDRUN_QUALS[Memory.SpeedrunQuals.ItemIndex]
+    );
 
   RenderText(
     ITEM_X_SPEEDRUN_QUALS[Memory.SpeedrunQuals.ItemIndex] - ITEM_X_MARKER,
@@ -760,7 +778,19 @@ begin
     ITEM_TEXT_MARKER,
     IfThen(
       Memory.SpeedrunQuals.ItemIndex = ITEM_SPEEDRUN_QUALS_START,
-      IfThen(Input.Device.Connected, COLOR_WHITE, COLOR_DARK),
+      IfThen(
+        Input.Device.Connected,
+        IfThen(
+          Memory.GameModes.TimerChanging,
+          IfThen(
+            Memory.GameModes.TimerData <> TIMER_DEFAULT_DATA,
+            IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE),
+            COLOR_DARK
+          ),
+          IfThen(Memory.GameModes.TimerData <> TIMER_DEFAULT_DATA, COLOR_WHITE, COLOR_DARK)
+        ),
+        COLOR_DARK
+      ),
       COLOR_WHITE
     )
   );
@@ -779,10 +809,18 @@ begin
         Memory.SpeedrunQuals.ItemIndex = ITEM_SPEEDRUN_QUALS_START,
         IfThen(
           Memory.GameModes.TimerChanging,
-          IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE),
-          COLOR_WHITE
+          IfThen(
+            Memory.GameModes.TimerData <> TIMER_DEFAULT_DATA,
+            IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE),
+            COLOR_DARK
+          ),
+          IfThen(Memory.GameModes.TimerData <> TIMER_DEFAULT_DATA, COLOR_WHITE, COLOR_DARK)
         ),
-        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+        IfThen(
+          Memory.GameModes.TimerData <> TIMER_DEFAULT_DATA,
+          IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE),
+          COLOR_DARK
+        )
       ),
       COLOR_DARK
     )
