@@ -156,6 +156,8 @@ const
     'transition.wav',
     'top out.wav',
     'pause.wav',
+    'noise.wav',
+    'coin.wav',
     'glass.wav'
   );
 
@@ -178,7 +180,7 @@ const
   );
 
 const
-  SOUND_CHANNEL: array [SOUND_FIRST .. SOUND_LAST] of Integer = (5, 0, 2, 3, 4, 0, 0, 1, 0, 0, 0);
+  SOUND_CHANNEL: array [SOUND_FIRST .. SOUND_LAST] of Integer = (5, 0, 2, 3, 4, 0, 0, 1, 0, 0, 6, 6, 0);
 
 
 const
@@ -1267,6 +1269,7 @@ const
   ERROR_MESSAGE: array [ERROR_FIRST .. ERROR_LAST] of String = (
     'SDL system failed to initialize',
     'SDL audio subsystem failed to initialize',
+    'SDL audio subsystem was unable to allocate enough channels to mix',
     'Unable to create SDL window',
     'Unable to create SDL window renderer',
     'Unable to get the SDL version and thus the window handle',
