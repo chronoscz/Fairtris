@@ -634,7 +634,7 @@ begin
   Result := not Memory.GameModes.SeedChanging;
   Result := Result and (SDL_SetClipboardText(PChar(Memory.GameModes.SeedData)) = 0);
 
-  Sounds.PlaySound(IfThen(Result, SOUND_TRANSITION, SOUND_DROP));
+  Sounds.PlaySound(IfThen(Result, SOUND_TRANSITION, SOUND_HUM));
 end;
 
 
@@ -645,13 +645,13 @@ begin
   Result := False;
 
   if SDL_HasClipboardText() = SDL_FALSE then
-    Sounds.PlaySound(SOUND_DROP)
+    Sounds.PlaySound(SOUND_HUM)
   else
   begin
     SeedData := Converter.TextToSeed(SDL_GetClipboardText());
 
     if SeedData = '' then
-      Sounds.PlaySound(SOUND_DROP)
+      Sounds.PlaySound(SOUND_HUM)
     else
     begin
       Memory.GameModes.SeedData := SeedData;
@@ -671,13 +671,13 @@ begin
   Result := False;
 
   if SDL_HasClipboardText() = SDL_FALSE then
-    Sounds.PlaySound(SOUND_DROP)
+    Sounds.PlaySound(SOUND_HUM)
   else
   begin
     TimerData := Converter.TextToTimer(SDL_GetClipboardText());
 
     if TimerData = '' then
-      Sounds.PlaySound(SOUND_DROP)
+      Sounds.PlaySound(SOUND_HUM)
     else
     begin
       Memory.GameModes.TimerData := TimerData;
@@ -840,7 +840,7 @@ begin
       Sounds.PlaySound(SOUND_TETRIS);
     end
     else
-      Sounds.PlaySound(SOUND_DROP);
+      Sounds.PlaySound(SOUND_HUM);
 
   if Input.Fixed.Clear.JustPressed then
     if Memory.GameModes.SeedEditor.Length > 0 then
@@ -849,7 +849,7 @@ begin
       Sounds.PlaySound(SOUND_BURN);
     end
     else
-      Sounds.PlaySound(SOUND_DROP);
+      Sounds.PlaySound(SOUND_HUM);
 
   if Input.Fixed.Cancel.JustPressed then
   begin
@@ -882,7 +882,7 @@ begin
         Sounds.PlaySound(SOUND_SHIFT);
       end
       else
-        Sounds.PlaySound(SOUND_DROP);
+        Sounds.PlaySound(SOUND_HUM);
 
       if Memory.GameModes.TimerEditor.Length < TIMER_LENGTH then
         if TIMER_PLACEHOLDER[Memory.GameModes.TimerEditor.Length + 1] = TIMER_SEPARATOR then
@@ -891,7 +891,7 @@ begin
 
   if Input.Fixed.Accept.JustPressed then
     if Memory.GameModes.TimerEditor.Length < TIMER_LENGTH then
-      Sounds.PlaySound(SOUND_DROP)
+      Sounds.PlaySound(SOUND_HUM)
     else
     begin
       Input.Fixed.Accept.Validate();
@@ -917,7 +917,7 @@ begin
       Sounds.PlaySound(SOUND_BURN);
     end
     else
-      Sounds.PlaySound(SOUND_DROP);
+      Sounds.PlaySound(SOUND_HUM);
 
   if Input.Fixed.Cancel.JustPressed then
   begin
@@ -1044,7 +1044,7 @@ begin
     if Memory.SinglePlayer.ItemIndex = ITEM_SINGLE_PLAYER_START then
     begin
       if InputMenuAccepted() then
-        Sounds.PlaySound(SOUND_DROP);
+        Sounds.PlaySound(SOUND_HUM);
 
       Exit;
     end;
@@ -1199,7 +1199,7 @@ begin
     if Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_START then
     begin
       if InputMenuAccepted() then
-        Sounds.PlaySound(SOUND_DROP);
+        Sounds.PlaySound(SOUND_HUM);
 
       Exit;
     end;
@@ -1221,7 +1221,7 @@ begin
         Sounds.PlaySound(SOUND_START);
       end
       else
-        Sounds.PlaySound(SOUND_DROP);
+        Sounds.PlaySound(SOUND_HUM);
     ITEM_TOURNAMENT_QUALS_BACK:
     begin
       FScene.Current := SCENE_MODES;
@@ -1362,7 +1362,7 @@ begin
     if Memory.TournamentMatch.ItemIndex = ITEM_TOURNAMENT_MATCH_START then
     begin
       if InputMenuAccepted() then
-        Sounds.PlaySound(SOUND_DROP);
+        Sounds.PlaySound(SOUND_HUM);
 
       Exit;
     end;
@@ -1471,7 +1471,7 @@ begin
     if Memory.SpeedrunQuals.ItemIndex = ITEM_SPEEDRUN_QUALS_START then
     begin
       if InputMenuAccepted() then
-        Sounds.PlaySound(SOUND_DROP);
+        Sounds.PlaySound(SOUND_HUM);
 
       Exit;
     end;
@@ -1493,7 +1493,7 @@ begin
         Sounds.PlaySound(SOUND_START);
       end
       else
-        Sounds.PlaySound(SOUND_DROP);
+        Sounds.PlaySound(SOUND_HUM);
     ITEM_SPEEDRUN_QUALS_BACK:
     begin
       FScene.Current := SCENE_MODES;
@@ -1583,7 +1583,7 @@ begin
     if Memory.SpeedrunMatch.ItemIndex = ITEM_SPEEDRUN_MATCH_START then
     begin
       if InputMenuAccepted() then
-        Sounds.PlaySound(SOUND_DROP);
+        Sounds.PlaySound(SOUND_HUM);
 
       Exit;
     end;
@@ -1675,7 +1675,7 @@ begin
     if Memory.Pause.ItemIndex in [ITEM_PAUSE_RESUME, ITEM_PAUSE_RESTART] then
     begin
       if InputMenuAccepted() then
-        Sounds.PlaySound(SOUND_DROP);
+        Sounds.PlaySound(SOUND_HUM);
 
       Exit;
     end;
@@ -1732,7 +1732,7 @@ begin
     if Memory.TopOut.ItemIndex = ITEM_TOP_OUT_PLAY then
     begin
       if InputMenuAccepted() then
-        Sounds.PlaySound(SOUND_DROP);
+        Sounds.PlaySound(SOUND_HUM);
 
       Exit;
     end;
@@ -1810,7 +1810,7 @@ begin
       Sounds.PlaySound(SOUND_SHIFT);
     end
     else
-      Sounds.PlaySound(SOUND_DROP);
+      Sounds.PlaySound(SOUND_HUM);
 
   if InputOptionSetNext() then
     if not Placement.VideoEnabled then
@@ -1819,7 +1819,7 @@ begin
       Sounds.PlaySound(SOUND_SHIFT);
     end
     else
-      Sounds.PlaySound(SOUND_DROP);
+      Sounds.PlaySound(SOUND_HUM);
 
   Placement.WindowSize := Memory.Options.Size;
 end;
@@ -1896,7 +1896,7 @@ begin
 
     if Memory.Options.ItemIndex in [ITEM_OPTIONS_SET_UP, ITEM_OPTIONS_BACK] then
       if InputMenuAccepted() then
-        Sounds.PlaySound(SOUND_DROP);
+        Sounds.PlaySound(SOUND_HUM);
 
     Exit;
   end;
@@ -1996,7 +1996,7 @@ begin
         Sounds.PlaySound(SOUND_BURN);
       end
       else
-        Sounds.PlaySound(SOUND_DROP);
+        Sounds.PlaySound(SOUND_HUM);
 
   if Memory.Keyboard.KeyIndex in [ITEM_KEYBOARD_SCANCODE_FIRST .. ITEM_KEYBOARD_SCANCODE_LAST] then
     if InputMenuAccepted() then
@@ -2060,9 +2060,12 @@ begin
     if InputMenuRejected() then
     begin
       if Memory.Keyboard.MappedCorrectly() then
+      begin
         FScene.Current := SCENE_OPTIONS;
-
-      Sounds.PlaySound(SOUND_DROP);
+        Sounds.PlaySound(SOUND_DROP);
+      end
+      else
+        Sounds.PlaySound(SOUND_HUM);
     end;
 
     if Memory.Keyboard.ItemIndex = ITEM_KEYBOARD_SAVE then
@@ -2075,7 +2078,7 @@ begin
           Sounds.PlaySound(SOUND_TETRIS, True);
         end
         else
-          Sounds.PlaySound(SOUND_DROP);
+          Sounds.PlaySound(SOUND_HUM);
 
     if Memory.Keyboard.ItemIndex = ITEM_KEYBOARD_CANCEL then
       if InputMenuAccepted() then
@@ -2150,7 +2153,7 @@ begin
         Sounds.PlaySound(SOUND_BURN);
       end
       else
-        Sounds.PlaySound(SOUND_DROP);
+        Sounds.PlaySound(SOUND_HUM);
 
   if Memory.Controller.ButtonIndex in [ITEM_CONTROLLER_SCANCODE_FIRST .. ITEM_CONTROLLER_SCANCODE_LAST] then
     if InputMenuAccepted() then
@@ -2225,9 +2228,12 @@ begin
     if InputMenuRejected() then
     begin
       if Memory.Controller.MappedCorrectly() then
+      begin
         FScene.Current := SCENE_OPTIONS;
-
-      Sounds.PlaySound(SOUND_DROP);
+        Sounds.PlaySound(SOUND_DROP);
+      end
+      else
+        Sounds.PlaySound(SOUND_HUM);
     end;
 
     if Memory.Controller.ItemIndex = ITEM_CONTROLLER_SAVE then
@@ -2240,7 +2246,7 @@ begin
           Sounds.PlaySound(SOUND_TETRIS, True);
         end
         else
-          Sounds.PlaySound(SOUND_DROP);
+          Sounds.PlaySound(SOUND_HUM);
 
     if Memory.Controller.ItemIndex = ITEM_CONTROLLER_CANCEL then
       if InputMenuAccepted() then
