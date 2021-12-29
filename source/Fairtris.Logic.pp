@@ -1617,7 +1617,12 @@ end;
 
 procedure TLogic.UpdateGameScene();
 begin
-  FScene.Current := IfThen(Memory.Game.Flashing, SCENE_GAME_FLASH, SCENE_GAME_NORMAL);
+  FScene.Current := IfThen(
+    Memory.GameModes.Mode in [MODE_SPEEDRUN_QUALS, MODE_SPEEDRUN_MATCH],
+    IfThen(Memory.Game.Flashing, SCENE_SPEEDRUN_FLASH, SCENE_SPEEDRUN_NORMAL),
+    IfThen(Memory.Game.Flashing, SCENE_GAME_FLASH, SCENE_GAME_NORMAL)
+  );
+
   FScene.Validate();
 
   if Memory.Game.State = STATE_UPDATE_TOP_OUT then
