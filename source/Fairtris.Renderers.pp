@@ -674,7 +674,8 @@ begin
       Input.Device.Connected,
       IfThen(
         Memory.TournamentMatch.ItemIndex = ITEM_TOURNAMENT_MATCH_START,
-        IfThen(Memory.GameModes.SeedChanging,
+        IfThen(
+          Memory.GameModes.SeedChanging,
           IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE),
           COLOR_WHITE
         ),
