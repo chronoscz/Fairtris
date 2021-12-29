@@ -120,6 +120,8 @@ type
     TimerData: String;
     TimerEditor: String;
     TimerChanging: Boolean;
+  public
+    TimeRemaining: Integer;
   end;
 
 
@@ -162,6 +164,8 @@ type
   public
     LockRow: Integer;
     LockTimer: Integer;
+  public
+    SpeedrunTimer: Integer;
   public
     ClearCount: Integer;
     ClearTimer: Integer;
@@ -450,6 +454,8 @@ begin
 
   LockRow := 0;
   LockTimer := 0;
+
+  SpeedrunTimer := 0;
 
   ClearCount := 0;
   ClearTimer := 0;
