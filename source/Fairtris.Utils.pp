@@ -33,8 +33,15 @@ uses
   function GetG(AColor: Integer): UInt8;
   function GetB(AColor: Integer): UInt8;
 
+  function GenerateRandomHexDigit(): Char;
+  function GenerateRandomSeed(): String;
+
 
 implementation
+
+uses
+  SysUtils,
+  Fairtris.Constants;
 
 
 function SDL_Rect(ALeft, ATop, AWidth, AHeight: SInt32): TSDL_Rect;
@@ -67,6 +74,36 @@ end;
 function GetB(AColor: Integer): UInt8;
 begin
   Result := (AColor and $00FF0000) shr 16;
+end;
+
+
+function GenerateRandomHexDigit(): Char;
+const
+  SEED_DIGITS = '0123456789ABCDEF';
+begin
+  Result := SEED_DIGITS.ToCharArray()[Random(SEED_DIGITS.Length - 1)];
+end;
+
+
+function GenerateRandomSeed(): String;
+var
+  SeedIsValid: Boolean;
+  Digit: Char;
+begin
+  repeat
+    Result := '';
+    SeedIsValid := True;
+
+    while Result.Length < SEED_LENGTH do
+      Result += GenerateRandomHexDigit();
+
+    for Digit in Result do
+      if Result.CountChar(Digit) > 2 then
+      begin
+        SeedIsValid := False;
+        Break;
+      end;
+  until SeedIsValid;
 end;
 
 

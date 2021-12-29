@@ -52,6 +52,8 @@ uses
   end;
 
 begin
+  Randomize();
+
   try
     with TGame.Create() do
     begin

@@ -48,6 +48,7 @@ type
     function InputOptionRollNext(): Boolean;
     function InputOptionCopy(): Boolean;
     function InputOptionPaste(): Boolean;
+    function InputOptionGenerate(): Boolean;
   private
     procedure OpenHelp();
   private
@@ -94,6 +95,8 @@ type
   private
     function PasteSeedFromClipboard(): Boolean;
     function PasteTimerFromClipboard(): Boolean;
+  private
+    procedure PasteRandomSeed();
   private
     procedure UpdateLegalHang();
     procedure UpdateLegalScene();
@@ -307,6 +310,12 @@ begin
 
   if not Result then
     Result := Input.Keyboard.Device[SDL_SCANCODE_LCTRL].Pressed and Input.Keyboard.Device[SDL_SCANCODE_V].JustPressed;
+end;
+
+
+function TLogic.InputOptionGenerate(): Boolean;
+begin
+  Result := Input.Fixed.Generate.JustPressed;
 end;
 
 
@@ -685,6 +694,15 @@ begin
 end;
 
 
+procedure TLogic.PasteRandomSeed();
+begin
+  Sounds.PlaySound(IfThen(Memory.GameModes.SeedChanging, SOUND_TETRIS, SOUND_SHIFT));
+
+  Memory.GameModes.SeedData := GenerateRandomSeed();
+  Memory.GameModes.SeedChanging := False;
+end;
+
+
 procedure TLogic.UpdateLegalHang();
 begin
   Memory.Legal.HangTimer += 1;
@@ -793,6 +811,12 @@ begin
   if InputOptionCopy() then
   begin
     CopySeedToClipboard();
+    Exit;
+  end;
+
+  if InputOptionGenerate() then
+  begin
+    PasteRandomSeed();
     Exit;
   end;
 
