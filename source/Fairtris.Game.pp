@@ -279,9 +279,11 @@ begin
       UpdateLogic();
 
       if not Logic.Scene.Changed and not Logic.Stopped then
+      begin
         UpdateBuffer();
+        UpdateTaskbar();
+      end;
 
-      UpdateTaskbar();
     CloseFrame();
   until Logic.Stopped;
 
