@@ -414,7 +414,8 @@ begin
     RenderText(
       ITEM_X_GAME_MODE_PARAM - ITEM_X_MARKER,
       ITEM_Y_GAME_MODE_SEED,
-      ITEM_TEXT_MARKER
+      ITEM_TEXT_MARKER,
+      IfThen(Clock.FrameIndexInHalf, COLOR_WHITE, COLOR_DARK)
     );
   end;
 end;
@@ -455,7 +456,8 @@ begin
     RenderText(
       ITEM_X_GAME_MODE_PARAM - ITEM_X_MARKER,
       ITEM_Y_GAME_MODE_TIMER,
-      ITEM_TEXT_MARKER
+      ITEM_TEXT_MARKER,
+      IfThen(Clock.FrameIndexInHalf, COLOR_WHITE, COLOR_DARK)
     );
   end;
 end;
