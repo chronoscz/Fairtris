@@ -823,11 +823,16 @@ begin
   if not Memory.GameModes.SeedChanging then Exit;
 
   if Memory.GameModes.SeedEditor.Length < SEED_LENGTH then
+  begin
     if Input.Keyboard.CatchedOneHexDigit(ScanCode) then
     begin
       Memory.GameModes.SeedEditor += Converter.ScanCodeToChar(ScanCode);
       Sounds.PlaySound(SOUND_SHIFT);
     end;
+  end
+  else
+    if Input.Keyboard.CatchedOneHexDigit(ScanCode) then
+      Sounds.PlaySound(SOUND_HUM);
 
   if Input.Fixed.Accept.JustPressed then
     if Memory.GameModes.SeedEditor.Length = SEED_LENGTH then
@@ -871,6 +876,7 @@ begin
   if not Memory.GameModes.TimerChanging then Exit;
 
   if Memory.GameModes.TimerEditor.Length < TIMER_LENGTH then
+  begin
     if Input.Keyboard.CatchedOneDigit(ScanCode) then
     begin
       DigitNew := Converter.ScanCodeToChar(ScanCode);
@@ -888,6 +894,10 @@ begin
         if TIMER_PLACEHOLDER[Memory.GameModes.TimerEditor.Length + 1] = TIMER_SEPARATOR then
           Memory.GameModes.TimerEditor += TIMER_SEPARATOR;
     end;
+  end
+  else
+    if Input.Keyboard.CatchedOneDigit(ScanCode) then
+      Sounds.PlaySound(SOUND_HUM);
 
   if Input.Fixed.Accept.JustPressed then
     if Memory.GameModes.TimerEditor.Length < TIMER_LENGTH then
