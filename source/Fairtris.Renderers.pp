@@ -558,6 +558,8 @@ end;
 
 procedure TRenderer.RenderTournamentQualsSelection();
 begin
+  if Memory.GameModes.TimerChanging then Exit;
+
   RenderText(
     ITEM_X_TOURNAMENT_QUALS[Memory.TournamentQuals.ItemIndex],
     ITEM_Y_TOURNAMENT_QUALS[Memory.TournamentQuals.ItemIndex],
@@ -587,7 +589,11 @@ begin
       Input.Device.Connected,
       IfThen(
         Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_START,
-        COLOR_WHITE,
+        IfThen(
+          Memory.GameModes.TimerChanging,
+          IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE),
+          COLOR_WHITE
+        ),
         IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
       ),
       COLOR_DARK
@@ -734,6 +740,8 @@ end;
 
 procedure TRenderer.RenderSpeedrunQualsSelection();
 begin
+  if Memory.GameModes.TimerChanging then Exit;
+
   RenderText(
     ITEM_X_SPEEDRUN_QUALS[Memory.SpeedrunQuals.ItemIndex],
     ITEM_Y_SPEEDRUN_QUALS[Memory.SpeedrunQuals.ItemIndex],
@@ -763,7 +771,11 @@ begin
       Input.Device.Connected,
       IfThen(
         Memory.SpeedrunQuals.ItemIndex = ITEM_SPEEDRUN_QUALS_START,
-        COLOR_WHITE,
+        IfThen(
+          Memory.GameModes.TimerChanging,
+          IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE),
+          COLOR_WHITE
+        ),
         IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
       ),
       COLOR_DARK
@@ -839,7 +851,8 @@ begin
       Input.Device.Connected,
       IfThen(
         Memory.SpeedrunMatch.ItemIndex = ITEM_SPEEDRUN_MATCH_START,
-        IfThen(Memory.GameModes.SeedChanging,
+        IfThen(
+          Memory.GameModes.SeedChanging,
           IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE),
           COLOR_WHITE
         ),
