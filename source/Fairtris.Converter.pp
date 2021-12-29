@@ -39,6 +39,10 @@ type
     function GainToString(AGain: Integer): String;
   public
     procedure SeedEditorToStrings(const ASeedEditor: String; out ADigits, APlaceholder: String);
+    procedure TimerEditorToStrings(const ATimerEditor: String; out ADigits, APlaceholder: String);
+  public
+    function StringToTimerSeconds(const ATimerEditor: String): Integer;
+    function StringToTimerFrames(const ATimerEditor: String): Integer;
   end;
 
 
@@ -132,6 +136,31 @@ procedure TConverter.SeedEditorToStrings(const ASeedEditor: String; out ADigits,
 begin
   ADigits := ASeedEditor;
   APlaceholder := SEED_PLACEHOLDER.Substring(ADigits.Length);
+end;
+
+
+procedure TConverter.TimerEditorToStrings(const ATimerEditor: String; out ADigits, APlaceholder: String);
+begin
+  ADigits := ATimerEditor;
+  APlaceholder := TIMER_PLACEHOLDER.Substring(ADigits.Length);
+end;
+
+
+function TConverter.StringToTimerSeconds(const ATimerEditor: String): Integer;
+var
+  Hours, Minutes, Seconds: Integer;
+begin
+  Hours   := ATimerEditor.Substring(0, 1).ToInteger();
+  Minutes := ATimerEditor.Substring(2, 2).ToInteger();
+  Seconds := ATimerEditor.Substring(5, 2).ToInteger();
+
+  Result := Hours * 3600 + Minutes * 60 + Seconds;
+end;
+
+
+function TConverter.StringToTimerFrames(const ATimerEditor: String): Integer;
+begin
+  Result := StringToTimerSeconds(ATimerEditor) * CLOCK_FRAMERATE_LIMIT[Memory.GameModes.Region];
 end;
 
 

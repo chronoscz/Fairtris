@@ -47,6 +47,7 @@ type
     procedure RenderModesSelection();
   protected
     procedure RenderGameModeSeed();
+    procedure RenderGameModeTimer();
   protected
     procedure RenderSinglePlayerSelection();
     procedure RenderSinglePlayerItems();
@@ -234,6 +235,7 @@ begin
     '-': Result := 43;
     '%': Result := 44;
     '>': Result := 45;
+    ':': Result := 46;
   otherwise
     Result := 0;
   end;
@@ -418,6 +420,43 @@ begin
 end;
 
 
+procedure TRenderer.RenderGameModeTimer();
+var
+  Digits, Placeholder: String;
+begin
+  if not Memory.GameModes.TimerChanging then
+    RenderText(
+      ITEM_X_GAME_MODE_PARAM,
+      ITEM_Y_GAME_MODE_TIMER,
+      Memory.GameModes.TimerData,
+      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+    )
+  else
+  begin
+    Converter.TimerEditorToStrings(Memory.GameModes.TimerEditor, Digits, Placeholder);
+
+    RenderText(
+      ITEM_X_GAME_MODE_PARAM,
+      ITEM_Y_GAME_MODE_TIMER,
+      Digits
+    );
+
+    RenderText(
+      ITEM_X_GAME_MODE_PARAM + Digits.Length * CHAR_WIDTH,
+      ITEM_Y_GAME_MODE_TIMER,
+      Placeholder,
+      IfThen(Clock.FrameIndexInHalf, COLOR_WHITE, COLOR_DARK)
+    );
+
+    RenderText(
+      ITEM_X_GAME_MODE_PARAM - ITEM_X_MARKER,
+      ITEM_Y_GAME_MODE_TIMER,
+      ITEM_TEXT_MARKER
+    );
+  end;
+end;
+
+
 procedure TRenderer.RenderSinglePlayerSelection();
 begin
   RenderText(
@@ -592,7 +631,7 @@ begin
     )
   );
 
-  { TODO : render current timer time }
+  RenderGameModeTimer();
 end;
 
 
@@ -756,7 +795,7 @@ begin
     )
   );
 
-  { TODO : render current timer time }
+  RenderGameModeTimer();
 end;
 
 

@@ -98,6 +98,7 @@ type
     procedure UpdateModesScene();
   private
     procedure UpdateMatchSeed();
+    procedure UpdateQualsTimer();
   private
     procedure UpdateSinglePlayerSelection();
     procedure UpdateSinglePlayerRegion();
@@ -726,14 +727,89 @@ begin
     if Memory.GameModes.SeedEditor.Length > 0 then
     begin
       SetLength(Memory.GameModes.SeedEditor, Memory.GameModes.SeedEditor.Length - 1);
-      Sounds.PlaySound(SOUND_SPIN);
-    end;
+      Sounds.PlaySound(SOUND_BURN);
+    end
+    else
+      Sounds.PlaySound(SOUND_DROP);
 
   if Input.Fixed.Cancel.JustPressed then
   begin
     Input.Fixed.Cancel.Validate();
 
     Memory.GameModes.SeedChanging := False;
+    Sounds.PlaySound(SOUND_DROP);
+  end;
+end;
+
+
+procedure TLogic.UpdateQualsTimer();
+var
+  ScanCode: UInt8 = KEYBOARD_SCANCODE_KEY_NOT_MAPPED;
+  DigitChar, DigitMax: Char;
+begin
+  if not Memory.GameModes.TimerChanging then Exit;
+
+  if Memory.GameModes.TimerEditor.Length < TIMER_LENGTH then
+    if Input.Keyboard.CatchedOneDigit(ScanCode) then
+    begin
+      DigitChar := Converter.ScanCodeToChar(ScanCode);
+      DigitMax := TIMER_PATTERN[Memory.GameModes.TimerEditor.Length + 1];
+
+      if DigitChar <= DigitMax then
+      begin
+        Memory.GameModes.TimerEditor += DigitChar;
+        Sounds.PlaySound(SOUND_SHIFT);
+      end
+      else
+        Sounds.PlaySound(SOUND_DROP);
+
+      if Memory.GameModes.TimerEditor.Length < TIMER_LENGTH then
+        if TIMER_PLACEHOLDER[Memory.GameModes.TimerEditor.Length + 1] = TIMER_SEPARATOR then
+          Memory.GameModes.TimerEditor += TIMER_SEPARATOR;
+    end;
+
+  if Input.Fixed.Accept.JustPressed then
+    if Memory.GameModes.TimerEditor.Length < TIMER_LENGTH then
+      Sounds.PlaySound(SOUND_DROP)
+    else
+      if Converter.StringToTimerSeconds(Memory.GameModes.TimerEditor) = 0 then
+      begin
+        Input.Fixed.Accept.Validate();
+
+        Memory.GameModes.TimerData := Memory.GameModes.TimerEditor;
+        Memory.GameModes.TimerChanging := False;
+
+        Sounds.PlaySound(SOUND_BURN);
+      end
+      else
+      begin
+        Input.Fixed.Accept.Validate();
+
+        Memory.GameModes.TimerData := Memory.GameModes.TimerEditor;
+        Memory.GameModes.TimerChanging := False;
+
+        Sounds.PlaySound(SOUND_TETRIS);
+      end;
+
+  if Input.Fixed.Clear.JustPressed then
+    if Memory.GameModes.TimerEditor.Length > 0 then
+    begin
+      SetLength(Memory.GameModes.TimerEditor, Memory.GameModes.TimerEditor.Length - 1);
+
+      if Memory.GameModes.TimerEditor.Length > 0 then
+        if TIMER_PLACEHOLDER[Memory.GameModes.TimerEditor.Length + 1] = TIMER_SEPARATOR then
+          SetLength(Memory.GameModes.TimerEditor, Memory.GameModes.TimerEditor.Length - 1);
+
+      Sounds.PlaySound(SOUND_BURN);
+    end
+    else
+      Sounds.PlaySound(SOUND_DROP);
+
+  if Input.Fixed.Cancel.JustPressed then
+  begin
+    Input.Fixed.Cancel.Validate();
+
+    Memory.GameModes.TimerChanging := False;
     Sounds.PlaySound(SOUND_DROP);
   end;
 end;
@@ -883,6 +959,8 @@ end;
 
 procedure TLogic.UpdateTournamentQualsSelection();
 begin
+  if Memory.GameModes.TimerChanging then Exit;
+
   if InputMenuSetPrev() then
   begin
     UpdateItemIndex(Memory.TournamentQuals.ItemIndex, ITEM_TOURNAMENT_QUALS_COUNT, ITEM_PREV);
@@ -893,6 +971,14 @@ begin
   begin
     UpdateItemIndex(Memory.TournamentQuals.ItemIndex, ITEM_TOURNAMENT_QUALS_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_BLIP);
+  end;
+
+  if (Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_START) and InputOptionSetNext() then
+  begin
+    Memory.GameModes.TimerChanging := True;
+    Memory.GameModes.TimerEditor := TIMER_DEFAULT_EDITOR;
+
+    Sounds.PlaySound(SOUND_START);
   end;
 end;
 
@@ -987,7 +1073,7 @@ end;
 
 procedure TLogic.UpdateTournamentQualsTimer();
 begin
-  { TODO : implement timer editor }
+  UpdateQualsTimer();
 end;
 
 
@@ -1003,6 +1089,8 @@ begin
 
       Exit;
     end;
+
+  if Memory.GameModes.TimerChanging then Exit;
 
   if InputMenuRejected() then
   begin
@@ -1188,6 +1276,8 @@ end;
 
 procedure TLogic.UpdateSpeedrunQualsSelection();
 begin
+  if Memory.GameModes.TimerChanging then Exit;
+
   if InputMenuSetPrev() then
   begin
     UpdateItemIndex(Memory.SpeedrunQuals.ItemIndex, ITEM_SPEEDRUN_QUALS_COUNT, ITEM_PREV);
@@ -1198,6 +1288,14 @@ begin
   begin
     UpdateItemIndex(Memory.SpeedrunQuals.ItemIndex, ITEM_SPEEDRUN_QUALS_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_BLIP);
+  end;
+
+  if (Memory.SpeedrunQuals.ItemIndex = ITEM_SPEEDRUN_QUALS_START) and InputOptionSetNext() then
+  begin
+    Memory.GameModes.TimerChanging := True;
+    Memory.GameModes.TimerEditor := TIMER_DEFAULT_EDITOR;
+
+    Sounds.PlaySound(SOUND_START);
   end;
 end;
 
@@ -1244,7 +1342,7 @@ end;
 
 procedure TLogic.UpdateSpeedrunQualsTimer();
 begin
-  { TODO : implement timer editor }
+  UpdateQualsTimer();
 end;
 
 
@@ -1260,6 +1358,8 @@ begin
 
       Exit;
     end;
+
+  if Memory.GameModes.TimerChanging then Exit;
 
   if InputMenuRejected() then
   begin
