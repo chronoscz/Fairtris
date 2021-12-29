@@ -1374,11 +1374,12 @@ end;
 
 procedure TRenderer.RenderKeyboardItemSelection();
 begin
-  RenderText(
-    ITEM_X_KEYBOARD[Memory.Keyboard.ItemIndex],
-    ITEM_Y_KEYBOARD[Memory.Keyboard.ItemIndex],
-    ITEM_TEXT_KEYBOARD[Memory.Keyboard.ItemIndex]
-  );
+  if not Memory.Keyboard.Changing then
+    RenderText(
+      ITEM_X_KEYBOARD[Memory.Keyboard.ItemIndex],
+      ITEM_Y_KEYBOARD[Memory.Keyboard.ItemIndex],
+      ITEM_TEXT_KEYBOARD[Memory.Keyboard.ItemIndex]
+    );
 
   RenderText(
     ITEM_X_KEYBOARD[Memory.Keyboard.ItemIndex] - ITEM_X_MARKER,
@@ -1387,7 +1388,15 @@ begin
     IfThen(
       Memory.Keyboard.ItemIndex = ITEM_KEYBOARD_SAVE,
       IfThen(Memory.Keyboard.MappedCorrectly(), COLOR_WHITE, COLOR_DARK),
-      COLOR_WHITE
+      IfThen(
+        Memory.Keyboard.ItemIndex = ITEM_KEYBOARD_CHANGE,
+        IfThen(
+          Memory.Keyboard.Changing,
+          IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE),
+          COLOR_WHITE
+        ),
+        COLOR_WHITE
+      )
     )
   );
 end;
@@ -1468,11 +1477,12 @@ end;
 
 procedure TRenderer.RenderControllerItemSelection();
 begin
-  RenderText(
-    ITEM_X_CONTROLLER[Memory.Controller.ItemIndex],
-    ITEM_Y_CONTROLLER[Memory.Controller.ItemIndex],
-    ITEM_TEXT_CONTROLLER[Memory.Controller.ItemIndex]
-  );
+  if not Memory.Controller.Changing then
+    RenderText(
+      ITEM_X_CONTROLLER[Memory.Controller.ItemIndex],
+      ITEM_Y_CONTROLLER[Memory.Controller.ItemIndex],
+      ITEM_TEXT_CONTROLLER[Memory.Controller.ItemIndex]
+    );
 
   RenderText(
     ITEM_X_CONTROLLER[Memory.Controller.ItemIndex] - ITEM_X_MARKER,
@@ -1481,7 +1491,15 @@ begin
     IfThen(
       Memory.Controller.ItemIndex = ITEM_CONTROLLER_SAVE,
       IfThen(Memory.Controller.MappedCorrectly(), COLOR_WHITE, COLOR_DARK),
-      COLOR_WHITE
+      IfThen(
+        Memory.Controller.ItemIndex = ITEM_CONTROLLER_CHANGE,
+        IfThen(
+          Memory.Controller.Changing,
+          IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE),
+          COLOR_WHITE
+        ),
+        COLOR_WHITE
+      )
     )
   );
 end;
