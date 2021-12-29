@@ -739,9 +739,7 @@ procedure TLogic.UpdateMatchSeed();
 var
   ScanCode: UInt8 = KEYBOARD_SCANCODE_KEY_NOT_MAPPED;
 begin
-  if InputOptionPaste() then
-    if IntroduceClipboardSeed() then
-      Exit;
+  if InputOptionPaste() and IntroduceClipboardSeed() then Exit;
 
   if not Memory.GameModes.SeedChanging then Exit;
 
