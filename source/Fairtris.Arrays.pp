@@ -156,7 +156,7 @@ const
     'transition.wav',
     'top out.wav',
     'pause.wav',
-    'noise.wav',
+    'hum.wav',
     'coin.wav',
     'glass.wav'
   );

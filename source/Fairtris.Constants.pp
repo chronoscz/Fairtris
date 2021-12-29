@@ -122,7 +122,7 @@ const
   SOUND_TRANSITION = 8;
   SOUND_TOP_OUT    = 9;
   SOUND_PAUSE      = 10;
-  SOUND_NOISE      = 11;
+  SOUND_HUM        = 11;
   SOUND_COIN       = 12;
   SOUND_GLASS      = 13;
 
