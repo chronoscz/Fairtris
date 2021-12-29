@@ -1215,10 +1215,13 @@ begin
   if InputMenuAccepted() then
   case Memory.TournamentQuals.ItemIndex of
     ITEM_TOURNAMENT_QUALS_START:
-    begin
-      FScene.Current := SCENE_GAME_NORMAL;
-      Sounds.PlaySound(SOUND_START);
-    end;
+      if Memory.GameModes.TimerData <> TIMER_DEFAULT_DATA then
+      begin
+        FScene.Current := SCENE_GAME_NORMAL;
+        Sounds.PlaySound(SOUND_START);
+      end
+      else
+        Sounds.PlaySound(SOUND_DROP);
     ITEM_TOURNAMENT_QUALS_BACK:
     begin
       FScene.Current := SCENE_MODES;
@@ -1484,10 +1487,13 @@ begin
   if InputMenuAccepted() then
   case Memory.SpeedrunQuals.ItemIndex of
     ITEM_SPEEDRUN_QUALS_START:
-    begin
-      FScene.Current := SCENE_SPEEDRUN_NORMAL;
-      Sounds.PlaySound(SOUND_START);
-    end;
+      if Memory.GameModes.TimerData <> TIMER_DEFAULT_DATA then
+      begin
+        FScene.Current := SCENE_SPEEDRUN_NORMAL;
+        Sounds.PlaySound(SOUND_START);
+      end
+      else
+        Sounds.PlaySound(SOUND_DROP);
     ITEM_SPEEDRUN_QUALS_BACK:
     begin
       FScene.Current := SCENE_MODES;
