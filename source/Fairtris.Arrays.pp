@@ -30,6 +30,8 @@ const
   TEXT_DIGITS:     set of Char = ['0' .. '9'];
   TEXT_HEX_DIGITS: set of Char = ['0' .. '9', 'A' .. 'F'];
 
+  TEXT_DATE_SEPARATORS: set of Char = ['-', '.', ':'];
+
 
 const
   CLOCK_FRAMERATE_LIMIT: array [REGION_FIRST .. REGION_LAST] of Integer = (

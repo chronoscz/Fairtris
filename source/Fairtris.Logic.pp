@@ -90,6 +90,7 @@ type
     procedure PrepareQuit();
   private
     function IntroduceClipboardSeed(): Boolean;
+    function IntroduceClipboardTimer(): Boolean;
   private
     procedure UpdateLegalHang();
     procedure UpdateLegalScene();
@@ -636,6 +637,36 @@ begin
 end;
 
 
+function TLogic.IntroduceClipboardTimer(): Boolean;
+var
+  TimerData: String;
+begin
+  Result := False;
+
+  if SDL_HasClipboardText() = SDL_FALSE then
+    Sounds.PlaySound(SOUND_DROP)
+  else
+  begin
+    TimerData := Converter.TextToTimer(SDL_GetClipboardText());
+
+    if TimerData = '' then
+      Sounds.PlaySound(SOUND_DROP)
+    else
+    begin
+      Memory.GameModes.TimerData := TimerData;
+      Memory.GameModes.TimerChanging := False;
+
+      Result := True;
+
+      if TimerData = TIMER_DEFAULT_DATA then
+        Sounds.PlaySound(SOUND_BURN)
+      else
+        Sounds.PlaySound(SOUND_TRANSITION);
+    end;
+  end;
+end;
+
+
 procedure TLogic.UpdateLegalHang();
 begin
   Memory.Legal.HangTimer += 1;
@@ -787,6 +818,8 @@ var
   ScanCode: UInt8 = KEYBOARD_SCANCODE_KEY_NOT_MAPPED;
   DigitNew, DigitMax: Char;
 begin
+  if InputOptionPaste() and IntroduceClipboardTimer() then Exit;
+
   if not Memory.GameModes.TimerChanging then Exit;
 
   if Memory.GameModes.TimerEditor.Length < TIMER_LENGTH then

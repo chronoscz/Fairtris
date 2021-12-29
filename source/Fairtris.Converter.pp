@@ -31,6 +31,7 @@ type
     function ScanCodeToChar(AScanCode: TSDL_ScanCode): Char;
   public
     function TextToSeed(const AText: String): String;
+    function TextToTimer(const AText: String): String;
   public
     function PiecesToString(APieces: Integer): String;
     function ScoreToString(AScore: Integer): String;
@@ -86,6 +87,30 @@ begin
       if not (Digit in TEXT_HEX_DIGITS) then
         Exit('');
   end;
+end;
+
+
+function TConverter.TextToTimer(const AText: String): String;
+var
+  Index: Integer;
+begin
+  if AText.Length <> TIMER_LENGTH then Exit('');
+
+  Result := AText.ToUpper();
+
+  for Index := 1 to Result.Length do
+    if TIMER_PLACEHOLDER[Index] = TIMER_SEPARATOR then
+    begin
+      if Result[Index] in TEXT_DATE_SEPARATORS then
+        Result[Index] := TIMER_SEPARATOR
+      else
+        Exit('');
+    end
+    else
+    begin
+      if not (Result[Index] in TEXT_DIGITS)      then Exit('');
+      if Result[Index] > TIMER_MAX_DIGITS[Index] then Exit('');
+    end;
 end;
 
 
