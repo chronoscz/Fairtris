@@ -1242,25 +1242,27 @@ const
   ERROR_TITLE = 'Fairtris crashed!';
 
 const
-  ERROR_MESSAGE_SDL = 'A fatal error occurred while booting the game, and the startup process must be interrupted.' +
+  ERROR_MESSAGE_SDL =
+    'A fatal error occurred while booting the game, and the startup process must be interrupted.' +
 
-                      LineEnding + LineEnding +
+    LineEnding + LineEnding +
 
-                      'General message: %s.' + LineEnding + LineEnding +
-                      'SDL message: "%s".' + LineEnding + LineEnding +
+    'General message: %s.' + LineEnding + LineEnding +
+    'SDL message: "%s".' + LineEnding + LineEnding +
 
-                      'Reinstalling the game may fix the problem, and if it persists, contact the author or report ' +
-                      'a bug in the project''s repository (see the file "license.txt" for helpful information).';
+    'Reinstalling the game may fix the problem, and if it persists, contact the author or report ' +
+    'a bug in the project''s repository (see the file "license.txt" for helpful information).';
 
 const
-  ERROR_MESSAGE_UNKNOWN = 'An unexpected exception has occurred and the game must be terminated.' +
+  ERROR_MESSAGE_UNKNOWN =
+    'An unexpected exception has occurred and the game must be terminated.' +
 
-                          LineEnding + LineEnding +
+    LineEnding + LineEnding +
 
-                          'Exception message: "%s".' + LineEnding + LineEnding +
+    'Exception message: "%s".' + LineEnding + LineEnding +
 
-                          'Reinstalling the game may fix the problem, and if it persists, contact the author or report ' +
-                          'a bug in the project''s repository (see the file "license.txt" for helpful information).';
+    'Reinstalling the game may fix the problem, and if it persists, contact the author or report ' +
+    'a bug in the project''s repository (see the file "license.txt" for helpful information).';
 
 
 implementation
