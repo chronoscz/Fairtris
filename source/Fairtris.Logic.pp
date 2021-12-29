@@ -1040,6 +1040,12 @@ procedure TLogic.UpdateSinglePlayerScene();
 begin
   FScene.Validate();
 
+  if InputMenuRejected() then
+  begin
+    FScene.Current := SCENE_MODES;
+    Sounds.PlaySound(SOUND_DROP);
+  end;
+
   if not Input.Device.Connected then
     if Memory.SinglePlayer.ItemIndex = ITEM_SINGLE_PLAYER_START then
     begin
@@ -1048,12 +1054,6 @@ begin
 
       Exit;
     end;
-
-  if InputMenuRejected() then
-  begin
-    FScene.Current := SCENE_MODES;
-    Sounds.PlaySound(SOUND_DROP);
-  end;
 
   if InputMenuAccepted() then
   case Memory.SinglePlayer.ItemIndex of
@@ -1194,6 +1194,13 @@ end;
 procedure TLogic.UpdateTournamentQualsScene();
 begin
   FScene.Validate();
+
+  if not Memory.GameModes.TimerChanging then
+    if InputMenuRejected() then
+    begin
+      FScene.Current := SCENE_MODES;
+      Sounds.PlaySound(SOUND_DROP);
+    end;
 
   if not Input.Device.Connected then
     if Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_START then
@@ -1358,6 +1365,13 @@ procedure TLogic.UpdateTournamentMatchScene();
 begin
   FScene.Validate();
 
+  if not Memory.GameModes.SeedChanging then
+    if InputMenuRejected() then
+    begin
+      FScene.Current := SCENE_MODES;
+      Sounds.PlaySound(SOUND_DROP);
+    end;
+
   if not Input.Device.Connected then
     if Memory.TournamentMatch.ItemIndex = ITEM_TOURNAMENT_MATCH_START then
     begin
@@ -1466,6 +1480,13 @@ end;
 procedure TLogic.UpdateSpeedrunQualsScene();
 begin
   FScene.Validate();
+
+  if not Memory.GameModes.TimerChanging then
+    if InputMenuRejected() then
+    begin
+      FScene.Current := SCENE_MODES;
+      Sounds.PlaySound(SOUND_DROP);
+    end;
 
   if not Input.Device.Connected then
     if Memory.SpeedrunQuals.ItemIndex = ITEM_SPEEDRUN_QUALS_START then
@@ -1578,6 +1599,13 @@ end;
 procedure TLogic.UpdateSpeedrunMatchScene();
 begin
   FScene.Validate();
+
+  if not Memory.GameModes.SeedChanging then
+    if InputMenuRejected() then
+    begin
+      FScene.Current := SCENE_MODES;
+      Sounds.PlaySound(SOUND_DROP);
+    end;
 
   if not Input.Device.Connected then
     if Memory.SpeedrunMatch.ItemIndex = ITEM_SPEEDRUN_MATCH_START then
