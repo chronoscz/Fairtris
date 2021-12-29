@@ -46,6 +46,7 @@ type
     function InputOptionSetNext(): Boolean;
     function InputOptionRollPrev(): Boolean;
     function InputOptionRollNext(): Boolean;
+    function InputOptionCopy(): Boolean;
     function InputOptionPaste(): Boolean;
   private
     procedure OpenHelp();
@@ -89,8 +90,10 @@ type
     procedure PrepareController();
     procedure PrepareQuit();
   private
-    function IntroduceClipboardSeed(): Boolean;
-    function IntroduceClipboardTimer(): Boolean;
+    function CopySeedToClipboard(): Boolean;
+  private
+    function PasteSeedFromClipboard(): Boolean;
+    function PasteTimerFromClipboard(): Boolean;
   private
     procedure UpdateLegalHang();
     procedure UpdateLegalScene();
@@ -289,6 +292,12 @@ end;
 function TLogic.InputOptionRollNext(): Boolean;
 begin
   Result := Input.Fixed.Right.Pressed or Input.Controller.Right.Pressed;
+end;
+
+
+function TLogic.InputOptionCopy(): Boolean;
+begin
+  Result := Input.Keyboard.Device[SDL_SCANCODE_LCTRL].Pressed and Input.Keyboard.Device[SDL_SCANCODE_C].JustPressed;
 end;
 
 
@@ -611,7 +620,16 @@ begin
 end;
 
 
-function TLogic.IntroduceClipboardSeed(): Boolean;
+function TLogic.CopySeedToClipboard(): Boolean;
+begin
+  Result := not Memory.GameModes.SeedChanging;
+  Result := Result and (SDL_SetClipboardText(PChar(Memory.GameModes.SeedData)) = 0);
+
+  Sounds.PlaySound(IfThen(Result, SOUND_TRANSITION, SOUND_DROP));
+end;
+
+
+function TLogic.PasteSeedFromClipboard(): Boolean;
 var
   SeedData: String;
 begin
@@ -637,7 +655,7 @@ begin
 end;
 
 
-function TLogic.IntroduceClipboardTimer(): Boolean;
+function TLogic.PasteTimerFromClipboard(): Boolean;
 var
   TimerData: String;
 begin
@@ -770,7 +788,13 @@ procedure TLogic.UpdateMatchSeed();
 var
   ScanCode: UInt8 = KEYBOARD_SCANCODE_KEY_NOT_MAPPED;
 begin
-  if InputOptionPaste() and IntroduceClipboardSeed() then Exit;
+  if InputOptionPaste() and PasteSeedFromClipboard() then Exit;
+
+  if InputOptionCopy() then
+  begin
+    CopySeedToClipboard();
+    Exit;
+  end;
 
   if not Memory.GameModes.SeedChanging then Exit;
 
@@ -818,7 +842,7 @@ var
   ScanCode: UInt8 = KEYBOARD_SCANCODE_KEY_NOT_MAPPED;
   DigitNew, DigitMax: Char;
 begin
-  if InputOptionPaste() and IntroduceClipboardTimer() then Exit;
+  if InputOptionPaste() and PasteTimerFromClipboard() then Exit;
 
   if not Memory.GameModes.TimerChanging then Exit;
 
