@@ -81,7 +81,7 @@ function GenerateRandomHexDigit(): Char;
 const
   SEED_DIGITS = '0123456789ABCDEF';
 begin
-  Result := SEED_DIGITS.ToCharArray()[Random(SEED_DIGITS.Length - 1)];
+  Result := SEED_DIGITS.ToCharArray()[Random(SEED_DIGITS.Length)];
 end;
 
 
