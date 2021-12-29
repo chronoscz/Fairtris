@@ -429,7 +429,11 @@ begin
       ITEM_X_GAME_MODE_PARAM,
       ITEM_Y_GAME_MODE_TIMER,
       Memory.GameModes.TimerData,
-      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      IfThen(
+        Memory.GameModes.TimerData = TIMER_DEFAULT_DATA,
+        COLOR_DARK,
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      )
     )
   else
   begin
