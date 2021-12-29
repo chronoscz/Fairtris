@@ -1247,7 +1247,7 @@ const
 
     LineEnding + LineEnding +
 
-    'General message: %s.' + LineEnding + LineEnding +
+    'General message: "%s".' + LineEnding + LineEnding +
     'SDL message: "%s".' + LineEnding + LineEnding +
 
     'Reinstalling the game may fix the problem, and if it persists, contact the author or report ' +
