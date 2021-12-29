@@ -745,19 +745,19 @@ end;
 procedure TLogic.UpdateQualsTimer();
 var
   ScanCode: UInt8 = KEYBOARD_SCANCODE_KEY_NOT_MAPPED;
-  DigitChar, DigitMax: Char;
+  DigitNew, DigitMax: Char;
 begin
   if not Memory.GameModes.TimerChanging then Exit;
 
   if Memory.GameModes.TimerEditor.Length < TIMER_LENGTH then
     if Input.Keyboard.CatchedOneDigit(ScanCode) then
     begin
-      DigitChar := Converter.ScanCodeToChar(ScanCode);
+      DigitNew := Converter.ScanCodeToChar(ScanCode);
       DigitMax := TIMER_MAX_DIGITS[Memory.GameModes.TimerEditor.Length + 1];
 
-      if DigitChar <= DigitMax then
+      if DigitNew <= DigitMax then
       begin
-        Memory.GameModes.TimerEditor += DigitChar;
+        Memory.GameModes.TimerEditor += DigitNew;
         Sounds.PlaySound(SOUND_SHIFT);
       end
       else
