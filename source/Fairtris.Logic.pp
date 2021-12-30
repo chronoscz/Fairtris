@@ -785,19 +785,43 @@ begin
 
   if InputMenuAccepted() then
   begin
+    if Memory.GameModes.QualsActive and (Memory.Modes.ItemIndex <> ITEM_MODES_BACK) then
     case Memory.Modes.ItemIndex of
-      ITEM_MODES_SINGLE_PLAYER:    FScene.Current := SCENE_SINGLE_PLAYER;
-      ITEM_MODES_TOURNAMENT_QUALS: FScene.Current := SCENE_TOURNAMENT_QUALS;
-      ITEM_MODES_TOURNAMENT_MATCH: FScene.Current := SCENE_TOURNAMENT_MATCH;
-      ITEM_MODES_SPEEDRUN_QUALS:   FScene.Current := SCENE_SPEEDRUN_QUALS;
-      ITEM_MODES_SPEEDRUN_MATCH:   FScene.Current := SCENE_SPEEDRUN_MATCH;
-      ITEM_MODES_BACK:             FScene.Current := SCENE_MENU;
-    end;
-
-    if Memory.Modes.ItemIndex <> ITEM_MODES_BACK then
-      Sounds.PlaySound(SOUND_START)
+      ITEM_MODES_TOURNAMENT_QUALS:
+        if Memory.GameModes.QualsMode = QUALS_MODE_TOURNAMENT then
+        begin
+          FScene.Current := SCENE_TOURNAMENT_QUALS;
+          Sounds.PlaySound(SOUND_START);
+        end
+        else
+          Sounds.PlaySound(SOUND_HUM);
+      ITEM_MODES_SPEEDRUN_QUALS:
+        if Memory.GameModes.QualsMode = QUALS_MODE_SPEEDRUN then
+        begin
+          FScene.Current := SCENE_SPEEDRUN_QUALS;
+          Sounds.PlaySound(SOUND_START);
+        end
+        else
+          Sounds.PlaySound(SOUND_HUM);
+    otherwise
+      Sounds.PlaySound(SOUND_HUM);
+    end
     else
-      Sounds.PlaySound(SOUND_DROP);
+    begin
+      case Memory.Modes.ItemIndex of
+        ITEM_MODES_SINGLE_PLAYER:    FScene.Current := SCENE_SINGLE_PLAYER;
+        ITEM_MODES_TOURNAMENT_QUALS: FScene.Current := SCENE_TOURNAMENT_QUALS;
+        ITEM_MODES_TOURNAMENT_MATCH: FScene.Current := SCENE_TOURNAMENT_MATCH;
+        ITEM_MODES_SPEEDRUN_QUALS:   FScene.Current := SCENE_SPEEDRUN_QUALS;
+        ITEM_MODES_SPEEDRUN_MATCH:   FScene.Current := SCENE_SPEEDRUN_MATCH;
+        ITEM_MODES_BACK:             FScene.Current := SCENE_MENU;
+      end;
+
+      if Memory.Modes.ItemIndex <> ITEM_MODES_BACK then
+        Sounds.PlaySound(SOUND_START)
+      else
+        Sounds.PlaySound(SOUND_DROP);
+    end;
   end;
 end;
 
