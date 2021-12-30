@@ -496,6 +496,9 @@ procedure TCore.UpdateCommon();
 begin
   Generators.Generator.Step();
 
+  if Memory.Game.State <> STATE_UPDATE_TOP_OUT then
+    Memory.Game.SpeedrunTimer += 1;
+
   if Memory.Game.GainTimer > 0 then
     Memory.Game.GainTimer -= 1;
 

@@ -825,6 +825,11 @@ const
 
 
 const
+  TIME_X: array [THEME_FIRST .. THEME_LAST] of Integer = (184, 192);
+  TIME_Y: array [THEME_FIRST .. THEME_LAST] of Integer = (192, 200);
+
+
+const
   STACK_X: array [THEME_FIRST .. THEME_LAST] of Integer = (88, 96);
   STACK_Y: array [THEME_FIRST .. THEME_LAST] of Integer = (40, 48);
 

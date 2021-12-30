@@ -27,6 +27,8 @@ uses
 
 type
   TConverter = class(TObject)
+  private
+    procedure FramesToTimeComponents(AFramesCount: Integer; out AHours, AMinutes, ASeconds, AMilliseconds: Integer);
   public
     function ScanCodeToChar(AScanCode: TSDL_ScanCode): Char;
   public
@@ -40,6 +42,7 @@ type
     function BurnedToString(ABurned: Integer): String;
     function TetrisesToString(ATetrises: Integer): String;
     function GainToString(AGain: Integer): String;
+    function FramesToTimeString(AFramesCount: Integer; AIsBestScore: Boolean = False): String;
   public
     procedure SeedEditorToStrings(const ASeedEditor: String; out ADigits, APlaceholder: String);
     procedure TimerEditorToStrings(const ATimerEditor: String; out ADigits, APlaceholder: String);
@@ -60,6 +63,29 @@ uses
   Fairtris.Memory,
   Fairtris.Arrays,
   Fairtris.Constants;
+
+
+procedure TConverter.FramesToTimeComponents(AFramesCount: Integer; out AHours, AMinutes, ASeconds, AMilliseconds: Integer);
+var
+  FramesCount, FramesPerHour, FramesPerMinute, FramesPerSecond: Integer;
+begin
+  FramesCount := AFramesCount;
+
+  FramesPerSecond := CLOCK_FRAMERATE_LIMIT[Memory.GameModes.Region];
+  FramesPerMinute := FramesPerSecond * 60;
+  FramesPerHour   := FramesPerMinute * 60;
+
+  AHours := FramesCount div FramesPerHour;
+  FramesCount -= AHours * FramesPerHour;
+
+  AMinutes := FramesCount div FramesPerMinute;
+  FramesCount -= AMinutes * FramesPerMinute;
+
+  ASeconds := FramesCount div FramesPerSecond;
+  FramesCount -= ASeconds * FramesPerSecond;
+
+  AMilliseconds := FramesCount * 1000 div FramesPerSecond;
+end;
 
 
 function TConverter.ScanCodeToChar(AScanCode: TSDL_ScanCode): Char;
@@ -173,6 +199,30 @@ end;
 function TConverter.GainToString(AGain: Integer): String;
 begin
   Result := AGain.ToString();
+end;
+
+
+function TConverter.FramesToTimeString(AFramesCount: Integer; AIsBestScore: Boolean): String;
+var
+  Hours, Minutes, Seconds, Milliseconds: Integer;
+var
+  TimeFormatDecimal: String = TIME_FORMAT_DECIMAL_MENU;
+begin
+  FramesToTimeComponents(AFramesCount, Hours, Minutes, Seconds, Milliseconds);
+
+  if not AIsBestScore then
+    if Memory.Options.Theme = THEME_MODERN then
+    begin
+      Milliseconds := Trunc(Milliseconds / 10);
+      TimeFormatDecimal := TIME_FORMAT_DECIMAL_MODERN;
+    end
+    else
+    begin
+      Milliseconds := Trunc(Milliseconds / 100);
+      TimeFormatDecimal := TIME_FORMAT_DECIMAL_CLASSIC;
+    end;
+
+  Result := (TIME_FORMAT_MAJOR + TimeFormatDecimal).Format([Minutes, Seconds, Milliseconds]);
 end;
 
 

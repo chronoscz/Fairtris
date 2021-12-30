@@ -79,6 +79,7 @@ type
     procedure RenderGameLines();
     procedure RenderGameLevel();
     procedure RenderGameNext();
+    procedure RenderGameTime();
     procedure RenderGameStack();
     procedure RenderGamePiece();
   protected
@@ -1008,6 +1009,17 @@ begin
 end;
 
 
+procedure TRenderer.RenderGameTime();
+begin
+  if Memory.GameModes.Mode in [MODE_SPEEDRUN_QUALS, MODE_SPEEDRUN_MATCH] then
+    RenderText(
+      TIME_X[Memory.Options.Theme],
+      TIME_Y[Memory.Options.Theme],
+      Converter.FramesToTimeString(Memory.Game.SpeedrunTimer)
+    );
+end;
+
+
 procedure TRenderer.RenderGameStack();
 var
   OffsetX, OffsetY, BrickX, BrickY: Integer;
@@ -1783,6 +1795,7 @@ begin
   RenderGameLines();
   RenderGameLevel();
   RenderGameNext();
+  RenderGameTime();
   RenderGameStack();
   RenderGamePiece();
 
@@ -1988,6 +2001,7 @@ begin
   RenderGameLines();
   RenderGameLevel();
   RenderGameNext();
+  RenderGameTime();
   RenderGameStack();
   RenderGamePiece();
 
