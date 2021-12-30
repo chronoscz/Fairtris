@@ -577,6 +577,7 @@ begin
       ITEM_TEXT_TOURNAMENT_QUALS[Memory.TournamentQuals.ItemIndex]
     );
 
+
   RenderText(
     ITEM_X_TOURNAMENT_QUALS[Memory.TournamentQuals.ItemIndex] - ITEM_X_MARKER,
     ITEM_Y_TOURNAMENT_QUALS[Memory.TournamentQuals.ItemIndex],
@@ -596,7 +597,11 @@ begin
         ),
         COLOR_DARK
       ),
-      COLOR_WHITE
+      IfThen(
+        Memory.GameModes.QualsActive,
+        IfThen(Memory.TournamentQuals.ItemIndex > ITEM_TOURNAMENT_QUALS_GENERATOR, COLOR_WHITE, COLOR_DARK),
+        COLOR_WHITE
+      )
     )
   );
 end;
@@ -630,6 +635,23 @@ begin
       COLOR_DARK
     )
   );
+
+  if Memory.GameModes.QualsActive then
+  begin
+    RenderText(
+      ITEM_X_GAME_MODE_REGION,
+      ITEM_Y_GAME_MODE_REGION,
+      ITEM_TEXT_GAME_MODE_REGION_TITLE,
+      COLOR_DARK
+    );
+
+    RenderText(
+      ITEM_X_GAME_MODE_GENERATOR,
+      ITEM_Y_GAME_MODE_GENERATOR,
+      ITEM_TEXT_GAME_MODE_GENERATOR_TITLE,
+      COLOR_DARK
+    );
+  end;
 end;
 
 
@@ -640,9 +662,13 @@ begin
     ITEM_Y_GAME_MODE_REGION,
     ITEM_TEXT_GAME_MODE_REGION[Memory.GameModes.Region],
     IfThen(
-      Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_REGION,
-      COLOR_WHITE,
-      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      Memory.GameModes.QualsActive,
+      COLOR_DARK,
+      IfThen(
+        Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_REGION,
+        COLOR_WHITE,
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      )
     )
   );
 
@@ -651,9 +677,13 @@ begin
     ITEM_Y_GAME_MODE_GENERATOR,
     ITEM_TEXT_GAME_MODE_GENERATOR[Memory.GameModes.Generator],
     IfThen(
-      Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_GENERATOR,
-      COLOR_WHITE,
-      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      Memory.GameModes.QualsActive,
+      COLOR_DARK,
+      IfThen(
+        Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_GENERATOR,
+        COLOR_WHITE,
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      )
     )
   );
 
@@ -804,7 +834,11 @@ begin
         ),
         COLOR_DARK
       ),
-      COLOR_WHITE
+      IfThen(
+        Memory.GameModes.QualsActive,
+        IfThen(Memory.SpeedrunQuals.ItemIndex > ITEM_SPEEDRUN_QUALS_GENERATOR, COLOR_WHITE, COLOR_DARK),
+        COLOR_WHITE
+      )
     )
   );
 end;
@@ -838,6 +872,23 @@ begin
       COLOR_DARK
     )
   );
+
+  if Memory.GameModes.QualsActive then
+  begin
+    RenderText(
+      ITEM_X_GAME_MODE_REGION,
+      ITEM_Y_GAME_MODE_REGION,
+      ITEM_TEXT_GAME_MODE_REGION_TITLE,
+      COLOR_DARK
+    );
+
+    RenderText(
+      ITEM_X_GAME_MODE_GENERATOR,
+      ITEM_Y_GAME_MODE_GENERATOR,
+      ITEM_TEXT_GAME_MODE_GENERATOR_TITLE,
+      COLOR_DARK
+    );
+  end;
 end;
 
 
@@ -848,9 +899,13 @@ begin
     ITEM_Y_GAME_MODE_REGION,
     ITEM_TEXT_GAME_MODE_REGION[Memory.GameModes.Region],
     IfThen(
-      Memory.SpeedrunQuals.ItemIndex = ITEM_SPEEDRUN_QUALS_REGION,
-      COLOR_WHITE,
-      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      Memory.GameModes.QualsActive,
+      COLOR_DARK,
+      IfThen(
+        Memory.SpeedrunQuals.ItemIndex = ITEM_SPEEDRUN_QUALS_REGION,
+        COLOR_WHITE,
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      )
     )
   );
 
@@ -859,9 +914,13 @@ begin
     ITEM_Y_GAME_MODE_GENERATOR,
     ITEM_TEXT_GAME_MODE_GENERATOR[Memory.GameModes.Generator],
     IfThen(
-      Memory.SpeedrunQuals.ItemIndex = ITEM_SPEEDRUN_QUALS_GENERATOR,
-      COLOR_WHITE,
-      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      Memory.GameModes.QualsActive,
+      COLOR_DARK,
+      IfThen(
+        Memory.SpeedrunQuals.ItemIndex = ITEM_SPEEDRUN_QUALS_GENERATOR,
+        COLOR_WHITE,
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      )
     )
   );
 
