@@ -44,7 +44,9 @@ type
     procedure RenderGround(ASceneID: Integer);
   protected
     procedure RenderMenuSelection();
+  protected
     procedure RenderModesSelection();
+    procedure RenderModesItems();
   protected
     procedure RenderGameModeSeed();
     procedure RenderGameModeTimer();
@@ -382,6 +384,48 @@ begin
     ITEM_Y_MODES[Memory.Modes.ItemIndex],
     ITEM_TEXT_MARKER
   );
+end;
+
+
+procedure TRenderer.RenderModesItems();
+begin
+  if not Memory.GameModes.QualsActive then Exit;
+
+  RenderText(
+    ITEM_X_MODES_SINGLE_PLAYER,
+    ITEM_Y_MODES_SINGLE_PLAYER,
+    ITEM_TEXT_MODES_SINGLE_PLAYER,
+    COLOR_DARK
+  );
+
+  RenderText(
+    ITEM_X_MODES_TOURNAMENT_MATCH,
+    ITEM_Y_MODES_TOURNAMENT_MATCH,
+    ITEM_TEXT_MODES_TOURNAMENT_MATCH,
+    COLOR_DARK
+  );
+
+  RenderText(
+    ITEM_X_MODES_SPEEDRUN_MATCH,
+    ITEM_Y_MODES_SPEEDRUN_MATCH,
+    ITEM_TEXT_MODES_SPEEDRUN_MATCH,
+    COLOR_DARK
+  );
+
+  if Memory.GameModes.QualsMode = QUALS_MODE_TOURNAMENT then
+    RenderText(
+      ITEM_X_MODES_SPEEDRUN_QUALS,
+      ITEM_Y_MODES_SPEEDRUN_QUALS,
+      ITEM_TEXT_MODES_SPEEDRUN_QUALS,
+      COLOR_DARK
+    )
+  else
+    RenderText(
+      ITEM_X_MODES_TOURNAMENT_QUALS,
+      ITEM_Y_MODES_TOURNAMENT_QUALS,
+      ITEM_TEXT_MODES_TOURNAMENT_QUALS,
+      COLOR_DARK
+    );
 end;
 
 
@@ -1839,6 +1883,7 @@ end;
 procedure TModernRenderer.RenderModes();
 begin
   RenderModesSelection();
+  RenderModesItems();
 end;
 
 
@@ -2046,6 +2091,7 @@ end;
 procedure TClassicRenderer.RenderModes();
 begin
   RenderModesSelection();
+  RenderModesItems();
 end;
 
 
