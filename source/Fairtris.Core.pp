@@ -666,8 +666,6 @@ begin
     begin
       Memory.Game.State := STATE_UPDATE_TOP_OUT;
       Memory.Game.TopOutTimer := TOP_OUT_FRAMES[Memory.GameModes.Region];
-
-      Sounds.PlaySound(SOUND_COIN);
     end;
 end;
 
@@ -715,7 +713,11 @@ begin
     if HappenedFirstTransition or HappenedLaterTransition then
     begin
       Memory.Game.Level += 1;
-      Sounds.PlaySound(SOUND_TRANSITION, True);
+
+      if Memory.Game.AfterHardKillScreen then
+        Sounds.PlaySound(SOUND_SUCCESS, True)
+      else
+        Sounds.PlaySound(SOUND_TRANSITION, True);
     end;
 
     Memory.Game.Lines += Memory.Game.ClearCount;

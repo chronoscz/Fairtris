@@ -1199,7 +1199,7 @@ const
   );
 
 const
-  KILLSCREEN_LINES_SPEEDRUN = 190;
+  KILLSCREEN_LINES_SPEEDRUN = 20;
 
 
 const
