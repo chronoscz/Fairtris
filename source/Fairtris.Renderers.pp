@@ -431,7 +431,11 @@ begin
     RenderText(
       ITEM_X_GAME_MODE_PARAM,
       ITEM_Y_GAME_MODE_TIMER,
-      Memory.GameModes.TimerData,
+      IfThen(
+        Memory.GameModes.QualsActive,
+        Converter.FramesToTimerString(Memory.GameModes.QualsRemaining, True),
+        Memory.GameModes.TimerData
+      ),
       IfThen(
         Memory.GameModes.TimerData = TIMER_DEFAULT_DATA,
         COLOR_DARK,
