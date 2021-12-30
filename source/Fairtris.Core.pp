@@ -505,7 +505,7 @@ begin
   begin
     Memory.Game.SpeedrunTimer += 1;
 
-    if Converter.TimeTooLong(Memory.Game.SpeedrunTimer) then
+    if Converter.IsTimeTooLong(Memory.Game.SpeedrunTimer) then
     begin
       Memory.Game.SpeedrunTimer -= 1;
 
