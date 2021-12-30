@@ -1806,7 +1806,10 @@ begin
   if InputMenuAccepted() or Input.Device.Start.JustPressed or Input.Keyboard.Start.JustPressed then
   case Memory.Pause.ItemIndex of
     ITEM_PAUSE_RESUME:
-      FScene.Current := Memory.Pause.FromScene;
+      if not Memory.GameModes.IsQuals then
+        FScene.Current := Memory.Pause.FromScene
+      else
+        Sounds.PlaySound(SOUND_HUM);
     ITEM_PAUSE_RESTART:
     begin
       FScene.Current := Memory.Game.FromScene;

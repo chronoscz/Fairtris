@@ -1260,7 +1260,15 @@ begin
     ITEM_TEXT_MARKER,
     IfThen(
       Memory.Pause.ItemIndex in [ITEM_PAUSE_RESUME, ITEM_PAUSE_RESTART],
-      IfThen(Input.Device.Connected, COLOR_WHITE, COLOR_DARK),
+      IfThen(
+        Input.Device.Connected,
+        IfThen(
+          Memory.GameModes.IsQuals,
+          IfThen(Memory.Pause.ItemIndex = ITEM_PAUSE_RESUME, COLOR_DARK, COLOR_WHITE),
+          COLOR_WHITE
+        ),
+        COLOR_DARK
+      ),
       COLOR_WHITE
     )
   );
@@ -1276,9 +1284,13 @@ begin
     IfThen(
       Input.Device.Connected,
       IfThen(
-        Memory.Pause.ItemIndex = ITEM_PAUSE_RESUME,
-        COLOR_WHITE,
-        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+        Memory.GameModes.IsQuals,
+        COLOR_DARK,
+        IfThen(
+          Memory.Pause.ItemIndex = ITEM_PAUSE_RESUME,
+          COLOR_WHITE,
+          IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+        )
       ),
       COLOR_DARK
     )
