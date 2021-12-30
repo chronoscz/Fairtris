@@ -530,7 +530,7 @@ begin
       Memory.Game.SpeedrunTimer -= 1;
 
       Memory.Game.State := STATE_UPDATE_TOP_OUT;
-      Memory.Game.TopOutTimer := TOP_OUT_FRAMES[Memory.GameModes.Region];
+      Memory.Game.TopOutTimer := TOP_OUT_FRAMES[False, Memory.GameModes.Region];
 
       Sounds.PlaySound(SOUND_TOP_OUT, True);
     end;
@@ -581,7 +581,7 @@ begin
   else
   begin
     Memory.Game.State := STATE_UPDATE_TOP_OUT;
-    Memory.Game.TopOutTimer := TOP_OUT_FRAMES[Memory.GameModes.Region];
+    Memory.Game.TopOutTimer := TOP_OUT_FRAMES[False, Memory.GameModes.Region];
 
     Sounds.PlaySound(SOUND_TOP_OUT, True);
   end;
@@ -665,7 +665,7 @@ begin
     else
     begin
       Memory.Game.State := STATE_UPDATE_TOP_OUT;
-      Memory.Game.TopOutTimer := TOP_OUT_FRAMES[Memory.GameModes.Region];
+      Memory.Game.TopOutTimer := TOP_OUT_FRAMES[True, Memory.GameModes.Region];
     end;
 end;
 
