@@ -660,7 +660,15 @@ begin
     Memory.Game.LowerTimer -= 1;
   end
   else
-    Memory.Game.State := STATE_PIECE_SPAWN;
+    if not Memory.GameModes.IsMatch or not Memory.Game.AfterHardKillScreen then
+      Memory.Game.State := STATE_PIECE_SPAWN
+    else
+    begin
+      Memory.Game.State := STATE_UPDATE_TOP_OUT;
+      Memory.Game.TopOutTimer := TOP_OUT_FRAMES[Memory.GameModes.Region];
+
+      Sounds.PlaySound(SOUND_COIN);
+    end;
 end;
 
 
@@ -684,8 +692,21 @@ begin
         HappenedLaterTransition := True;
 
       if HappenedLaterTransition then
+      begin
         if Memory.Game.Lines + Memory.Game.ClearCount >= KILLSCREEN_LINES[Memory.GameModes.Region, Memory.GameModes.Level] then
           HappenedKillScreen := True;
+
+        if Memory.GameModes.IsMatch then
+        begin
+          if Memory.GameModes.IsTournament and Memory.GameModes.IsMatch then
+            if Memory.Game.Lines + Memory.Game.ClearCount >= KILLSCREEN_LINES_TOURNAMENT[Memory.GameModes.Region, Memory.GameModes.Level] then
+              Memory.Game.AfterHardKillScreen := True;
+
+          if Memory.GameModes.IsSpeedrun then
+            if Memory.Game.Lines + Memory.Game.ClearCount >= KILLSCREEN_LINES_SPEEDRUN then
+              Memory.Game.AfterHardKillScreen := True;
+        end;
+      end;
     end;
 
     if HappenedFirstTransition then
