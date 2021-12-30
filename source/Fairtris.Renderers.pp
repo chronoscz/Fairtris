@@ -976,7 +976,11 @@ begin
   RenderText(
     TOP_X[Memory.Options.Theme],
     TOP_Y[Memory.Options.Theme],
-    Converter.ScoreToString(Memory.Game.Best)
+    IfThen(
+      Memory.GameModes.IsQuals,
+      Converter.FramesToTimerString(Memory.GameModes.TimeRemaining),
+      Converter.ScoreToString(Memory.Game.Best)
+    )
   );
 end;
 
