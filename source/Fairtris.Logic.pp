@@ -1662,7 +1662,7 @@ end;
 procedure TLogic.UpdateGameScene();
 begin
   FScene.Current := IfThen(
-    Memory.GameModes.Mode in [MODE_SPEEDRUN_QUALS, MODE_SPEEDRUN_MATCH],
+    Memory.GameModes.IsSpeedrun,
     IfThen(Memory.Game.Flashing, SCENE_SPEEDRUN_FLASH, SCENE_SPEEDRUN_NORMAL),
     IfThen(Memory.Game.Flashing, SCENE_GAME_FLASH, SCENE_GAME_NORMAL)
   );

@@ -960,7 +960,7 @@ end;
 
 procedure TRenderer.RenderGameBestTitle();
 begin
-  if Memory.GameModes.Mode in [MODE_TOURNAMENT_QUALS, MODE_SPEEDRUN_QUALS] then
+  if Memory.GameModes.IsQuals then
     RenderText(
       TOP_TITLE_X[Memory.Options.Theme],
       TOP_TITLE_Y[Memory.Options.Theme],
@@ -1025,7 +1025,7 @@ end;
 
 procedure TRenderer.RenderGameTime();
 begin
-  if Memory.GameModes.Mode in [MODE_SPEEDRUN_QUALS, MODE_SPEEDRUN_MATCH] then
+  if Memory.GameModes.IsSpeedrun then
     RenderText(
       TIME_X[Memory.Options.Theme],
       TIME_Y[Memory.Options.Theme],
