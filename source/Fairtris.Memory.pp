@@ -105,6 +105,11 @@ type
 
 type
   TGameModesMemory = class(TObject)
+  private
+    function GetIsQuals(): Boolean;
+    function GetIsMatch(): Boolean;
+    function GetIsTournament(): Boolean;
+    function GetIsSpeedrun(): Boolean;
   public      
     procedure Initialize();
   public
@@ -122,6 +127,11 @@ type
     TimerChanging: Boolean;
   public
     TimeRemaining: Integer;
+  public
+    property IsQuals: Boolean read GetIsQuals;
+    property IsMatch: Boolean read GetIsMatch;
+    property IsTournament: Boolean read GetIsTournament;
+    property IsSpeedrun: Boolean read GetIsSpeedrun;
   end;
 
 
@@ -403,6 +413,30 @@ procedure TSpeedrunMatchMemory.Initialize();
 begin
   ItemIndex := ITEM_SPEEDRUN_MATCH_START;
   Autorepeat := 0;
+end;
+
+
+function TGameModesMemory.GetIsQuals(): Boolean;
+begin
+  Result := Mode in [MODE_TOURNAMENT_QUALS, MODE_SPEEDRUN_QUALS];
+end;
+
+
+function TGameModesMemory.GetIsMatch(): Boolean;
+begin
+  Result := Mode in [MODE_TOURNAMENT_MATCH, MODE_SPEEDRUN_MATCH];
+end;
+
+
+function TGameModesMemory.GetIsTournament(): Boolean;
+begin
+  Result := Mode in [MODE_TOURNAMENT_QUALS, MODE_TOURNAMENT_MATCH];
+end;
+
+
+function TGameModesMemory.GetIsSpeedrun(): Boolean;
+begin
+  Result := Mode in [MODE_SPEEDRUN_QUALS, MODE_SPEEDRUN_MATCH];
 end;
 
 
