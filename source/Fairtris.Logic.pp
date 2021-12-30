@@ -1122,16 +1122,22 @@ begin
   if Memory.TournamentQuals.ItemIndex <> ITEM_TOURNAMENT_QUALS_REGION then Exit;
 
   if InputOptionSetPrev() then
-  begin
-    UpdateItemIndex(Memory.GameModes.Region, REGION_COUNT, ITEM_PREV);
-    Sounds.PlaySound(SOUND_SHIFT);
-  end;
+    if Memory.GameModes.QualsActive then
+      Sounds.PlaySound(SOUND_HUM)
+    else
+    begin
+      UpdateItemIndex(Memory.GameModes.Region, REGION_COUNT, ITEM_PREV);
+      Sounds.PlaySound(SOUND_SHIFT);
+    end;
 
   if InputOptionSetNext() then
-  begin
-    UpdateItemIndex(Memory.GameModes.Region, REGION_COUNT, ITEM_NEXT);
-    Sounds.PlaySound(SOUND_SHIFT);
-  end;
+    if Memory.GameModes.QualsActive then
+      Sounds.PlaySound(SOUND_HUM)
+    else
+    begin
+      UpdateItemIndex(Memory.GameModes.Region, REGION_COUNT, ITEM_NEXT);
+      Sounds.PlaySound(SOUND_SHIFT);
+    end;
 
   Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.GameModes.Region];
 end;
@@ -1142,16 +1148,22 @@ begin
   if Memory.TournamentQuals.ItemIndex <> ITEM_TOURNAMENT_QUALS_GENERATOR then Exit;
 
   if InputOptionSetPrev() then
-  begin
-    UpdateItemIndex(Memory.GameModes.Generator, GENERATOR_COUNT, ITEM_PREV);
-    Sounds.PlaySound(SOUND_SHIFT);
-  end;
+    if Memory.GameModes.QualsActive then
+      Sounds.PlaySound(SOUND_HUM)
+    else
+    begin
+      UpdateItemIndex(Memory.GameModes.Generator, GENERATOR_COUNT, ITEM_PREV);
+      Sounds.PlaySound(SOUND_SHIFT);
+    end;
 
   if InputOptionSetNext() then
-  begin
-    UpdateItemIndex(Memory.GameModes.Generator, GENERATOR_COUNT, ITEM_NEXT);
-    Sounds.PlaySound(SOUND_SHIFT);
-  end;
+    if Memory.GameModes.QualsActive then
+      Sounds.PlaySound(SOUND_HUM)
+    else
+    begin
+      UpdateItemIndex(Memory.GameModes.Generator, GENERATOR_COUNT, ITEM_NEXT);
+      Sounds.PlaySound(SOUND_SHIFT);
+    end;
 
   Generators.GeneratorID := Memory.GameModes.Generator;
 end;
@@ -1463,16 +1475,22 @@ begin
   if Memory.SpeedrunQuals.ItemIndex <> ITEM_SPEEDRUN_QUALS_REGION then Exit;
 
   if InputOptionSetPrev() then
-  begin
-    UpdateItemIndex(Memory.GameModes.Region, REGION_COUNT, ITEM_PREV);
-    Sounds.PlaySound(SOUND_SHIFT);
-  end;
+    if Memory.GameModes.QualsActive then
+      Sounds.PlaySound(SOUND_HUM)
+    else
+    begin
+      UpdateItemIndex(Memory.GameModes.Region, REGION_COUNT, ITEM_PREV);
+      Sounds.PlaySound(SOUND_SHIFT);
+    end;
 
   if InputOptionSetNext() then
-  begin
-    UpdateItemIndex(Memory.GameModes.Region, REGION_COUNT, ITEM_NEXT);
-    Sounds.PlaySound(SOUND_SHIFT);
-  end;
+    if Memory.GameModes.QualsActive then
+      Sounds.PlaySound(SOUND_HUM)
+    else
+    begin
+      UpdateItemIndex(Memory.GameModes.Region, REGION_COUNT, ITEM_NEXT);
+      Sounds.PlaySound(SOUND_SHIFT);
+    end;
 
   Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.GameModes.Region];
 end;
@@ -1483,16 +1501,22 @@ begin
   if Memory.SpeedrunQuals.ItemIndex <> ITEM_SPEEDRUN_QUALS_GENERATOR then Exit;
 
   if InputOptionSetPrev() then
-  begin
-    UpdateItemIndex(Memory.GameModes.Generator, GENERATOR_COUNT, ITEM_PREV);
-    Sounds.PlaySound(SOUND_SHIFT);
-  end;
+    if Memory.GameModes.QualsActive then
+      Sounds.PlaySound(SOUND_HUM)
+    else
+    begin
+      UpdateItemIndex(Memory.GameModes.Generator, GENERATOR_COUNT, ITEM_PREV);
+      Sounds.PlaySound(SOUND_SHIFT);
+    end;
 
   if InputOptionSetNext() then
-  begin
-    UpdateItemIndex(Memory.GameModes.Generator, GENERATOR_COUNT, ITEM_NEXT);
-    Sounds.PlaySound(SOUND_SHIFT);
-  end;
+    if Memory.GameModes.QualsActive then
+      Sounds.PlaySound(SOUND_HUM)
+    else
+    begin
+      UpdateItemIndex(Memory.GameModes.Generator, GENERATOR_COUNT, ITEM_NEXT);
+      Sounds.PlaySound(SOUND_SHIFT);
+    end;
 
   Generators.GeneratorID := Memory.GameModes.Generator;
 end;
