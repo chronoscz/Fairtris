@@ -85,6 +85,7 @@ uses
   Fairtris.Sounds,
   Fairtris.BestScores,
   Fairtris.Generators,
+  Fairtris.Converter,
   Fairtris.Utils,
   Fairtris.Arrays,
   Fairtris.Constants;
@@ -496,8 +497,21 @@ procedure TCore.UpdateCommon();
 begin
   Generators.Generator.Step();
 
-  if Memory.Game.State <> STATE_UPDATE_TOP_OUT then
-    Memory.Game.SpeedrunTimer += 1;
+  if Memory.GameModes.IsSpeedrun then
+    if Memory.Game.State <> STATE_UPDATE_TOP_OUT then
+    begin
+      Memory.Game.SpeedrunTimer += 1;
+
+      if Converter.TimeTooLong(Memory.Game.SpeedrunTimer) then
+      begin
+        Memory.Game.SpeedrunTimer -= 1;
+
+        Memory.Game.State := STATE_UPDATE_TOP_OUT;
+        Memory.Game.TopOutTimer := TOP_OUT_FRAMES[Memory.GameModes.Region];
+
+        Sounds.PlaySound(SOUND_TOP_OUT, True);
+      end;
+    end;
 
   if Memory.Game.GainTimer > 0 then
     Memory.Game.GainTimer -= 1;

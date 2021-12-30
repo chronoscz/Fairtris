@@ -51,6 +51,8 @@ type
   public
     function StringToTimerSeconds(const ATimerEditor: String): Integer;
     function StringToTimerFrames(const ATimerEditor: String): Integer;
+  public
+    function TimeTooLong(AFramesCount: Integer): Boolean;
   end;
 
 
@@ -276,6 +278,15 @@ end;
 function TConverter.StringToTimerFrames(const ATimerEditor: String): Integer;
 begin
   Result := StringToTimerSeconds(ATimerEditor) * CLOCK_FRAMERATE_LIMIT[Memory.GameModes.Region];
+end;
+
+
+function TConverter.TimeTooLong(AFramesCount: Integer): Boolean;
+var
+  Hours, Minutes, Seconds, Milliseconds: Integer;
+begin
+  FramesToTimeComponents(AFramesCount, Hours, Minutes, Seconds, Milliseconds);
+  Result := Minutes > 9;
 end;
 
 
