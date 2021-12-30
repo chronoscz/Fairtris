@@ -1042,7 +1042,16 @@ begin
     RenderText(
       TIME_X[Memory.Options.Theme],
       TIME_Y[Memory.Options.Theme],
-      Converter.FramesToTimeString(Memory.Game.SpeedrunTimer)
+      Converter.FramesToTimeString(Memory.Game.SpeedrunTimer),
+      IfThen(
+        Memory.Game.State <> STATE_UPDATE_TOP_OUT,
+        IfThen(
+          Converter.IsTimeRunningOut(Memory.Game.SpeedrunTimer),
+          IfThen(Clock.FrameIndexInHalf, COLOR_DARK, COLOR_WHITE),
+          COLOR_WHITE
+        ),
+        COLOR_WHITE
+      )
     );
 end;
 

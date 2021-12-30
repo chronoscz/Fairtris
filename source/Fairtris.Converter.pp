@@ -53,6 +53,8 @@ type
     function StringToTimerFrames(const ATimer: String): Integer;
   public
     function IsTimeTooLong(AFramesCount: Integer): Boolean;
+  public
+    function IsTimeRunningOut(AFramesCount: Integer): Boolean;
     function IsTimerRunningOut(AFramesCount: Integer): Boolean;
   end;
 
@@ -291,12 +293,21 @@ begin
 end;
 
 
+function TConverter.IsTimeRunningOut(AFramesCount: Integer): Boolean;
+var
+  Hours, Minutes, Seconds, Milliseconds: Integer;
+begin
+  FramesToTimeComponents(AFramesCount, Hours, Minutes, Seconds, Milliseconds);
+  Result := (Minutes = 9) and (Seconds > 49);
+end;
+
+
 function TConverter.IsTimerRunningOut(AFramesCount: Integer): Boolean;
 var
   Hours, Minutes, Seconds, Milliseconds: Integer;
 begin
   FramesToTimeComponents(AFramesCount, Hours, Minutes, Seconds, Milliseconds);
-  Result := (Hours = 0) and (Minutes = 0) and (Seconds < 5) and ((Seconds > 0) or (Milliseconds > 0));
+  Result := (Hours = 0) and (Minutes = 0) and (Seconds < 10) and ((Seconds > 0) or (Milliseconds > 0));
 end;
 
 
