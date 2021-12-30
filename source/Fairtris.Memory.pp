@@ -127,7 +127,7 @@ type
     TimerEditor: String;
     TimerChanging: Boolean;
   public
-    TimeRemaining: Integer;
+    QualsRemaining: Integer;
   public
     property IsSingle: Boolean read GetIsSingle;
     property IsQuals: Boolean read GetIsQuals;

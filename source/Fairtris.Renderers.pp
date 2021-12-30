@@ -978,7 +978,7 @@ begin
     TOP_Y[Memory.Options.Theme],
     IfThen(
       Memory.GameModes.IsQuals,
-      Converter.FramesToTimerString(Memory.GameModes.TimeRemaining),
+      Converter.FramesToTimerString(Memory.GameModes.QualsRemaining),
       Converter.ScoreToString(Memory.Game.Best)
     )
   );
