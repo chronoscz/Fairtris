@@ -33,7 +33,6 @@ uses
   function GetG(AColor: Integer): UInt8;
   function GetB(AColor: Integer): UInt8;
 
-  function GenerateRandomHexDigit(): Char;
   function GenerateRandomSeed(): String;
 
 
@@ -77,15 +76,9 @@ begin
 end;
 
 
-function GenerateRandomHexDigit(): Char;
+function GenerateRandomSeed(): String;
 const
   SEED_DIGITS = '0123456789ABCDEF';
-begin
-  Result := SEED_DIGITS.ToCharArray()[Random(SEED_DIGITS.Length)];
-end;
-
-
-function GenerateRandomSeed(): String;
 var
   SeedIsValid: Boolean;
   Digit: Char;
@@ -95,7 +88,7 @@ begin
     SeedIsValid := True;
 
     while Result.Length < SEED_LENGTH do
-      Result += GenerateRandomHexDigit();
+      Result += SEED_DIGITS.ToCharArray()[Random(SEED_DIGITS.Length)];
 
     for Digit in Result do
       if Result.CountChar(Digit) > 2 then
