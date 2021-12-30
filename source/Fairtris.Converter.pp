@@ -46,11 +46,11 @@ type
     function FramesToTimeString(AFramesCount: Integer; AIsBestScore: Boolean = False): String;
     function FramesToTimerString(AFramesCount: Integer; AIsEditor: Boolean = False): String;
   public
-    procedure SeedEditorToStrings(const ASeedEditor: String; out ADigits, APlaceholder: String);
-    procedure TimerEditorToStrings(const ATimerEditor: String; out ADigits, APlaceholder: String);
+    procedure SeedEditorToStrings(const ASeed: String; out ADigits, APlaceholder: String);
+    procedure TimerEditorToStrings(const ATimer: String; out ADigits, APlaceholder: String);
   public
-    function StringToTimerSeconds(const ATimerEditor: String): Integer;
-    function StringToTimerFrames(const ATimerEditor: String): Integer;
+    function StringToTimerSeconds(const ATimer: String): Integer;
+    function StringToTimerFrames(const ATimer: String): Integer;
   public
     function TimeTooLong(AFramesCount: Integer): Boolean;
   end;
@@ -249,35 +249,35 @@ begin
 end;
 
 
-procedure TConverter.SeedEditorToStrings(const ASeedEditor: String; out ADigits, APlaceholder: String);
+procedure TConverter.SeedEditorToStrings(const ASeed: String; out ADigits, APlaceholder: String);
 begin
-  ADigits := ASeedEditor;
+  ADigits := ASeed;
   APlaceholder := SEED_PLACEHOLDER.Substring(ADigits.Length);
 end;
 
 
-procedure TConverter.TimerEditorToStrings(const ATimerEditor: String; out ADigits, APlaceholder: String);
+procedure TConverter.TimerEditorToStrings(const ATimer: String; out ADigits, APlaceholder: String);
 begin
-  ADigits := ATimerEditor;
+  ADigits := ATimer;
   APlaceholder := TIMER_PLACEHOLDER.Substring(ADigits.Length);
 end;
 
 
-function TConverter.StringToTimerSeconds(const ATimerEditor: String): Integer;
+function TConverter.StringToTimerSeconds(const ATimer: String): Integer;
 var
   Hours, Minutes, Seconds: Integer;
 begin
-  Hours   := ATimerEditor.Substring(0, 1).ToInteger();
-  Minutes := ATimerEditor.Substring(2, 2).ToInteger();
-  Seconds := ATimerEditor.Substring(5, 2).ToInteger();
+  Hours   := ATimer.Substring(0, 1).ToInteger();
+  Minutes := ATimer.Substring(2, 2).ToInteger();
+  Seconds := ATimer.Substring(5, 2).ToInteger();
 
   Result := Hours * 3600 + Minutes * 60 + Seconds;
 end;
 
 
-function TConverter.StringToTimerFrames(const ATimerEditor: String): Integer;
+function TConverter.StringToTimerFrames(const ATimer: String): Integer;
 begin
-  Result := StringToTimerSeconds(ATimerEditor) * CLOCK_FRAMERATE_LIMIT[Memory.GameModes.Region];
+  Result := StringToTimerSeconds(ATimer) * CLOCK_FRAMERATE_LIMIT[Memory.GameModes.Region];
 end;
 
 
