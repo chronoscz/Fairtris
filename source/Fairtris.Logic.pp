@@ -2338,6 +2338,20 @@ begin
 
   if not Memory.Game.Started then
     Generators.Shuffle();
+
+  if Memory.GameModes.QualsActive then
+    if Memory.GameModes.QualsRemaining > 0 then
+    begin
+      Memory.GameModes.QualsRemaining -= 1;
+
+      if Memory.GameModes.QualsRemaining = 0 then
+      begin
+        Memory.GameModes.QualsActive := False;
+        Memory.GameModes.QualsMode := QUALS_MODE_UNKNOWN;
+
+        Sounds.PlaySound(SOUND_COIN);
+      end;
+    end;
 end;
 
 
