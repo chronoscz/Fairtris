@@ -382,7 +382,20 @@ begin
   RenderText(
     ITEM_X_MODES[Memory.Modes.ItemIndex] - ITEM_X_MARKER,
     ITEM_Y_MODES[Memory.Modes.ItemIndex],
-    ITEM_TEXT_MARKER
+    ITEM_TEXT_MARKER,
+    IfThen(
+      Memory.GameModes.QualsActive,
+      IfThen(
+        (Memory.Modes.ItemIndex = ITEM_MODES_TOURNAMENT_QUALS) and (Memory.GameModes.QualsMode = QUALS_MODE_TOURNAMENT),
+        COLOR_WHITE,
+        IfThen(
+          (Memory.Modes.ItemIndex = ITEM_MODES_SPEEDRUN_QUALS) and (Memory.GameModes.QualsMode = QUALS_MODE_SPEEDRUN),
+          COLOR_WHITE,
+          IfThen(Memory.Modes.ItemIndex = ITEM_MODES_BACK, COLOR_WHITE, COLOR_DARK)
+        )
+      ),
+      COLOR_WHITE
+    )
   );
 end;
 
