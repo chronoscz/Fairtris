@@ -57,9 +57,9 @@ type
     procedure UpdatePieceControlDrop();
     procedure UpdatePieceControlDelay();
   private
-    procedure UpdateCommonSpeedrun();
     procedure UpdateCommonGain();
     procedure UpdateCommonNext();
+    procedure UpdateCommonSpeedrun();
   private
     procedure UpdateCommon();
     procedure UpdatePieceControl();
@@ -497,6 +497,26 @@ begin
 end;
 
 
+procedure TCore.UpdateCommonGain();
+begin
+  if Memory.Game.GainTimer > 0 then
+    Memory.Game.GainTimer -= 1;
+end;
+
+
+procedure TCore.UpdateCommonNext();
+begin
+  if Input.Device.Select.JustPressed then
+    if Memory.GameModes.IsSingle then
+    begin
+      Memory.Game.NextVisible := not Memory.Game.NextVisible;
+      Sounds.PlaySound(SOUND_COIN);
+    end
+    else
+      Sounds.PlaySound(SOUND_HUM);
+end;
+
+
 procedure TCore.UpdateCommonSpeedrun();
 begin
   if not Memory.GameModes.IsSpeedrun then Exit;
@@ -518,33 +538,13 @@ begin
 end;
 
 
-procedure TCore.UpdateCommonGain();
-begin
-  if Memory.Game.GainTimer > 0 then
-    Memory.Game.GainTimer -= 1;
-end;
-
-
-procedure TCore.UpdateCommonNext();
-begin
-  if Input.Device.Select.JustPressed then
-    if Memory.GameModes.IsSingle then
-    begin
-      Memory.Game.NextVisible := not Memory.Game.NextVisible;
-      Sounds.PlaySound(SOUND_COIN);
-    end
-    else
-      Sounds.PlaySound(SOUND_HUM);
-end;
-
-
 procedure TCore.UpdateCommon();
 begin
   Generators.Generator.Step();
 
-  UpdateCommonSpeedrun();
   UpdateCommonGain();
   UpdateCommonNext();
+  UpdateCommonSpeedrun();
 end;
 
 
