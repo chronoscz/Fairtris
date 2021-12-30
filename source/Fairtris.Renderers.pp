@@ -74,6 +74,7 @@ type
     procedure RenderSpeedrunMatchParameters();
     procedure RenderSpeedrunMatchBestScores();
   protected
+    procedure RenderGameBestTitle();
     procedure RenderGameBest();
     procedure RenderGameScore();
     procedure RenderGameLines();
@@ -957,6 +958,19 @@ begin
 end;
 
 
+procedure TRenderer.RenderGameBestTitle();
+begin
+  if Memory.GameModes.Mode in [MODE_TOURNAMENT_QUALS, MODE_SPEEDRUN_QUALS] then
+    RenderText(
+      TOP_TITLE_X[Memory.Options.Theme],
+      TOP_TITLE_Y[Memory.Options.Theme],
+      ITEM_TEXT_QUALS_LEFT,
+      COLOR_WHITE,
+      IfThen(Memory.Options.Theme = THEME_MODERN, ALIGN_RIGHT, ALIGN_LEFT)
+    );
+end;
+
+
 procedure TRenderer.RenderGameBest();
 begin
   RenderText(
@@ -1790,6 +1804,7 @@ end;
 
 procedure TModernRenderer.RenderGame();
 begin
+  RenderGameBestTitle();
   RenderGameBest();
   RenderGameScore();
   RenderGameLines();
@@ -1996,6 +2011,7 @@ end;
 
 procedure TClassicRenderer.RenderGame();
 begin
+  RenderGameBestTitle();
   RenderGameBest();
   RenderGameScore();
   RenderGameLines();

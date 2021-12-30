@@ -800,6 +800,10 @@ const
 
 
 const
+  TOP_TITLE_X: array [THEME_FIRST .. THEME_LAST] of Integer = (72, 192);
+  TOP_TITLE_Y: array [THEME_FIRST .. THEME_LAST] of Integer = (40, 32);
+
+const
   TOP_X: array [THEME_FIRST .. THEME_LAST] of Integer = (16, 192);
   TOP_Y: array [THEME_FIRST .. THEME_LAST] of Integer = (50, 40);
 

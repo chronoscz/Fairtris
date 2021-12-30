@@ -492,7 +492,8 @@ const
 
 
 const
-  ITEM_TEXT_MARKER = '>';
+  ITEM_TEXT_MARKER     = '>';
+  ITEM_TEXT_QUALS_LEFT = 'LEFT';
 
 const
   ITEM_TEXT_MENU_PLAY    = 'PLAY';
