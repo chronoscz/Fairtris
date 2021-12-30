@@ -871,7 +871,8 @@ var
   ScanCode: UInt8 = KEYBOARD_SCANCODE_KEY_NOT_MAPPED;
   DigitNew, DigitMax: Char;
 begin
-  if InputOptionPaste() and PasteTimerFromClipboard() then Exit;
+  if not Memory.GameModes.QualsActive then
+    if InputOptionPaste() and PasteTimerFromClipboard() then Exit;
 
   if not Memory.GameModes.TimerChanging then Exit;
 
@@ -910,7 +911,16 @@ begin
       Memory.GameModes.TimerChanging := False;
 
       if Converter.StringToTimerSeconds(Memory.GameModes.TimerEditor) = 0 then
-        Sounds.PlaySound(SOUND_BURN)
+      begin
+        if Memory.GameModes.QualsActive then
+        begin
+          Memory.GameModes.QualsActive := False;
+          Memory.GameModes.QualsMode := QUALS_MODE_DEFAULT;
+          Memory.GameModes.QualsRemaining := 0;
+        end;
+
+        Sounds.PlaySound(SOUND_BURN);
+      end
       else
         Sounds.PlaySound(SOUND_TETRIS);
     end;
@@ -2347,7 +2357,7 @@ begin
       if Memory.GameModes.QualsRemaining = 0 then
       begin
         Memory.GameModes.QualsActive := False;
-        Memory.GameModes.QualsMode := QUALS_MODE_UNKNOWN;
+        Memory.GameModes.QualsMode := QUALS_MODE_DEFAULT;
         Memory.GameModes.TimerData := TIMER_DEFAULT_DATA;
 
         Sounds.PlaySound(SOUND_COIN);
