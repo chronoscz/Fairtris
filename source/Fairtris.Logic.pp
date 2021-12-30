@@ -1234,6 +1234,13 @@ begin
     ITEM_TOURNAMENT_QUALS_START:
       if Memory.GameModes.TimerData <> TIMER_DEFAULT_DATA then
       begin
+        if not Memory.GameModes.QualsActive then
+        begin
+          Memory.GameModes.QualsActive := True;
+          Memory.GameModes.QualsMode := QUALS_MODE_TOURNAMENT;
+          Memory.GameModes.QualsRemaining := Converter.StringToTimerFrames(Memory.GameModes.TimerData);
+        end;
+
         FScene.Current := SCENE_GAME_NORMAL;
         Sounds.PlaySound(SOUND_START);
       end
@@ -1520,6 +1527,13 @@ begin
     ITEM_SPEEDRUN_QUALS_START:
       if Memory.GameModes.TimerData <> TIMER_DEFAULT_DATA then
       begin
+        if not Memory.GameModes.QualsActive then
+        begin
+          Memory.GameModes.QualsActive := True;
+          Memory.GameModes.QualsMode := QUALS_MODE_SPEEDRUN;
+          Memory.GameModes.QualsRemaining := Converter.StringToTimerFrames(Memory.GameModes.TimerData);
+        end;
+
         FScene.Current := SCENE_SPEEDRUN_NORMAL;
         Sounds.PlaySound(SOUND_START);
       end
