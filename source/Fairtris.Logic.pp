@@ -2348,6 +2348,7 @@ begin
       begin
         Memory.GameModes.QualsActive := False;
         Memory.GameModes.QualsMode := QUALS_MODE_UNKNOWN;
+        Memory.GameModes.TimerData := TIMER_DEFAULT_DATA;
 
         Sounds.PlaySound(SOUND_COIN);
       end;
