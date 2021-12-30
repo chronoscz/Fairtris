@@ -907,22 +907,32 @@ begin
     begin
       Input.Fixed.Accept.Validate();
 
-      Memory.GameModes.TimerData := Memory.GameModes.TimerEditor;
-      Memory.GameModes.TimerChanging := False;
-
-      if Converter.StringToTimerSeconds(Memory.GameModes.TimerEditor) = 0 then
+      if Memory.GameModes.QualsActive then
       begin
-        if Memory.GameModes.QualsActive then
+        if Converter.StringToTimerSeconds(Memory.GameModes.TimerEditor) = 0 then
         begin
+          Memory.GameModes.TimerData := Memory.GameModes.TimerEditor;
+          Memory.GameModes.TimerChanging := False;
+
           Memory.GameModes.QualsActive := False;
           Memory.GameModes.QualsMode := QUALS_MODE_DEFAULT;
           Memory.GameModes.QualsRemaining := 0;
-        end;
 
-        Sounds.PlaySound(SOUND_BURN);
+          Sounds.PlaySound(SOUND_BURN);
+        end
+        else
+          Sounds.PlaySound(SOUND_HUM);
       end
       else
-        Sounds.PlaySound(SOUND_TETRIS);
+      begin
+        Memory.GameModes.TimerData := Memory.GameModes.TimerEditor;
+        Memory.GameModes.TimerChanging := False;
+
+        if Converter.StringToTimerSeconds(Memory.GameModes.TimerEditor) = 0 then
+          Sounds.PlaySound(SOUND_BURN)
+        else
+          Sounds.PlaySound(SOUND_TETRIS);
+      end;
     end;
 
   if Input.Fixed.Clear.JustPressed then
