@@ -106,6 +106,7 @@ type
 type
   TGameModesMemory = class(TObject)
   private
+    function GetIsSingle(): Boolean;
     function GetIsQuals(): Boolean;
     function GetIsMatch(): Boolean;
     function GetIsTournament(): Boolean;
@@ -128,6 +129,7 @@ type
   public
     TimeRemaining: Integer;
   public
+    property IsSingle: Boolean read GetIsSingle;
     property IsQuals: Boolean read GetIsQuals;
     property IsMatch: Boolean read GetIsMatch;
     property IsTournament: Boolean read GetIsTournament;
@@ -413,6 +415,12 @@ procedure TSpeedrunMatchMemory.Initialize();
 begin
   ItemIndex := ITEM_SPEEDRUN_MATCH_START;
   Autorepeat := 0;
+end;
+
+
+function TGameModesMemory.GetIsSingle(): Boolean;
+begin
+  Result := Mode = MODE_SINGLE_PLAYER;
 end;
 
 

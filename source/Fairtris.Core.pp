@@ -528,10 +528,13 @@ end;
 procedure TCore.UpdateCommonNext();
 begin
   if Input.Device.Select.JustPressed then
-  begin
-    Memory.Game.NextVisible := not Memory.Game.NextVisible;
-    Sounds.PlaySound(SOUND_COIN);
-  end;
+    if Memory.GameModes.IsSingle then
+    begin
+      Memory.Game.NextVisible := not Memory.Game.NextVisible;
+      Sounds.PlaySound(SOUND_COIN);
+    end
+    else
+      Sounds.PlaySound(SOUND_HUM);
 end;
 
 
@@ -771,6 +774,9 @@ begin
   Memory.Game.Stats[Memory.Game.PieceID] += 1;
 
   Memory.Game.Best := BestScores[Memory.GameModes.Region][Memory.GameModes.Generator].BestScore;
+
+  if not Memory.GameModes.IsSingle then
+    Memory.Game.NextVisible := True;
 end;
 
 
