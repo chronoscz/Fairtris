@@ -127,6 +127,8 @@ type
     TimerEditor: String;
     TimerChanging: Boolean;
   public
+    QualsMode: Integer;
+    QualsActive: Boolean;
     QualsRemaining: Integer;
   public
     property IsSingle: Boolean read GetIsSingle;
@@ -463,6 +465,10 @@ begin
   TimerData := TIMER_DEFAULT_DATA;
   TimerEditor := TIMER_DEFAULT_EDITOR;
   TimerChanging := False;
+
+  QualsMode := QUALS_MODE_DEFAULT;
+  QualsActive := False;
+  QualsRemaining := 0;
 end;
 
 
