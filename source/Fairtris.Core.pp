@@ -57,6 +57,10 @@ type
     procedure UpdatePieceControlDrop();
     procedure UpdatePieceControlDelay();
   private
+    procedure UpdateCommonSpeedrun();
+    procedure UpdateCommonGain();
+    procedure UpdateCommonNext();
+  private
     procedure UpdateCommon();
     procedure UpdatePieceControl();
     procedure UpdatePieceLock();
@@ -493,34 +497,51 @@ begin
 end;
 
 
-procedure TCore.UpdateCommon();
+procedure TCore.UpdateCommonSpeedrun();
 begin
-  Generators.Generator.Step();
+  if not Memory.GameModes.IsSpeedrun then Exit;
 
-  if Memory.GameModes.IsSpeedrun then
-    if Memory.Game.State <> STATE_UPDATE_TOP_OUT then
+  if Memory.Game.State <> STATE_UPDATE_TOP_OUT then
+  begin
+    Memory.Game.SpeedrunTimer += 1;
+
+    if Converter.TimeTooLong(Memory.Game.SpeedrunTimer) then
     begin
-      Memory.Game.SpeedrunTimer += 1;
+      Memory.Game.SpeedrunTimer -= 1;
 
-      if Converter.TimeTooLong(Memory.Game.SpeedrunTimer) then
-      begin
-        Memory.Game.SpeedrunTimer -= 1;
+      Memory.Game.State := STATE_UPDATE_TOP_OUT;
+      Memory.Game.TopOutTimer := TOP_OUT_FRAMES[Memory.GameModes.Region];
 
-        Memory.Game.State := STATE_UPDATE_TOP_OUT;
-        Memory.Game.TopOutTimer := TOP_OUT_FRAMES[Memory.GameModes.Region];
-
-        Sounds.PlaySound(SOUND_TOP_OUT, True);
-      end;
+      Sounds.PlaySound(SOUND_TOP_OUT, True);
     end;
+  end;
+end;
 
+
+procedure TCore.UpdateCommonGain();
+begin
   if Memory.Game.GainTimer > 0 then
     Memory.Game.GainTimer -= 1;
+end;
 
+
+procedure TCore.UpdateCommonNext();
+begin
   if Input.Device.Select.JustPressed then
   begin
     Memory.Game.NextVisible := not Memory.Game.NextVisible;
     Sounds.PlaySound(SOUND_COIN);
   end;
+end;
+
+
+procedure TCore.UpdateCommon();
+begin
+  Generators.Generator.Step();
+
+  UpdateCommonSpeedrun();
+  UpdateCommonGain();
+  UpdateCommonNext();
 end;
 
 
