@@ -42,7 +42,9 @@ type
     function BurnedToString(ABurned: Integer): String;
     function TetrisesToString(ATetrises: Integer): String;
     function GainToString(AGain: Integer): String;
+  public
     function FramesToTimeString(AFramesCount: Integer; AIsBestScore: Boolean = False): String;
+    function FramesToTimerString(AFramesCount: Integer; AIsEditor: Boolean = False): String;
   public
     procedure SeedEditorToStrings(const ASeedEditor: String; out ADigits, APlaceholder: String);
     procedure TimerEditorToStrings(const ATimerEditor: String; out ADigits, APlaceholder: String);
@@ -223,6 +225,25 @@ begin
     end;
 
   Result := (TIME_FORMAT_MAJOR + TimeFormatDecimal).Format([Minutes, Seconds, Milliseconds]);
+end;
+
+
+function TConverter.FramesToTimerString(AFramesCount: Integer; AIsEditor: Boolean): String;
+var
+  Hours, Minutes, Seconds, Milliseconds: Integer;
+begin
+  FramesToTimeComponents(AFramesCount, Hours, Minutes, Seconds, Milliseconds);
+
+  if AIsEditor then
+    Result := TIMER_FORMAT_EDITOR.Format([Hours, Minutes, Seconds])
+  else
+    if Memory.Options.Theme = THEME_MODERN then
+      Result := TIMER_FORMAT_GAME_MODERN.Format([Hours, Minutes, Seconds])
+    else
+    begin
+      Minutes += Hours * 60;
+      Result := TIMER_FORMAT_GAME_CLASSIC.Format([Minutes, Seconds]);
+    end;
 end;
 
 
