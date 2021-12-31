@@ -796,6 +796,9 @@ begin
   Generators.Generator.Step();
   Memory.Game.Next := Generators.Generator.Pick();
 
+  if Memory.GameModes.IsSpeedrun then
+    Memory.GameModes.Level := 0;
+
   Memory.Game.Level := Memory.GameModes.Level;
   Memory.Game.Stats[Memory.Game.PieceID] += 1;
 
