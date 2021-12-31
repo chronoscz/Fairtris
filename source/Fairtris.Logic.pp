@@ -1763,7 +1763,10 @@ begin
       begin
         FScene.Current := SCENE_PAUSE;
         Sounds.PlaySound(SOUND_PAUSE, True);
-      end;
+      end
+      else
+        if Input.Device.Connected then
+          Sounds.PlaySound(SOUND_HUM);
 end;
 
 
