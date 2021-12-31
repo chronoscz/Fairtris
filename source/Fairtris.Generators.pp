@@ -441,8 +441,18 @@ end;
 
 
 procedure T7BagGenerator.Prepare();
+var
+  ShuffleCount: Integer;
 begin
   inherited Prepare();
+  ShuffleCount := High(FRegister.Seed);
+
+  while ShuffleCount > 0 do
+  begin
+    Shuffle();
+    ShuffleCount -= 1;
+  end;
+
   FBagPiece := 0;
 end;
 
