@@ -52,6 +52,8 @@ type
     function StringToTimerSeconds(const ATimer: String): Integer;
     function StringToTimerFrames(const ATimer: String): Integer;
   public
+    function StringToSeed(const ASeed: String): Integer;
+  public
     function IsTimeTooLong(AFramesCount: Integer): Boolean;
   public
     function IsTimeRunningOut(AFramesCount: Integer): Boolean;
@@ -281,6 +283,12 @@ end;
 function TConverter.StringToTimerFrames(const ATimer: String): Integer;
 begin
   Result := StringToTimerSeconds(ATimer) * CLOCK_FRAMERATE_LIMIT[Memory.GameModes.Region];
+end;
+
+
+function TConverter.StringToSeed(const ASeed: String): Integer;
+begin
+  Result := StrToInt('0x' + ASeed);
 end;
 
 
