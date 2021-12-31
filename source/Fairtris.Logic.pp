@@ -1769,7 +1769,8 @@ end;
 
 procedure TLogic.UpdatePauseCommon();
 begin
-  Generators.Generator.Step();
+  if Memory.GameModes.IsSingle then
+    Generators.Generator.Step();
 end;
 
 
