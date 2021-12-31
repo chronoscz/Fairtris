@@ -316,6 +316,7 @@ end;
 function TLogic.InputOptionGenerate(): Boolean;
 begin
   Result := Input.Keyboard.Device[SDL_SCANCODE_LCTRL].Pressed and Input.Keyboard.Device[SDL_SCANCODE_G].JustPressed;
+  Result := Result or Input.Controller.Select.JustPressed;
 end;
 
 
