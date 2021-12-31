@@ -696,10 +696,10 @@ end;
 
 procedure TLogic.PasteRandomSeed();
 begin
-  Sounds.PlaySound(IfThen(Memory.GameModes.SeedChanging, SOUND_TETRIS, SOUND_SHIFT));
-
   Memory.GameModes.SeedData := GenerateRandomSeed();
   Memory.GameModes.SeedChanging := False;
+
+  Sounds.PlaySound(SOUND_COIN);
 end;
 
 
