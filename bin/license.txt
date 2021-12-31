@@ -1,5 +1,5 @@
 Faritris — a fair implementation of Classic Tetris®
-Copyleft 2021 furious programming. All rights reversed.
+Copyleft 2021-2022 furious programming. All rights reversed.
 
 for more informations, see <https://github.com/furious-programming/fairtris>
 

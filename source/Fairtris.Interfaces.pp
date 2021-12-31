@@ -1,6 +1,6 @@
 {
   Fairtris — a fair implementation of Classic Tetris®
-  Copyleft (ɔ) furious programming 2021. All rights reversed.
+  Copyleft (ɔ) furious programming 2021-2022. All rights reversed.
 
   https://github.com/furious-programming/fairtris
 
