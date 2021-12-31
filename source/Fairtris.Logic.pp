@@ -1816,6 +1816,7 @@ begin
       begin
         FScene.Current := Memory.Game.FromScene;
         FScene.Current := SCENE_GAME_NORMAL;
+
         Sounds.PlaySound(SOUND_START);
       end
       else
