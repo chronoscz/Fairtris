@@ -1812,11 +1812,14 @@ begin
       else
         Sounds.PlaySound(SOUND_HUM);
     ITEM_PAUSE_RESTART:
-    begin
-      FScene.Current := Memory.Game.FromScene;
-      FScene.Current := SCENE_GAME_NORMAL;
-      Sounds.PlaySound(SOUND_START);
-    end;
+      if (not Memory.GameModes.IsQuals) or (Memory.GameModes.QualsRemaining > 0) then
+      begin
+        FScene.Current := Memory.Game.FromScene;
+        FScene.Current := SCENE_GAME_NORMAL;
+        Sounds.PlaySound(SOUND_START);
+      end
+      else
+        Sounds.PlaySound(SOUND_HUM);
   end;
 
   if InputMenuAccepted() then

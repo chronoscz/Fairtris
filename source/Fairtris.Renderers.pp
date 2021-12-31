@@ -1264,7 +1264,15 @@ begin
         Input.Device.Connected,
         IfThen(
           Memory.GameModes.IsQuals,
-          IfThen(Memory.Pause.ItemIndex = ITEM_PAUSE_RESUME, COLOR_DARK, COLOR_WHITE),
+          IfThen(
+            Memory.Pause.ItemIndex = ITEM_PAUSE_RESUME,
+            COLOR_DARK,
+            IfThen(
+              Memory.Pause.ItemIndex = ITEM_PAUSE_RESTART,
+              IfThen(Memory.GameModes.QualsRemaining > 0, COLOR_WHITE, COLOR_DARK),
+              COLOR_WHITE
+            )
+          ),
           COLOR_WHITE
         ),
         COLOR_DARK
@@ -1303,9 +1311,21 @@ begin
     IfThen(
       Input.Device.Connected,
       IfThen(
-        Memory.Pause.ItemIndex = ITEM_PAUSE_RESTART,
-        COLOR_WHITE,
-        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+        Memory.GameModes.IsQuals,
+        IfThen(
+          Memory.GameModes.QualsRemaining > 0,
+          IfThen(
+            Memory.Pause.ItemIndex = ITEM_PAUSE_RESTART,
+            COLOR_WHITE,
+            IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+          ),
+          COLOR_DARK
+        ),
+        IfThen(
+          Memory.Pause.ItemIndex = ITEM_PAUSE_RESTART,
+          COLOR_WHITE,
+          IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+        )
       ),
       COLOR_DARK
     )
