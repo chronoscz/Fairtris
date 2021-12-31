@@ -507,13 +507,14 @@ end;
 procedure TCore.UpdateCommonNext();
 begin
   if Input.Device.Select.JustPressed then
-    if Memory.GameModes.IsSingle then
-    begin
-      Memory.Game.NextVisible := not Memory.Game.NextVisible;
-      Sounds.PlaySound(SOUND_COIN);
-    end
-    else
-      Sounds.PlaySound(SOUND_HUM);
+    if Memory.Game.State <> STATE_UPDATE_TOP_OUT then
+      if Memory.GameModes.IsSingle then
+      begin
+        Memory.Game.NextVisible := not Memory.Game.NextVisible;
+        Sounds.PlaySound(SOUND_COIN);
+      end
+      else
+        Sounds.PlaySound(SOUND_HUM);
 end;
 
 
