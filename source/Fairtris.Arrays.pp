@@ -181,7 +181,7 @@ const
   );
 
 const
-  SOUND_CHANNEL: array [SOUND_FIRST .. SOUND_LAST] of Integer = (5, 0, 2, 3, 4, 0, 0, 1, 0, 0, 0, 6, 6, 0);
+  SOUND_CHANNEL: array [SOUND_FIRST .. SOUND_LAST] of Integer = (5, 0, 2, 3, 4, 0, 0, 1, 0, 0, 0, 6, 7, 0);
 
 
 const
