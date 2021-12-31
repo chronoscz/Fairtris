@@ -90,10 +90,12 @@ type
     procedure RenderPauseItems();
   protected
     procedure RenderTopOutResultScore();
+    procedure RenderTopOutResultTotalTime();
     procedure RenderTopOutResultTransition();
     procedure RenderTopOutResultLinesCleared();
     procedure RenderTopOutResultLinesBurned();
     procedure RenderTopOutResultTetrisRate();
+    procedure RenderTopOutResultQualsEndIn();
   protected
     procedure RenderTopOutSelection();
     procedure RenderTopOutItems();
@@ -1345,8 +1347,35 @@ begin
 end;
 
 
+procedure TRenderer.RenderTopOutResultTotalTime();
+begin
+  if not Memory.GameModes.IsSpeedrun then Exit;
+
+  RenderText(
+    ITEM_X_TOP_OUT_RESULT_TOTAL_TIME_TITLE,
+    ITEM_Y_TOP_OUT_RESULT_TOTAL_TIME_TITLE,
+    ITEM_TEXT_TOP_OUT_RESULT_TOTAL_TIME_TITLE,
+    IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_ORANGE, COLOR_WHITE)
+  );
+
+  RenderText(
+    ITEM_X_TOP_OUT_RESULT_TOTAL_TIME,
+    ITEM_Y_TOP_OUT_RESULT_TOTAL_TIME,
+    IfThen(
+      Memory.Game.SpeedrunCompleted,
+      Converter.FramesToTimeString(Memory.Game.SpeedrunTimer, True),
+      '-'
+    ),
+    IfThen(Memory.Game.SpeedrunCompleted, COLOR_WHITE, COLOR_DARK),
+    ALIGN_RIGHT
+  );
+end;
+
+
 procedure TRenderer.RenderTopOutResultTransition();
 begin
+  if Memory.GameModes.IsSpeedrun then Exit;
+
   if Memory.TopOut.Transition > 0 then
     RenderText(
       ITEM_X_TOP_OUT_RESULT_TRANSITION,
@@ -1401,6 +1430,8 @@ end;
 
 procedure TRenderer.RenderTopOutResultTetrisRate();
 begin
+  if Memory.GameModes.IsQuals then Exit;
+
   if Memory.TopOut.LinesCleared > 0 then
     RenderText(
       ITEM_X_TOP_OUT_RESULT_TETRIS_RATE,
@@ -1420,6 +1451,31 @@ begin
 end;
 
 
+procedure TRenderer.RenderTopOutResultQualsEndIn();
+begin
+  if not Memory.GameModes.IsQuals then Exit;
+
+  RenderText(
+    ITEM_X_TOP_OUT_RESULT_QUALS_END_IN_TITLE,
+    ITEM_Y_TOP_OUT_RESULT_QUALS_END_IN_TITLE,
+    ITEM_TEXT_TOP_OUT_RESULT_QUALS_END_IN_TITLE,
+    IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_ORANGE, COLOR_WHITE)
+  );
+
+  RenderText(
+    ITEM_X_TOP_OUT_RESULT_QUALS_END_IN,
+    ITEM_Y_TOP_OUT_RESULT_QUALS_END_IN,
+    Converter.FramesToTimerString(Memory.GameModes.QualsRemaining, True),
+    IfThen(
+      Converter.IsTimerRunningOut(Memory.GameModes.QualsRemaining),
+      IfThen(Clock.FrameIndexInHalf, COLOR_DARK, COLOR_WHITE),
+      COLOR_WHITE
+    ),
+    ALIGN_RIGHT
+  );
+end;
+
+
 procedure TRenderer.RenderTopOutSelection();
 begin
   RenderText(
@@ -1434,7 +1490,15 @@ begin
     ITEM_TEXT_MARKER,
     IfThen(
       Memory.TopOut.ItemIndex = ITEM_TOP_OUT_PLAY,
-      IfThen(Input.Device.Connected, COLOR_WHITE, COLOR_DARK),
+      IfThen(
+        Input.Device.Connected,
+        IfThen(
+          Memory.GameModes.IsQuals,
+          IfThen(Memory.GameModes.QualsRemaining > 0, COLOR_WHITE, COLOR_DARK),
+          COLOR_WHITE
+        ),
+        COLOR_DARK
+      ),
       COLOR_WHITE
     )
   );
@@ -1451,8 +1515,20 @@ begin
       Input.Device.Connected,
       IfThen(
         Memory.TopOut.ItemIndex = ITEM_TOP_OUT_PLAY,
-        COLOR_WHITE,
-        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+        IfThen(
+          Memory.GameModes.IsQuals,
+          IfThen(Memory.GameModes.QualsRemaining > 0, COLOR_WHITE, COLOR_DARK),
+          COLOR_WHITE
+        ),
+        IfThen(
+          Memory.GameModes.IsQuals,
+          IfThen(
+            Memory.GameModes.QualsRemaining > 0,
+            IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE),
+            COLOR_DARK
+          ),
+          IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+        )
       ),
       COLOR_DARK
     )
@@ -1463,10 +1539,12 @@ end;
 procedure TRenderer.RenderTopOutResult();
 begin
   RenderTopOutResultScore();
+  RenderTopOutResultTotalTime();
   RenderTopOutResultTransition();
   RenderTopOutResultLinesCleared();
   RenderTopOutResultLinesBurned();
   RenderTopOutResultTetrisRate();
+  RenderTopOutResultQualsEndIn();
 end;
 
 

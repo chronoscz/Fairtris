@@ -180,6 +180,7 @@ type
     LockTimer: Integer;
   public
     SpeedrunTimer: Integer;
+    SpeedrunCompleted: Boolean;
   public
     ClearCount: Integer;
     ClearTimer: Integer;
@@ -505,6 +506,7 @@ begin
   LockTimer := 0;
 
   SpeedrunTimer := 0;
+  SpeedrunCompleted := False;
 
   ClearCount := 0;
   ClearTimer := 0;

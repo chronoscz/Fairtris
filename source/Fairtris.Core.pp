@@ -706,7 +706,10 @@ begin
 
           if Memory.GameModes.IsSpeedrun then
             if Memory.Game.Lines + Memory.Game.ClearCount >= KILLSCREEN_LINES_SPEEDRUN then
+            begin
               Memory.Game.AfterHardKillScreen := True;
+              Memory.Game.SpeedrunCompleted := True;
+            end;
         end;
       end;
     end;
