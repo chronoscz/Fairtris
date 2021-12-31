@@ -1759,9 +1759,7 @@ begin
   end
   else
     if not Input.Device.Connected or Input.Device.Start.JustPressed then
-      if Memory.GameModes.IsMatch then
-        Sounds.PlaySound(SOUND_HUM)
-      else
+      if not Memory.GameModes.IsMatch then
       begin
         FScene.Current := SCENE_PAUSE;
         Sounds.PlaySound(SOUND_PAUSE, True);
