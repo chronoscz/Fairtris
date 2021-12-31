@@ -1872,12 +1872,15 @@ begin
 
   if InputMenuAccepted() or Input.Device.Start.JustPressed or Input.Keyboard.Start.JustPressed then
     if Memory.TopOut.ItemIndex = ITEM_TOP_OUT_PLAY then
-    begin
-      Memory.Game.Reset();
+      if (not Memory.GameModes.IsQuals) or (Memory.GameModes.QualsRemaining > 0) then
+      begin
+        Memory.Game.Reset();
 
-      FScene.Current := SCENE_GAME_NORMAL;
-      Sounds.PlaySound(SOUND_START);
-    end;
+        FScene.Current := SCENE_GAME_NORMAL;
+        Sounds.PlaySound(SOUND_START);
+      end
+      else
+        Sounds.PlaySound(SOUND_HUM);
 
   if InputMenuAccepted() then
     if Memory.TopOut.ItemIndex = ITEM_TOP_OUT_BACK then
