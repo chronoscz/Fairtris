@@ -424,7 +424,7 @@ end;
 
 function TGameModesMemory.GetIsFreeGame(): Boolean;
 begin
-  Result := Mode = MODE_FREE_MARATHON;
+  Result := Mode in [MODE_FREE_MARATHON, MODE_FREE_SPEEDRUN];
 end;
 
 
