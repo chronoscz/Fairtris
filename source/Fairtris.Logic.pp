@@ -1051,7 +1051,7 @@ begin
   begin
     Memory.FreeMarathon.Autorepeat := 0;
 
-    UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_SINGLE[Memory.GameModes.Region], ITEM_PREV);
+    UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_FREE_GAME[Memory.GameModes.Region], ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
   end
   else
@@ -1063,7 +1063,7 @@ begin
       begin
         Memory.FreeMarathon.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
 
-        UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_SINGLE[Memory.GameModes.Region], ITEM_PREV);
+        UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_FREE_GAME[Memory.GameModes.Region], ITEM_PREV);
         Sounds.PlaySound(SOUND_SHIFT);
       end;
     end;
@@ -1072,7 +1072,7 @@ begin
   begin
     Memory.FreeMarathon.Autorepeat := 0;
 
-    UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_SINGLE[Memory.GameModes.Region], ITEM_NEXT);
+    UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_FREE_GAME[Memory.GameModes.Region], ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end
   else
@@ -1084,7 +1084,7 @@ begin
       begin
         Memory.FreeMarathon.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
 
-        UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_SINGLE[Memory.GameModes.Region], ITEM_NEXT);
+        UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_FREE_GAME[Memory.GameModes.Region], ITEM_NEXT);
         Sounds.PlaySound(SOUND_SHIFT);
       end;
     end;
@@ -1389,7 +1389,7 @@ begin
   begin
     Memory.TournamentMatch.Autorepeat := 0;
 
-    UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_SINGLE[Memory.GameModes.Region], ITEM_PREV);
+    UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_FREE_GAME[Memory.GameModes.Region], ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
   end
   else
@@ -1401,7 +1401,7 @@ begin
       begin
         Memory.TournamentMatch.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
 
-        UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_SINGLE[Memory.GameModes.Region], ITEM_PREV);
+        UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_FREE_GAME[Memory.GameModes.Region], ITEM_PREV);
         Sounds.PlaySound(SOUND_SHIFT);
       end;
     end;
@@ -1410,7 +1410,7 @@ begin
   begin
     Memory.TournamentMatch.Autorepeat := 0;
 
-    UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_SINGLE[Memory.GameModes.Region], ITEM_NEXT);
+    UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_FREE_GAME[Memory.GameModes.Region], ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end
   else
@@ -1422,7 +1422,7 @@ begin
       begin
         Memory.TournamentMatch.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
 
-        UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_SINGLE[Memory.GameModes.Region], ITEM_NEXT);
+        UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_FREE_GAME[Memory.GameModes.Region], ITEM_NEXT);
         Sounds.PlaySound(SOUND_SHIFT);
       end;
     end;

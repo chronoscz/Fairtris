@@ -107,7 +107,7 @@ const
     'legal.bmp',
     'menu.bmp',
     'modes.bmp',
-    'single player.bmp',
+    'free marathon.bmp',
     'tournament quals.bmp',
     'tournament match.bmp',
     'speedrun quals.bmp',
@@ -221,7 +221,7 @@ const
   );
 
 const
-  LEVEL_COUNT_SINGLE: array [REGION_FIRST .. REGION_LAST] of Integer = (
+  LEVEL_COUNT_FREE_GAME: array [REGION_FIRST .. REGION_LAST] of Integer = (
     LEVEL_COUNT_FREE_GAME_NTSC,
     LEVEL_COUNT_FREE_GAME_NTSC,
     LEVEL_COUNT_FREE_GAME_NTSC,
