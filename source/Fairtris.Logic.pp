@@ -357,7 +357,7 @@ end;
 
 procedure TLogic.PrepareFreeSpeedrunSelection();
 begin
-  Memory.FreeSpeedrun.ItemIndex := ITEM_FREE_SPEEDRUN_REGION;
+  Memory.FreeSpeedrun.ItemIndex := ITEM_FREE_SPEEDRUN_START;
 end;
 
 
