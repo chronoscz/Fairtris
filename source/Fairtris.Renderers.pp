@@ -1187,7 +1187,11 @@ begin
     IfThen(
       Memory.GameModes.IsQuals,
       Converter.FramesToTimerString(Memory.GameModes.QualsRemaining),
-      Converter.ScoreToString(Memory.Game.Best)
+      IfThen(
+        Memory.GameModes.IsMarathon,
+        Converter.ScoreToString(Memory.Game.Best),
+        Converter.FramesToTimeString(0) { TODO : render best speedrun time here }
+      )
     ),
     IfThen(
       Memory.GameModes.IsQuals,
