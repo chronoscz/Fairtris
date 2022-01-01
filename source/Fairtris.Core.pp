@@ -576,6 +576,7 @@ end;
 procedure TCore.UpdatePieceSpawn();
 begin
   SpawnPiece();
+  Memory.Game.FallPoints := 0;
 
   if CanPlacePiece() then
     Memory.Game.State := STATE_PIECE_CONTROL
