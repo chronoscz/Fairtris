@@ -64,6 +64,16 @@ type
 
 
 type
+  TFreeSpeedrunMemory = class(TObject)
+  public
+    procedure Initialize();
+  public
+    ItemIndex: Integer;
+    Autorepeat: Integer;
+  end;
+
+
+type
   TMarathonQualsMemory = class(TObject)
   public
     procedure Initialize();
@@ -318,6 +328,7 @@ type
     FMenu: TMenuMemory;
     FModes: TModesMemory;
     FFreeMarathon: TFreeMarathonMemory;
+    FFreeSpeedrun: TFreeSpeedrunMemory;
     FMarathonQuals: TMarathonQualsMemory;
     FMarathonMatch: TMarathonMatchMemory;
     FSpeedrunQuals: TSpeedrunQualsMemory;
@@ -340,6 +351,7 @@ type
     property Menu: TMenuMemory read FMenu;
     property Modes: TModesMemory read FModes;
     property FreeMarathon: TFreeMarathonMemory read FFreeMarathon;
+    property FreeSpeedrun: TFreeSpeedrunMemory read FFreeSpeedrun;
     property MarathonQuals: TMarathonQualsMemory read FMarathonQuals;
     property MarathonMatch: TMarathonMatchMemory read FMarathonMatch;
     property SpeedrunQuals: TSpeedrunQualsMemory read FSpeedrunQuals;
@@ -390,6 +402,13 @@ end;
 procedure TFreeMarathonMemory.Initialize();
 begin
   ItemIndex := ITEM_FREE_MARATHON_START;
+  Autorepeat := 0;
+end;
+
+
+procedure TFreeSpeedrunMemory.Initialize();
+begin
+  ItemIndex := ITEM_FREE_SPEEDRUN_START;
   Autorepeat := 0;
 end;
 
@@ -652,6 +671,7 @@ begin
   FMenu := TMenuMemory.Create();
   FModes := TModesMemory.Create();
   FFreeMarathon := TFreeMarathonMemory.Create();
+  FFreeSpeedrun := TFreeSpeedrunMemory.Create();
   FMarathonQuals := TMarathonQualsMemory.Create();
   FMarathonMatch := TMarathonMatchMemory.Create();
   FSpeedrunQuals := TSpeedrunQualsMemory.Create();
@@ -673,6 +693,7 @@ begin
   FMenu.Free();
   FModes.Free();
   FFreeMarathon.Free();
+  FFreeSpeedrun.Free();
   FMarathonQuals.Free();
   FMarathonMatch.Free();
   FSpeedrunQuals.Free();
@@ -696,6 +717,7 @@ begin
   FMenu.Initialize();
   FModes.Initialize();
   FFreeMarathon.Initialize();
+  FFreeSpeedrun.Initialize();
   FMarathonQuals.Initialize();
   FMarathonMatch.Initialize();
   FSpeedrunQuals.Initialize();
