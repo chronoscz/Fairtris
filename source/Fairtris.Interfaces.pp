@@ -54,6 +54,7 @@ type
     procedure RenderMenu();
     procedure RenderModes();
     procedure RenderFreeMarathon();
+    procedure RenderFreeSpeedrun();
     procedure RenderMarathonQuals();
     procedure RenderMarathonMatch();
     procedure RenderSpeedrunQuals();

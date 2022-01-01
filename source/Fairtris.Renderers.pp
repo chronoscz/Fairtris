@@ -56,6 +56,11 @@ type
     procedure RenderFreeMarathonParameters();
     procedure RenderFreeMarathonBestScores();
   protected
+    procedure RenderFreeSpeedrunSelection();
+    procedure RenderFreeSpeedrunItems();
+    procedure RenderFreeSpeedrunParameters();
+    procedure RenderFreeSpeedrunBestScores();
+  protected
     procedure RenderMarathonQualsSelection();
     procedure RenderMarathonQualsItems();
     procedure RenderMarathonQualsParameters();
@@ -134,6 +139,7 @@ type
     procedure RenderMenu();
     procedure RenderModes();
     procedure RenderFreeMarathon();
+    procedure RenderFreeSpeedrun();
     procedure RenderMarathonQuals();
     procedure RenderMarathonMatch();
     procedure RenderSpeedrunQuals();
@@ -161,6 +167,7 @@ type
     procedure RenderMenu();
     procedure RenderModes();
     procedure RenderFreeMarathon();
+    procedure RenderFreeSpeedrun();
     procedure RenderMarathonQuals();
     procedure RenderMarathonMatch();
     procedure RenderSpeedrunQuals();
@@ -624,6 +631,78 @@ begin
         EmptyEntryToString(),
         COLOR_DARK
       );
+end;
+
+
+procedure TRenderer.RenderFreeSpeedrunSelection();
+begin
+  RenderText(
+    ITEM_X_FREE_SPEEDRUN[Memory.FreeSpeedrun.ItemIndex],
+    ITEM_Y_FREE_SPEEDRUN[Memory.FreeSpeedrun.ItemIndex],
+    ITEM_TEXT_FREE_SPEEDRUN[Memory.FreeSpeedrun.ItemIndex]
+  );
+
+  RenderText(
+    ITEM_X_FREE_SPEEDRUN[Memory.FreeSpeedrun.ItemIndex] - ITEM_X_MARKER,
+    ITEM_Y_FREE_SPEEDRUN[Memory.FreeSpeedrun.ItemIndex],
+    ITEM_TEXT_MARKER,
+    IfThen(
+      Memory.FreeSpeedrun.ItemIndex = ITEM_FREE_SPEEDRUN_START,
+      IfThen(Input.Device.Connected, COLOR_WHITE, COLOR_DARK),
+      COLOR_WHITE
+    )
+  );
+end;
+
+
+procedure TRenderer.RenderFreeSpeedrunItems();
+begin
+  RenderText(
+    ITEM_X_GAME_MODE_START,
+    ITEM_Y_GAME_MODE_START,
+    ITEM_TEXT_GAME_MODE_START,
+    IfThen(
+      Input.Device.Connected,
+      IfThen(
+        Memory.FreeSpeedrun.ItemIndex = ITEM_FREE_SPEEDRUN_START,
+        COLOR_WHITE,
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      ),
+      COLOR_DARK
+    )
+  );
+end;
+
+
+procedure TRenderer.RenderFreeSpeedrunParameters();
+begin
+  RenderText(
+    ITEM_X_GAME_MODE_PARAM,
+    ITEM_Y_GAME_MODE_REGION,
+    ITEM_TEXT_GAME_MODE_REGION[Memory.GameModes.Region],
+    IfThen(
+      Memory.FreeSpeedrun.ItemIndex = ITEM_FREE_SPEEDRUN_REGION,
+      COLOR_WHITE,
+      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+    )
+  );
+
+  RenderText(
+    ITEM_X_GAME_MODE_PARAM,
+    ITEM_Y_GAME_MODE_GENERATOR,
+    ITEM_TEXT_GAME_MODE_GENERATOR[Memory.GameModes.Generator],
+    IfThen(
+      Memory.FreeSpeedrun.ItemIndex = ITEM_FREE_SPEEDRUN_GENERATOR,
+      COLOR_WHITE,
+      IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+    )
+  );
+end;
+
+
+procedure TRenderer.RenderFreeSpeedrunBestScores();
+begin
+  { TODO : render best speedrun times if any }
 end;
 
 
@@ -2019,6 +2098,15 @@ begin
 end;
 
 
+procedure TModernRenderer.RenderFreeSpeedrun();
+begin
+  RenderFreeSpeedrunSelection();
+  RenderFreeSpeedrunItems();
+  RenderFreeSpeedrunParameters();
+  RenderFreeSpeedrunBestScores();
+end;
+
+
 procedure TModernRenderer.RenderMarathonQuals();
 begin
   RenderMarathonQualsSelection();
@@ -2131,6 +2219,7 @@ begin
     SCENE_MENU:            RenderMenu();
     SCENE_MODES:           RenderModes();
     SCENE_FREE_MARATHON:   RenderFreeMarathon();
+    SCENE_FREE_SPEEDRUN:   RenderFreeSpeedrun();
     SCENE_MARATHON_QUALS:  RenderMarathonQuals();
     SCENE_MARATHON_MATCH:  RenderMarathonMatch();
     SCENE_SPEEDRUN_QUALS:  RenderSpeedrunQuals();
@@ -2224,6 +2313,15 @@ begin
   RenderFreeMarathonItems();
   RenderFreeMarathonParameters();
   RenderFreeMarathonBestScores();
+end;
+
+
+procedure TClassicRenderer.RenderFreeSpeedrun();
+begin
+  RenderFreeSpeedrunSelection();
+  RenderFreeSpeedrunItems();
+  RenderFreeSpeedrunParameters();
+  RenderFreeSpeedrunBestScores();
 end;
 
 
@@ -2336,6 +2434,7 @@ begin
     SCENE_MENU:            RenderMenu();
     SCENE_MODES:           RenderModes();
     SCENE_FREE_MARATHON:   RenderFreeMarathon();
+    SCENE_FREE_SPEEDRUN:   RenderFreeSpeedrun();
     SCENE_MARATHON_QUALS:  RenderMarathonQuals();
     SCENE_MARATHON_MATCH:  RenderMarathonMatch();
     SCENE_SPEEDRUN_QUALS:  RenderSpeedrunQuals();
