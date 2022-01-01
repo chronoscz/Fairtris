@@ -461,13 +461,13 @@ end;
 
 function TGameModesMemory.GetIsMarathon(): Boolean;
 begin
-  Result := Mode in [MODE_MARATHON_QUALS, MODE_MARATHON_MATCH];
+  Result := Mode in [MODE_FREE_MARATHON, MODE_MARATHON_QUALS, MODE_MARATHON_MATCH];
 end;
 
 
 function TGameModesMemory.GetIsSpeedrun(): Boolean;
 begin
-  Result := Mode in [MODE_SPEEDRUN_QUALS, MODE_SPEEDRUN_MATCH];
+  Result := Mode in [MODE_FREE_SPEEDRUN, MODE_SPEEDRUN_QUALS, MODE_SPEEDRUN_MATCH];
 end;
 
 
