@@ -54,6 +54,7 @@ type
   private
     procedure PrepareModesSelection();
     procedure PrepareFreeMarathonSelection();
+    procedure PrepareFreeSpeedrunSelection();
     procedure PrepareMarathonQualsSelection();
     procedure PrepareMarathonQualsLevel();
     procedure PrepareMarathonMatchSelection();
@@ -80,6 +81,7 @@ type
   private
     procedure PrepareModes();
     procedure PrepareFreeMarathon();
+    procedure PrepareFreeSpeedrun();
     procedure PrepareMarathonQuals();
     procedure PrepareMarathonMatch();
     procedure PrepareSpeedrunQuals();
@@ -115,6 +117,11 @@ type
     procedure UpdateFreeMarathonGenerator();
     procedure UpdateFreeMarathonLevel();
     procedure UpdateFreeMarathonScene();
+  private
+    procedure UpdateFreeSpeedrunSelection();
+    procedure UpdateFreeSpeedrunRegion();
+    procedure UpdateFreeSpeedrunGenerator();
+    procedure UpdateFreeSpeedrunScene();
   private
     procedure UpdateMarathonQualsSelection();
     procedure UpdateMarathonQualsRegion();
@@ -178,6 +185,7 @@ type
     procedure UpdateMenu();
     procedure UpdateModes();
     procedure UpdateFreeMarathon();
+    procedure UpdateFreeSpeedrun();
     procedure UpdateMarathonQuals();
     procedure UpdateMarathonMatch();
     procedure UpdateSpeedrunQuals();
@@ -347,6 +355,12 @@ begin
 end;
 
 
+procedure TLogic.PrepareFreeSpeedrunSelection();
+begin
+  Memory.FreeSpeedrun.ItemIndex := ITEM_FREE_SPEEDRUN_REGION;
+end;
+
+
 procedure TLogic.PrepareMarathonQualsSelection();
 begin
   Memory.MarathonQuals.ItemIndex := ITEM_MARATHON_QUALS_START;
@@ -495,6 +509,19 @@ begin
   Memory.Game.Started := False;
   Memory.Game.FromScene := SCENE_FREE_MARATHON;
   Memory.GameModes.Mode := MODE_FREE_MARATHON;
+end;
+
+
+procedure TLogic.PrepareFreeSpeedrun();
+begin
+  if not FScene.Changed then Exit;
+
+  if FScene.Previous = SCENE_MODES then
+    PrepareFreeSpeedrunSelection();
+
+  Memory.Game.Started := False;
+  Memory.Game.FromScene := SCENE_FREE_SPEEDRUN;
+  Memory.GameModes.Mode := MODE_FREE_SPEEDRUN;
 end;
 
 
@@ -811,6 +838,7 @@ begin
     begin
       case Memory.Modes.ItemIndex of
         ITEM_MODES_FREE_MARATHON:  FScene.Current := SCENE_FREE_MARATHON;
+        ITEM_MODES_FREE_SPEEDRUN:  FScene.Current := SCENE_FREE_SPEEDRUN;
         ITEM_MODES_MARATHON_QUALS: FScene.Current := SCENE_MARATHON_QUALS;
         ITEM_MODES_MARATHON_MATCH: FScene.Current := SCENE_MARATHON_MATCH;
         ITEM_MODES_SPEEDRUN_QUALS: FScene.Current := SCENE_SPEEDRUN_QUALS;
@@ -1118,6 +1146,97 @@ begin
       Sounds.PlaySound(SOUND_START);
     end;
     ITEM_FREE_MARATHON_BACK:
+    begin
+      FScene.Current := SCENE_MODES;
+      Sounds.PlaySound(SOUND_DROP);
+    end;
+  end;
+end;
+
+
+procedure TLogic.UpdateFreeSpeedrunSelection();
+begin
+  if InputMenuSetPrev() then
+  begin
+    UpdateItemIndex(Memory.FreeSpeedrun.ItemIndex, ITEM_FREE_SPEEDRUN_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_BLIP);
+  end;
+
+  if InputMenuSetNext() then
+  begin
+    UpdateItemIndex(Memory.FreeSpeedrun.ItemIndex, ITEM_FREE_SPEEDRUN_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_BLIP);
+  end;
+end;
+
+
+procedure TLogic.UpdateFreeSpeedrunRegion();
+begin
+  if Memory.FreeSpeedrun.ItemIndex <> ITEM_FREE_SPEEDRUN_REGION then Exit;
+
+  if InputOptionSetPrev() then
+  begin
+    UpdateItemIndex(Memory.GameModes.Region, REGION_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end;
+
+  if InputOptionSetNext() then
+  begin
+    UpdateItemIndex(Memory.GameModes.Region, REGION_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end;
+
+  Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.GameModes.Region];
+end;
+
+
+procedure TLogic.UpdateFreeSpeedrunGenerator();
+begin
+  if Memory.FreeSpeedrun.ItemIndex <> ITEM_FREE_SPEEDRUN_GENERATOR then Exit;
+
+  if InputOptionSetPrev() then
+  begin
+    UpdateItemIndex(Memory.GameModes.Generator, GENERATOR_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end;
+
+  if InputOptionSetNext() then
+  begin
+    UpdateItemIndex(Memory.GameModes.Generator, GENERATOR_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end;
+
+  Generators.GeneratorID := Memory.GameModes.Generator;
+end;
+
+
+procedure TLogic.UpdateFreeSpeedrunScene();
+begin
+  FScene.Validate();
+
+  if InputMenuRejected() then
+  begin
+    FScene.Current := SCENE_MODES;
+    Sounds.PlaySound(SOUND_DROP);
+  end;
+
+  if not Input.Device.Connected then
+    if Memory.FreeSpeedrun.ItemIndex = ITEM_FREE_SPEEDRUN_START then
+    begin
+      if InputMenuAccepted() then
+        Sounds.PlaySound(SOUND_HUM);
+
+      Exit;
+    end;
+
+  if InputMenuAccepted() then
+  case Memory.FreeSpeedrun.ItemIndex of
+    ITEM_FREE_SPEEDRUN_START:
+    begin
+      FScene.Current := SCENE_SPEEDRUN_NORMAL;
+      Sounds.PlaySound(SOUND_START);
+    end;
+    ITEM_FREE_SPEEDRUN_BACK:
     begin
       FScene.Current := SCENE_MODES;
       Sounds.PlaySound(SOUND_DROP);
@@ -1772,7 +1891,7 @@ end;
 
 procedure TLogic.UpdatePauseCommon();
 begin
-  if Memory.GameModes.IsSingle then
+  if Memory.GameModes.IsFreeGame then
     Generators.Generator.Step();
 end;
 
@@ -2475,6 +2594,17 @@ begin
 end;
 
 
+procedure TLogic.UpdateFreeSpeedrun();
+begin
+  PrepareFreeSpeedrun();
+
+  UpdateFreeSpeedrunSelection();
+  UpdateFreeSpeedrunRegion();
+  UpdateFreeSpeedrunGenerator();
+  UpdateFreeSpeedrunScene();
+end;
+
+
 procedure TLogic.UpdateMarathonQuals();
 begin
   PrepareMarathonQuals();
@@ -2605,6 +2735,7 @@ begin
     SCENE_MENU:            UpdateMenu();
     SCENE_MODES:           UpdateModes();
     SCENE_FREE_MARATHON:   UpdateFreeMarathon();
+    SCENE_FREE_SPEEDRUN:   UpdateFreeSpeedrun();
     SCENE_MARATHON_QUALS:  UpdateMarathonQuals();
     SCENE_MARATHON_MATCH:  UpdateMarathonMatch();
     SCENE_SPEEDRUN_QUALS:  UpdateSpeedrunQuals();

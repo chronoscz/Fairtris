@@ -141,7 +141,7 @@ type
     QualsActive: Boolean;
     QualsRemaining: Integer;
   public
-    property IsSingle: Boolean read GetIsFreeGame;
+    property IsFreeGame: Boolean read GetIsFreeGame;
     property IsQuals: Boolean read GetIsQuals;
     property IsMatch: Boolean read GetIsMatch;
     property IsMarathon: Boolean read GetIsMarathon;

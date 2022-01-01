@@ -508,7 +508,7 @@ procedure TCore.UpdateCommonNext();
 begin
   if Input.Device.Select.JustPressed then
     if Memory.Game.State <> STATE_UPDATE_TOP_OUT then
-      if Memory.GameModes.IsSingle then
+      if Memory.GameModes.IsFreeGame then
       begin
         Memory.Game.NextVisible := not Memory.Game.NextVisible;
         Sounds.PlaySound(SOUND_COIN);
@@ -661,7 +661,7 @@ begin
     Memory.Game.LowerTimer -= 1;
   end
   else
-    if Memory.GameModes.IsSingle or (Memory.GameModes.IsMarathon and Memory.GameModes.IsQuals) then
+    if Memory.GameModes.IsFreeGame or (Memory.GameModes.IsMarathon and Memory.GameModes.IsQuals) then
       Memory.Game.State := STATE_PIECE_SPAWN
     else
       if not Memory.Game.AfterHardKillScreen then
@@ -808,7 +808,7 @@ begin
 
   Memory.Game.Best := BestScores[Memory.GameModes.Region][Memory.GameModes.Generator].BestScore;
 
-  if not Memory.GameModes.IsSingle then
+  if not Memory.GameModes.IsFreeGame then
     Memory.Game.NextVisible := True;
 end;
 
