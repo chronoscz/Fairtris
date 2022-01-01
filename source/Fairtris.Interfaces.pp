@@ -52,7 +52,12 @@ type
   IRenderable = interface(IInterface)
     procedure RenderLegal();
     procedure RenderMenu();
+    procedure RenderModes();
     procedure RenderFreeMarathon();
+    procedure RenderMarathonQuals();
+    procedure RenderMarathonMatch();
+    procedure RenderSpeedrunQuals();
+    procedure RenderSpeedrunMatch();
     procedure RenderGame();
     procedure RenderPause();
     procedure RenderTopOut();
