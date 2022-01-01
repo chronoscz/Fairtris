@@ -661,16 +661,13 @@ begin
     Memory.Game.LowerTimer -= 1;
   end
   else
-    if Memory.GameModes.IsFreeGame or (Memory.GameModes.IsMarathon and Memory.GameModes.IsQuals) then
+    if not Memory.GameModes.HasHardKillScreen or not Memory.Game.AfterHardKillScreen then
       Memory.Game.State := STATE_PIECE_SPAWN
     else
-      if not Memory.Game.AfterHardKillScreen then
-        Memory.Game.State := STATE_PIECE_SPAWN
-      else
-      begin
-        Memory.Game.State := STATE_UPDATE_TOP_OUT;
-        Memory.Game.TopOutTimer := TOP_OUT_FRAMES[True, Memory.GameModes.Region];
-      end;
+    begin
+      Memory.Game.State := STATE_UPDATE_TOP_OUT;
+      Memory.Game.TopOutTimer := TOP_OUT_FRAMES[True, Memory.GameModes.Region];
+    end;
 end;
 
 

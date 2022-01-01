@@ -121,6 +121,8 @@ type
     function GetIsMatch(): Boolean;
     function GetIsMarathon(): Boolean;
     function GetIsSpeedrun(): Boolean;
+  private
+    function GetHasHardKillScreen(): Boolean;
   public      
     procedure Initialize();
   public
@@ -146,6 +148,8 @@ type
     property IsMatch: Boolean read GetIsMatch;
     property IsMarathon: Boolean read GetIsMarathon;
     property IsSpeedrun: Boolean read GetIsSpeedrun;
+  public
+    property HasHardKillScreen: Boolean read GetHasHardKillScreen;
   end;
 
 
@@ -468,6 +472,12 @@ end;
 function TGameModesMemory.GetIsSpeedrun(): Boolean;
 begin
   Result := Mode in [MODE_FREE_SPEEDRUN, MODE_SPEEDRUN_QUALS, MODE_SPEEDRUN_MATCH];
+end;
+
+
+function TGameModesMemory.GetHasHardKillScreen(): Boolean;
+begin
+  Result := Mode in [MODE_FREE_SPEEDRUN, MODE_MARATHON_MATCH, MODE_SPEEDRUN_QUALS, MODE_SPEEDRUN_MATCH];
 end;
 
 
