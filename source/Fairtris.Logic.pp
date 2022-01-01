@@ -810,12 +810,12 @@ begin
     else
     begin
       case Memory.Modes.ItemIndex of
-        ITEM_MODES_FREE_MARATHON:    FScene.Current := SCENE_FREE_MARATHON;
+        ITEM_MODES_FREE_MARATHON:  FScene.Current := SCENE_FREE_MARATHON;
         ITEM_MODES_MARATHON_QUALS: FScene.Current := SCENE_MARATHON_QUALS;
         ITEM_MODES_MARATHON_MATCH: FScene.Current := SCENE_MARATHON_MATCH;
-        ITEM_MODES_SPEEDRUN_QUALS:   FScene.Current := SCENE_SPEEDRUN_QUALS;
-        ITEM_MODES_SPEEDRUN_MATCH:   FScene.Current := SCENE_SPEEDRUN_MATCH;
-        ITEM_MODES_BACK:             FScene.Current := SCENE_MENU;
+        ITEM_MODES_SPEEDRUN_QUALS: FScene.Current := SCENE_SPEEDRUN_QUALS;
+        ITEM_MODES_SPEEDRUN_MATCH: FScene.Current := SCENE_SPEEDRUN_MATCH;
+        ITEM_MODES_BACK:           FScene.Current := SCENE_MENU;
       end;
 
       if Memory.Modes.ItemIndex <> ITEM_MODES_BACK then
@@ -2601,24 +2601,24 @@ begin
   UpdateCommon();
 
   case FScene.Current of
-    SCENE_LEGAL:            UpdateLegal();
-    SCENE_MENU:             UpdateMenu();
-    SCENE_MODES:            UpdateModes();
-    SCENE_FREE_MARATHON:    UpdateFreeMarathon();
-    SCENE_MARATHON_QUALS: UpdateMarathonQuals();
-    SCENE_MARATHON_MATCH: UpdateMarathonMatch();
-    SCENE_SPEEDRUN_QUALS:   UpdateSpeedrunQuals();
-    SCENE_SPEEDRUN_MATCH:   UpdateSpeedrunMatch();
-    SCENE_GAME_NORMAL:      UpdateGame();
-    SCENE_GAME_FLASH:       UpdateGame();
-    SCENE_SPEEDRUN_NORMAL:  UpdateGame();
-    SCENE_SPEEDRUN_FLASH:   UpdateGame();
-    SCENE_PAUSE:            UpdatePause();
-    SCENE_TOP_OUT:          UpdateTopOut();
-    SCENE_OPTIONS:          UpdateOptions();
-    SCENE_KEYBOARD:         UpdateKeyboard();
-    SCENE_CONTROLLER:       UpdateController();
-    SCENE_QUIT:             UpdateQuit();
+    SCENE_LEGAL:           UpdateLegal();
+    SCENE_MENU:            UpdateMenu();
+    SCENE_MODES:           UpdateModes();
+    SCENE_FREE_MARATHON:   UpdateFreeMarathon();
+    SCENE_MARATHON_QUALS:  UpdateMarathonQuals();
+    SCENE_MARATHON_MATCH:  UpdateMarathonMatch();
+    SCENE_SPEEDRUN_QUALS:  UpdateSpeedrunQuals();
+    SCENE_SPEEDRUN_MATCH:  UpdateSpeedrunMatch();
+    SCENE_GAME_NORMAL:     UpdateGame();
+    SCENE_GAME_FLASH:      UpdateGame();
+    SCENE_SPEEDRUN_NORMAL: UpdateGame();
+    SCENE_SPEEDRUN_FLASH:  UpdateGame();
+    SCENE_PAUSE:           UpdatePause();
+    SCENE_TOP_OUT:         UpdateTopOut();
+    SCENE_OPTIONS:         UpdateOptions();
+    SCENE_KEYBOARD:        UpdateKeyboard();
+    SCENE_CONTROLLER:      UpdateController();
+    SCENE_QUIT:            UpdateQuit();
   end;
 end;
 

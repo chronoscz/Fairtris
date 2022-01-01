@@ -106,7 +106,7 @@ type
 type
   TGameModesMemory = class(TObject)
   private
-    function GetIsSingle(): Boolean;
+    function GetIsFreeGame(): Boolean;
     function GetIsQuals(): Boolean;
     function GetIsMatch(): Boolean;
     function GetIsMarathon(): Boolean;
@@ -131,7 +131,7 @@ type
     QualsActive: Boolean;
     QualsRemaining: Integer;
   public
-    property IsSingle: Boolean read GetIsSingle;
+    property IsSingle: Boolean read GetIsFreeGame;
     property IsQuals: Boolean read GetIsQuals;
     property IsMatch: Boolean read GetIsMatch;
     property IsMarathon: Boolean read GetIsMarathon;
@@ -422,7 +422,7 @@ begin
 end;
 
 
-function TGameModesMemory.GetIsSingle(): Boolean;
+function TGameModesMemory.GetIsFreeGame(): Boolean;
 begin
   Result := Mode = MODE_FREE_MARATHON;
 end;
