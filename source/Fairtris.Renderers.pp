@@ -56,15 +56,15 @@ type
     procedure RenderFreeMarathonParameters();
     procedure RenderFreeMarathonBestScores();
   protected
-    procedure RenderTournamentQualsSelection();
-    procedure RenderTournamentQualsItems();
-    procedure RenderTournamentQualsParameters();
-    procedure RenderTournamentQualsBestScores();
+    procedure RenderMarathonQualsSelection();
+    procedure RenderMarathonQualsItems();
+    procedure RenderMarathonQualsParameters();
+    procedure RenderMarathonQualsBestScores();
   protected
-    procedure RenderTournamentMatchSelection();
-    procedure RenderTournamentMatchItems();
-    procedure RenderTournamentMatchParameters();
-    procedure RenderTournamentMatchBestScores();
+    procedure RenderMarathonMatchSelection();
+    procedure RenderMarathonMatchItems();
+    procedure RenderMarathonMatchParameters();
+    procedure RenderMarathonMatchBestScores();
   protected
     procedure RenderSpeedrunQualsSelection();
     procedure RenderSpeedrunQualsItems();
@@ -134,8 +134,8 @@ type
     procedure RenderMenu();
     procedure RenderModes();
     procedure RenderFreeMarathon();
-    procedure RenderTournamentQuals();
-    procedure RenderTournamentMatch();
+    procedure RenderMarathonQuals();
+    procedure RenderMarathonMatch();
     procedure RenderSpeedrunQuals();
     procedure RenderSpeedrunMatch();
     procedure RenderGame();
@@ -161,8 +161,8 @@ type
     procedure RenderMenu();
     procedure RenderModes();
     procedure RenderFreeMarathon();
-    procedure RenderTournamentQuals();
-    procedure RenderTournamentMatch();
+    procedure RenderMarathonQuals();
+    procedure RenderMarathonMatch();
     procedure RenderSpeedrunQuals();
     procedure RenderSpeedrunMatch();
     procedure RenderGame();
@@ -388,7 +388,7 @@ begin
     IfThen(
       Memory.GameModes.QualsActive,
       IfThen(
-        (Memory.Modes.ItemIndex = ITEM_MODES_TOURNAMENT_QUALS) and (Memory.GameModes.QualsMode = QUALS_MODE_TOURNAMENT),
+        (Memory.Modes.ItemIndex = ITEM_MODES_MARATHON_QUALS) and (Memory.GameModes.QualsMode = QUALS_MODE_MARATHON),
         COLOR_WHITE,
         IfThen(
           (Memory.Modes.ItemIndex = ITEM_MODES_SPEEDRUN_QUALS) and (Memory.GameModes.QualsMode = QUALS_MODE_SPEEDRUN),
@@ -414,9 +414,9 @@ begin
   );
 
   RenderText(
-    ITEM_X_MODES_TOURNAMENT_MATCH,
-    ITEM_Y_MODES_TOURNAMENT_MATCH,
-    ITEM_TEXT_MODES_TOURNAMENT_MATCH,
+    ITEM_X_MODES_MARATHON_MATCH,
+    ITEM_Y_MODES_MARATHON_MATCH,
+    ITEM_TEXT_MODES_MARATHON_MATCH,
     COLOR_DARK
   );
 
@@ -427,7 +427,7 @@ begin
     COLOR_DARK
   );
 
-  if Memory.GameModes.QualsMode = QUALS_MODE_TOURNAMENT then
+  if Memory.GameModes.QualsMode = QUALS_MODE_MARATHON then
     RenderText(
       ITEM_X_MODES_SPEEDRUN_QUALS,
       ITEM_Y_MODES_SPEEDRUN_QUALS,
@@ -436,9 +436,9 @@ begin
     )
   else
     RenderText(
-      ITEM_X_MODES_TOURNAMENT_QUALS,
-      ITEM_Y_MODES_TOURNAMENT_QUALS,
-      ITEM_TEXT_MODES_TOURNAMENT_QUALS,
+      ITEM_X_MODES_MARATHON_QUALS,
+      ITEM_Y_MODES_MARATHON_QUALS,
+      ITEM_TEXT_MODES_MARATHON_QUALS,
       COLOR_DARK
     );
 end;
@@ -627,22 +627,22 @@ begin
 end;
 
 
-procedure TRenderer.RenderTournamentQualsSelection();
+procedure TRenderer.RenderMarathonQualsSelection();
 begin
   if not Memory.GameModes.TimerChanging then
     RenderText(
-      ITEM_X_TOURNAMENT_QUALS[Memory.TournamentQuals.ItemIndex],
-      ITEM_Y_TOURNAMENT_QUALS[Memory.TournamentQuals.ItemIndex],
-      ITEM_TEXT_TOURNAMENT_QUALS[Memory.TournamentQuals.ItemIndex]
+      ITEM_X_MARATHON_QUALS[Memory.MarathonQuals.ItemIndex],
+      ITEM_Y_MARATHON_QUALS[Memory.MarathonQuals.ItemIndex],
+      ITEM_TEXT_MARATHON_QUALS[Memory.MarathonQuals.ItemIndex]
     );
 
 
   RenderText(
-    ITEM_X_TOURNAMENT_QUALS[Memory.TournamentQuals.ItemIndex] - ITEM_X_MARKER,
-    ITEM_Y_TOURNAMENT_QUALS[Memory.TournamentQuals.ItemIndex],
+    ITEM_X_MARATHON_QUALS[Memory.MarathonQuals.ItemIndex] - ITEM_X_MARKER,
+    ITEM_Y_MARATHON_QUALS[Memory.MarathonQuals.ItemIndex],
     ITEM_TEXT_MARKER,
     IfThen(
-      Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_START,
+      Memory.MarathonQuals.ItemIndex = ITEM_MARATHON_QUALS_START,
       IfThen(
         Input.Device.Connected,
         IfThen(
@@ -658,7 +658,7 @@ begin
       ),
       IfThen(
         Memory.GameModes.QualsActive,
-        IfThen(Memory.TournamentQuals.ItemIndex > ITEM_TOURNAMENT_QUALS_GENERATOR, COLOR_WHITE, COLOR_DARK),
+        IfThen(Memory.MarathonQuals.ItemIndex > ITEM_MARATHON_QUALS_GENERATOR, COLOR_WHITE, COLOR_DARK),
         COLOR_WHITE
       )
     )
@@ -666,7 +666,7 @@ begin
 end;
 
 
-procedure TRenderer.RenderTournamentQualsItems();
+procedure TRenderer.RenderMarathonQualsItems();
 begin
   RenderText(
     ITEM_X_GAME_MODE_START,
@@ -675,7 +675,7 @@ begin
     IfThen(
       Input.Device.Connected,
       IfThen(
-        Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_START,
+        Memory.MarathonQuals.ItemIndex = ITEM_MARATHON_QUALS_START,
         IfThen(
           Memory.GameModes.TimerChanging,
           IfThen(
@@ -714,7 +714,7 @@ begin
 end;
 
 
-procedure TRenderer.RenderTournamentQualsParameters();
+procedure TRenderer.RenderMarathonQualsParameters();
 begin
   RenderText(
     ITEM_X_GAME_MODE_PARAM,
@@ -724,7 +724,7 @@ begin
       Memory.GameModes.QualsActive,
       COLOR_DARK,
       IfThen(
-        Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_REGION,
+        Memory.MarathonQuals.ItemIndex = ITEM_MARATHON_QUALS_REGION,
         COLOR_WHITE,
         IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
       )
@@ -739,7 +739,7 @@ begin
       Memory.GameModes.QualsActive,
       COLOR_DARK,
       IfThen(
-        Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_GENERATOR,
+        Memory.MarathonQuals.ItemIndex = ITEM_MARATHON_QUALS_GENERATOR,
         COLOR_WHITE,
         IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
       )
@@ -751,7 +751,7 @@ begin
     ITEM_Y_GAME_MODE_LEVEL,
     Memory.GameModes.Level.ToString(),
     IfThen(
-      Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_LEVEL,
+      Memory.MarathonQuals.ItemIndex = ITEM_MARATHON_QUALS_LEVEL,
       COLOR_WHITE,
       IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
     )
@@ -761,27 +761,27 @@ begin
 end;
 
 
-procedure TRenderer.RenderTournamentQualsBestScores();
+procedure TRenderer.RenderMarathonQualsBestScores();
 begin
   { TODO : render best qualifying scores if any }
 end;
 
 
-procedure TRenderer.RenderTournamentMatchSelection();
+procedure TRenderer.RenderMarathonMatchSelection();
 begin
   if not Memory.GameModes.SeedChanging then
     RenderText(
-      ITEM_X_TOURNAMENT_MATCH[Memory.TournamentMatch.ItemIndex],
-      ITEM_Y_TOURNAMENT_MATCH[Memory.TournamentMatch.ItemIndex],
-      ITEM_TEXT_TOURNAMENT_MATCH[Memory.TournamentMatch.ItemIndex]
+      ITEM_X_MARATHON_MATCH[Memory.MarathonMatch.ItemIndex],
+      ITEM_Y_MARATHON_MATCH[Memory.MarathonMatch.ItemIndex],
+      ITEM_TEXT_MARATHON_MATCH[Memory.MarathonMatch.ItemIndex]
     );
 
   RenderText(
-    ITEM_X_TOURNAMENT_MATCH[Memory.TournamentMatch.ItemIndex] - ITEM_X_MARKER,
-    ITEM_Y_TOURNAMENT_MATCH[Memory.TournamentMatch.ItemIndex],
+    ITEM_X_MARATHON_MATCH[Memory.MarathonMatch.ItemIndex] - ITEM_X_MARKER,
+    ITEM_Y_MARATHON_MATCH[Memory.MarathonMatch.ItemIndex],
     ITEM_TEXT_MARKER,
     IfThen(
-      Memory.TournamentMatch.ItemIndex = ITEM_TOURNAMENT_MATCH_START,
+      Memory.MarathonMatch.ItemIndex = ITEM_MARATHON_MATCH_START,
       IfThen(
         Input.Device.Connected,
         IfThen(
@@ -797,7 +797,7 @@ begin
 end;
 
 
-procedure TRenderer.RenderTournamentMatchItems();
+procedure TRenderer.RenderMarathonMatchItems();
 begin
   RenderText(
     ITEM_X_GAME_MODE_START,
@@ -806,7 +806,7 @@ begin
     IfThen(
       Input.Device.Connected,
       IfThen(
-        Memory.TournamentMatch.ItemIndex = ITEM_TOURNAMENT_MATCH_START,
+        Memory.MarathonMatch.ItemIndex = ITEM_MARATHON_MATCH_START,
         IfThen(
           Memory.GameModes.SeedChanging,
           IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE),
@@ -820,14 +820,14 @@ begin
 end;
 
 
-procedure TRenderer.RenderTournamentMatchParameters();
+procedure TRenderer.RenderMarathonMatchParameters();
 begin
   RenderText(
     ITEM_X_GAME_MODE_PARAM,
     ITEM_Y_GAME_MODE_REGION,
     ITEM_TEXT_GAME_MODE_REGION[Memory.GameModes.Region],
     IfThen(
-      Memory.TournamentMatch.ItemIndex = ITEM_TOURNAMENT_MATCH_REGION,
+      Memory.MarathonMatch.ItemIndex = ITEM_MARATHON_MATCH_REGION,
       COLOR_WHITE,
       IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
     )
@@ -838,7 +838,7 @@ begin
     ITEM_Y_GAME_MODE_GENERATOR,
     ITEM_TEXT_GAME_MODE_GENERATOR[Memory.GameModes.Generator],
     IfThen(
-      Memory.TournamentMatch.ItemIndex = ITEM_TOURNAMENT_MATCH_GENERATOR,
+      Memory.MarathonMatch.ItemIndex = ITEM_MARATHON_MATCH_GENERATOR,
       COLOR_WHITE,
       IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
     )
@@ -849,7 +849,7 @@ begin
     ITEM_Y_GAME_MODE_LEVEL,
     Memory.GameModes.Level.ToString(),
     IfThen(
-      Memory.TournamentMatch.ItemIndex = ITEM_TOURNAMENT_MATCH_LEVEL,
+      Memory.MarathonMatch.ItemIndex = ITEM_MARATHON_MATCH_LEVEL,
       COLOR_WHITE,
       IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
     )
@@ -859,7 +859,7 @@ begin
 end;
 
 
-procedure TRenderer.RenderTournamentMatchBestScores();
+procedure TRenderer.RenderMarathonMatchBestScores();
 begin
   { TODO : render best match scores if any }
 end;
@@ -2019,21 +2019,21 @@ begin
 end;
 
 
-procedure TModernRenderer.RenderTournamentQuals();
+procedure TModernRenderer.RenderMarathonQuals();
 begin
-  RenderTournamentQualsSelection();
-  RenderTournamentQualsItems();
-  RenderTournamentQualsParameters();
-  RenderTournamentQualsBestScores();
+  RenderMarathonQualsSelection();
+  RenderMarathonQualsItems();
+  RenderMarathonQualsParameters();
+  RenderMarathonQualsBestScores();
 end;
 
 
-procedure TModernRenderer.RenderTournamentMatch();
+procedure TModernRenderer.RenderMarathonMatch();
 begin
-  RenderTournamentMatchSelection();
-  RenderTournamentMatchItems();
-  RenderTournamentMatchParameters();
-  RenderTournamentMatchBestScores();
+  RenderMarathonMatchSelection();
+  RenderMarathonMatchItems();
+  RenderMarathonMatchParameters();
+  RenderMarathonMatchBestScores();
 end;
 
 
@@ -2131,8 +2131,8 @@ begin
     SCENE_MENU:             RenderMenu();
     SCENE_MODES:            RenderModes();
     SCENE_FREE_MARATHON:    RenderFreeMarathon();
-    SCENE_TOURNAMENT_QUALS: RenderTournamentQuals();
-    SCENE_TOURNAMENT_MATCH: RenderTournamentMatch();
+    SCENE_MARATHON_QUALS: RenderMarathonQuals();
+    SCENE_MARATHON_MATCH: RenderMarathonMatch();
     SCENE_SPEEDRUN_QUALS:   RenderSpeedrunQuals();
     SCENE_SPEEDRUN_MATCH:   RenderSpeedrunMatch();
     SCENE_GAME_NORMAL:      RenderGame();
@@ -2227,21 +2227,21 @@ begin
 end;
 
 
-procedure TClassicRenderer.RenderTournamentQuals();
+procedure TClassicRenderer.RenderMarathonQuals();
 begin
-  RenderTournamentQualsSelection();
-  RenderTournamentQualsItems();
-  RenderTournamentQualsParameters();
-  RenderTournamentQualsBestScores();
+  RenderMarathonQualsSelection();
+  RenderMarathonQualsItems();
+  RenderMarathonQualsParameters();
+  RenderMarathonQualsBestScores();
 end;
 
 
-procedure TClassicRenderer.RenderTournamentMatch();
+procedure TClassicRenderer.RenderMarathonMatch();
 begin
-  RenderTournamentMatchSelection();
-  RenderTournamentMatchItems();
-  RenderTournamentMatchParameters();
-  RenderTournamentMatchBestScores();
+  RenderMarathonMatchSelection();
+  RenderMarathonMatchItems();
+  RenderMarathonMatchParameters();
+  RenderMarathonMatchBestScores();
 end;
 
 
@@ -2336,8 +2336,8 @@ begin
     SCENE_MENU:             RenderMenu();
     SCENE_MODES:            RenderModes();
     SCENE_FREE_MARATHON:    RenderFreeMarathon();
-    SCENE_TOURNAMENT_QUALS: RenderTournamentQuals();
-    SCENE_TOURNAMENT_MATCH: RenderTournamentMatch();
+    SCENE_MARATHON_QUALS: RenderMarathonQuals();
+    SCENE_MARATHON_MATCH: RenderMarathonMatch();
     SCENE_SPEEDRUN_QUALS:   RenderSpeedrunQuals();
     SCENE_SPEEDRUN_MATCH:   RenderSpeedrunMatch();
     SCENE_GAME_NORMAL:      RenderGame();

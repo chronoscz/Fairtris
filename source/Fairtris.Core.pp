@@ -661,7 +661,7 @@ begin
     Memory.Game.LowerTimer -= 1;
   end
   else
-    if Memory.GameModes.IsSingle or (Memory.GameModes.IsTournament and Memory.GameModes.IsQuals) then
+    if Memory.GameModes.IsSingle or (Memory.GameModes.IsMarathon and Memory.GameModes.IsQuals) then
       Memory.Game.State := STATE_PIECE_SPAWN
     else
       if not Memory.Game.AfterHardKillScreen then
@@ -698,10 +698,10 @@ begin
         if Memory.Game.Lines + Memory.Game.ClearCount >= KILLSCREEN_LINES[Memory.GameModes.Region, Memory.GameModes.Level] then
           HappenedKillScreen := True;
 
-        if Memory.GameModes.IsSpeedrun or (Memory.GameModes.IsTournament and Memory.GameModes.IsMatch) then
+        if Memory.GameModes.IsSpeedrun or (Memory.GameModes.IsMarathon and Memory.GameModes.IsMatch) then
         begin
-          if Memory.GameModes.IsTournament and Memory.GameModes.IsMatch then
-            if Memory.Game.Lines + Memory.Game.ClearCount >= KILLSCREEN_LINES_TOURNAMENT[Memory.GameModes.Region, Memory.GameModes.Level] then
+          if Memory.GameModes.IsMarathon and Memory.GameModes.IsMatch then
+            if Memory.Game.Lines + Memory.Game.ClearCount >= KILLSCREEN_LINES_MARATHON[Memory.GameModes.Region, Memory.GameModes.Level] then
               Memory.Game.AfterHardKillScreen := True;
 
           if Memory.GameModes.IsSpeedrun then

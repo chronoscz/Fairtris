@@ -54,9 +54,9 @@ type
   private
     procedure PrepareModesSelection();
     procedure PrepareFreeMarathonSelection();
-    procedure PrepareTournamentQualsSelection();
-    procedure PrepareTournamentQualsLevel();
-    procedure PrepareTournamentMatchSelection();
+    procedure PrepareMarathonQualsSelection();
+    procedure PrepareMarathonQualsLevel();
+    procedure PrepareMarathonMatchSelection();
     procedure PrepareSpeedrunQualsSelection();
     procedure PrepareSpeedrunMatchSelection();
   private
@@ -80,8 +80,8 @@ type
   private
     procedure PrepareModes();
     procedure PrepareFreeMarathon();
-    procedure PrepareTournamentQuals();
-    procedure PrepareTournamentMatch();
+    procedure PrepareMarathonQuals();
+    procedure PrepareMarathonMatch();
     procedure PrepareSpeedrunQuals();
     procedure PrepareSpeedrunMatch();
     procedure PreparePause();
@@ -116,19 +116,19 @@ type
     procedure UpdateFreeMarathonLevel();
     procedure UpdateFreeMarathonScene();
   private
-    procedure UpdateTournamentQualsSelection();
-    procedure UpdateTournamentQualsRegion();
-    procedure UpdateTournamentQualsGenerator();
-    procedure UpdateTournamentQualsLevel();
-    procedure UpdateTournamentQualsTimer();
-    procedure UpdateTournamentQualsScene();
+    procedure UpdateMarathonQualsSelection();
+    procedure UpdateMarathonQualsRegion();
+    procedure UpdateMarathonQualsGenerator();
+    procedure UpdateMarathonQualsLevel();
+    procedure UpdateMarathonQualsTimer();
+    procedure UpdateMarathonQualsScene();
   private
-    procedure UpdateTournamentMatchSelection();
-    procedure UpdateTournamentMatchRegion();
-    procedure UpdateTournamentMatchGenerator();
-    procedure UpdateTournamentMatchLevel();
-    procedure UpdateTournamentMatchSeed();
-    procedure UpdateTournamentMatchScene();
+    procedure UpdateMarathonMatchSelection();
+    procedure UpdateMarathonMatchRegion();
+    procedure UpdateMarathonMatchGenerator();
+    procedure UpdateMarathonMatchLevel();
+    procedure UpdateMarathonMatchSeed();
+    procedure UpdateMarathonMatchScene();
   private
     procedure UpdateSpeedrunQualsSelection();
     procedure UpdateSpeedrunQualsRegion();
@@ -178,8 +178,8 @@ type
     procedure UpdateMenu();
     procedure UpdateModes();
     procedure UpdateFreeMarathon();
-    procedure UpdateTournamentQuals();
-    procedure UpdateTournamentMatch();
+    procedure UpdateMarathonQuals();
+    procedure UpdateMarathonMatch();
     procedure UpdateSpeedrunQuals();
     procedure UpdateSpeedrunMatch();
     procedure UpdateGame();
@@ -347,21 +347,21 @@ begin
 end;
 
 
-procedure TLogic.PrepareTournamentQualsSelection();
+procedure TLogic.PrepareMarathonQualsSelection();
 begin
-  Memory.TournamentQuals.ItemIndex := ITEM_TOURNAMENT_QUALS_START;
+  Memory.MarathonQuals.ItemIndex := ITEM_MARATHON_QUALS_START;
 end;
 
 
-procedure TLogic.PrepareTournamentQualsLevel();
+procedure TLogic.PrepareMarathonQualsLevel();
 begin
   Memory.GameModes.Level := Min(Memory.GameModes.Level, LEVEL_LAST_QUALS);
 end;
 
 
-procedure TLogic.PrepareTournamentMatchSelection();
+procedure TLogic.PrepareMarathonMatchSelection();
 begin
-  Memory.TournamentMatch.ItemIndex := ITEM_TOURNAMENT_MATCH_START;
+  Memory.MarathonMatch.ItemIndex := ITEM_MARATHON_MATCH_START;
 end;
 
 
@@ -498,32 +498,32 @@ begin
 end;
 
 
-procedure TLogic.PrepareTournamentQuals();
+procedure TLogic.PrepareMarathonQuals();
 begin
   if not FScene.Changed then Exit;
 
   if FScene.Previous = SCENE_MODES then
   begin
-    PrepareTournamentQualsSelection();
-    PrepareTournamentQualsLevel();
+    PrepareMarathonQualsSelection();
+    PrepareMarathonQualsLevel();
   end;
 
   Memory.Game.Started := False;
-  Memory.Game.FromScene := SCENE_TOURNAMENT_QUALS;
-  Memory.GameModes.Mode := MODE_TOURNAMENT_QUALS;
+  Memory.Game.FromScene := SCENE_MARATHON_QUALS;
+  Memory.GameModes.Mode := MODE_MARATHON_QUALS;
 end;
 
 
-procedure TLogic.PrepareTournamentMatch();
+procedure TLogic.PrepareMarathonMatch();
 begin
   if not FScene.Changed then Exit;
 
   if FScene.Previous = SCENE_MODES then
-    PrepareTournamentMatchSelection();
+    PrepareMarathonMatchSelection();
 
   Memory.Game.Started := False;
-  Memory.Game.FromScene := SCENE_TOURNAMENT_MATCH;
-  Memory.GameModes.Mode := MODE_TOURNAMENT_MATCH;
+  Memory.Game.FromScene := SCENE_MARATHON_MATCH;
+  Memory.GameModes.Mode := MODE_MARATHON_MATCH;
 end;
 
 
@@ -788,10 +788,10 @@ begin
   begin
     if Memory.GameModes.QualsActive and (Memory.Modes.ItemIndex <> ITEM_MODES_BACK) then
     case Memory.Modes.ItemIndex of
-      ITEM_MODES_TOURNAMENT_QUALS:
-        if Memory.GameModes.QualsMode = QUALS_MODE_TOURNAMENT then
+      ITEM_MODES_MARATHON_QUALS:
+        if Memory.GameModes.QualsMode = QUALS_MODE_MARATHON then
         begin
-          FScene.Current := SCENE_TOURNAMENT_QUALS;
+          FScene.Current := SCENE_MARATHON_QUALS;
           Sounds.PlaySound(SOUND_START);
         end
         else
@@ -811,8 +811,8 @@ begin
     begin
       case Memory.Modes.ItemIndex of
         ITEM_MODES_FREE_MARATHON:    FScene.Current := SCENE_FREE_MARATHON;
-        ITEM_MODES_TOURNAMENT_QUALS: FScene.Current := SCENE_TOURNAMENT_QUALS;
-        ITEM_MODES_TOURNAMENT_MATCH: FScene.Current := SCENE_TOURNAMENT_MATCH;
+        ITEM_MODES_MARATHON_QUALS: FScene.Current := SCENE_MARATHON_QUALS;
+        ITEM_MODES_MARATHON_MATCH: FScene.Current := SCENE_MARATHON_MATCH;
         ITEM_MODES_SPEEDRUN_QUALS:   FScene.Current := SCENE_SPEEDRUN_QUALS;
         ITEM_MODES_SPEEDRUN_MATCH:   FScene.Current := SCENE_SPEEDRUN_MATCH;
         ITEM_MODES_BACK:             FScene.Current := SCENE_MENU;
@@ -1126,23 +1126,23 @@ begin
 end;
 
 
-procedure TLogic.UpdateTournamentQualsSelection();
+procedure TLogic.UpdateMarathonQualsSelection();
 begin
   if Memory.GameModes.TimerChanging then Exit;
 
   if InputMenuSetPrev() then
   begin
-    UpdateItemIndex(Memory.TournamentQuals.ItemIndex, ITEM_TOURNAMENT_QUALS_COUNT, ITEM_PREV);
+    UpdateItemIndex(Memory.MarathonQuals.ItemIndex, ITEM_MARATHON_QUALS_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_BLIP);
   end;
 
   if InputMenuSetNext() then
   begin
-    UpdateItemIndex(Memory.TournamentQuals.ItemIndex, ITEM_TOURNAMENT_QUALS_COUNT, ITEM_NEXT);
+    UpdateItemIndex(Memory.MarathonQuals.ItemIndex, ITEM_MARATHON_QUALS_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_BLIP);
   end;
 
-  if (Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_START) and InputOptionSetNext() then
+  if (Memory.MarathonQuals.ItemIndex = ITEM_MARATHON_QUALS_START) and InputOptionSetNext() then
   begin
     Memory.GameModes.TimerChanging := True;
     Memory.GameModes.TimerEditor := TIMER_DEFAULT_EDITOR;
@@ -1152,9 +1152,9 @@ begin
 end;
 
 
-procedure TLogic.UpdateTournamentQualsRegion();
+procedure TLogic.UpdateMarathonQualsRegion();
 begin
-  if Memory.TournamentQuals.ItemIndex <> ITEM_TOURNAMENT_QUALS_REGION then Exit;
+  if Memory.MarathonQuals.ItemIndex <> ITEM_MARATHON_QUALS_REGION then Exit;
 
   if InputOptionSetPrev() then
     if Memory.GameModes.QualsActive then
@@ -1178,9 +1178,9 @@ begin
 end;
 
 
-procedure TLogic.UpdateTournamentQualsGenerator();
+procedure TLogic.UpdateMarathonQualsGenerator();
 begin
-  if Memory.TournamentQuals.ItemIndex <> ITEM_TOURNAMENT_QUALS_GENERATOR then Exit;
+  if Memory.MarathonQuals.ItemIndex <> ITEM_MARATHON_QUALS_GENERATOR then Exit;
 
   if InputOptionSetPrev() then
     if Memory.GameModes.QualsActive then
@@ -1204,13 +1204,13 @@ begin
 end;
 
 
-procedure TLogic.UpdateTournamentQualsLevel();
+procedure TLogic.UpdateMarathonQualsLevel();
 begin
-  if Memory.TournamentQuals.ItemIndex <> ITEM_TOURNAMENT_QUALS_LEVEL then Exit;
+  if Memory.MarathonQuals.ItemIndex <> ITEM_MARATHON_QUALS_LEVEL then Exit;
 
   if InputOptionSetPrev() then
   begin
-    Memory.TournamentQuals.Autorepeat := 0;
+    Memory.MarathonQuals.Autorepeat := 0;
 
     UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_QUALS[Memory.GameModes.Region], ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
@@ -1218,11 +1218,11 @@ begin
   else
     if InputOptionRollPrev() then
     begin
-      Memory.TournamentQuals.Autorepeat += 1;
+      Memory.MarathonQuals.Autorepeat += 1;
 
-      if Memory.TournamentQuals.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region] then
+      if Memory.MarathonQuals.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region] then
       begin
-        Memory.TournamentQuals.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
+        Memory.MarathonQuals.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
 
         UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_QUALS[Memory.GameModes.Region], ITEM_PREV);
         Sounds.PlaySound(SOUND_SHIFT);
@@ -1231,7 +1231,7 @@ begin
 
   if InputOptionSetNext() then
   begin
-    Memory.TournamentQuals.Autorepeat := 0;
+    Memory.MarathonQuals.Autorepeat := 0;
 
     UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_QUALS[Memory.GameModes.Region], ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
@@ -1239,11 +1239,11 @@ begin
   else
     if InputOptionRollNext() then
     begin
-      Memory.TournamentQuals.Autorepeat += 1;
+      Memory.MarathonQuals.Autorepeat += 1;
 
-      if Memory.TournamentQuals.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region] then
+      if Memory.MarathonQuals.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region] then
       begin
-        Memory.TournamentQuals.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
+        Memory.MarathonQuals.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
 
         UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_QUALS[Memory.GameModes.Region], ITEM_NEXT);
         Sounds.PlaySound(SOUND_SHIFT);
@@ -1252,13 +1252,13 @@ begin
 end;
 
 
-procedure TLogic.UpdateTournamentQualsTimer();
+procedure TLogic.UpdateMarathonQualsTimer();
 begin
   UpdateQualsTimer();
 end;
 
 
-procedure TLogic.UpdateTournamentQualsScene();
+procedure TLogic.UpdateMarathonQualsScene();
 begin
   FScene.Validate();
 
@@ -1270,7 +1270,7 @@ begin
     end;
 
   if not Input.Device.Connected then
-    if Memory.TournamentQuals.ItemIndex = ITEM_TOURNAMENT_QUALS_START then
+    if Memory.MarathonQuals.ItemIndex = ITEM_MARATHON_QUALS_START then
     begin
       if InputMenuAccepted() then
         Sounds.PlaySound(SOUND_HUM);
@@ -1287,14 +1287,14 @@ begin
   end;
 
   if InputMenuAccepted() then
-  case Memory.TournamentQuals.ItemIndex of
-    ITEM_TOURNAMENT_QUALS_START:
+  case Memory.MarathonQuals.ItemIndex of
+    ITEM_MARATHON_QUALS_START:
       if Memory.GameModes.TimerData <> TIMER_DEFAULT_DATA then
       begin
         if not Memory.GameModes.QualsActive then
         begin
           Memory.GameModes.QualsActive := True;
-          Memory.GameModes.QualsMode := QUALS_MODE_TOURNAMENT;
+          Memory.GameModes.QualsMode := QUALS_MODE_MARATHON;
           Memory.GameModes.QualsRemaining := Converter.StringToTimerFrames(Memory.GameModes.TimerData);
         end;
 
@@ -1303,7 +1303,7 @@ begin
       end
       else
         Sounds.PlaySound(SOUND_HUM);
-    ITEM_TOURNAMENT_QUALS_BACK:
+    ITEM_MARATHON_QUALS_BACK:
     begin
       FScene.Current := SCENE_MODES;
       Sounds.PlaySound(SOUND_DROP);
@@ -1312,23 +1312,23 @@ begin
 end;
 
 
-procedure TLogic.UpdateTournamentMatchSelection();
+procedure TLogic.UpdateMarathonMatchSelection();
 begin
   if Memory.GameModes.SeedChanging then Exit;
 
   if InputMenuSetPrev() then
   begin
-    UpdateItemIndex(Memory.TournamentMatch.ItemIndex, ITEM_TOURNAMENT_MATCH_COUNT, ITEM_PREV);
+    UpdateItemIndex(Memory.MarathonMatch.ItemIndex, ITEM_MARATHON_MATCH_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_BLIP);
   end;
 
   if InputMenuSetNext() then
   begin
-    UpdateItemIndex(Memory.TournamentMatch.ItemIndex, ITEM_TOURNAMENT_MATCH_COUNT, ITEM_NEXT);
+    UpdateItemIndex(Memory.MarathonMatch.ItemIndex, ITEM_MARATHON_MATCH_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_BLIP);
   end;
 
-  if (Memory.TournamentMatch.ItemIndex = ITEM_TOURNAMENT_MATCH_START) and InputOptionSetNext() then
+  if (Memory.MarathonMatch.ItemIndex = ITEM_MARATHON_MATCH_START) and InputOptionSetNext() then
   begin
     Memory.GameModes.SeedChanging := True;
     Memory.GameModes.SeedEditor := SEED_DEFAULT_EDITOR;
@@ -1338,9 +1338,9 @@ begin
 end;
 
 
-procedure TLogic.UpdateTournamentMatchRegion();
+procedure TLogic.UpdateMarathonMatchRegion();
 begin
-  if Memory.TournamentMatch.ItemIndex <> ITEM_TOURNAMENT_MATCH_REGION then Exit;
+  if Memory.MarathonMatch.ItemIndex <> ITEM_MARATHON_MATCH_REGION then Exit;
 
   if InputOptionSetPrev() then
   begin
@@ -1361,9 +1361,9 @@ begin
 end;
 
 
-procedure TLogic.UpdateTournamentMatchGenerator();
+procedure TLogic.UpdateMarathonMatchGenerator();
 begin
-  if Memory.TournamentMatch.ItemIndex <> ITEM_TOURNAMENT_MATCH_GENERATOR then Exit;
+  if Memory.MarathonMatch.ItemIndex <> ITEM_MARATHON_MATCH_GENERATOR then Exit;
 
   if InputOptionSetPrev() then
   begin
@@ -1381,13 +1381,13 @@ begin
 end;
 
 
-procedure TLogic.UpdateTournamentMatchLevel();
+procedure TLogic.UpdateMarathonMatchLevel();
 begin
-  if Memory.TournamentMatch.ItemIndex <> ITEM_TOURNAMENT_MATCH_LEVEL then Exit;
+  if Memory.MarathonMatch.ItemIndex <> ITEM_MARATHON_MATCH_LEVEL then Exit;
 
   if InputOptionSetPrev() then
   begin
-    Memory.TournamentMatch.Autorepeat := 0;
+    Memory.MarathonMatch.Autorepeat := 0;
 
     UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_FREE_GAME[Memory.GameModes.Region], ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
@@ -1395,11 +1395,11 @@ begin
   else
     if InputOptionRollPrev() then
     begin
-      Memory.TournamentMatch.Autorepeat += 1;
+      Memory.MarathonMatch.Autorepeat += 1;
 
-      if Memory.TournamentMatch.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region] then
+      if Memory.MarathonMatch.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region] then
       begin
-        Memory.TournamentMatch.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
+        Memory.MarathonMatch.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
 
         UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_FREE_GAME[Memory.GameModes.Region], ITEM_PREV);
         Sounds.PlaySound(SOUND_SHIFT);
@@ -1408,7 +1408,7 @@ begin
 
   if InputOptionSetNext() then
   begin
-    Memory.TournamentMatch.Autorepeat := 0;
+    Memory.MarathonMatch.Autorepeat := 0;
 
     UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_FREE_GAME[Memory.GameModes.Region], ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
@@ -1416,11 +1416,11 @@ begin
   else
     if InputOptionRollNext() then
     begin
-      Memory.TournamentMatch.Autorepeat += 1;
+      Memory.MarathonMatch.Autorepeat += 1;
 
-      if Memory.TournamentMatch.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region] then
+      if Memory.MarathonMatch.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region] then
       begin
-        Memory.TournamentMatch.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
+        Memory.MarathonMatch.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
 
         UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_FREE_GAME[Memory.GameModes.Region], ITEM_NEXT);
         Sounds.PlaySound(SOUND_SHIFT);
@@ -1429,13 +1429,13 @@ begin
 end;
 
 
-procedure TLogic.UpdateTournamentMatchSeed();
+procedure TLogic.UpdateMarathonMatchSeed();
 begin
   UpdateMatchSeed();
 end;
 
 
-procedure TLogic.UpdateTournamentMatchScene();
+procedure TLogic.UpdateMarathonMatchScene();
 begin
   FScene.Validate();
 
@@ -1447,7 +1447,7 @@ begin
     end;
 
   if not Input.Device.Connected then
-    if Memory.TournamentMatch.ItemIndex = ITEM_TOURNAMENT_MATCH_START then
+    if Memory.MarathonMatch.ItemIndex = ITEM_MARATHON_MATCH_START then
     begin
       if InputMenuAccepted() then
         Sounds.PlaySound(SOUND_HUM);
@@ -1464,13 +1464,13 @@ begin
   end;
 
   if InputMenuAccepted() then
-  case Memory.TournamentMatch.ItemIndex of
-    ITEM_TOURNAMENT_MATCH_START:
+  case Memory.MarathonMatch.ItemIndex of
+    ITEM_MARATHON_MATCH_START:
     begin
       FScene.Current := SCENE_GAME_NORMAL;
       Sounds.PlaySound(SOUND_START);
     end;
-    ITEM_TOURNAMENT_MATCH_BACK:
+    ITEM_MARATHON_MATCH_BACK:
     begin
       FScene.Current := SCENE_MODES;
       Sounds.PlaySound(SOUND_DROP);
@@ -2475,29 +2475,29 @@ begin
 end;
 
 
-procedure TLogic.UpdateTournamentQuals();
+procedure TLogic.UpdateMarathonQuals();
 begin
-  PrepareTournamentQuals();
+  PrepareMarathonQuals();
 
-  UpdateTournamentQualsSelection();
-  UpdateTournamentQualsRegion();
-  UpdateTournamentQualsGenerator();
-  UpdateTournamentQualsLevel();
-  UpdateTournamentQualsTimer();
-  UpdateTournamentQualsScene();
+  UpdateMarathonQualsSelection();
+  UpdateMarathonQualsRegion();
+  UpdateMarathonQualsGenerator();
+  UpdateMarathonQualsLevel();
+  UpdateMarathonQualsTimer();
+  UpdateMarathonQualsScene();
 end;
 
 
-procedure TLogic.UpdateTournamentMatch();
+procedure TLogic.UpdateMarathonMatch();
 begin
-  PrepareTournamentMatch();
+  PrepareMarathonMatch();
 
-  UpdateTournamentMatchSelection();
-  UpdateTournamentMatchRegion();
-  UpdateTournamentMatchGenerator();
-  UpdateTournamentMatchLevel();
-  UpdateTournamentMatchSeed();
-  UpdateTournamentMatchScene();
+  UpdateMarathonMatchSelection();
+  UpdateMarathonMatchRegion();
+  UpdateMarathonMatchGenerator();
+  UpdateMarathonMatchLevel();
+  UpdateMarathonMatchSeed();
+  UpdateMarathonMatchScene();
 end;
 
 
@@ -2605,8 +2605,8 @@ begin
     SCENE_MENU:             UpdateMenu();
     SCENE_MODES:            UpdateModes();
     SCENE_FREE_MARATHON:    UpdateFreeMarathon();
-    SCENE_TOURNAMENT_QUALS: UpdateTournamentQuals();
-    SCENE_TOURNAMENT_MATCH: UpdateTournamentMatch();
+    SCENE_MARATHON_QUALS: UpdateMarathonQuals();
+    SCENE_MARATHON_MATCH: UpdateMarathonMatch();
     SCENE_SPEEDRUN_QUALS:   UpdateSpeedrunQuals();
     SCENE_SPEEDRUN_MATCH:   UpdateSpeedrunMatch();
     SCENE_GAME_NORMAL:      UpdateGame();

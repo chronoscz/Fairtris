@@ -64,7 +64,7 @@ type
 
 
 type
-  TTournamentQualsMemory = class(TObject)
+  TMarathonQualsMemory = class(TObject)
   public
     procedure Initialize();
   public
@@ -74,7 +74,7 @@ type
 
 
 type
-  TTournamentMatchMemory = class(TObject)
+  TMarathonMatchMemory = class(TObject)
   public
     procedure Initialize();
   public
@@ -109,7 +109,7 @@ type
     function GetIsSingle(): Boolean;
     function GetIsQuals(): Boolean;
     function GetIsMatch(): Boolean;
-    function GetIsTournament(): Boolean;
+    function GetIsMarathon(): Boolean;
     function GetIsSpeedrun(): Boolean;
   public      
     procedure Initialize();
@@ -134,7 +134,7 @@ type
     property IsSingle: Boolean read GetIsSingle;
     property IsQuals: Boolean read GetIsQuals;
     property IsMatch: Boolean read GetIsMatch;
-    property IsTournament: Boolean read GetIsTournament;
+    property IsMarathon: Boolean read GetIsMarathon;
     property IsSpeedrun: Boolean read GetIsSpeedrun;
   end;
 
@@ -318,8 +318,8 @@ type
     FMenu: TMenuMemory;
     FModes: TModesMemory;
     FFreeMarathon: TFreeMarathonMemory;
-    FTournamentQuals: TTournamentQualsMemory;
-    FTournamentMatch: TTournamentMatchMemory;
+    FMarathonQuals: TMarathonQualsMemory;
+    FMarathonMatch: TMarathonMatchMemory;
     FSpeedrunQuals: TSpeedrunQualsMemory;
     FSpeedrunMatch: TSpeedrunMatchMemory;
     FGameModes: TGameModesMemory;
@@ -340,8 +340,8 @@ type
     property Menu: TMenuMemory read FMenu;
     property Modes: TModesMemory read FModes;
     property FreeMarathon: TFreeMarathonMemory read FFreeMarathon;
-    property TournamentQuals: TTournamentQualsMemory read FTournamentQuals;
-    property TournamentMatch: TTournamentMatchMemory read FTournamentMatch;
+    property MarathonQuals: TMarathonQualsMemory read FMarathonQuals;
+    property MarathonMatch: TMarathonMatchMemory read FMarathonMatch;
     property SpeedrunQuals: TSpeedrunQualsMemory read FSpeedrunQuals;
     property SpeedrunMatch: TSpeedrunMatchMemory read FSpeedrunMatch;
     property GameModes: TGameModesMemory read FGameModes;
@@ -394,16 +394,16 @@ begin
 end;
 
 
-procedure TTournamentQualsMemory.Initialize();
+procedure TMarathonQualsMemory.Initialize();
 begin
-  ItemIndex := ITEM_TOURNAMENT_QUALS_START;
+  ItemIndex := ITEM_MARATHON_QUALS_START;
   Autorepeat := 0;
 end;
 
 
-procedure TTournamentMatchMemory.Initialize();
+procedure TMarathonMatchMemory.Initialize();
 begin
-  ItemIndex := ITEM_TOURNAMENT_MATCH_START;
+  ItemIndex := ITEM_MARATHON_MATCH_START;
   Autorepeat := 0;
 end;
 
@@ -430,19 +430,19 @@ end;
 
 function TGameModesMemory.GetIsQuals(): Boolean;
 begin
-  Result := Mode in [MODE_TOURNAMENT_QUALS, MODE_SPEEDRUN_QUALS];
+  Result := Mode in [MODE_MARATHON_QUALS, MODE_SPEEDRUN_QUALS];
 end;
 
 
 function TGameModesMemory.GetIsMatch(): Boolean;
 begin
-  Result := Mode in [MODE_TOURNAMENT_MATCH, MODE_SPEEDRUN_MATCH];
+  Result := Mode in [MODE_MARATHON_MATCH, MODE_SPEEDRUN_MATCH];
 end;
 
 
-function TGameModesMemory.GetIsTournament(): Boolean;
+function TGameModesMemory.GetIsMarathon(): Boolean;
 begin
-  Result := Mode in [MODE_TOURNAMENT_QUALS, MODE_TOURNAMENT_MATCH];
+  Result := Mode in [MODE_MARATHON_QUALS, MODE_MARATHON_MATCH];
 end;
 
 
@@ -652,8 +652,8 @@ begin
   FMenu := TMenuMemory.Create();
   FModes := TModesMemory.Create();
   FFreeMarathon := TFreeMarathonMemory.Create();
-  FTournamentQuals := TTournamentQualsMemory.Create();
-  FTournamentMatch := TTournamentMatchMemory.Create();
+  FMarathonQuals := TMarathonQualsMemory.Create();
+  FMarathonMatch := TMarathonMatchMemory.Create();
   FSpeedrunQuals := TSpeedrunQualsMemory.Create();
   FSpeedrunMatch := TSpeedrunMatchMemory.Create();
   FGameModes := TGameModesMemory.Create();
@@ -673,8 +673,8 @@ begin
   FMenu.Free();
   FModes.Free();
   FFreeMarathon.Free();
-  FTournamentQuals.Free();
-  FTournamentMatch.Free();
+  FMarathonQuals.Free();
+  FMarathonMatch.Free();
   FSpeedrunQuals.Free();
   FSpeedrunMatch.Free();
   FGameModes.Free();
@@ -696,8 +696,8 @@ begin
   FMenu.Initialize();
   FModes.Initialize();
   FFreeMarathon.Initialize();
-  FTournamentQuals.Initialize();
-  FTournamentMatch.Initialize();
+  FMarathonQuals.Initialize();
+  FMarathonMatch.Initialize();
   FSpeedrunQuals.Initialize();
   FSpeedrunMatch.Initialize();
   FGameModes.Initialize();
