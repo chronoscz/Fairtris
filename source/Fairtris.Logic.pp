@@ -53,7 +53,7 @@ type
     procedure OpenHelp();
   private
     procedure PrepareModesSelection();
-    procedure PrepareSinglePlayerSelection();
+    procedure PrepareFreeMarathonSelection();
     procedure PrepareTournamentQualsSelection();
     procedure PrepareTournamentQualsLevel();
     procedure PrepareTournamentMatchSelection();
@@ -79,7 +79,7 @@ type
     procedure PrepareControllerScanCodes();
   private
     procedure PrepareModes();
-    procedure PrepareSinglePlayer();
+    procedure PrepareFreeMarathon();
     procedure PrepareTournamentQuals();
     procedure PrepareTournamentMatch();
     procedure PrepareSpeedrunQuals();
@@ -110,11 +110,11 @@ type
     procedure UpdateMatchSeed();
     procedure UpdateQualsTimer();
   private
-    procedure UpdateSinglePlayerSelection();
-    procedure UpdateSinglePlayerRegion();
-    procedure UpdateSinglePlayerGenerator();
-    procedure UpdateSinglePlayerLevel();
-    procedure UpdateSinglePlayerScene();
+    procedure UpdateFreeMarathonSelection();
+    procedure UpdateFreeMarathonRegion();
+    procedure UpdateFreeMarathonGenerator();
+    procedure UpdateFreeMarathonLevel();
+    procedure UpdateFreeMarathonScene();
   private
     procedure UpdateTournamentQualsSelection();
     procedure UpdateTournamentQualsRegion();
@@ -177,7 +177,7 @@ type
     procedure UpdateLegal();
     procedure UpdateMenu();
     procedure UpdateModes();
-    procedure UpdateSinglePlayer();
+    procedure UpdateFreeMarathon();
     procedure UpdateTournamentQuals();
     procedure UpdateTournamentMatch();
     procedure UpdateSpeedrunQuals();
@@ -337,13 +337,13 @@ end;
 
 procedure TLogic.PrepareModesSelection();
 begin
-  Memory.Modes.ItemIndex := ITEM_MODES_SINGLE_PLAYER;
+  Memory.Modes.ItemIndex := ITEM_MODES_FREE_MARATHON;
 end;
 
 
-procedure TLogic.PrepareSinglePlayerSelection();
+procedure TLogic.PrepareFreeMarathonSelection();
 begin
-  Memory.SinglePlayer.ItemIndex := ITEM_SINGLE_PLAYER_START;
+  Memory.FreeMarathon.ItemIndex := ITEM_FREE_MARATHON_START;
 end;
 
 
@@ -485,16 +485,16 @@ begin
 end;
 
 
-procedure TLogic.PrepareSinglePlayer();
+procedure TLogic.PrepareFreeMarathon();
 begin
   if not FScene.Changed then Exit;
 
   if FScene.Previous = SCENE_MODES then
-    PrepareSinglePlayerSelection();
+    PrepareFreeMarathonSelection();
 
   Memory.Game.Started := False;
-  Memory.Game.FromScene := SCENE_SINGLE_PLAYER;
-  Memory.GameModes.Mode := MODE_SINGLE_PLAYER;
+  Memory.Game.FromScene := SCENE_FREE_MARATHON;
+  Memory.GameModes.Mode := MODE_FREE_MARATHON;
 end;
 
 
@@ -810,7 +810,7 @@ begin
     else
     begin
       case Memory.Modes.ItemIndex of
-        ITEM_MODES_SINGLE_PLAYER:    FScene.Current := SCENE_SINGLE_PLAYER;
+        ITEM_MODES_FREE_MARATHON:    FScene.Current := SCENE_FREE_MARATHON;
         ITEM_MODES_TOURNAMENT_QUALS: FScene.Current := SCENE_TOURNAMENT_QUALS;
         ITEM_MODES_TOURNAMENT_MATCH: FScene.Current := SCENE_TOURNAMENT_MATCH;
         ITEM_MODES_SPEEDRUN_QUALS:   FScene.Current := SCENE_SPEEDRUN_QUALS;
@@ -984,25 +984,25 @@ begin
 end;
 
 
-procedure TLogic.UpdateSinglePlayerSelection();
+procedure TLogic.UpdateFreeMarathonSelection();
 begin
   if InputMenuSetPrev() then
   begin
-    UpdateItemIndex(Memory.SinglePlayer.ItemIndex, ITEM_SINGLE_PLAYER_COUNT, ITEM_PREV);
+    UpdateItemIndex(Memory.FreeMarathon.ItemIndex, ITEM_FREE_MARATHON_COUNT, ITEM_PREV);
     Sounds.PlaySound(SOUND_BLIP);
   end;
 
   if InputMenuSetNext() then
   begin
-    UpdateItemIndex(Memory.SinglePlayer.ItemIndex, ITEM_SINGLE_PLAYER_COUNT, ITEM_NEXT);
+    UpdateItemIndex(Memory.FreeMarathon.ItemIndex, ITEM_FREE_MARATHON_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_BLIP);
   end;
 end;
 
 
-procedure TLogic.UpdateSinglePlayerRegion();
+procedure TLogic.UpdateFreeMarathonRegion();
 begin
-  if Memory.SinglePlayer.ItemIndex <> ITEM_SINGLE_PLAYER_REGION then Exit;
+  if Memory.FreeMarathon.ItemIndex <> ITEM_FREE_MARATHON_REGION then Exit;
 
   if InputOptionSetPrev() then
   begin
@@ -1019,13 +1019,13 @@ begin
   Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.GameModes.Region];
 
   if Memory.GameModes.Region in [REGION_PAL .. REGION_PAL_EXTENDED] then
-    Memory.GameModes.Level := Min(Memory.GameModes.Level, LEVEL_LAST_SINGLE_PAL);
+    Memory.GameModes.Level := Min(Memory.GameModes.Level, LEVEL_LAST_FREE_GAME_PAL);
 end;
 
 
-procedure TLogic.UpdateSinglePlayerGenerator();
+procedure TLogic.UpdateFreeMarathonGenerator();
 begin
-  if Memory.SinglePlayer.ItemIndex <> ITEM_SINGLE_PLAYER_GENERATOR then Exit;
+  if Memory.FreeMarathon.ItemIndex <> ITEM_FREE_MARATHON_GENERATOR then Exit;
 
   if InputOptionSetPrev() then
   begin
@@ -1043,13 +1043,13 @@ begin
 end;
 
 
-procedure TLogic.UpdateSinglePlayerLevel();
+procedure TLogic.UpdateFreeMarathonLevel();
 begin
-  if Memory.SinglePlayer.ItemIndex <> ITEM_SINGLE_PLAYER_LEVEL then Exit;
+  if Memory.FreeMarathon.ItemIndex <> ITEM_FREE_MARATHON_LEVEL then Exit;
 
   if InputOptionSetPrev() then
   begin
-    Memory.SinglePlayer.Autorepeat := 0;
+    Memory.FreeMarathon.Autorepeat := 0;
 
     UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_SINGLE[Memory.GameModes.Region], ITEM_PREV);
     Sounds.PlaySound(SOUND_SHIFT);
@@ -1057,11 +1057,11 @@ begin
   else
     if InputOptionRollPrev() then
     begin
-      Memory.SinglePlayer.Autorepeat += 1;
+      Memory.FreeMarathon.Autorepeat += 1;
 
-      if Memory.SinglePlayer.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region] then
+      if Memory.FreeMarathon.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region] then
       begin
-        Memory.SinglePlayer.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
+        Memory.FreeMarathon.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
 
         UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_SINGLE[Memory.GameModes.Region], ITEM_PREV);
         Sounds.PlaySound(SOUND_SHIFT);
@@ -1070,7 +1070,7 @@ begin
 
   if InputOptionSetNext() then
   begin
-    Memory.SinglePlayer.Autorepeat := 0;
+    Memory.FreeMarathon.Autorepeat := 0;
 
     UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_SINGLE[Memory.GameModes.Region], ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
@@ -1078,11 +1078,11 @@ begin
   else
     if InputOptionRollNext() then
     begin
-      Memory.SinglePlayer.Autorepeat += 1;
+      Memory.FreeMarathon.Autorepeat += 1;
 
-      if Memory.SinglePlayer.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region] then
+      if Memory.FreeMarathon.Autorepeat = AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region] then
       begin
-        Memory.SinglePlayer.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
+        Memory.FreeMarathon.Autorepeat := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
 
         UpdateItemIndex(Memory.GameModes.Level, LEVEL_COUNT_SINGLE[Memory.GameModes.Region], ITEM_NEXT);
         Sounds.PlaySound(SOUND_SHIFT);
@@ -1091,7 +1091,7 @@ begin
 end;
 
 
-procedure TLogic.UpdateSinglePlayerScene();
+procedure TLogic.UpdateFreeMarathonScene();
 begin
   FScene.Validate();
 
@@ -1102,7 +1102,7 @@ begin
   end;
 
   if not Input.Device.Connected then
-    if Memory.SinglePlayer.ItemIndex = ITEM_SINGLE_PLAYER_START then
+    if Memory.FreeMarathon.ItemIndex = ITEM_FREE_MARATHON_START then
     begin
       if InputMenuAccepted() then
         Sounds.PlaySound(SOUND_HUM);
@@ -1111,13 +1111,13 @@ begin
     end;
 
   if InputMenuAccepted() then
-  case Memory.SinglePlayer.ItemIndex of
-    ITEM_SINGLE_PLAYER_START:
+  case Memory.FreeMarathon.ItemIndex of
+    ITEM_FREE_MARATHON_START:
     begin
       FScene.Current := SCENE_GAME_NORMAL;
       Sounds.PlaySound(SOUND_START);
     end;
-    ITEM_SINGLE_PLAYER_BACK:
+    ITEM_FREE_MARATHON_BACK:
     begin
       FScene.Current := SCENE_MODES;
       Sounds.PlaySound(SOUND_DROP);
@@ -1357,7 +1357,7 @@ begin
   Clock.FrameRateLimit := CLOCK_FRAMERATE_LIMIT[Memory.GameModes.Region];
 
   if Memory.GameModes.Region in [REGION_PAL .. REGION_PAL_EXTENDED] then
-    Memory.GameModes.Level := Min(Memory.GameModes.Level, LEVEL_LAST_SINGLE_PAL);
+    Memory.GameModes.Level := Min(Memory.GameModes.Level, LEVEL_LAST_FREE_GAME_PAL);
 end;
 
 
@@ -2463,15 +2463,15 @@ begin
 end;
 
 
-procedure TLogic.UpdateSinglePlayer();
+procedure TLogic.UpdateFreeMarathon();
 begin
-  PrepareSinglePlayer();
+  PrepareFreeMarathon();
 
-  UpdateSinglePlayerSelection();
-  UpdateSinglePlayerRegion();
-  UpdateSinglePlayerGenerator();
-  UpdateSinglePlayerLevel();
-  UpdateSinglePlayerScene();
+  UpdateFreeMarathonSelection();
+  UpdateFreeMarathonRegion();
+  UpdateFreeMarathonGenerator();
+  UpdateFreeMarathonLevel();
+  UpdateFreeMarathonScene();
 end;
 
 
@@ -2604,7 +2604,7 @@ begin
     SCENE_LEGAL:            UpdateLegal();
     SCENE_MENU:             UpdateMenu();
     SCENE_MODES:            UpdateModes();
-    SCENE_SINGLE_PLAYER:    UpdateSinglePlayer();
+    SCENE_FREE_MARATHON:    UpdateFreeMarathon();
     SCENE_TOURNAMENT_QUALS: UpdateTournamentQuals();
     SCENE_TOURNAMENT_MATCH: UpdateTournamentMatch();
     SCENE_SPEEDRUN_QUALS:   UpdateSpeedrunQuals();

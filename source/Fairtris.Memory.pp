@@ -54,7 +54,7 @@ type
 
 
 type
-  TSinglePlayerMemory = class(TObject)
+  TFreeMarathonMemory = class(TObject)
   public
     procedure Initialize();
   public
@@ -317,7 +317,7 @@ type
     FLegal: TLegalMemory;
     FMenu: TMenuMemory;
     FModes: TModesMemory;
-    FSinglePlayer: TSinglePlayerMemory;
+    FFreeMarathon: TFreeMarathonMemory;
     FTournamentQuals: TTournamentQualsMemory;
     FTournamentMatch: TTournamentMatchMemory;
     FSpeedrunQuals: TSpeedrunQualsMemory;
@@ -339,7 +339,7 @@ type
     property Legal: TLegalMemory read FLegal;
     property Menu: TMenuMemory read FMenu;
     property Modes: TModesMemory read FModes;
-    property SinglePlayer: TSinglePlayerMemory read FSinglePlayer;
+    property FreeMarathon: TFreeMarathonMemory read FFreeMarathon;
     property TournamentQuals: TTournamentQualsMemory read FTournamentQuals;
     property TournamentMatch: TTournamentMatchMemory read FTournamentMatch;
     property SpeedrunQuals: TSpeedrunQualsMemory read FSpeedrunQuals;
@@ -387,9 +387,9 @@ begin
 end;
 
 
-procedure TSinglePlayerMemory.Initialize();
+procedure TFreeMarathonMemory.Initialize();
 begin
-  ItemIndex := ITEM_SINGLE_PLAYER_START;
+  ItemIndex := ITEM_FREE_MARATHON_START;
   Autorepeat := 0;
 end;
 
@@ -424,7 +424,7 @@ end;
 
 function TGameModesMemory.GetIsSingle(): Boolean;
 begin
-  Result := Mode = MODE_SINGLE_PLAYER;
+  Result := Mode = MODE_FREE_MARATHON;
 end;
 
 
@@ -651,7 +651,7 @@ begin
   FLegal := TLegalMemory.Create();
   FMenu := TMenuMemory.Create();
   FModes := TModesMemory.Create();
-  FSinglePlayer := TSinglePlayerMemory.Create();
+  FFreeMarathon := TFreeMarathonMemory.Create();
   FTournamentQuals := TTournamentQualsMemory.Create();
   FTournamentMatch := TTournamentMatchMemory.Create();
   FSpeedrunQuals := TSpeedrunQualsMemory.Create();
@@ -672,7 +672,7 @@ begin
   FLegal.Free();
   FMenu.Free();
   FModes.Free();
-  FSinglePlayer.Free();
+  FFreeMarathon.Free();
   FTournamentQuals.Free();
   FTournamentMatch.Free();
   FSpeedrunQuals.Free();
@@ -695,7 +695,7 @@ begin
   FLegal.Initialize();
   FMenu.Initialize();
   FModes.Initialize();
-  FSinglePlayer.Initialize();
+  FFreeMarathon.Initialize();
   FTournamentQuals.Initialize();
   FTournamentMatch.Initialize();
   FSpeedrunQuals.Initialize();

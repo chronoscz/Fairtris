@@ -371,7 +371,7 @@ begin
   Memory.Game.FallTimer += 1;
   Memory.Game.FallSpeed := 1;
 
-  if Memory.Game.Level < LEVEL_LAST_SINGLE then
+  if Memory.Game.Level < LEVEL_LAST_FREE_GAME then
     Memory.Game.FallSpeed := AUTOFALL_FRAMES[Memory.GameModes.Region, Memory.Game.Level];
 
   if Memory.Game.FallTimer >= Memory.Game.FallSpeed then
