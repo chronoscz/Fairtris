@@ -979,6 +979,8 @@ begin
           Memory.GameModes.QualsMode := QUALS_MODE_DEFAULT;
           Memory.GameModes.QualsRemaining := 0;
 
+          BestScores.Quals[Memory.GameModes.IsSpeedrun].Clear();
+
           Sounds.PlaySound(SOUND_BURN);
         end
         else
