@@ -50,6 +50,8 @@ type
     procedure Load(AFile: TIniFile; const ASection: String);
     procedure Save(AFile: TIniFile; const ASection: String);
   public
+    function Clone(): TScoreEntry;
+  public
     property LinesCleared: Integer read FLinesCleared write FLinesCleared;
     property LevelBegin: Integer read FLevelBegin write FLevelBegin;
     property LevelEnd: Integer read FLevelEnd write FLevelEnd;
@@ -141,10 +143,13 @@ type
   TBestScores = class(TObject)
   private
     FStorable: array [Boolean] of TModeEntries;
+  private
     FQuals: array [Boolean] of TModeEntries;
+    FMatch: array [Boolean] of TModeEntries;
   private
     function GetStorableMode(AIsSpeedrun: Boolean): TModeEntries;
     function GetQualsMode(AIsSpeedrun: Boolean): TModeEntries;
+    function GetMatchMode(AIsSpeedrun: Boolean): TModeEntries;
   public
     constructor Create();
     destructor Destroy(); override;
@@ -153,7 +158,9 @@ type
     procedure Save();
   public
     property Storable[AIsSpeedrun: Boolean]: TModeEntries read GetStorableMode; default;
+  public
     property Quals[AIsSpeedrun: Boolean]: TModeEntries read GetQualsMode;
+    property Match[AIsSpeedrun: Boolean]: TModeEntries read GetMatchMode;
   end;
 
 
@@ -227,6 +234,25 @@ begin
 end;
 
 
+function TScoreEntry.Clone(): TScoreEntry;
+begin
+  Result := TScoreEntry.Create(FIsSpeedrun, FRegionID);
+
+  Result.FIsSpeedrun := FIsSpeedrun;
+  Result.FRegionID := FRegionID;
+
+  Result.FLinesCleared := FLinesCleared;
+  Result.FLevelBegin := FLevelBegin;
+  Result.FLevelEnd := FLevelEnd;
+  Result.FTetrisRate := FTetrisRate;
+  Result.FTotalScore := FTotalScore;
+  Result.FTotalTime := FTotalTime;
+  Result.FCompleted := FCompleted;
+
+  Result.FValid := FValid;
+end;
+
+
 constructor TGeneratorEntries.Create(const AFileName: String; AIsSpeedrun: Boolean; ARegionID: Integer);
 begin
   FScoresFile := TMemIniFile.Create(AFileName);
@@ -289,16 +315,19 @@ procedure TGeneratorEntries.AddSpeedrunEntry(AEntry: TScoreEntry);
 var
   Index: Integer;
 begin
-  if not AEntry.Completed then Exit;
+  if not AEntry.Completed then
+    AEntry.Free()
+  else
+  begin
+    for Index := 0 to FEntries.Count - 1 do
+      if AEntry.TotalTime < FEntries[Index].TotalTime then
+      begin
+        FEntries.Insert(Index, AEntry);
+        Exit;
+      end;
 
-  for Index := 0 to FEntries.Count - 1 do
-    if AEntry.TotalTime < FEntries[Index].TotalTime then
-    begin
-      FEntries.Insert(Index, AEntry);
-      Exit;
-    end;
-
-  FEntries.Add(AEntry);
+    FEntries.Add(AEntry);
+  end;
 end;
 
 
@@ -467,7 +496,9 @@ begin
   for Index := Low(FStorable) to High(FStorable) do
   begin
     FStorable[Index] := TModeEntries.Create(Index);
+
     FQuals[Index] := TModeEntries.Create(Index);
+    FMatch[Index] := TModeEntries.Create(Index);
   end;
 end;
 
@@ -479,7 +510,9 @@ begin
   for Index := Low(FStorable) to High(FStorable) do
   begin
     FStorable[Index].Free();
+
     FQuals[Index].Free();
+    FMatch[Index].Free();
   end;
 
   inherited Destroy();
@@ -495,6 +528,12 @@ end;
 function TBestScores.GetQualsMode(AIsSpeedrun: Boolean): TModeEntries;
 begin
   Result := FQuals[AIsSpeedrun];
+end;
+
+
+function TBestScores.GetMatchMode(AIsSpeedrun: Boolean): TModeEntries;
+begin
+  Result := FMatch[AIsSpeedrun];
 end;
 
 

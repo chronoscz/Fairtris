@@ -33,8 +33,8 @@ type
   private
     function CharToIndex(AChar: Char): Integer;
   protected
-    function EmptyEntryToString(): String;
-    function ScoreEntryToString(AEntry: TScoreEntry): String;
+    function MarathonEntryToString(AEntry: TScoreEntry = nil): String;
+    function SpeedrunEntryToString(AEntry: TScoreEntry = nil): String;
   protected
     procedure RenderSprite(ASprite: PSDL_Texture; ABufferRect, ASpriteRect: TSDL_Rect);
     procedure RenderText(AX, AY: Integer; const AText: String; AColor: Integer = COLOR_WHITE; AAlign: Integer = ALIGN_LEFT);
@@ -255,19 +255,31 @@ begin
 end;
 
 
-function TRenderer.EmptyEntryToString(): String;
+function TRenderer.MarathonEntryToString(AEntry: TScoreEntry): String;
 begin
-  Result := '-    -        -        -';
+  if AEntry <> nil then
+  begin
+    Result := '%.3d'.Format([AEntry.LinesCleared]);
+    Result += '%.2d'.Format([AEntry.LevelBegin]).PadLeft(4) + '-' + '%.2d'.Format([AEntry.LevelEnd]);
+
+    Result += Converter.TetrisesToString(AEntry.TetrisRate).PadLeft(5);
+    Result += Converter.ScoreToString(AEntry.TotalScore).PadLeft(9);
+  end
+  else
+    Result := '-    -        -        -';
 end;
 
 
-function TRenderer.ScoreEntryToString(AEntry: TScoreEntry): String;
+function TRenderer.SpeedrunEntryToString(AEntry: TScoreEntry): String;
 begin
-  Result := '%.3d'.Format([AEntry.LinesCleared]);
-  Result += '%.2d'.Format([AEntry.LevelBegin]).PadLeft(4) + '-' + '%.2d'.Format([AEntry.LevelEnd]);
-
-  Result += Converter.TetrisesToString(AEntry.TetrisRate).PadLeft(5);
-  Result += Converter.ScoreToString(AEntry.TotalScore).PadLeft(9);
+  if AEntry <> nil then
+  begin
+    Result := Converter.FramesToTimeString(AEntry.TotalTime, True);
+    Result += '%.3d'.Format([AEntry.LinesCleared]).PadLeft(6);
+    Result += Converter.ScoreToString(AEntry.TotalScore).PadLeft(10);
+  end
+  else
+    Result := '-          -           -';
 end;
 
 
@@ -628,7 +640,7 @@ begin
       RenderText(
         ITEM_X_GAME_MODE_BEST_SCORE,
         ITEM_Y_GAME_MODE_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
-        ScoreEntryToString(
+        MarathonEntryToString(
           BestScores
             [Memory.GameModes.IsSpeedrun]
             [Memory.GameModes.Region]
@@ -640,7 +652,7 @@ begin
       RenderText(
         ITEM_X_GAME_MODE_BEST_SCORE,
         ITEM_Y_GAME_MODE_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
-        EmptyEntryToString(),
+        MarathonEntryToString(),
         COLOR_DARK
       );
 end;
@@ -713,8 +725,29 @@ end;
 
 
 procedure TRenderer.RenderFreeSpeedrunBestScores();
+var
+  Index: Integer;
 begin
-  { TODO : render best speedrun times if any }
+  for Index := BEST_SCORES_FIRST to BEST_SCORES_LAST do
+    if Index < BestScores[Memory.GameModes.IsSpeedrun][Memory.GameModes.Region][Memory.GameModes.Generator].Count then
+      RenderText(
+        ITEM_X_GAME_MODE_BEST_SCORE,
+        ITEM_Y_GAME_MODE_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
+        SpeedrunEntryToString(
+          BestScores
+            [Memory.GameModes.IsSpeedrun]
+            [Memory.GameModes.Region]
+            [Memory.GameModes.Generator].Entry[Index]
+        ),
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      )
+    else
+      RenderText(
+        ITEM_X_GAME_MODE_BEST_SCORE,
+        ITEM_Y_GAME_MODE_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
+        SpeedrunEntryToString(),
+        COLOR_DARK
+      );
 end;
 
 
@@ -853,8 +886,29 @@ end;
 
 
 procedure TRenderer.RenderMarathonQualsBestScores();
+var
+  Index: Integer;
 begin
-  { TODO : render best qualifying scores if any }
+  for Index := BEST_SCORES_FIRST to BEST_SCORES_LAST do
+    if Index < BestScores.Quals[Memory.GameModes.IsSpeedrun][Memory.GameModes.Region][Memory.GameModes.Generator].Count then
+      RenderText(
+        ITEM_X_GAME_MODE_BEST_SCORE,
+        ITEM_Y_GAME_MODE_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
+        MarathonEntryToString(
+          BestScores.Quals
+            [Memory.GameModes.IsSpeedrun]
+            [Memory.GameModes.Region]
+            [Memory.GameModes.Generator].Entry[Index]
+        ),
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      )
+    else
+      RenderText(
+        ITEM_X_GAME_MODE_BEST_SCORE,
+        ITEM_Y_GAME_MODE_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
+        MarathonEntryToString(),
+        COLOR_DARK
+      );
 end;
 
 
@@ -951,8 +1005,29 @@ end;
 
 
 procedure TRenderer.RenderMarathonMatchBestScores();
+var
+  Index: Integer;
 begin
-  { TODO : render best match scores if any }
+  for Index := BEST_SCORES_FIRST to BEST_SCORES_LAST do
+    if Index < BestScores.Match[Memory.GameModes.IsSpeedrun][Memory.GameModes.Region][Memory.GameModes.Generator].Count then
+      RenderText(
+        ITEM_X_GAME_MODE_BEST_SCORE,
+        ITEM_Y_GAME_MODE_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
+        MarathonEntryToString(
+          BestScores.Match
+            [Memory.GameModes.IsSpeedrun]
+            [Memory.GameModes.Region]
+            [Memory.GameModes.Generator].Entry[Index]
+        ),
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      )
+    else
+      RenderText(
+        ITEM_X_GAME_MODE_BEST_SCORE,
+        ITEM_Y_GAME_MODE_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
+        MarathonEntryToString(),
+        COLOR_DARK
+      );
 end;
 
 
@@ -1079,8 +1154,29 @@ end;
 
 
 procedure TRenderer.RenderSpeedrunQualsBestScores();
+var
+  Index: Integer;
 begin
-  { TODO : render best qualifying times if any }
+  for Index := BEST_SCORES_FIRST to BEST_SCORES_LAST do
+    if Index < BestScores.Quals[Memory.GameModes.IsSpeedrun][Memory.GameModes.Region][Memory.GameModes.Generator].Count then
+      RenderText(
+        ITEM_X_GAME_MODE_BEST_SCORE,
+        ITEM_Y_GAME_MODE_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
+        SpeedrunEntryToString(
+          BestScores.Quals
+            [Memory.GameModes.IsSpeedrun]
+            [Memory.GameModes.Region]
+            [Memory.GameModes.Generator].Entry[Index]
+        ),
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      )
+    else
+      RenderText(
+        ITEM_X_GAME_MODE_BEST_SCORE,
+        ITEM_Y_GAME_MODE_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
+        SpeedrunEntryToString(),
+        COLOR_DARK
+      );
 end;
 
 
@@ -1166,8 +1262,29 @@ end;
 
 
 procedure TRenderer.RenderSpeedrunMatchBestScores();
+var
+  Index: Integer;
 begin
-  { TODO : render best match times if any }
+  for Index := BEST_SCORES_FIRST to BEST_SCORES_LAST do
+    if Index < BestScores.Match[Memory.GameModes.IsSpeedrun][Memory.GameModes.Region][Memory.GameModes.Generator].Count then
+      RenderText(
+        ITEM_X_GAME_MODE_BEST_SCORE,
+        ITEM_Y_GAME_MODE_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
+        SpeedrunEntryToString(
+          BestScores.Match
+            [Memory.GameModes.IsSpeedrun]
+            [Memory.GameModes.Region]
+            [Memory.GameModes.Generator].Entry[Index]
+        ),
+        IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
+      )
+    else
+      RenderText(
+        ITEM_X_GAME_MODE_BEST_SCORE,
+        ITEM_Y_GAME_MODE_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
+        SpeedrunEntryToString(),
+        COLOR_DARK
+      );
 end;
 
 

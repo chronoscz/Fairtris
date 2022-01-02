@@ -810,10 +810,16 @@ begin
       [Memory.GameModes.Region]
       [Memory.GameModes.Generator].BestResult
   else
-    Memory.Game.Best := BestScores
-      [Memory.GameModes.IsSpeedrun]
-      [Memory.GameModes.Region]
-      [Memory.GameModes.Generator].BestResult;
+    if Memory.GameModes.IsMatch then
+      Memory.Game.Best := BestScores.Match
+        [Memory.GameModes.IsSpeedrun]
+        [Memory.GameModes.Region]
+        [Memory.GameModes.Generator].BestResult
+    else
+      Memory.Game.Best := BestScores
+        [Memory.GameModes.IsSpeedrun]
+        [Memory.GameModes.Region]
+        [Memory.GameModes.Generator].BestResult;
 
   if not Memory.GameModes.IsFreeGame then
     Memory.Game.NextVisible := True;

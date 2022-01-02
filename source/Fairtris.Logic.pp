@@ -445,11 +445,11 @@ begin
 
   BestScores[Memory.GameModes.IsSpeedrun][Memory.GameModes.Region][Memory.GameModes.Generator].Add(Entry);
 
-  if Memory.GameModes.IsSpeedrun then
-    BestScores[False][Memory.GameModes.Region][Memory.GameModes.Generator].Add(Entry);
-
   if Memory.GameModes.IsQuals then
-    BestScores.Quals[Memory.GameModes.IsSpeedrun][Memory.GameModes.Region][Memory.GameModes.Generator].Add(Entry);
+    BestScores.Quals[Memory.GameModes.IsSpeedrun][Memory.GameModes.Region][Memory.GameModes.Generator].Add(Entry.Clone());
+
+  if Memory.GameModes.IsMatch then
+    BestScores.Match[Memory.GameModes.IsSpeedrun][Memory.GameModes.Region][Memory.GameModes.Generator].Add(Entry.Clone());
 end;
 
 
