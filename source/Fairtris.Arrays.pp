@@ -197,15 +197,27 @@ const
   );
 
 const
-  BEST_SCORES_PATH: array [REGION_FIRST .. REGION_LAST] of String = (
-    'scores\ntsc\',
-    'scores\ntsc extended\',
-    'scores\jpn\',
-    'scores\jpn extended\',
-    'scores\pal\',
-    'scores\pal extended\',
-    'scores\eur\',
-    'scores\eur extended\'
+  BEST_SCORES_PATH: array [Boolean, REGION_FIRST .. REGION_LAST] of String = (
+    (
+      'scores\marathon\ntsc\',
+      'scores\marathon\ntsc extended\',
+      'scores\marathon\jpn\',
+      'scores\marathon\jpn extended\',
+      'scores\marathon\pal\',
+      'scores\marathon\pal extended\',
+      'scores\marathon\eur\',
+      'scores\marathon\eur extended\'
+    ),
+    (
+      'scores\speedrun\ntsc\',
+      'scores\speedrun\ntsc extended\',
+      'scores\speedrun\jpn\',
+      'scores\speedrun\jpn extended\',
+      'scores\speedrun\pal\',
+      'scores\speedrun\pal extended\',
+      'scores\speedrun\eur\',
+      'scores\speedrun\eur extended\'
+    )
   );
 
 

@@ -624,11 +624,16 @@ var
   Index: Integer;
 begin
   for Index := BEST_SCORES_FIRST to BEST_SCORES_LAST do
-    if Index < BestScores[Memory.GameModes.Region][Memory.GameModes.Generator].Count then
+    if Index < BestScores[Memory.GameModes.IsSpeedrun][Memory.GameModes.Region][Memory.GameModes.Generator].Count then
       RenderText(
         ITEM_X_GAME_MODE_BEST_SCORE,
         ITEM_Y_GAME_MODE_BEST_SCORES[Memory.Options.Theme] + Index * BEST_SCORES_SPACING_Y,
-        ScoreEntryToString(BestScores[Memory.GameModes.Region][Memory.GameModes.Generator].Entry[Index]),
+        ScoreEntryToString(
+          BestScores
+            [Memory.GameModes.IsSpeedrun]
+            [Memory.GameModes.Region]
+            [Memory.GameModes.Generator].Entry[Index]
+        ),
         IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
       )
     else

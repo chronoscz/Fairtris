@@ -433,15 +433,16 @@ procedure TLogic.PrepareTopOutBestScore();
 var
   Entry: TScoreEntry;
 begin
-  Entry := TScoreEntry.Create(Memory.GameModes.Region, True);
+  Entry := TScoreEntry.Create(Memory.GameModes.IsSpeedrun, Memory.GameModes.Region, True);
 
   Entry.LinesCleared := Memory.Game.LinesCleared;
   Entry.LevelBegin := Memory.GameModes.Level;
   Entry.LevelEnd := Memory.Game.Level;
   Entry.TetrisRate := Memory.Game.TetrisRate;
   Entry.TotalScore := Memory.Game.Score;
+  Entry.TotalTime := Memory.Game.SpeedrunTimer;
 
-  BestScores[Memory.GameModes.Region][Memory.GameModes.Generator].Add(Entry);
+  BestScores[Memory.GameModes.IsSpeedrun][Memory.GameModes.Region][Memory.GameModes.Generator].Add(Entry);
 end;
 
 

@@ -804,7 +804,7 @@ begin
   Memory.Game.Level := Memory.GameModes.Level;
   Memory.Game.Stats[Memory.Game.PieceID] += 1;
 
-  Memory.Game.Best := BestScores[Memory.GameModes.Region][Memory.GameModes.Generator].BestScore;
+  Memory.Game.Best := BestScores[Memory.GameModes.IsSpeedrun][Memory.GameModes.Region][Memory.GameModes.Generator].BestResult;
 
   if not Memory.GameModes.IsFreeGame then
     Memory.Game.NextVisible := True;
