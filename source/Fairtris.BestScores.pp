@@ -88,6 +88,7 @@ type
     procedure Save();
   public
     procedure Add(AEntry: TScoreEntry);
+    procedure Clear();
   public
     property Entry[AIndex: Integer]: TScoreEntry read GetEntry; default;
     property Count: Integer read GetCount;
@@ -110,6 +111,8 @@ type
     procedure Load();
     procedure Save();
   public
+    procedure Clear();
+  public
     property Generator[AGeneratorID: Integer]: TGeneratorEntries read GetGenerator; default;
   end;
 
@@ -128,6 +131,8 @@ type
     procedure Load();
     procedure Save();
   public
+    procedure Clear();
+  public
     property Region[ARegionID: Integer]: TRegionEntries read GetRegion; default;
   end;
 
@@ -135,9 +140,11 @@ type
 type
   TBestScores = class(TObject)
   private
-    FModes: array [Boolean] of TModeEntries;
+    FStorable: array [Boolean] of TModeEntries;
+    FQuals: array [Boolean] of TModeEntries;
   private
-    function GetMode(AIsSpeedrun: Boolean): TModeEntries;
+    function GetStorableMode(AIsSpeedrun: Boolean): TModeEntries;
+    function GetQualsMode(AIsSpeedrun: Boolean): TModeEntries;
   public
     constructor Create();
     destructor Destroy(); override;
@@ -145,7 +152,8 @@ type
     procedure Load();
     procedure Save();
   public
-    property Mode[AIsSpeedrun: Boolean]: TModeEntries read GetMode; default;
+    property Storable[AIsSpeedrun: Boolean]: TModeEntries read GetStorableMode; default;
+    property Quals[AIsSpeedrun: Boolean]: TModeEntries read GetQualsMode;
   end;
 
 
@@ -336,6 +344,12 @@ begin
 end;
 
 
+procedure TGeneratorEntries.Clear();
+begin
+  FEntries.Clear();
+end;
+
+
 constructor TRegionEntries.Create(const APath: String; AIsSpeedrun: Boolean; ARegionID: Integer);
 var
   Index: Integer;
@@ -373,6 +387,15 @@ var
 begin
   for Index := Low(FGenerators) to High(FGenerators) do
     FGenerators[Index].Save();
+end;
+
+
+procedure TRegionEntries.Clear();
+var
+  Index: Integer;
+begin
+  for Index := Low(FGenerators) to High(FGenerators) do
+    FGenerators[Index].Clear();
 end;
 
 
@@ -428,12 +451,24 @@ begin
 end;
 
 
+procedure TModeEntries.Clear();
+var
+  Index: Integer;
+begin
+  for Index := Low(FRegions) to High(FRegions) do
+    FRegions[Index].Clear();
+end;
+
+
 constructor TBestScores.Create();
 var
   Index: Boolean;
 begin
-  for Index := Low(FModes) to High(FModes) do
-    FModes[Index] := TModeEntries.Create(Index);
+  for Index := Low(FStorable) to High(FStorable) do
+  begin
+    FStorable[Index] := TModeEntries.Create(Index);
+    FQuals[Index] := TModeEntries.Create(Index);
+  end;
 end;
 
 
@@ -441,16 +476,25 @@ destructor TBestScores.Destroy();
 var
   Index: Boolean;
 begin
-  for Index := Low(FModes) to High(FModes) do
-    FModes[Index].Free();
+  for Index := Low(FStorable) to High(FStorable) do
+  begin
+    FStorable[Index].Free();
+    FQuals[Index].Free();
+  end;
 
   inherited Destroy();
 end;
 
 
-function TBestScores.GetMode(AIsSpeedrun: Boolean): TModeEntries;
+function TBestScores.GetStorableMode(AIsSpeedrun: Boolean): TModeEntries;
 begin
-  Result := FModes[AIsSpeedrun];
+  Result := FStorable[AIsSpeedrun];
+end;
+
+
+function TBestScores.GetQualsMode(AIsSpeedrun: Boolean): TModeEntries;
+begin
+  Result := FQuals[AIsSpeedrun];
 end;
 
 
@@ -458,8 +502,8 @@ procedure TBestScores.Load();
 var
   Index: Boolean;
 begin
-  for Index := Low(FModes) to High(FModes) do
-    FModes[Index].Load();
+  for Index := Low(FStorable) to High(FStorable) do
+    FStorable[Index].Load();
 end;
 
 
@@ -467,8 +511,8 @@ procedure TBestScores.Save();
 var
   Index: Boolean;
 begin
-  for Index := Low(FModes) to High(FModes) do
-    FModes[Index].Save();
+  for Index := Low(FStorable) to High(FStorable) do
+    FStorable[Index].Save();
 end;
 
 

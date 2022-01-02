@@ -444,6 +444,12 @@ begin
   Entry.Completed := Memory.Game.SpeedrunCompleted;
 
   BestScores[Memory.GameModes.IsSpeedrun][Memory.GameModes.Region][Memory.GameModes.Generator].Add(Entry);
+
+  if Memory.GameModes.IsSpeedrun then
+    BestScores[False][Memory.GameModes.Region][Memory.GameModes.Generator].Add(Entry);
+
+  if Memory.GameModes.IsQuals then
+    BestScores.Quals[Memory.GameModes.IsSpeedrun][Memory.GameModes.Region][Memory.GameModes.Generator].Add(Entry);
 end;
 
 
