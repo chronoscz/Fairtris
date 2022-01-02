@@ -1312,7 +1312,7 @@ begin
       IfThen(
         Memory.GameModes.IsMarathon,
         Converter.ScoreToString(Memory.Game.Best),
-        Converter.FramesToTimeString(0) { TODO : render best speedrun time here }
+        Converter.FramesToTimeString(Memory.Game.Best)
       )
     ),
     IfThen(
