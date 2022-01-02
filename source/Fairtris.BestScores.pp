@@ -182,7 +182,7 @@ begin
   FValid := FValid and InRange(FTotalScore, 0, 9999999);
 
   if FIsSpeedrun then
-    FValid := FValid and InRange(FTotalTime, 0, 599999 div CLOCK_FRAMERATE_LIMIT[FRegionID]);
+    FValid := FValid and InRange(FTotalTime, 0, 10 * 60 * CLOCK_FRAMERATE_LIMIT[FRegionID] - 1);
 end;
 
 
