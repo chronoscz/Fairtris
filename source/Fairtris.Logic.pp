@@ -1423,6 +1423,8 @@ begin
           Memory.GameModes.QualsActive := True;
           Memory.GameModes.QualsMode := QUALS_MODE_MARATHON;
           Memory.GameModes.QualsRemaining := Converter.StringToTimerFrames(Memory.GameModes.TimerData);
+
+          BestScores.Quals[False].Clear();
         end;
 
         FScene.Current := SCENE_GAME_NORMAL;
@@ -1728,6 +1730,8 @@ begin
           Memory.GameModes.QualsActive := True;
           Memory.GameModes.QualsMode := QUALS_MODE_SPEEDRUN;
           Memory.GameModes.QualsRemaining := Converter.StringToTimerFrames(Memory.GameModes.TimerData);
+
+          BestScores.Quals[True].Clear();
         end;
 
         FScene.Current := SCENE_SPEEDRUN_NORMAL;
