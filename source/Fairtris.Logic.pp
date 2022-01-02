@@ -441,6 +441,7 @@ begin
   Entry.TetrisRate := Memory.Game.TetrisRate;
   Entry.TotalScore := Memory.Game.Score;
   Entry.TotalTime := Memory.Game.SpeedrunTimer;
+  Entry.Completed := Memory.Game.SpeedrunCompleted;
 
   BestScores[Memory.GameModes.IsSpeedrun][Memory.GameModes.Region][Memory.GameModes.Generator].Add(Entry);
 end;

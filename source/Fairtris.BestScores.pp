@@ -39,6 +39,7 @@ type
     FTetrisRate: Integer;
     FTotalScore: Integer;
     FTotalTime: Integer;
+    FCompleted: Boolean;
   private
     FValid: Boolean;
   private
@@ -55,6 +56,7 @@ type
     property TetrisRate: Integer read FTetrisRate write FTetrisRate;
     property TotalScore: Integer read FTotalScore write FTotalScore;
     property TotalTime: Integer read FTotalTime write FTotalTime;
+    property Completed: Boolean read FCompleted write FCompleted;
   public
     property Valid: Boolean read FValid;
   end;
@@ -279,6 +281,8 @@ procedure TGeneratorEntries.AddSpeedrunEntry(AEntry: TScoreEntry);
 var
   Index: Integer;
 begin
+  if not AEntry.Completed then Exit;
+
   for Index := 0 to FEntries.Count - 1 do
     if AEntry.TotalTime < FEntries[Index].TotalTime then
     begin
