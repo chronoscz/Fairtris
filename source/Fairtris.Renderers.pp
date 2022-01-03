@@ -1892,10 +1892,10 @@ begin
 
   RenderText(
     ITEM_X_OPTIONS_PARAM,
-    ITEM_Y_OPTIONS_SOUNDS,
-    ITEM_TEXT_OPTIONS_SOUNDS[Memory.Options.Sounds],
+    ITEM_Y_OPTIONS_CONTROLS,
+    ITEM_TEXT_OPTIONS_CONTROLS[Memory.Options.Controls],
     IfThen(
-      Memory.Options.ItemIndex = ITEM_OPTIONS_SOUNDS,
+      Memory.Options.ItemIndex = ITEM_OPTIONS_CONTROLS,
       COLOR_WHITE,
       IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
     )
@@ -1903,10 +1903,10 @@ begin
 
   RenderText(
     ITEM_X_OPTIONS_PARAM,
-    ITEM_Y_OPTIONS_SCROLL,
-    ITEM_TEXT_OPTIONS_SCROLL[Memory.Options.Scroll],
+    ITEM_Y_OPTIONS_SOUNDS,
+    ITEM_TEXT_OPTIONS_SOUNDS[Memory.Options.Sounds],
     IfThen(
-      Memory.Options.ItemIndex = ITEM_OPTIONS_SCROLL,
+      Memory.Options.ItemIndex = ITEM_OPTIONS_SOUNDS,
       COLOR_WHITE,
       IfThen(Memory.Options.Theme = THEME_MODERN, COLOR_GRAY, COLOR_WHITE)
     )

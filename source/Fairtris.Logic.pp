@@ -163,8 +163,8 @@ type
     procedure UpdateOptionsInput();
     procedure UpdateOptionsWindow();
     procedure UpdateOptionsTheme();
+    procedure UpdateOptionsControls();
     procedure UpdateOptionsSounds();
-    procedure UpdateOptionsScroll();
     procedure UpdateOptionsScene();
   private
     procedure UpdateKeyboardItemSelection();
@@ -2114,6 +2114,24 @@ begin
 end;
 
 
+procedure TLogic.UpdateOptionsControls();
+begin
+  if Memory.Options.ItemIndex <> ITEM_OPTIONS_CONTROLS then Exit;
+
+  if InputOptionSetPrev() then
+  begin
+    UpdateItemIndex(Memory.Options.Controls, CONTROLS_COUNT, ITEM_PREV);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end;
+
+  if InputOptionSetNext() then
+  begin
+    UpdateItemIndex(Memory.Options.Controls, CONTROLS_COUNT, ITEM_NEXT);
+    Sounds.PlaySound(SOUND_SHIFT);
+  end;
+end;
+
+
 procedure TLogic.UpdateOptionsSounds();
 begin
   if Memory.Options.ItemIndex <> ITEM_OPTIONS_SOUNDS then Exit;
@@ -2131,24 +2149,6 @@ begin
     UpdateItemIndex(Memory.Options.Sounds, SOUNDS_COUNT, ITEM_NEXT);
 
     Sounds.Enabled := Memory.Options.Sounds;
-    Sounds.PlaySound(SOUND_SHIFT);
-  end;
-end;
-
-
-procedure TLogic.UpdateOptionsScroll();
-begin
-  if Memory.Options.ItemIndex <> ITEM_OPTIONS_SCROLL then Exit;
-
-  if InputOptionSetPrev() then
-  begin
-    UpdateItemIndex(Memory.Options.Scroll, SCROLL_COUNT, ITEM_PREV);
-    Sounds.PlaySound(SOUND_SHIFT);
-  end;
-
-  if InputOptionSetNext() then
-  begin
-    UpdateItemIndex(Memory.Options.Scroll, SCROLL_COUNT, ITEM_NEXT);
     Sounds.PlaySound(SOUND_SHIFT);
   end;
 end;
@@ -2703,8 +2703,8 @@ begin
   UpdateOptionsInput();
   UpdateOptionsWindow();
   UpdateOptionsTheme();
+  UpdateOptionsControls();
   UpdateOptionsSounds();
-  UpdateOptionsScroll();
   UpdateOptionsScene();
 end;
 

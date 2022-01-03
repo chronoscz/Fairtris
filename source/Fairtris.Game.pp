@@ -218,13 +218,12 @@ begin
   while SDL_PollEvent(@Event) = 1 do
   case Event.Type_ of
     SDL_MOUSEWHEEL:
-      if Memory.Options.Scroll = SCROLL_ENABLED then
-      begin
-        if Event.Wheel.Y < 0 then Placement.ReduceWindow();
-        if Event.Wheel.Y > 0 then Placement.EnlargeWindow();
+    begin
+      if Event.Wheel.Y < 0 then Placement.ReduceWindow();
+      if Event.Wheel.Y > 0 then Placement.EnlargeWindow();
 
-        Memory.Options.Size := Placement.WindowSize;
-      end;
+      Memory.Options.Size := Placement.WindowSize;
+    end;
     SDL_JOYDEVICEADDED:   Input.Controller.Attach();
     SDL_JOYDEVICEREMOVED: Input.Controller.Detach();
     SDL_QUITEV:

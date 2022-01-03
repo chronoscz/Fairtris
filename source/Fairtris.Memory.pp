@@ -269,7 +269,6 @@ type
     Theme: Integer;
     Controls: Integer;
     Sounds: Integer;
-    Scroll: Integer;
   end;
 
 
@@ -591,7 +590,6 @@ begin
   Theme := Settings.General.Theme;
   Controls := Settings.General.Controls;
   Sounds := Settings.General.Sounds;
-  Scroll := Settings.General.Scroll;
 end;
 
 
