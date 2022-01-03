@@ -52,6 +52,9 @@ type
     procedure UpdatePieceControlDropMove();
     procedure UpdatePieceControlDropLookupSpeed();
   private
+    procedure UpdatePieceControlRotateModern();
+    procedure UpdatePieceControlRotateClassic();
+  private
     procedure UpdatePieceControlShift();
     procedure UpdatePieceControlRotate();
     procedure UpdatePieceControlDrop();
@@ -161,15 +164,25 @@ begin
 
   Memory.Game.PieceOrientation := WrapAround(Memory.Game.PieceOrientation, PIECE_ORIENTATION_COUNT, ADirection);
 
-  if Memory.Game.PieceY <= PIECE_ROTATION_Y_MAX[Memory.Game.PieceID, Memory.Game.PieceOrientation] then
+  if Memory.Options.Controls = CONTROLS_CLASSIC then
   begin
-    Memory.Game.PieceX := Max(Memory.Game.PieceX, PIECE_ROTATION_X_MIN[Memory.Game.PieceID, Memory.Game.PieceOrientation]);
-    Memory.Game.PieceX := Min(Memory.Game.PieceX, PIECE_ROTATION_X_MAX[Memory.Game.PieceID, Memory.Game.PieceOrientation]);
+    Result := (Memory.Game.PieceX >= PIECE_ROTATION_X_MIN[Memory.Game.PieceID, Memory.Game.PieceOrientation]) and
+              (Memory.Game.PieceX <= PIECE_ROTATION_X_MAX[Memory.Game.PieceID, Memory.Game.PieceOrientation]) and
+              (Memory.Game.PieceY <= PIECE_ROTATION_Y_MAX[Memory.Game.PieceID, Memory.Game.PieceOrientation]);
 
-    Result := CanPlacePiece();
+    if Result then
+      Result := CanPlacePiece();
   end
   else
-    Result := False;
+    if Memory.Game.PieceY <= PIECE_ROTATION_Y_MAX[Memory.Game.PieceID, Memory.Game.PieceOrientation] then
+    begin
+      Memory.Game.PieceX := Max(Memory.Game.PieceX, PIECE_ROTATION_X_MIN[Memory.Game.PieceID, Memory.Game.PieceOrientation]);
+      Memory.Game.PieceX := Min(Memory.Game.PieceX, PIECE_ROTATION_X_MAX[Memory.Game.PieceID, Memory.Game.PieceOrientation]);
+
+      Result := CanPlacePiece();
+    end
+    else
+      Result := False;
 
   Memory.Game.PieceX := OldPosition;
   Memory.Game.PieceOrientation := OldOrientation;
@@ -255,8 +268,11 @@ procedure TCore.RotatePiece(ADirection: Integer);
 begin
   Memory.Game.PieceOrientation := WrapAround(Memory.Game.PieceOrientation, PIECE_ORIENTATION_COUNT, ADirection);
 
-  Memory.Game.PieceX := Max(Memory.Game.PieceX, PIECE_ROTATION_X_MIN[Memory.Game.PieceID, Memory.Game.PieceOrientation]);
-  Memory.Game.PieceX := Min(Memory.Game.PieceX, PIECE_ROTATION_X_MAX[Memory.Game.PieceID, Memory.Game.PieceOrientation]);
+  if Memory.Options.Controls = CONTROLS_MODERN then
+  begin
+    Memory.Game.PieceX := Max(Memory.Game.PieceX, PIECE_ROTATION_X_MIN[Memory.Game.PieceID, Memory.Game.PieceOrientation]);
+    Memory.Game.PieceX := Min(Memory.Game.PieceX, PIECE_ROTATION_X_MAX[Memory.Game.PieceID, Memory.Game.PieceOrientation]);
+  end;
 end;
 
 
@@ -379,46 +395,7 @@ begin
 end;
 
 
-procedure TCore.UpdatePieceControlShift();
-begin
-  if Input.Device.Down.Pressed then Exit;
-
-  if Input.Device.Left.Pressed and Input.Device.Right.Pressed then Exit;
-  if not Input.Device.Left.Pressed and not Input.Device.Right.Pressed then Exit;
-
-  if Input.Device.Left.JustPressed or Input.Device.Right.JustPressed then
-    Memory.Game.AutorepeatX := 0
-  else
-  begin
-    Memory.Game.AutorepeatX += 1;
-
-    if Memory.Game.AutorepeatX < AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region] then
-      Exit
-    else
-      Memory.Game.AutorepeatX := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
-  end;
-
-  if Input.Device.Left.Pressed then
-    if CanShiftPiece(PIECE_SHIFT_LEFT) then
-    begin
-      ShiftPiece(PIECE_SHIFT_LEFT);
-      Sounds.PlaySound(SOUND_SHIFT);
-    end
-    else
-      Memory.Game.AutorepeatX := AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region];
-
-  if Input.Device.Right.Pressed then
-    if CanShiftPiece(PIECE_SHIFT_RIGHT) then
-    begin
-      ShiftPiece(PIECE_SHIFT_RIGHT);
-      Sounds.PlaySound(SOUND_SHIFT);
-    end
-    else
-      Memory.Game.AutorepeatX := AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region];
-end;
-
-
-procedure TCore.UpdatePieceControlRotate();
+procedure TCore.UpdatePieceControlRotateModern();
 var
   Rotation: Integer;
 begin
@@ -465,24 +442,96 @@ begin
 end;
 
 
+procedure TCore.UpdatePieceControlRotateClassic();
+begin
+  if Input.Device.B.JustPressed then
+    if CanRotatePiece(PIECE_ROTATE_COUNTERCLOCKWISE) then
+    begin
+      RotatePiece(PIECE_ROTATE_COUNTERCLOCKWISE);
+      Sounds.PlaySound(SOUND_SPIN);
+
+      Exit;
+    end;
+
+  if Input.Device.A.JustPressed then
+    if CanRotatePiece(PIECE_ROTATE_CLOCKWISE) then
+    begin
+      RotatePiece(PIECE_ROTATE_CLOCKWISE);
+      Sounds.PlaySound(SOUND_SPIN);
+    end;
+end;
+
+
+procedure TCore.UpdatePieceControlShift();
+begin
+  if Input.Device.Down.Pressed then Exit;
+
+  if Input.Device.Left.Pressed and Input.Device.Right.Pressed then Exit;
+  if not Input.Device.Left.Pressed and not Input.Device.Right.Pressed then Exit;
+
+  if Input.Device.Left.JustPressed or Input.Device.Right.JustPressed then
+    Memory.Game.AutorepeatX := 0
+  else
+  begin
+    Memory.Game.AutorepeatX += 1;
+
+    if Memory.Game.AutorepeatX < AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region] then
+      Exit
+    else
+      Memory.Game.AutorepeatX := AUTOSHIFT_FRAMES_PRECHARGE[Memory.GameModes.Region];
+  end;
+
+  if Input.Device.Left.Pressed then
+    if CanShiftPiece(PIECE_SHIFT_LEFT) then
+    begin
+      ShiftPiece(PIECE_SHIFT_LEFT);
+      Sounds.PlaySound(SOUND_SHIFT);
+    end
+    else
+      Memory.Game.AutorepeatX := AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region];
+
+  if Input.Device.Right.Pressed then
+    if CanShiftPiece(PIECE_SHIFT_RIGHT) then
+    begin
+      ShiftPiece(PIECE_SHIFT_RIGHT);
+      Sounds.PlaySound(SOUND_SHIFT);
+    end
+    else
+      Memory.Game.AutorepeatX := AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region];
+end;
+
+
+procedure TCore.UpdatePieceControlRotate();
+begin
+  if Memory.Options.Controls = CONTROLS_MODERN then
+    UpdatePieceControlRotateModern()
+  else
+    UpdatePieceControlRotateClassic();
+end;
+
+
 procedure TCore.UpdatePieceControlDrop();
 begin
-  if Input.Device.Up.JustPressed and (not Input.Device.Left.Pressed and not Input.Device.Right.Pressed) then
-    UpdatePieceControlDropUpPressed()
+  if Memory.Options.Controls = CONTROLS_MODERN then
+    if Input.Device.Up.JustPressed and (not Input.Device.Left.Pressed and not Input.Device.Right.Pressed) then
+    begin
+      UpdatePieceControlDropUpPressed();
+      Exit;
+    end;
+
+  if Memory.Game.AutorepeatY > 0 then
+    UpdatePieceControlDropAutorepeat()
   else
-    if Memory.Game.AutorepeatY > 0 then
-      UpdatePieceControlDropAutorepeat()
+    if Memory.Game.AutorepeatY = 0 then
+      UpdatePieceControlDropControl()
     else
-      if Memory.Game.AutorepeatY = 0 then
-        UpdatePieceControlDropControl()
+      if not Input.Device.Down.JustPressed then
+        Memory.Game.AutorepeatY += 1
       else
-        if not Input.Device.Down.JustPressed then
-          Memory.Game.AutorepeatY += 1
-        else
-        begin
-          Memory.Game.AutorepeatY := 0;
-          UpdatePieceControlDropControl();
-        end;
+      begin
+        Memory.Game.AutorepeatY := 0;
+        UpdatePieceControlDropControl();
+      end;
 end;
 
 
@@ -564,8 +613,6 @@ begin
 
   if Memory.Game.LockTimer = 0 then
   begin
-    Sounds.PlaySound(SOUND_DROP);
-
     Memory.Game.State := STATE_UPDATE_COUNTERS;
     Memory.Game.ClearCount := 0;
     Memory.Game.ClearTimer := 0;
@@ -841,8 +888,9 @@ begin
     STATE_UPDATE_TOP_OUT:  UpdateTopOut();
   end;
 
-  if not (Memory.Game.State in [STATE_PIECE_CONTROL, STATE_UPDATE_TOP_OUT]) then
-    UpdatePieceControlDelay();
+  if Memory.Options.Controls = CONTROLS_MODERN then
+    if not (Memory.Game.State in [STATE_PIECE_CONTROL, STATE_UPDATE_TOP_OUT]) then
+      UpdatePieceControlDelay();
 end;
 
 
