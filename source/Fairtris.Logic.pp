@@ -2376,23 +2376,23 @@ begin
 
   case Memory.Controller.ItemIndex of
     ITEM_CONTROLLER_CHANGE:
-    if InputMenuAccepted() then
-    begin
-      Input.Validate();
+      if InputMenuAccepted() then
+      begin
+        Input.Validate();
 
-      Memory.Controller.ButtonIndex := ITEM_CONTROLLER_BUTTON_FIRST;
-      Memory.Controller.Changing := True;
+        Memory.Controller.ButtonIndex := ITEM_CONTROLLER_BUTTON_FIRST;
+        Memory.Controller.Changing := True;
 
-      Sounds.PlaySound(SOUND_START);
-    end;
+        Sounds.PlaySound(SOUND_START);
+      end;
     ITEM_CONTROLLER_RESTORE:
-    if InputMenuAccepted() then
-    begin
-      Input.Controller.Restore();
-      PrepareControllerScanCodes();
+      if InputMenuAccepted() then
+      begin
+        Input.Controller.Restore();
+        PrepareControllerScanCodes();
 
-      Sounds.PlaySound(SOUND_TOP_OUT, True);
-    end;
+        Sounds.PlaySound(SOUND_TOP_OUT, True);
+      end;
   end;
 end;
 
