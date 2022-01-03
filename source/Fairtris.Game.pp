@@ -91,7 +91,7 @@ begin
     raise SDLException.CreateFmt(ERROR_MESSAGE_SDL, [ERROR_MESSAGE[ERROR_SDL_INITIALIZE_AUDIO], Mix_GetError()]);
 
   if Mix_AllocateChannels(SOUND_CHANNELS_COUNT) < SOUND_CHANNELS_COUNT then
-    raise Exception.CreateFmt(ERROR_MESSAGE_UNKNOWN, [ERROR_MESSAGE[ERROR_SDL_ALLOCATE_CHANNELS]]);
+    raise Exception.Create(ERROR_MESSAGE[ERROR_SDL_ALLOCATE_CHANNELS]);
 end;
 
 
