@@ -2324,38 +2324,37 @@ procedure TLogic.UpdateKeyboardScene();
 begin
   FScene.Validate();
 
-  if not Memory.Keyboard.Changing then
+  if Memory.Keyboard.Changing then Exit;
+
+  if InputMenuRejected() then
   begin
-    if InputMenuRejected() then
+    if Memory.Keyboard.MappedCorrectly() then
     begin
+      FScene.Current := SCENE_OPTIONS;
+      Sounds.PlaySound(SOUND_DROP);
+    end
+    else
+      Sounds.PlaySound(SOUND_HUM);
+  end;
+
+  if Memory.Keyboard.ItemIndex = ITEM_KEYBOARD_SAVE then
+    if InputMenuAccepted() then
       if Memory.Keyboard.MappedCorrectly() then
       begin
+        Input.Keyboard.Introduce();
+
         FScene.Current := SCENE_OPTIONS;
-        Sounds.PlaySound(SOUND_DROP);
+        Sounds.PlaySound(SOUND_TETRIS, True);
       end
       else
         Sounds.PlaySound(SOUND_HUM);
+
+  if Memory.Keyboard.ItemIndex = ITEM_KEYBOARD_CANCEL then
+    if InputMenuAccepted() then
+    begin
+      FScene.Current := SCENE_OPTIONS;
+      Sounds.PlaySound(SOUND_DROP);
     end;
-
-    if Memory.Keyboard.ItemIndex = ITEM_KEYBOARD_SAVE then
-      if InputMenuAccepted() then
-        if Memory.Keyboard.MappedCorrectly() then
-        begin
-          Input.Keyboard.Introduce();
-
-          FScene.Current := SCENE_OPTIONS;
-          Sounds.PlaySound(SOUND_TETRIS, True);
-        end
-        else
-          Sounds.PlaySound(SOUND_HUM);
-
-    if Memory.Keyboard.ItemIndex = ITEM_KEYBOARD_CANCEL then
-      if InputMenuAccepted() then
-      begin
-        FScene.Current := SCENE_OPTIONS;
-        Sounds.PlaySound(SOUND_DROP);
-      end;
-  end;
 end;
 
 
@@ -2492,38 +2491,37 @@ begin
     Exit;
   end;
 
-  if not Memory.Controller.Changing then
+  if Memory.Controller.Changing then Exit;
+
+  if InputMenuRejected() then
   begin
-    if InputMenuRejected() then
+    if Memory.Controller.MappedCorrectly() then
     begin
+      FScene.Current := SCENE_OPTIONS;
+      Sounds.PlaySound(SOUND_DROP);
+    end
+    else
+      Sounds.PlaySound(SOUND_HUM);
+  end;
+
+  if Memory.Controller.ItemIndex = ITEM_CONTROLLER_SAVE then
+    if InputMenuAccepted() then
       if Memory.Controller.MappedCorrectly() then
       begin
+        Input.Controller.Introduce();
+
         FScene.Current := SCENE_OPTIONS;
-        Sounds.PlaySound(SOUND_DROP);
+        Sounds.PlaySound(SOUND_TETRIS, True);
       end
       else
         Sounds.PlaySound(SOUND_HUM);
+
+  if Memory.Controller.ItemIndex = ITEM_CONTROLLER_CANCEL then
+    if InputMenuAccepted() then
+    begin
+      FScene.Current := SCENE_OPTIONS;
+      Sounds.PlaySound(SOUND_DROP);
     end;
-
-    if Memory.Controller.ItemIndex = ITEM_CONTROLLER_SAVE then
-      if InputMenuAccepted() then
-        if Memory.Controller.MappedCorrectly() then
-        begin
-          Input.Controller.Introduce();
-
-          FScene.Current := SCENE_OPTIONS;
-          Sounds.PlaySound(SOUND_TETRIS, True);
-        end
-        else
-          Sounds.PlaySound(SOUND_HUM);
-
-    if Memory.Controller.ItemIndex = ITEM_CONTROLLER_CANCEL then
-      if InputMenuAccepted() then
-      begin
-        FScene.Current := SCENE_OPTIONS;
-        Sounds.PlaySound(SOUND_DROP);
-      end;
-  end;
 end;
 
 
