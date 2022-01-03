@@ -2220,23 +2220,23 @@ begin
 
   case Memory.Keyboard.ItemIndex of
     ITEM_KEYBOARD_CHANGE:
-    if InputMenuAccepted() then
-    begin
-      Input.Validate();
+      if InputMenuAccepted() then
+      begin
+        Input.Validate();
 
-      Memory.Keyboard.KeyIndex := ITEM_KEYBOARD_KEY_FIRST;
-      Memory.Keyboard.Changing := True;
+        Memory.Keyboard.KeyIndex := ITEM_KEYBOARD_KEY_FIRST;
+        Memory.Keyboard.Changing := True;
 
-      Sounds.PlaySound(SOUND_START);
-    end;
+        Sounds.PlaySound(SOUND_START);
+      end;
     ITEM_KEYBOARD_RESTORE:
-    if InputMenuAccepted() then
-    begin
-      Input.Keyboard.Restore();
-      PrepareKeyboardScanCodes();
+      if InputMenuAccepted() then
+      begin
+        Input.Keyboard.Restore();
+        PrepareKeyboardScanCodes();
 
-      Sounds.PlaySound(SOUND_TOP_OUT, True);
-    end;
+        Sounds.PlaySound(SOUND_TOP_OUT, True);
+      end;
   end;
 end;
 
