@@ -616,6 +616,8 @@ begin
     Memory.Game.State := STATE_UPDATE_COUNTERS;
     Memory.Game.ClearCount := 0;
     Memory.Game.ClearTimer := 0;
+
+    Sounds.PlaySound(SOUND_DROP);
   end;
 end;
 
