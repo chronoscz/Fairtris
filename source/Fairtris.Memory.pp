@@ -267,6 +267,7 @@ type
     Input: Integer;
     Size: Integer;
     Theme: Integer;
+    Controls: Integer;
     Sounds: Integer;
     Scroll: Integer;
   end;
@@ -588,6 +589,7 @@ begin
   Input := Settings.General.Input;
   Size := Settings.General.Size;
   Theme := Settings.General.Theme;
+  Controls := Settings.General.Controls;
   Sounds := Settings.General.Sounds;
   Scroll := Settings.General.Scroll;
 end;
