@@ -47,6 +47,8 @@ type
     FCurrentItems: TItems;
     FDefaultItems: TItems;
   private
+    procedure UpdateAsString();
+  private
     function GetItem(AIndex: Integer): Integer;
     function GetSize(): Integer;
   public
@@ -61,6 +63,8 @@ type
   public
     property Item[AIndex: Integer]: Integer read GetItem; default;
     property Size: Integer read GetSize;
+  public
+    AsString: String;
   end;
 
 
@@ -377,6 +381,25 @@ begin
 end;
 
 
+procedure TBag.UpdateAsString();
+var
+  CurrentItem: Integer;
+begin
+  AsString := '';
+
+  for CurrentItem in FCurrentItems do
+    case CurrentItem of
+      PIECE_T: AsString += 'T';
+      PIECE_J: AsString += 'J';
+      PIECE_Z: AsString += 'Z';
+      PIECE_O: AsString += 'O';
+      PIECE_S: AsString += 'S';
+      PIECE_L: AsString += 'L';
+      PIECE_I: AsString += 'I';
+    end;
+end;
+
+
 function TBag.GetItem(AIndex: Integer): Integer;
 begin
   Result := FCurrentItems[AIndex];
@@ -399,12 +422,14 @@ begin
   if IndexA <> IndexB then
     FCurrentItems.Exchange(IndexA, IndexB);
 
+  UpdateAsString();
 end;
 
 
 procedure TBag.SwapFirst();
 begin
   FCurrentItems.Exchange(0, 1);
+  UpdateAsString();
 end;
 
 
@@ -1104,13 +1129,21 @@ end;
 
 procedure TTGM3Generator.PerformStep();
 begin
-
+  FRegister.Step();
 end;
 
 
 procedure TTGM3Generator.PerformFixedSteps();
+var
+  StepsCount: Integer;
 begin
+  StepsCount := EnsureRange(Hi(FRegister.Seed), SEED_CUSTOM_STEP_COUNT_MIN, SEED_CUSTOM_STEP_COUNT_MAX);
 
+  while StepsCount > 0 do
+  begin
+    PerformStep();
+    StepsCount -= 1;
+  end;
 end;
 
 
@@ -1144,11 +1177,14 @@ procedure TTGM3Generator.Prepare(ASeed: Integer);
 begin
   inherited Prepare(ASeed);
 
-  FPool.Free();
-  FPool := TPool.Create(TGM3_POOL_POOL);
+  if FCustomSeed then
+  begin
+    FPieces.Reset();
+    FSpecial.Reset();
+  end;
 
-  FHistory.Free();
-  FHistory := TPool.Create(TGM3_POOL_HISTORY);
+  FPool.Reset();
+  FHistory.Reset();
 
   FOrder.Clear();
 end;
@@ -1156,13 +1192,20 @@ end;
 
 procedure TTGM3Generator.Shuffle(APreShuffling: Boolean);
 begin
+  if FCustomSeed and not APreShuffling then Exit;
+
   FRegister.Step();
 end;
 
 
 procedure TTGM3Generator.Step(APicking: Boolean);
 begin
-  FRegister.Step();
+  if FCustomSeed and not APicking then Exit;
+
+  if FCustomSeed then
+    PerformFixedSteps()
+  else
+    PerformStep();
 end;
 
 
@@ -1170,6 +1213,8 @@ function TTGM3Generator.Pick(): Integer;
 var
   Roll, Index: Integer;
 begin
+  if FCustomSeed then Step(True);
+
   if FHistory.Size = TGM3_POOL_HISTORY_COUNT then
   begin
     Result := FSpecial[Hi(FRegister.Seed) mod FSpecial.Size];
