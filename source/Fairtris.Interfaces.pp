@@ -74,10 +74,11 @@ type
 type
   IGenerable = interface(IInterface)
     procedure Initialize();
-    procedure Prepare();
+    procedure Unlock();
+    procedure Prepare(ASeed: Integer = SEED_USE_RANDOM);
 
-    procedure Shuffle();
-    procedure Step();
+    procedure Shuffle(APreShiffling: Boolean = False);
+    procedure Step(APicking: Boolean = False);
 
     function Pick(): Integer;
   end;

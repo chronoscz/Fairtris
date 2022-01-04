@@ -835,12 +835,17 @@ end;
 
 
 procedure TCore.Reset();
+var
+  InitialSeed: Integer = SEED_USE_RANDOM;
 begin
+  if Memory.GameModes.IsMatch then
+    InitialSeed := Converter.StringToSeed(Memory.GameModes.SeedData);
+
   Memory.Game.Reset();
   Memory.Game.Started := True;
   Memory.Game.AutorepeatY := PIECE_FRAMES_HANG[Memory.GameModes.Region];
 
-  Generators.Generator.Prepare();
+  Generators.Generator.Prepare(InitialSeed);
   Generators.Generator.Step();
   Memory.Game.PieceID := Generators.Generator.Pick();
 

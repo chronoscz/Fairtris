@@ -35,7 +35,7 @@ type
     procedure Initialize();
     procedure Step();
   public
-    property Seed: UInt16 read FSeed;
+    property Seed: UInt16 read FSeed write FSeed;
   end;
 
 
@@ -44,7 +44,8 @@ type
   private type
     TItems = specialize TFPGList<Integer>;
   private
-    FItems: TItems;
+    FCurrentItems: TItems;
+    FDefaultItems: TItems;
   private
     function GetItem(AIndex: Integer): Integer;
     function GetSize(): Integer;
@@ -52,6 +53,8 @@ type
     constructor Create(const ACount: Integer);
     constructor Create(const AItems: array of Integer);
     destructor Destroy(); override;
+  public
+    procedure Reset();
   public
     procedure Swap(ASeed: UInt16);
     procedure SwapFirst();
@@ -70,6 +73,7 @@ type
     procedure Append(AItem: Integer);
     procedure Remove(AItem: Integer);
     procedure Push(AItem: Integer);
+  public
     procedure Clear();
   public
     function Contains(AItem: Integer): Boolean;
@@ -83,15 +87,21 @@ type
   TCustomGenerator = class(TInterfacedObject, IGenerable)
   protected
     FRegister: TShiftRegister;
+  protected
+    FCustomSeed: Boolean;
+  protected
+    procedure PerformStep(); virtual; abstract;
+    procedure PerformFixedSteps(); virtual; abstract;
   public
     constructor Create(); virtual;
     destructor Destroy(); override;
   public
     procedure Initialize(); virtual;
-    procedure Prepare(); virtual;
+    procedure Unlock();
+    procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); virtual;
   public
-    procedure Shuffle(); virtual; abstract;
-    procedure Step(); virtual; abstract;
+    procedure Shuffle(APreShiffling: Boolean = False); virtual; abstract;
+    procedure Step(APicking: Boolean = False); virtual; abstract;
   public
     function Pick(): Integer; virtual; abstract;
   end;
@@ -105,15 +115,20 @@ type
     FBagPick: Integer;
     FBagSwap: Integer;
     FBagPiece: Integer;
+  private
+    procedure PreShuffle();
+  protected
+    procedure PerformStep(); override;
+    procedure PerformFixedSteps(); override;
   public
     constructor Create(); override;
     destructor Destroy(); override;
   public
     procedure Initialize(); override;
-    procedure Prepare(); override;
+    procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); override;
   public
-    procedure Shuffle(); override;
-    procedure Step(); override;
+    procedure Shuffle(APreShiffling: Boolean = False); override;
+    procedure Step(APicking: Boolean = False); override;
   public
     function Pick(): Integer; override;
   end;
@@ -130,15 +145,18 @@ type
     FBagPick: Integer;
     FBagSwap: Integer;
     FBagPiece: Integer;
+  protected
+    procedure PerformStep(); override;
+    procedure PerformFixedSteps(); override;
   public
     constructor Create(); override;
     destructor Destroy(); override;
   public
     procedure Initialize(); override;
-    procedure Prepare(); override;
+    procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); override;
   public
-    procedure Shuffle(); override;
-    procedure Step(); override;
+    procedure Shuffle(APreShiffling: Boolean = False); override;
+    procedure Step(APicking: Boolean = False); override;
   public
     function Pick(): Integer; override;
   end;
@@ -152,9 +170,12 @@ type
   private
     function IndexToSpawnID(AIndex: UInt8): UInt8;
     function SpawnIDToPieceID(ASpawnID: UInt8): Integer;
+  protected
+    procedure PerformStep(); override;
+    procedure PerformFixedSteps(); override;
   public
-    procedure Shuffle(); override;
-    procedure Step(); override;
+    procedure Shuffle(APreShiffling: Boolean = False); override;
+    procedure Step(APicking: Boolean = False); override;
   public
     function Pick(): Integer; override;
   end;
@@ -176,11 +197,14 @@ type
   private
     procedure UpdateHistory(APiece: Integer);
     procedure UpdateDrought(APiece: Integer);
+  protected
+    procedure PerformStep(); override;
+    procedure PerformFixedSteps(); override;
   public
-    procedure Prepare(); override;
+    procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); override;
   public
-    procedure Shuffle(); override;
-    procedure Step(); override;
+    procedure Shuffle(APreShiffling: Boolean = False); override;
+    procedure Step(APicking: Boolean = False); override;
   public
     function Pick(): Integer; override;
   end;
@@ -192,14 +216,17 @@ type
     FPieces: TPool;
     FSpecial: TPool;
     FHistory: TPool;
+  protected
+    procedure PerformStep(); override;
+    procedure PerformFixedSteps(); override;
   public
     constructor Create(); override;
     destructor Destroy(); override;
   public
-    procedure Prepare(); override;
+    procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); override;
   public
-    procedure Shuffle(); override;
-    procedure Step(); override;
+    procedure Shuffle(APreShiffling: Boolean = False); override;
+    procedure Step(APicking: Boolean = False); override;
   public
     function Pick(): Integer; override;
   end;
@@ -214,14 +241,17 @@ type
     FPool: TPool;
     FOrder: TPool;
     FHistory: TPool;
+  protected
+    procedure PerformStep(); override;
+    procedure PerformFixedSteps(); override;
   public
     constructor Create(); override;
     destructor Destroy(); override;
   public
-    procedure Prepare(); override;
+    procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); override;
   public
-    procedure Shuffle(); override;
-    procedure Step(); override;
+    procedure Shuffle(APreShiffling: Boolean = False); override;
+    procedure Step(APicking: Boolean = False); override;
   public
     function Pick(): Integer; override;
   end;
@@ -229,9 +259,12 @@ type
 
 type
   TUnfairGenerator = class(TCustomGenerator)
+  protected
+    procedure PerformStep(); override;
+    procedure PerformFixedSteps(); override;
   public
-    procedure Shuffle(); override;
-    procedure Step(); override;
+    procedure Shuffle(APreShiffling: Boolean = False); override;
+    procedure Step(APicking: Boolean = False); override;
   public
     function Pick(): Integer; override;
   end;
@@ -266,6 +299,7 @@ var
 implementation
 
 uses
+  Math,
   Fairtris.Clock,
   Fairtris.Settings,
   Fairtris.Arrays,
@@ -288,10 +322,16 @@ constructor TBag.Create(const ACount: Integer);
 var
   Index: Integer;
 begin
-  FItems := TItems.Create();
+  FCurrentItems := TItems.Create();
+  FDefaultItems := TItems.Create();
 
   for Index := 0 to ACount - 1 do
-    FItems.Add(Index);
+  begin
+    FCurrentItems.Add(Index);
+    FDefaultItems.Add(Index);
+  end;
+
+  UpdateAsString();
 end;
 
 
@@ -299,29 +339,50 @@ constructor TBag.Create(const AItems: array of Integer);
 var
   Index: Integer;
 begin
-  FItems := TItems.Create();
+  FCurrentItems := TItems.Create();
+  FDefaultItems := TItems.Create();
 
   for Index := 0 to High(AItems) do
-    FItems.Add(AItems[Index]);
+  begin
+    FCurrentItems.Add(AItems[Index]);
+    FDefaultItems.Add(AItems[Index]);
+  end;
+
+  UpdateAsString();
 end;
 
 
 destructor TBag.Destroy();
 begin
-  FItems.Free();
+  FCurrentItems.Free();
+  FDefaultItems.Free();
+
   inherited Destroy();
+end;
+
+
+procedure TBag.Reset();
+var
+  DefaultItem: Integer;
+begin
+  FCurrentItems.Clear();
+
+  for DefaultItem in FDefaultItems do
+    FCurrentItems.Add(DefaultItem);
+
+  UpdateAsString();
 end;
 
 
 function TBag.GetItem(AIndex: Integer): Integer;
 begin
-  Result := FItems[AIndex];
+  Result := FCurrentItems[AIndex];
 end;
 
 
 function TBag.GetSize(): Integer;
 begin
-  Result := FItems.Count;
+  Result := FCurrentItems.Count;
 end;
 
 
@@ -329,60 +390,61 @@ procedure TBag.Swap(ASeed: UInt16);
 var
   IndexA, IndexB: Integer;
 begin
-  IndexA := Hi(ASeed) mod FItems.Count;
-  IndexB := Lo(ASeed) mod FItems.Count;
+  IndexA := Hi(ASeed) mod FCurrentItems.Count;
+  IndexB := Lo(ASeed) mod FCurrentItems.Count;
 
   if IndexA <> IndexB then
-    FItems.Exchange(IndexA, IndexB);
+    FCurrentItems.Exchange(IndexA, IndexB);
+
 end;
 
 
 procedure TBag.SwapFirst();
 begin
-  FItems.Exchange(0, 1);
+  FCurrentItems.Exchange(0, 1);
 end;
 
 
 procedure TPool.SetItem(AIndex, AItem: Integer);
 begin
-  FItems[AIndex] := AItem;
+  FCurrentItems[AIndex] := AItem;
 end;
 
 
 function TPool.GetEmpty(): Boolean;
 begin
-  Result := FItems.Count = 0;
+  Result := FCurrentItems.Count = 0;
 end;
 
 
 procedure TPool.Append(AItem: Integer);
 begin
-  FItems.Add(AItem);
+  FCurrentItems.Add(AItem);
 end;
 
 
 procedure TPool.Remove(AItem: Integer);
 begin
-  FItems.Remove(AItem);
+  FCurrentItems.Remove(AItem);
 end;
 
 
 procedure TPool.Push(AItem: Integer);
 begin
-  FItems.Delete(0);
-  FItems.Add(AItem);
+  FCurrentItems.Delete(0);
+  FCurrentItems.Add(AItem);
 end;
 
 
 procedure TPool.Clear();
 begin
-  FItems.Clear();
+  FCurrentItems.Clear();
 end;
 
 
 function TPool.Contains(AItem: Integer): Boolean;
 begin
-  Result := FItems.IndexOf(AItem) <> -1;
+  Result := FCurrentItems.IndexOf(AItem) <> -1;
 end;
 
 
@@ -405,9 +467,23 @@ begin
 end;
 
 
-procedure TCustomGenerator.Prepare();
+procedure TCustomGenerator.Unlock();
 begin
+  FCustomSeed := False;
+end;
 
+
+procedure TCustomGenerator.Prepare(ASeed: Integer);
+begin
+  FCustomSeed := ASeed <> SEED_USE_RANDOM;
+
+  if FCustomSeed then
+  begin
+    FRegister.Seed := ASeed and SEED_MASK_REGISTER shr SEED_REGISTER_OFFSET;
+
+    if FRegister.Seed = 0 then
+      FRegister.Initialize();
+  end;
 end;
 
 
@@ -429,6 +505,41 @@ begin
 end;
 
 
+procedure T7BagGenerator.PerformStep();
+begin
+  FRegister.Step();
+  FBags[FBagSwap].Swap(FRegister.Seed);
+end;
+
+
+procedure T7BagGenerator.PreShuffle();
+var
+  ShuffleCount: Integer;
+begin
+  ShuffleCount := Hi(FRegister.Seed);
+
+  while ShuffleCount > 0 do
+  begin
+    Shuffle(True);
+    ShuffleCount -= 1;
+  end;
+end;
+
+
+procedure T7BagGenerator.PerformFixedSteps();
+var
+  StepsCount: Integer;
+begin
+  StepsCount := EnsureRange(Hi(FRegister.Seed), SEED_CUSTOM_STEP_COUNT_MIN, SEED_CUSTOM_STEP_COUNT_MAX);
+
+  while StepsCount > 0 do
+  begin
+    PerformStep();
+    StepsCount -= 1;
+  end;
+end;
+
+
 procedure T7BagGenerator.Initialize();
 begin
   inherited Initialize();
@@ -440,25 +551,32 @@ begin
 end;
 
 
-procedure T7BagGenerator.Prepare();
-var
-  ShuffleCount: Integer;
+procedure T7BagGenerator.Prepare(ASeed: Integer);
 begin
-  inherited Prepare();
-  ShuffleCount := High(FRegister.Seed);
+  inherited Prepare(ASeed);
 
-  while ShuffleCount > 0 do
+  if FCustomSeed then
   begin
-    Shuffle();
-    ShuffleCount -= 1;
+    FBags[0].Reset();
+    FBags[1].Reset();
+  end;
+
+  PreShuffle();
+
+  if FCustomSeed then
+  begin
+    FBagPick := 0;
+    FBagSwap := 1;
   end;
 
   FBagPiece := 0;
 end;
 
 
-procedure T7BagGenerator.Shuffle();
+procedure T7BagGenerator.Shuffle(APreShiffling: Boolean);
 begin
+  if FCustomSeed and not APreShiffling then Exit;
+
   FRegister.Step();
   FBags[0].Swap(FRegister.Seed);
 
@@ -472,15 +590,21 @@ begin
 end;
 
 
-procedure T7BagGenerator.Step();
+procedure T7BagGenerator.Step(APicking: Boolean);
 begin
-  FRegister.Step();
-  FBags[FBagSwap].Swap(FRegister.Seed);
+  if FCustomSeed and not APicking then Exit;
+
+  if FCustomSeed then
+    PerformFixedSteps()
+  else
+    PerformStep();
 end;
 
 
 function T7BagGenerator.Pick(): Integer;
 begin
+  if FCustomSeed then Step(True);
+
   Result := FBags[FBagPick][FBagPiece];
   FBagPiece := (FBagPiece + 1) mod FBags[FBagPick].Size;
 
@@ -489,6 +613,18 @@ begin
     FBagPick := FBagPick xor 1;
     FBagSwap := FBagSwap xor 1;
   end;
+end;
+
+
+procedure TMultiBagGenerator.PerformStep();
+begin
+
+end;
+
+
+procedure TMultiBagGenerator.PerformFixedSteps();
+begin
+
 end;
 
 
@@ -533,9 +669,9 @@ begin
 end;
 
 
-procedure TMultiBagGenerator.Prepare();
+procedure TMultiBagGenerator.Prepare(ASeed: Integer);
 begin
-  inherited Prepare();
+  inherited Prepare(ASeed);
 
   FIndexPick := 0;
 
@@ -544,7 +680,7 @@ begin
 end;
 
 
-procedure TMultiBagGenerator.Shuffle();
+procedure TMultiBagGenerator.Shuffle(APreShiffling: Boolean);
 var
   Index: Integer;
 begin
@@ -570,7 +706,7 @@ begin
 end;
 
 
-procedure TMultiBagGenerator.Step();
+procedure TMultiBagGenerator.Step(APicking: Boolean);
 var
   Index: Integer;
 begin
@@ -640,13 +776,25 @@ begin
 end;
 
 
-procedure TClassicGenerator.Shuffle();
+procedure TClassicGenerator.PerformStep();
+begin
+
+end;
+
+
+procedure TClassicGenerator.PerformFixedSteps();
+begin
+
+end;
+
+
+procedure TClassicGenerator.Shuffle(APreShiffling: Boolean = False);
 begin
   FRegister.Step();
 end;
 
 
-procedure TClassicGenerator.Step();
+procedure TClassicGenerator.Step(APicking: Boolean);
 begin
   FRegister.Step();
 end;
@@ -718,9 +866,21 @@ begin
 end;
 
 
-procedure TBalancedGenerator.Prepare();
+procedure TBalancedGenerator.PerformStep();
 begin
-  inherited Prepare();
+
+end;
+
+
+procedure TBalancedGenerator.PerformFixedSteps();
+begin
+
+end;
+
+
+procedure TBalancedGenerator.Prepare(ASeed: Integer);
+begin
+  inherited Prepare(ASeed);
 
   FHistory := BALANCED_HISTORY_PIECES;
   FDrought := BALANCED_DROUGHT_COUNTS;
@@ -729,13 +889,13 @@ begin
 end;
 
 
-procedure TBalancedGenerator.Shuffle();
+procedure TBalancedGenerator.Shuffle(APreShiffling: Boolean);
 begin
   FRegister.Step();
 end;
 
 
-procedure TBalancedGenerator.Step();
+procedure TBalancedGenerator.Step(APicking: Boolean);
 begin
   FRegister.Step();
 end;
@@ -771,6 +931,18 @@ begin
 end;
 
 
+procedure TTGMGenerator.PerformStep();
+begin
+
+end;
+
+
+procedure TTGMGenerator.PerformFixedSteps();
+begin
+
+end;
+
+
 constructor TTGMGenerator.Create();
 begin
   inherited Create();
@@ -791,22 +963,22 @@ begin
 end;
 
 
-procedure TTGMGenerator.Prepare();
+procedure TTGMGenerator.Prepare(ASeed: Integer);
 begin
-  inherited Prepare();
+  inherited Prepare(ASeed);
 
   FHistory.Free();
   FHistory := TPool.Create(TGM_POOL_HISTORY);
 end;
 
 
-procedure TTGMGenerator.Shuffle();
+procedure TTGMGenerator.Shuffle(APreShiffling: Boolean);
 begin
   FRegister.Step();
 end;
 
 
-procedure TTGMGenerator.Step();
+procedure TTGMGenerator.Step(APicking: Boolean);
 begin
   FRegister.Step();
 end;
@@ -836,6 +1008,18 @@ begin
 end;
 
 
+procedure TTGM3Generator.PerformStep();
+begin
+
+end;
+
+
+procedure TTGM3Generator.PerformFixedSteps();
+begin
+
+end;
+
+
 constructor TTGM3Generator.Create();
 begin
   inherited Create();
@@ -862,9 +1046,9 @@ begin
 end;
 
 
-procedure TTGM3Generator.Prepare();
+procedure TTGM3Generator.Prepare(ASeed: Integer);
 begin
-  inherited Prepare();
+  inherited Prepare(ASeed);
 
   FPool.Free();
   FPool := TPool.Create(TGM3_POOL_POOL);
@@ -876,13 +1060,13 @@ begin
 end;
 
 
-procedure TTGM3Generator.Shuffle();
+procedure TTGM3Generator.Shuffle(APreShiffling: Boolean);
 begin
   FRegister.Step();
 end;
 
 
-procedure TTGM3Generator.Step();
+procedure TTGM3Generator.Step(APicking: Boolean);
 begin
   FRegister.Step();
 end;
@@ -921,13 +1105,25 @@ begin
 end;
 
 
-procedure TUnfairGenerator.Shuffle();
+procedure TUnfairGenerator.PerformStep();
+begin
+
+end;
+
+
+procedure TUnfairGenerator.PerformFixedSteps();
+begin
+
+end;
+
+
+procedure TUnfairGenerator.Shuffle(APreShiffling: Boolean);
 begin
   FRegister.Step();
 end;
 
 
-procedure TUnfairGenerator.Step();
+procedure TUnfairGenerator.Step(APicking: Boolean);
 begin
   FRegister.Step();
 end;

@@ -609,6 +609,7 @@ begin
     PrepareTopOutBestScore();
 
     Memory.Game.Started := False;
+    Generators.Generator.Unlock();
   end;
 end;
 
@@ -1905,8 +1906,7 @@ end;
 
 procedure TLogic.UpdatePauseCommon();
 begin
-  if Memory.GameModes.IsFreeGame then
-    Generators.Generator.Step();
+  Generators.Generator.Step();
 end;
 
 
@@ -1968,6 +1968,8 @@ begin
     ITEM_PAUSE_BACK:
     begin
       FScene.Current := Memory.Game.FromScene;
+
+      Generators.Generator.Unlock();
       Sounds.PlaySound(SOUND_DROP);
     end;
   end;
