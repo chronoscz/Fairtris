@@ -110,42 +110,45 @@ end;
 
 function TConverter.TextToSeed(const AText: String): String;
 var
+  Text: String;
   Digit: Char;
 begin
-  Result := '';
+  Text := AText.Trim().ToUpper();
 
-  if AText.Length = SEED_LENGTH then
-  begin
-    Result := AText.ToUpper();
+  if Text.Length <> SEED_LENGTH then Exit('');
 
-    for Digit in Result do
-      if not (Digit in TEXT_HEX_DIGITS) then
-        Exit('');
-  end;
+  for Digit in Text do
+    if not (Digit in TEXT_HEX_DIGITS) then
+      Exit('');
+
+  Result := Text;
 end;
 
 
 function TConverter.TextToTimer(const AText: String): String;
 var
+  Text: String;
   Index: Integer;
 begin
-  if AText.Length <> TIMER_LENGTH then Exit('');
+  Text := AText.Trim().ToUpper();
 
-  Result := AText.ToUpper();
+  if Text.Length <> TIMER_LENGTH then Exit('');
 
-  for Index := 1 to Result.Length do
+  for Index := 1 to Text.Length do
     if TIMER_PLACEHOLDER[Index] = TIMER_SEPARATOR then
     begin
-      if Result[Index] in TEXT_DATE_SEPARATORS then
-        Result[Index] := TIMER_SEPARATOR
+      if Text[Index] in TEXT_DATE_SEPARATORS then
+        Text[Index] := TIMER_SEPARATOR
       else
         Exit('');
     end
     else
     begin
-      if not (Result[Index] in TEXT_DIGITS)      then Exit('');
-      if Result[Index] > TIMER_MAX_DIGITS[Index] then Exit('');
+      if not (Text[Index] in TEXT_DIGITS)      then Exit('');
+      if Text[Index] > TIMER_MAX_DIGITS[Index] then Exit('');
     end;
+
+  Result := Text;
 end;
 
 
