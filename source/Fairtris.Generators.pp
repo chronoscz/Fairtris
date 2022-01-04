@@ -266,13 +266,7 @@ type
 
 
 type
-  TUnfairGenerator = class(TCustomGenerator)
-  protected
-    procedure PerformStep(); override;
-    procedure PerformFixedSteps(); override;
-  public
-    procedure Shuffle(APreShuffling: Boolean = False); override;
-    procedure Step(APicking: Boolean = False); override;
+  TUnfairGenerator = class(TClassicGenerator)
   public
     function Pick(): Integer; override;
   end;
@@ -1266,33 +1260,24 @@ begin
 end;
 
 
-procedure TUnfairGenerator.PerformStep();
-begin
-
-end;
-
-
-procedure TUnfairGenerator.PerformFixedSteps();
-begin
-
-end;
-
-
-procedure TUnfairGenerator.Shuffle(APreShuffling: Boolean);
-begin
-  FRegister.Step();
-end;
-
-
-procedure TUnfairGenerator.Step(APicking: Boolean);
-begin
-  FRegister.Step();
-end;
-
-
 function TUnfairGenerator.Pick(): Integer;
+var
+  Index: UInt8;
 begin
-  Result := Hi(FRegister.Seed) mod PIECE_LAST + PIECE_FIRST;
+  if FCustomSeed then Step(True);
+
+  {$PUSH}{$RANGECHECKS OFF}
+  FSpawnCount += 1;
+  Index := (Hi(FRegister.Seed) + FSpawnCount) and %111;
+  {$POP}
+
+  if Index = 7 then
+  begin
+    FRegister.Step();
+    Index := ((Hi(FRegister.Seed) and %111) + FSpawnID) mod 7;
+  end;
+
+  Result := SpawnIDToPieceID(IndexToSpawnID(Index));
 end;
 
 
