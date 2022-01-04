@@ -508,13 +508,6 @@ begin
 end;
 
 
-procedure T7BagGenerator.PerformStep();
-begin
-  FRegister.Step();
-  FBags[FBagSwap].Swap(FRegister.Seed);
-end;
-
-
 procedure T7BagGenerator.PreShuffle();
 var
   ShuffleCount: Integer;
@@ -526,6 +519,13 @@ begin
     Shuffle(True);
     ShuffleCount -= 1;
   end;
+end;
+
+
+procedure T7BagGenerator.PerformStep();
+begin
+  FRegister.Step();
+  FBags[FBagSwap].Swap(FRegister.Seed);
 end;
 
 
