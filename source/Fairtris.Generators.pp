@@ -176,6 +176,8 @@ type
     procedure PerformStep(); override;
     procedure PerformFixedSteps(); override;
   public
+    procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); override;
+  public
     procedure Shuffle(APreShiffling: Boolean = False); override;
     procedure Step(APicking: Boolean = False); override;
   public
@@ -824,25 +826,49 @@ end;
 
 procedure TClassicGenerator.PerformStep();
 begin
-
+  FRegister.Step();
 end;
 
 
 procedure TClassicGenerator.PerformFixedSteps();
+var
+  StepsCount: Integer;
 begin
+  StepsCount := EnsureRange(Hi(FRegister.Seed), SEED_CUSTOM_STEP_COUNT_MIN, SEED_CUSTOM_STEP_COUNT_MAX);
 
+  while StepsCount > 0 do
+  begin
+    PerformStep();
+    StepsCount -= 1;
+  end;
+end;
+
+
+procedure TClassicGenerator.Prepare(ASeed: Integer);
+begin
+  inherited Prepare(ASeed);
+
+  if FCustomSeed then
+    FSpawnCount := ASeed and SEED_MASK_SPAWN_COUNTER;
 end;
 
 
 procedure TClassicGenerator.Shuffle(APreShiffling: Boolean = False);
 begin
+  if FCustomSeed and not APreShiffling then Exit;
+
   FRegister.Step();
 end;
 
 
 procedure TClassicGenerator.Step(APicking: Boolean);
 begin
-  FRegister.Step();
+  if FCustomSeed and not APicking then Exit;
+
+  if FCustomSeed then
+    PerformFixedSteps()
+  else
+    PerformStep();
 end;
 
 
@@ -850,6 +876,8 @@ function TClassicGenerator.Pick(): Integer;
 var
   Index: UInt8;
 begin
+  if FCustomSeed then Step(True);
+
   {$PUSH}{$RANGECHECKS OFF}
   FSpawnCount += 1;
   Index := (Hi(FRegister.Seed) + FSpawnCount) and %111;
