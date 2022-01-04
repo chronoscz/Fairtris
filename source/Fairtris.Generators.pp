@@ -942,19 +942,30 @@ end;
 
 procedure TBalancedGenerator.PerformStep();
 begin
-
+  FRegister.Step();
 end;
 
 
 procedure TBalancedGenerator.PerformFixedSteps();
+var
+  StepsCount: Integer;
 begin
+  StepsCount := EnsureRange(Hi(FRegister.Seed), SEED_CUSTOM_STEP_COUNT_MIN, SEED_CUSTOM_STEP_COUNT_MAX);
 
+  while StepsCount > 0 do
+  begin
+    PerformStep();
+    StepsCount -= 1;
+  end;
 end;
 
 
 procedure TBalancedGenerator.Prepare(ASeed: Integer);
 begin
   inherited Prepare(ASeed);
+
+  if FCustomSeed then
+    FSpawnCount := ASeed and SEED_MASK_SPAWN_COUNTER;
 
   FHistory := BALANCED_HISTORY_PIECES;
   FDrought := BALANCED_DROUGHT_COUNTS;
@@ -965,13 +976,20 @@ end;
 
 procedure TBalancedGenerator.Shuffle(APreShiffling: Boolean);
 begin
+  if FCustomSeed and not APreShiffling then Exit;
+
   FRegister.Step();
 end;
 
 
 procedure TBalancedGenerator.Step(APicking: Boolean);
 begin
-  FRegister.Step();
+  if FCustomSeed and not APicking then Exit;
+
+  if FCustomSeed then
+    PerformFixedSteps()
+  else
+    PerformStep();
 end;
 
 
@@ -980,6 +998,8 @@ var
   Index: UInt8;
   Roll: Boolean;
 begin
+  if FCustomSeed then Step(True);
+
   {$PUSH}{$RANGECHECKS OFF}
   FSpawnCount += 1;
   {$POP}
