@@ -77,7 +77,7 @@ type
     procedure Unlock();
     procedure Prepare(ASeed: Integer = SEED_USE_RANDOM);
 
-    procedure Shuffle(APreShiffling: Boolean = False);
+    procedure Shuffle(APreShuffling: Boolean = False);
     procedure Step(APicking: Boolean = False);
 
     function Pick(): Integer;

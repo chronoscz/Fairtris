@@ -100,7 +100,7 @@ type
     procedure Unlock();
     procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); virtual;
   public
-    procedure Shuffle(APreShiffling: Boolean = False); virtual; abstract;
+    procedure Shuffle(APreShuffling: Boolean = False); virtual; abstract;
     procedure Step(APicking: Boolean = False); virtual; abstract;
   public
     function Pick(): Integer; virtual; abstract;
@@ -127,7 +127,7 @@ type
     procedure Initialize(); override;
     procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); override;
   public
-    procedure Shuffle(APreShiffling: Boolean = False); override;
+    procedure Shuffle(APreShuffling: Boolean = False); override;
     procedure Step(APicking: Boolean = False); override;
   public
     function Pick(): Integer; override;
@@ -157,7 +157,7 @@ type
     procedure Initialize(); override;
     procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); override;
   public
-    procedure Shuffle(APreShiffling: Boolean = False); override;
+    procedure Shuffle(APreShuffling: Boolean = False); override;
     procedure Step(APicking: Boolean = False); override;
   public
     function Pick(): Integer; override;
@@ -178,7 +178,7 @@ type
   public
     procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); override;
   public
-    procedure Shuffle(APreShiffling: Boolean = False); override;
+    procedure Shuffle(APreShuffling: Boolean = False); override;
     procedure Step(APicking: Boolean = False); override;
   public
     function Pick(): Integer; override;
@@ -207,7 +207,7 @@ type
   public
     procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); override;
   public
-    procedure Shuffle(APreShiffling: Boolean = False); override;
+    procedure Shuffle(APreShuffling: Boolean = False); override;
     procedure Step(APicking: Boolean = False); override;
   public
     function Pick(): Integer; override;
@@ -229,7 +229,7 @@ type
   public
     procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); override;
   public
-    procedure Shuffle(APreShiffling: Boolean = False); override;
+    procedure Shuffle(APreShuffling: Boolean = False); override;
     procedure Step(APicking: Boolean = False); override;
   public
     function Pick(): Integer; override;
@@ -254,7 +254,7 @@ type
   public
     procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); override;
   public
-    procedure Shuffle(APreShiffling: Boolean = False); override;
+    procedure Shuffle(APreShuffling: Boolean = False); override;
     procedure Step(APicking: Boolean = False); override;
   public
     function Pick(): Integer; override;
@@ -267,7 +267,7 @@ type
     procedure PerformStep(); override;
     procedure PerformFixedSteps(); override;
   public
-    procedure Shuffle(APreShiffling: Boolean = False); override;
+    procedure Shuffle(APreShuffling: Boolean = False); override;
     procedure Step(APicking: Boolean = False); override;
   public
     function Pick(): Integer; override;
@@ -576,9 +576,9 @@ begin
 end;
 
 
-procedure T7BagGenerator.Shuffle(APreShiffling: Boolean);
+procedure T7BagGenerator.Shuffle(APreShuffling: Boolean);
 begin
-  if FCustomSeed and not APreShiffling then Exit;
+  if FCustomSeed and not APreShuffling then Exit;
 
   FRegister.Step();
   FBags[0].Swap(FRegister.Seed);
@@ -730,11 +730,11 @@ begin
 end;
 
 
-procedure TMultiBagGenerator.Shuffle(APreShiffling: Boolean);
+procedure TMultiBagGenerator.Shuffle(APreShuffling: Boolean);
 var
   Index: Integer;
 begin
-  if FCustomSeed and not APreShiffling then Exit;
+  if FCustomSeed and not APreShuffling then Exit;
 
   for Index := Low(FIndexBags) to High(FIndexBags) do
   begin
@@ -853,9 +853,9 @@ begin
 end;
 
 
-procedure TClassicGenerator.Shuffle(APreShiffling: Boolean = False);
+procedure TClassicGenerator.Shuffle(APreShuffling: Boolean = False);
 begin
-  if FCustomSeed and not APreShiffling then Exit;
+  if FCustomSeed and not APreShuffling then Exit;
 
   FRegister.Step();
 end;
@@ -974,9 +974,9 @@ begin
 end;
 
 
-procedure TBalancedGenerator.Shuffle(APreShiffling: Boolean);
+procedure TBalancedGenerator.Shuffle(APreShuffling: Boolean);
 begin
-  if FCustomSeed and not APreShiffling then Exit;
+  if FCustomSeed and not APreShuffling then Exit;
 
   FRegister.Step();
 end;
@@ -1066,7 +1066,7 @@ begin
 end;
 
 
-procedure TTGMGenerator.Shuffle(APreShiffling: Boolean);
+procedure TTGMGenerator.Shuffle(APreShuffling: Boolean);
 begin
   FRegister.Step();
 end;
@@ -1154,7 +1154,7 @@ begin
 end;
 
 
-procedure TTGM3Generator.Shuffle(APreShiffling: Boolean);
+procedure TTGM3Generator.Shuffle(APreShuffling: Boolean);
 begin
   FRegister.Step();
 end;
@@ -1211,7 +1211,7 @@ begin
 end;
 
 
-procedure TUnfairGenerator.Shuffle(APreShiffling: Boolean);
+procedure TUnfairGenerator.Shuffle(APreShuffling: Boolean);
 begin
   FRegister.Step();
 end;
