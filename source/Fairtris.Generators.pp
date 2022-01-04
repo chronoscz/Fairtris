@@ -695,10 +695,7 @@ begin
     if FHistory[Index] = APiece then
       Count += 1;
 
-  if APiece = PIECE_I then
-    Result := Count >= BALANCED_FLOOD_COUNT_LONGBAR
-  else
-    Result := Count >= BALANCED_FLOOD_COUNT_PIECE;
+  Result := Count >= BALANCED_FLOOD_COUNT;
 end;
 
 
