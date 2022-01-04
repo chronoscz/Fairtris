@@ -145,6 +145,8 @@ type
     FBagPick: Integer;
     FBagSwap: Integer;
     FBagPiece: Integer;
+  private
+    procedure PreShuffle();
   protected
     procedure PerformStep(); override;
     procedure PerformFixedSteps(); override;
@@ -300,7 +302,6 @@ implementation
 
 uses
   Math,
-  Fairtris.Clock,
   Fairtris.Settings,
   Fairtris.Arrays,
   Fairtris.Utils;
@@ -616,29 +617,14 @@ begin
 end;
 
 
-procedure TMultiBagGenerator.PerformStep();
-begin
-
-end;
-
-
-procedure TMultiBagGenerator.PerformFixedSteps();
-begin
-
-end;
-
-
 constructor TMultiBagGenerator.Create();
 var
   Index: Integer;
 begin
   inherited Create();
 
-  for Index := Low(FIndexBags) to High(FIndexBags) do
-    FIndexBags[Index] := TBag.Create(MULTIBAG_BAGS_COUNT);
-
-  for Index := Low(FPieceBags) to High(FPieceBags) do
-    FPieceBags[Index] := TBag.Create(MULTIBAG_BAGS[Index]);
+  for Index := Low(FIndexBags) to High(FIndexBags) do FIndexBags[Index] := TBag.Create(MULTIBAG_BAGS_COUNT);
+  for Index := Low(FPieceBags) to High(FPieceBags) do FPieceBags[Index] := TBag.Create(MULTIBAG_BAGS[Index]);
 end;
 
 
@@ -646,13 +632,55 @@ destructor TMultiBagGenerator.Destroy();
 var
   Index: Integer;
 begin
-  for Index := Low(FIndexBags) to High(FIndexBags) do
-    FIndexBags[Index].Free();
-
-  for Index := Low(FPieceBags) to High(FPieceBags) do
-    FPieceBags[Index].Free();
+  for Index := Low(FIndexBags) to High(FIndexBags) do FIndexBags[Index].Free();
+  for Index := Low(FPieceBags) to High(FPieceBags) do FPieceBags[Index].Free();
 
   inherited Destroy();
+end;
+
+
+procedure TMultiBagGenerator.PreShuffle();
+var
+  ShuffleCount: Integer;
+begin
+  ShuffleCount := Hi(FRegister.Seed);
+  ShuffleCount *= MULTIBAG_BAGS_COUNT;
+
+  while ShuffleCount > 0 do
+  begin
+    Shuffle(True);
+    ShuffleCount -= 1;
+  end;
+end;
+
+
+procedure TMultiBagGenerator.PerformStep();
+var
+  Index: Integer;
+begin
+  FRegister.Step();
+  FIndexBags[FBagSwap].Swap(FRegister.Seed);
+
+  for Index := MULTIBAG_BAG_FIRST to MULTIBAG_BAG_LAST do
+    if Index <> FIndexBags[FBagPick][FIndexPick] then
+    begin
+      FRegister.Step();
+      FPieceBags[Index].Swap(FRegister.Seed);
+    end;
+end;
+
+
+procedure TMultiBagGenerator.PerformFixedSteps();
+var
+  StepsCount: Integer;
+begin
+  StepsCount := EnsureRange(Hi(FRegister.Seed), SEED_CUSTOM_STEP_COUNT_MIN, SEED_CUSTOM_STEP_COUNT_MAX);
+
+  while StepsCount > 0 do
+  begin
+    PerformStep();
+    StepsCount -= 1;
+  end;
 end;
 
 
@@ -670,13 +698,33 @@ end;
 
 
 procedure TMultiBagGenerator.Prepare(ASeed: Integer);
+var
+  Index: Integer;
 begin
   inherited Prepare(ASeed);
 
-  FIndexPick := 0;
+  if FCustomSeed then
+  begin
+    for Index := Low(FIndexBags) to High(FIndexBags) do FIndexBags[Index].Reset();
+    for Index := Low(FPieceBags) to High(FPieceBags) do FPieceBags[Index].Reset();
+  end;
 
-  FBagPick := FBagPick xor 1;
-  FBagSwap := FBagSwap xor 1;
+  PreShuffle();
+
+  if FCustomSeed then
+  begin
+    FBagPick := MULTIBAG_BAG_FIRST;
+    FBagSwap := MULTIBAG_BAG_FIRST + 1;
+
+    FBagPiece := MULTIBAG_PIECE_FIRST;
+  end
+  else
+  begin
+    FBagPick := FBagPick xor 1;
+    FBagSwap := FBagSwap xor 1;
+  end;
+
+  FIndexPick := 0;
 end;
 
 
@@ -684,18 +732,19 @@ procedure TMultiBagGenerator.Shuffle(APreShiffling: Boolean);
 var
   Index: Integer;
 begin
-  if Clock.FrameIndex mod 4 = 0 then
-    for Index := Low(FIndexBags) to High(FIndexBags) do
-    begin
-      FRegister.Step();
-      FIndexBags[Index].Swap(FRegister.Seed);
-    end
-  else
-    for Index := Low(FPieceBags) to High(FPieceBags) do
-    begin
-      FRegister.Step();
-      FPieceBags[Index].Swap(FRegister.Seed);
-    end;
+  if FCustomSeed and not APreShiffling then Exit;
+
+  for Index := Low(FIndexBags) to High(FIndexBags) do
+  begin
+    FRegister.Step();
+    FIndexBags[Index].Swap(FRegister.Seed);
+  end;
+
+  for Index := Low(FPieceBags) to High(FPieceBags) do
+  begin
+    FRegister.Step();
+    FPieceBags[Index].Swap(FRegister.Seed);
+  end;
 
   FIndexPick := (FIndexPick + 1) mod FIndexBags[0].Size;
 
@@ -707,23 +756,20 @@ end;
 
 
 procedure TMultiBagGenerator.Step(APicking: Boolean);
-var
-  Index: Integer;
 begin
-  FRegister.Step();
-  FIndexBags[FBagSwap].Swap(FRegister.Seed);
+  if FCustomSeed and not APicking then Exit;
 
-  for Index := MULTIBAG_BAG_FIRST to MULTIBAG_BAG_LAST do
-    if Index <> FIndexBags[FBagPick][FIndexPick] then
-    begin
-      FRegister.Step();
-      FPieceBags[Index].Swap(FRegister.Seed);
-    end;
+  if FCustomSeed then
+    PerformFixedSteps()
+  else
+    PerformStep();
 end;
 
 
 function TMultiBagGenerator.Pick(): Integer;
 begin
+  if FCustomSeed then Step(True);
+
   Result := FPieceBags[FIndexBags[FBagPick][FIndexPick]][FBagPiece];
   FBagPiece := (FBagPiece + 1) mod FPieceBags[0].Size;
 
