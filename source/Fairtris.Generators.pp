@@ -97,11 +97,11 @@ type
     destructor Destroy(); override;
   public
     procedure Initialize(); virtual;
-    procedure Unlock();
-    procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); virtual;
+    procedure UnlockRandomness();
   public
+    procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); virtual;
     procedure Shuffle(APreShuffling: Boolean = False); virtual; abstract;
-    procedure Step(APicking: Boolean = False); virtual; abstract;
+    procedure Step(APicking: Boolean = False); virtual;
   public
     function Pick(): Integer; virtual; abstract;
   end;
@@ -125,10 +125,9 @@ type
     destructor Destroy(); override;
   public
     procedure Initialize(); override;
-    procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); override;
   public
+    procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); override;
     procedure Shuffle(APreShuffling: Boolean = False); override;
-    procedure Step(APicking: Boolean = False); override;
   public
     function Pick(): Integer; override;
   end;
@@ -155,10 +154,9 @@ type
     destructor Destroy(); override;
   public
     procedure Initialize(); override;
-    procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); override;
   public
+    procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); override;
     procedure Shuffle(APreShuffling: Boolean = False); override;
-    procedure Step(APicking: Boolean = False); override;
   public
     function Pick(): Integer; override;
   end;
@@ -177,9 +175,7 @@ type
     procedure PerformFixedSteps(); override;
   public
     procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); override;
-  public
     procedure Shuffle(APreShuffling: Boolean = False); override;
-    procedure Step(APicking: Boolean = False); override;
   public
     function Pick(): Integer; override;
   end;
@@ -206,9 +202,7 @@ type
     procedure PerformFixedSteps(); override;
   public
     procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); override;
-  public
     procedure Shuffle(APreShuffling: Boolean = False); override;
-    procedure Step(APicking: Boolean = False); override;
   public
     function Pick(): Integer; override;
   end;
@@ -228,9 +222,7 @@ type
     destructor Destroy(); override;
   public
     procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); override;
-  public
     procedure Shuffle(APreShuffling: Boolean = False); override;
-    procedure Step(APicking: Boolean = False); override;
   public
     function Pick(): Integer; override;
   end;
@@ -253,9 +245,7 @@ type
     destructor Destroy(); override;
   public
     procedure Prepare(ASeed: Integer = SEED_USE_RANDOM); override;
-  public
     procedure Shuffle(APreShuffling: Boolean = False); override;
-    procedure Step(APicking: Boolean = False); override;
   public
     function Pick(): Integer; override;
   end;
@@ -457,7 +447,7 @@ begin
 end;
 
 
-procedure TCustomGenerator.Unlock();
+procedure TCustomGenerator.UnlockRandomness();
 begin
   FCustomSeed := False;
 end;
@@ -474,6 +464,17 @@ begin
     if FRegister.Seed = 0 then
       FRegister.Initialize();
   end;
+end;
+
+
+procedure TCustomGenerator.Step(APicking: Boolean);
+begin
+  if FCustomSeed and not APicking then Exit;
+
+  if FCustomSeed then
+    PerformFixedSteps()
+  else
+    PerformStep();
 end;
 
 
@@ -577,17 +578,6 @@ begin
   FBagSwap := FBagSwap xor 1;
 
   FBagPiece := (FBagPiece + 1) mod FBags[0].Size;
-end;
-
-
-procedure T7BagGenerator.Step(APicking: Boolean);
-begin
-  if FCustomSeed and not APicking then Exit;
-
-  if FCustomSeed then
-    PerformFixedSteps()
-  else
-    PerformStep();
 end;
 
 
@@ -744,17 +734,6 @@ begin
 end;
 
 
-procedure TMultiBagGenerator.Step(APicking: Boolean);
-begin
-  if FCustomSeed and not APicking then Exit;
-
-  if FCustomSeed then
-    PerformFixedSteps()
-  else
-    PerformStep();
-end;
-
-
 function TMultiBagGenerator.Pick(): Integer;
 begin
   if FCustomSeed then Step(True);
@@ -845,17 +824,6 @@ begin
   if FCustomSeed and not APreShuffling then Exit;
 
   FRegister.Step();
-end;
-
-
-procedure TClassicGenerator.Step(APicking: Boolean);
-begin
-  if FCustomSeed and not APicking then Exit;
-
-  if FCustomSeed then
-    PerformFixedSteps()
-  else
-    PerformStep();
 end;
 
 
@@ -969,17 +937,6 @@ begin
 end;
 
 
-procedure TBalancedGenerator.Step(APicking: Boolean);
-begin
-  if FCustomSeed and not APicking then Exit;
-
-  if FCustomSeed then
-    PerformFixedSteps()
-  else
-    PerformStep();
-end;
-
-
 function TBalancedGenerator.Pick(): Integer;
 var
   Index: UInt8;
@@ -1071,17 +1028,6 @@ begin
   if FCustomSeed and not APreShuffling then Exit;
 
   FRegister.Step();
-end;
-
-
-procedure TTGMGenerator.Step(APicking: Boolean);
-begin
-  if FCustomSeed and not APicking then Exit;
-
-  if FCustomSeed then
-    PerformFixedSteps()
-  else
-    PerformStep();
 end;
 
 
@@ -1179,17 +1125,6 @@ begin
   if FCustomSeed and not APreShuffling then Exit;
 
   FRegister.Step();
-end;
-
-
-procedure TTGM3Generator.Step(APicking: Boolean);
-begin
-  if FCustomSeed and not APicking then Exit;
-
-  if FCustomSeed then
-    PerformFixedSteps()
-  else
-    PerformStep();
 end;
 
 

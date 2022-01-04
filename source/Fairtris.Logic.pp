@@ -609,7 +609,7 @@ begin
     PrepareTopOutBestScore();
 
     Memory.Game.Started := False;
-    Generators.Generator.Unlock();
+    Generators.Generator.UnlockRandomness();
   end;
 end;
 
@@ -1969,7 +1969,7 @@ begin
     begin
       FScene.Current := Memory.Game.FromScene;
 
-      Generators.Generator.Unlock();
+      Generators.Generator.UnlockRandomness();
       Sounds.PlaySound(SOUND_DROP);
     end;
   end;
