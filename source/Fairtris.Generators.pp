@@ -1052,13 +1052,21 @@ end;
 
 procedure TTGMGenerator.PerformStep();
 begin
-
+  FRegister.Step();
 end;
 
 
 procedure TTGMGenerator.PerformFixedSteps();
+var
+  StepsCount: Integer;
 begin
+  StepsCount := EnsureRange(Hi(FRegister.Seed), SEED_CUSTOM_STEP_COUNT_MIN, SEED_CUSTOM_STEP_COUNT_MAX);
 
+  while StepsCount > 0 do
+  begin
+    PerformStep();
+    StepsCount -= 1;
+  end;
 end;
 
 
@@ -1086,20 +1094,32 @@ procedure TTGMGenerator.Prepare(ASeed: Integer);
 begin
   inherited Prepare(ASeed);
 
-  FHistory.Free();
-  FHistory := TPool.Create(TGM_POOL_HISTORY);
+  if FCustomSeed then
+  begin
+    FPieces.Reset();
+    FSpecial.Reset();
+  end;
+
+  FHistory.Reset();
 end;
 
 
 procedure TTGMGenerator.Shuffle(APreShuffling: Boolean);
 begin
+  if FCustomSeed and not APreShuffling then Exit;
+
   FRegister.Step();
 end;
 
 
 procedure TTGMGenerator.Step(APicking: Boolean);
 begin
-  FRegister.Step();
+  if FCustomSeed and not APicking then Exit;
+
+  if FCustomSeed then
+    PerformFixedSteps()
+  else
+    PerformStep();
 end;
 
 
@@ -1107,6 +1127,8 @@ function TTGMGenerator.Pick(): Integer;
 var
   Roll: Integer;
 begin
+  if FCustomSeed then Step(True);
+
   if FHistory.Size = TGM_POOL_HISTORY_COUNT then
   begin
     Result := FSpecial[Hi(FRegister.Seed) mod FSpecial.Size];
