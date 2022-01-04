@@ -47,8 +47,6 @@ type
     FCurrentItems: TItems;
     FDefaultItems: TItems;
   private
-    procedure UpdateAsString();
-  private
     function GetItem(AIndex: Integer): Integer;
     function GetSize(): Integer;
   public
@@ -63,8 +61,6 @@ type
   public
     property Item[AIndex: Integer]: Integer read GetItem; default;
     property Size: Integer read GetSize;
-  public
-    AsString: String;
   end;
 
 
@@ -331,8 +327,6 @@ begin
     FCurrentItems.Add(Index);
     FDefaultItems.Add(Index);
   end;
-
-  UpdateAsString();
 end;
 
 
@@ -348,8 +342,6 @@ begin
     FCurrentItems.Add(AItems[Index]);
     FDefaultItems.Add(AItems[Index]);
   end;
-
-  UpdateAsString();
 end;
 
 
@@ -370,27 +362,6 @@ begin
 
   for DefaultItem in FDefaultItems do
     FCurrentItems.Add(DefaultItem);
-
-  UpdateAsString();
-end;
-
-
-procedure TBag.UpdateAsString();
-var
-  CurrentItem: Integer;
-begin
-  AsString := '';
-
-  for CurrentItem in FCurrentItems do
-    case CurrentItem of
-      PIECE_T: AsString += 'T';
-      PIECE_J: AsString += 'J';
-      PIECE_Z: AsString += 'Z';
-      PIECE_O: AsString += 'O';
-      PIECE_S: AsString += 'S';
-      PIECE_L: AsString += 'L';
-      PIECE_I: AsString += 'I';
-    end;
 end;
 
 
@@ -415,15 +386,12 @@ begin
 
   if IndexA <> IndexB then
     FCurrentItems.Exchange(IndexA, IndexB);
-
-  UpdateAsString();
 end;
 
 
 procedure TBag.SwapFirst();
 begin
   FCurrentItems.Exchange(0, 1);
-  UpdateAsString();
 end;
 
 
