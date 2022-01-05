@@ -71,7 +71,7 @@ You can close the game using the appropriate option in the main menu or by press
 
 # Default controls
 
-**Fairtris** is controlled by the keyboard by default, and if a game controller is plugged in and set as main input device, also with it. All the game menus can be operated with both devices, while the game can only be played using the main input device, selected in the **[Game options](game-options)** menu. The control looks the same as in emulators (e.g. in **[FCEUX](http://fceux.com/)**), where one set of keys or controller buttons is used for navigating in the game menu and for playing.
+**Fairtris** is controlled by the keyboard by default, and if a game controller is plugged in and set as main input device, also with it. All the game menus can be operated with both devices, while the game can only be played using the main input device, selected in the **[Game options](game-options)** menu.
 
 Given that the keyboard and controller can be freely mapped, in the remainder of this document, when discussing the **[Gameplay](#gameplay)** scene, general names of the buttons will be given. For more information about device mappings, see **[Set up keyboard](#set-up-keyboard)** and **[Set up controller](#set-up-controller)** sections.
 
