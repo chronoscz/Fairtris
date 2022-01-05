@@ -91,7 +91,7 @@ begin
       Result += SEED_DIGITS.ToCharArray()[Random(SEED_DIGITS.Length)];
 
     for Digit in Result do
-      if Result.CountChar(Digit) > 2 then
+      if Result.CountChar(Digit) > 3 then
       begin
         SeedIsValid := False;
         Break;
