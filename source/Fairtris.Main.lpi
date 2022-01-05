@@ -25,10 +25,8 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <MajorVersionNr Value="2"/>
-      <MinorVersionNr Value="3"/>
-      <RevisionNr Value="1"/>
-      <BuildNr Value="2"/>
+      <MajorVersionNr Value="3"/>
+      <BuildNr Value="1"/>
       <StringTable CompanyName="furious programming" FileDescription="Fair implementation of Classic Tetris®" InternalName="fairtris" LegalCopyright="Copyleft 2021-2022 furious programming. All rights reversed." OriginalFilename="fairtris.exe" ProductName="Fairtris" ProductVersion="2"/>
     </VersionInfo>
     <BuildModes Count="2">
