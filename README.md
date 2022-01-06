@@ -34,7 +34,7 @@ This project was initially created as a tool to test various RNG algorithms, but
 - extended mechanics with basic **wall kick**, **hard-drop** and **meta-soft-drop**,
 - support for **EIGHT** regional versions of the game, including original **NTSC** and **PAL** versions,
 - support for as many as **SEVEN** random piece generators, including the classic RNG,
-- support for free **marathon** and **speedrun** modes, qualifications and matches,
+- support for free **marathon** and **speedrun** modes, qualifications and matches with same piece set,
 - the ability to start the game from any level up to the killscreen,
 - the ability to play on a keyboard or any USB controller (with input mapping support),
 - supports window mode and exclusive video mode,
