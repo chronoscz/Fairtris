@@ -1,13 +1,13 @@
 <img align="left" src="blob/readme/logo.png">
 
 **Fair implementation of Classic Tetris®**</br>
-Copyleft 2021 furious programming. All rights reversed.
+Copyleft 2021-2022 furious programming. All rights reversed.
 
 </br>
 
 PC version of the official classic **[Nintendo Tetris®](https://en.wikipedia.org/wiki/Tetris_(NES_video_game))** game for the **[NES](https://en.wikipedia.org/wiki/Nintendo_Entertainment_System)** console, intended for Windows systems. It implements and slightly extends the original mechanics, supports two themes and includes many regional versions and several random piece generators. All in one native executable file!
 
-Ready to play like a true master? **[Download the game](https://github.com/furious-programming/Fairtris/releases/download/v2.3.1.2/fairtris_2.3.1_release.zip)** and show off!
+Ready to play like a true master? **[Download the game](https://github.com/furious-programming/Fairtris/releases/download/v3.0.0.1-beta/fairtris_3.0_beta_release.zip)** and show off!
 
 </br></br>
 
@@ -31,13 +31,14 @@ This project was initially created as a tool to test various RNG algorithms, but
 
 - implementation of gameplay mechanics compatible with the **[Nintendo Tetris®](https://en.wikipedia.org/wiki/Tetris_(NES_video_game))** game,
 - **DAS** mechanics fixed and spin buffering added, making the controls fabulously responsive,
-- extended mechanics with basic **wall kick**, **hard-drop** and accumulation of soft-drop points,
+- extended mechanics with basic **wall kick**, **hard-drop** and **meta-soft-drop**,
 - support for **EIGHT** regional versions of the game, including original **NTSC** and **PAL** versions,
 - support for as many as **SEVEN** random piece generators, including the classic RNG,
+- support for free **marathon** and **speedrun** modes, qualifications and matches with same piece set,
 - the ability to start the game from any level up to the killscreen,
 - the ability to play on a keyboard or any USB controller (with input mapping support),
 - supports window mode and exclusive video mode,
-- support for additional meters, such as **TRT**, **BRN** or gain meter,
+- support for additional meters, such as **TRT**, **BRN**, as well as gain popup,
 - stores the best results for each game region and RNG type,
 - has a pause menu with the ability to quickly restart the game and change settings,
 - shows the game summary screen after each game,
@@ -59,7 +60,7 @@ Information on the license can be found in the **[LICENSE](LICENSE)** file. In g
 
 # First launch
 
-After extracting the game files from the **[release archive](https://github.com/furious-programming/Fairtris/releases/download/v2.3.1.2/fairtris_2.3.1_release.zip)**, run the `fairtris.exe` file. For the first time, the game starts in the exclusive video mode on the main screen and with the current resolution of that screen, maintaining the appropriate aspect ratio.
+After extracting the game files from the **[release archive](https://github.com/furious-programming/Fairtris/releases/download/v3.0.0.1-beta/fairtris_3.0_beta_release.zip)**, run the `fairtris.exe` file. For the first time, the game starts in the exclusive video mode on the main screen and with the current resolution of that screen, maintaining the appropriate aspect ratio.
 
 Video mode is used by default because it provides the best rendering efficiency. If you prefer the game to be displayed in a small window or generally in windowed mode, so that you can conveniently switch between different applications, turn off video mode by pressing the <kbd>F11</kbd> key. But remember, the rendering performance in windowed mode is always lower.
 
@@ -79,7 +80,11 @@ Given that the keyboard and controller can be freely mapped, in the remainder of
 
 ## Menu screens
 
-To navigate in the menu, use the <kbd>↑</kbd> <kbd>↓</kbd> keys to change the selected item and <kbd>←</kbd> <kbd>→</kbd> to change the value of the current option. If you want to enter the selected option, press the <kbd>Enter</kbd> key. To go back to the previous menu, press the <kbd>Escape</kbd> key. When mapping keys and buttons, if you want to leave the button unmapped, use the <kbd>Backspace</kbd> key to clear the mapping.
+To navigate in the menu, use the <kbd>↑</kbd> <kbd>↓</kbd> keys to change the selected item and <kbd>←</kbd> <kbd>→</kbd> to change the value of the current option. If you want to enter the selected option, press the <kbd>Enter</kbd> key. To go back to the previous menu, press the <kbd>Escape</kbd> key. When mapping keys and buttons, if you want to set the button unmapped, use the <kbd>Backspace</kbd> key to clear the mapping.
+
+Some menus have the option of entering seed and time counter data. To enter the editor, highlight the appropriate option and press the <kbd>←</kbd> key or the <kbd>←</kbd> button on the controller. The data is entered directly from the keyboard, so use the <kbd>0</kbd> to <kbd>9</kbd> keys for the timer. The seed can have hexadecimal characters, so the key pool expands to include the keys <kbd>A</kbd> through <kbd>F</kbd>. To accept the data entered, press <kbd>Enter</kbd> (press <kbd>Escape</kbd> to cancel changes and close the editor).
+
+Additionally, if the editor is not open and is not locked, you can use <kbd>Ctrl+C</kbd> to copy data and <kbd>Ctrl+V</kbd>. To generate a random seed, press <kbd>Ctrl+G</kbd> or the <kbd>Select</kbd> button on the controller. You will be notified with an appropriate sound about the correctness of the operation.
 
 </br>
 
@@ -93,7 +98,7 @@ If after connecting the controller for the first time, you cannot control the ga
 
 ## Special functions
 
-In addition to the basic buttons, some keys have special functions assigned permanently and cannot be used when mapping. If you need help, press the <kbd>F1</kbd> key. To toggle the exclusive video mode, press <kbd>F11</kbd>. To toggle visibility of the first and last tiles row (for the **[NestrisChamps](https://nestrischamps.herokuapp.com)** and **[MaxoutClub](https://maxoutclub.com)** purposes), use the <kbd>F10</kbd> key.
+In addition to the basic buttons, some keys have special functions assigned permanently and cannot be used when mapping. If you need help, press the <kbd>F1</kbd> key. To toggle the exclusive video mode, press <kbd>F11</kbd>. To change the active theme, press the <kbd>F10</kbd> button (at any time).
 
 </br>
 
