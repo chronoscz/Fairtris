@@ -608,7 +608,6 @@ end;
 
 procedure TCore.UpdatePieceLock();
 begin
-  Memory.Game.AutospinCharged := False;
   Memory.Game.LockTimer -= 1;
 
   if Memory.Game.LockTimer = 0 then
@@ -625,6 +624,8 @@ end;
 procedure TCore.UpdatePieceSpawn();
 begin
   SpawnPiece();
+
+  Memory.Game.AutospinCharged := False;
   Memory.Game.FallPoints := 0;
 
   if CanPlacePiece() then
