@@ -48,7 +48,44 @@ This project was initially created as a tool to test various RNG algorithms, but
 - it is fully portable, no installation required,
 - and many more!
 
-More detailed information on how to handle the game and its mechanics can be found further in this document and also on **[wiki pages](https://github.com/furious-programming/fairtris/wiki)**. If you want, you can also check out the **[FAQ](https://github.com/furious-programming/Fairtris/wiki/faq)** page where you will find answers to basic questions. If you want to help develop the game, please visit the **[Discord server](https://discord.gg/qQRfEDcTrY)** and write what you think about it.
+</br>
+
+## Table of content
+
+**General:**
+* [Introduction](home)
+* [First launch](first-launch)
+* [Default controls](default-controls)
+
+**Game screens:**
+* [Introduction](game-scenes)
+* [Prime menu](prime-menu)
+* [Game modes:](game-modes)
+    * [Free marathon](free-marathon)
+    * [Free speedrun](free-speedrun)
+    * [Marathon qualifications](marathon-qualifications)
+    * [Marathon match](marathon-match)
+    * [Speedrun qualifications](speedrun-qualifications)
+    * [Speedrun match](speedrun-match)
+* **Game specifics:**
+    * [Game regions](game-regions)
+    * [RNG algorithms](rng-algorithms)
+* **Gameplay:**
+    * [Marathon](marathon)
+    * [Speedrun](speedrun)
+* [Game pause](game-pause)
+* **Game statistics:**
+    * [Marathon summary](marathon-summary)
+    * [Speedrun summary](speedrun-summary)
+* [Game options:](game-options)
+    * [Set up keyboard](set-up-keyboard)
+    * [Set up controller](set-up-controller)
+
+**More help:**
+* [FAQ](faq)
+* [Acknowledgments and links](acknowledgments-and-links)
+
+Click on one of the links above to go to the **[project wiki](https://github.com/furious-programming/fairtris/wiki)**. If you want, you can also check out the **[FAQ](https://github.com/furious-programming/Fairtris/wiki/faq)** page where you will find answers to basic questions. If you want to help develop the game, please visit the **[Discord server](https://discord.gg/qQRfEDcTrY)** and write what you think about it.
 
 </br>
 
