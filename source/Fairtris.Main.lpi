@@ -27,7 +27,7 @@
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="3"/>
       <BuildNr Value="2"/>
-      <StringTable CompanyName="furious programming" FileDescription="Fair implementation of Classic Tetris®" InternalName="fairtris" LegalCopyright="Copyleft 2021-2022 furious programming. All rights reversed." OriginalFilename="fairtris.exe" ProductName="Fairtris" ProductVersion="2"/>
+      <StringTable CompanyName="furious programming" FileDescription="Fair implementation of Classic Tetris®" InternalName="fairtris" LegalCopyright="Copyleft 2021-2022 furious programming. All rights reversed." OriginalFilename="fairtris.exe" ProductName="Fairtris" ProductVersion="3"/>
     </VersionInfo>
     <BuildModes Count="2">
       <Item1 Name="Debug" Default="True"/>
