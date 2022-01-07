@@ -36,6 +36,8 @@ implementation
 
 uses
   Windows,
+  StrUtils,
+  Fairtris.Memory,
   Fairtris.Logic,
   Fairtris.Constants;
 
@@ -46,22 +48,22 @@ var
 begin
   case Logic.Scene.Current of
     SCENE_MENU:            Address += '/prime-menu';
-    SCENE_MODES:           Address += '/modes';
+    SCENE_MODES:           Address += '/game-modes';
     SCENE_FREE_MARATHON:   Address += '/free-marathon';
     SCENE_FREE_SPEEDRUN:   Address += '/free-speedrun';
-    SCENE_MARATHON_QUALS:  Address += '/marathon-quals';
+    SCENE_MARATHON_QUALS:  Address += '/marathon-qualifications';
     SCENE_MARATHON_MATCH:  Address += '/marathon-match';
-    SCENE_SPEEDRUN_QUALS:  Address += '/speedrun-quals';
+    SCENE_SPEEDRUN_QUALS:  Address += '/speedrun-qualifications';
     SCENE_SPEEDRUN_MATCH:  Address += '/speedrun-match';
     SCENE_GAME_NORMAL:     Address += '/marathon';
     SCENE_GAME_FLASH:      Address += '/marathon';
     SCENE_SPEEDRUN_NORMAL: Address += '/speedrun';
     SCENE_SPEEDRUN_FLASH:  Address += '/speedrun';
     SCENE_PAUSE:           Address += '/game-pause';
-    SCENE_TOP_OUT:         Address += '/game-summary';
     SCENE_OPTIONS:         Address += '/game-options';
     SCENE_KEYBOARD:        Address += '/set-up-keyboard';
     SCENE_CONTROLLER:      Address += '/set-up-controller';
+    SCENE_TOP_OUT:         Address += IfThen(Memory.GameModes.IsMarathon, '/marathon-summary', '/speedrun-summary');
   end;
 
   ShellExecute(0, 'open', PChar(Address), nil, nil, SW_SHOWNORMAL);
