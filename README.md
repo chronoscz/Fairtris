@@ -92,7 +92,7 @@ Additionally, if the editor is not open and is not locked, you can use <kbd>Ctrl
 
 The actual game can be controlled with a keyboard or any USB controller for which separate mappings are provided. The basic set of buttons for this purpose is compatible with the buttons on the **[NES controller](https://en.wikipedia.org/wiki/Nintendo_Entertainment_System#Controllers)** and can be freely mapped. By default, the <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd> keys are used to move and drop pieces, and the <kbd>X</kbd> and <kbd>C</kbd> keys are used to rotate them. The <kbd>Z</kbd> key is used to pause the game, while the <kbd>V</kbd> key is used to show or hide the next piece. The controller buttons are mapped by default according to the general button layout standards, where the `X` and `Y` axes are responsible for moving and dropping pieces, and the first two buttons for rotating them.
 
-If after connecting the controller for the first time, you cannot control the game, use the keyboard and go to the **[Set up game](#set-up-game)** screen, select the controller as the main input device, and then go to the **[Set up controller](#set-up-controller)** screen, where you can set the controller mapping your way.
+If after connecting the controller for the first time, you cannot control the game, use the keyboard and go to the **[Game options](#game-options)** screen, select the controller as the main input device, and then go to the **[Set up controller](#set-up-controller)** screen, where you can set the controller mapping your way.
 
 </br>
 
