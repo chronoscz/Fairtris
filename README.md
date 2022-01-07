@@ -53,37 +53,37 @@ This project was initially created as a tool to test various RNG algorithms, but
 ## Table of content
 
 **General:**
-* [Introduction](home)
-* [First launch](first-launch)
-* [Default controls](default-controls)
+* [Introduction](https://github.com/furious-programming/Fairtris/wiki)
+* [First launch](https://github.com/furious-programming/Fairtris/wiki/first-launch)
+* [Default controls](https://github.com/furious-programming/Fairtris/wiki/default-controls)
 
 **Game screens:**
-* [Introduction](game-scenes)
-* [Prime menu](prime-menu)
-* [Game modes:](game-modes)
-    * [Free marathon](free-marathon)
-    * [Free speedrun](free-speedrun)
-    * [Marathon qualifications](marathon-qualifications)
-    * [Marathon match](marathon-match)
-    * [Speedrun qualifications](speedrun-qualifications)
-    * [Speedrun match](speedrun-match)
+* [Introduction](https://github.com/furious-programming/Fairtris/wiki/game-scenes)
+* [Prime menu](https://github.com/furious-programming/Fairtris/wiki/prime-menu)
+* [Game modes:](https://github.com/furious-programming/Fairtris/wiki/game-modes)
+    * [Free marathon](https://github.com/furious-programming/Fairtris/wiki/free-marathon)
+    * [Free speedrun](https://github.com/furious-programming/Fairtris/wiki/free-speedrun)
+    * [Marathon qualifications](https://github.com/furious-programming/Fairtris/wiki/marathon-qualifications)
+    * [Marathon match](https://github.com/furious-programming/Fairtris/wiki/marathon-match)
+    * [Speedrun qualifications](https://github.com/furious-programming/Fairtris/wiki/speedrun-qualifications)
+    * [Speedrun match](https://github.com/furious-programming/Fairtris/wiki/speedrun-match)
 * **Game specifics:**
-    * [Game regions](game-regions)
-    * [RNG algorithms](rng-algorithms)
+    * [Game regions](https://github.com/furious-programming/Fairtris/wiki/game-regions)
+    * [RNG algorithms](https://github.com/furious-programming/Fairtris/wiki/rng-algorithms)
 * **Gameplay:**
-    * [Marathon](marathon)
-    * [Speedrun](speedrun)
-* [Game pause](game-pause)
+    * [Marathon](https://github.com/furious-programming/Fairtris/wiki/marathon)
+    * [Speedrun](https://github.com/furious-programming/Fairtris/wiki/speedrun)
+* [Game pause](https://github.com/furious-programming/Fairtris/wiki/game-pause)
 * **Game statistics:**
-    * [Marathon summary](marathon-summary)
-    * [Speedrun summary](speedrun-summary)
-* [Game options:](game-options)
-    * [Set up keyboard](set-up-keyboard)
-    * [Set up controller](set-up-controller)
+    * [Marathon summary](https://github.com/furious-programming/Fairtris/wiki/marathon-summary)
+    * [Speedrun summary](https://github.com/furious-programming/Fairtris/wiki/speedrun-summary)
+* [Game options:](https://github.com/furious-programming/Fairtris/wiki/game-options)
+    * [Set up keyboard](https://github.com/furious-programming/Fairtris/wiki/set-up-keyboard)
+    * [Set up controller](https://github.com/furious-programming/Fairtris/wiki/set-up-controller)
 
 **More help:**
-* [FAQ](faq)
-* [Acknowledgments and links](acknowledgments-and-links)
+* [FAQ](https://github.com/furious-programming/Fairtris/wiki/faq)
+* [Acknowledgments and links](https://github.com/furious-programming/Fairtris/wiki/acknowledgments-and-links)
 
 Click on one of the links above to go to the **[project wiki](https://github.com/furious-programming/fairtris/wiki)**. If you want, you can also check out the **[FAQ](https://github.com/furious-programming/Fairtris/wiki/faq)** page where you will find answers to basic questions. If you want to help develop the game, please visit the **[Discord server](https://discord.gg/qQRfEDcTrY)** and write what you think about it.
 
