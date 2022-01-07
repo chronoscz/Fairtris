@@ -50,7 +50,7 @@ This project was initially created as a tool to test various RNG algorithms, but
 
 </br>
 
-## Table of content
+# Table of content
 
 **General:**
 * [Introduction](https://github.com/furious-programming/Fairtris/wiki)
