@@ -84,7 +84,7 @@ To navigate in the menu, use the <kbd>↑</kbd> <kbd>↓</kbd> keys to change th
 
 Some menus have the option of entering seed and time counter data. To enter the editor, highlight the appropriate option and press the <kbd>←</kbd> key or the <kbd>←</kbd> button on the controller. The data is entered directly from the keyboard, so use the <kbd>0</kbd> to <kbd>9</kbd> keys for the timer. The seed can have hexadecimal characters, so the key pool expands to include the keys <kbd>A</kbd> through <kbd>F</kbd>. To accept the data entered, press <kbd>Enter</kbd> (press <kbd>Escape</kbd> to cancel changes and close the editor).
 
-Additionally, if the editor is not open and is not locked, you can use <kbd>Ctrl+C</kbd> to copy data to system clipboard and <kbd>Ctrl+V</kbd> to paste it. To generate a random seed, press <kbd>Ctrl+G</kbd> or the <kbd>Select</kbd> button on the controller. You will be notified with an appropriate sound about the correctness of the operation.
+Additionally, if the editor is not open and is not locked, you can use <kbd>Ctrl+C</kbd> to copy data to the system clipboard and <kbd>Ctrl+V</kbd> to paste it. To generate a random seed, press <kbd>Ctrl+G</kbd> or the <kbd>Select</kbd> button on the controller. You will be notified with an appropriate sound about the correctness of the operation.
 
 </br>
 
