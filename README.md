@@ -31,7 +31,7 @@ This project was initially created as a tool to test various RNG algorithms, but
 
 - implementation of gameplay mechanics compatible with the **[Nintendo Tetris®](https://en.wikipedia.org/wiki/Tetris_(NES_video_game))** game,
 - **DAS** mechanics fixed and spin buffering added, making the controls fabulously responsive,
-- extended mechanics with basic **wall kick**, **hard-drop** and **meta-soft-drop**,
+- extended mechanics with basic **wall kick**, **hard-drop** and **multi-spawn soft-drop**,
 - support for **EIGHT** regional versions of the game, including original **NTSC** and **PAL** versions,
 - support for as many as **SEVEN** random piece generators, including the classic RNG,
 - support for free **marathon** and **speedrun** modes, qualifications and matches with same piece set,
