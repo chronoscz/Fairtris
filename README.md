@@ -1,3 +1,9 @@
+| :warning: | **WARNING!** |
+| --------- |:------------ |
+| | This document is undergoing a redevelopment to bring it into line with the latest version of the game. The project wiki is also being rebuilt. |
+
+</br>
+
 <img align="left" src="blob/readme/logo.png">
 
 **Fair implementation of Classic Tetris®**</br>
