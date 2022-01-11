@@ -1,0 +1,31 @@
+#!/usr/bin/make -f
+
+# Set temporary HOME for lazarus primary config directory
+export HOME=$(CURDIR)/tmphome
+
+ROOT = $(CURDIR)/debian/fairtris
+
+override_dh_auto_clean:
+	$(RM) -r source/lib
+	$(RM) source/lib source/*.res bin/fairtris
+
+override_dh_auto_build:
+	cd source ;\
+	lazbuild --build-mode=Release Fairtris.Main.lpi
+
+override_dh_auto_install:
+	install -d -m 755 $(ROOT)/usr/bin
+	install -s -m 755 bin/fairtris $(ROOT)/usr/bin
+	install -d -m 755 $(ROOT)/usr/share/fairtris
+	install -m 644 bin/settings.ini $(ROOT)/usr/share/fairtris
+	cp -r bin/grounds $(ROOT)/usr/share/fairtris
+	cp -r bin/sprites $(ROOT)/usr/share/fairtris
+	cp -r bin/sounds $(ROOT)/usr/share/fairtris
+	cp -r bin/scores $(ROOT)/usr/share/fairtris     
+	install -d -m 755 $(ROOT)/usr/share/applications
+	install -m 755 install/snap/local/fairtris.desktop $(ROOT)/usr/share/applications
+	install -d -m 755 $(ROOT)/usr/share/pixmaps
+	install -m 755 graphics/application/64.png $(ROOT)/usr/share/pixmaps/fairtris.png
+
+%:
+	dh $@

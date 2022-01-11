@@ -22,6 +22,7 @@ program Fairtris.Main;
 {$RESOURCE Fairtris.Main.res}
 
 uses
+  {$IFDEF UNIX}cthreads, clocale,{$ENDIF}
   SDL2,
   SysUtils,
   Fairtris.Window,

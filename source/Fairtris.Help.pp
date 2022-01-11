@@ -22,7 +22,7 @@ unit Fairtris.Help;
 interface
 
 uses
-  Classes;
+  Classes, Process;
 
 
 type
@@ -41,6 +41,23 @@ uses
   Fairtris.Logic,
   Fairtris.Constants;
 
+
+procedure ExecuteProgram(Executable: string; Parameters: array of string);
+var
+  Process: TProcess;
+  I: Integer;
+begin
+  try
+    Process := TProcess.Create(nil);
+    Process.Executable := Executable;
+    for I := 0 to Length(Parameters) - 1 do
+      Process.Parameters.Add(Parameters[I]);
+    Process.Options := [poNoConsole];
+    Process.Execute;
+  finally
+    Process.Free;
+  end;
+end;
 
 procedure THelpThread.Execute();
 var
@@ -67,6 +84,7 @@ begin
   end;
 
   {$IFDEF WINDOWS}ShellExecute(0, 'open', PChar(Address), nil, nil, SW_SHOWNORMAL);{$ENDIF}
+  {$IFDEF LINUX}ExecuteProgram('/usr/bin/xdg-open', [Address]);{$ENDIF}
   Terminate();
 end;
 
