@@ -35,7 +35,7 @@ type
 implementation
 
 uses
-  Windows,
+  {$IFDEF WINDOWS}Windows,{$ENDIF}
   StrUtils,
   Fairtris.Memory,
   Fairtris.Logic,
@@ -66,7 +66,7 @@ begin
     SCENE_TOP_OUT:         Address += IfThen(Memory.GameModes.IsMarathon, '/marathon-summary', '/speedrun-summary');
   end;
 
-  ShellExecute(0, 'open', PChar(Address), nil, nil, SW_SHOWNORMAL);
+  {$IFDEF WINDOWS}ShellExecute(0, 'open', PChar(Address), nil, nil, SW_SHOWNORMAL);{$ENDIF}
   Terminate();
 end;
 

@@ -87,7 +87,12 @@ begin
   SDL_Version(SysInfo.Version);
 
   if SDL_GetWindowWMInfo(FWindow, @SysInfo) = SDL_TRUE then
+    {$IFDEF WINDOWS}
     FHandle := SysInfo.Win.Window
+    {$ENDIF}
+    {$IFDEF LINUX}
+    FHandle := SysInfo.x11.Window
+    {$ENDIF}
   else
     raise SDLException.CreateFmt(ERROR_MESSAGE_SDL, [ERROR_MESSAGE[ERROR_SDL_CREATE_HANDLE], SDL_GetError()]);
 end;

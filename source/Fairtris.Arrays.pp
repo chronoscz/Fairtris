@@ -127,8 +127,8 @@ const
 
 const
   GROUND_PATH: array [THEME_FIRST .. THEME_LAST] of String = (
-    'grounds\modern\',
-    'grounds\classic\'
+    'grounds' + DirectorySeparator + 'modern' + DirectorySeparator,
+    'grounds' + DirectorySeparator + 'classic' + DirectorySeparator
   );
 
 
@@ -142,7 +142,7 @@ const
   );
 
 const
-  SPRITE_PATH = 'sprites\';
+  SPRITE_PATH = 'sprites' + DirectorySeparator;
 
 
 const
@@ -165,8 +165,8 @@ const
 
 const
   SOUND_PATH: array [SOUND_REGION_FIRST .. SOUND_REGION_LAST] of String = (
-    'sounds\ntsc\',
-    'sounds\pal\'
+    'sounds' + DirectorySeparator + 'ntsc' + DirectorySeparator,
+    'sounds' + DirectorySeparator + 'pal' + DirectorySeparator
   );
 
 const
@@ -199,24 +199,24 @@ const
 const
   BEST_SCORES_PATH: array [Boolean, REGION_FIRST .. REGION_LAST] of String = (
     (
-      'scores\marathon\ntsc\',
-      'scores\marathon\ntsc extended\',
-      'scores\marathon\jpn\',
-      'scores\marathon\jpn extended\',
-      'scores\marathon\pal\',
-      'scores\marathon\pal extended\',
-      'scores\marathon\eur\',
-      'scores\marathon\eur extended\'
+      'scores' + DirectorySeparator + 'marathon' + DirectorySeparator + 'ntsc' + DirectorySeparator,
+      'scores' + DirectorySeparator + 'marathon' + DirectorySeparator + 'ntsc extended' + DirectorySeparator,
+      'scores' + DirectorySeparator + 'marathon' + DirectorySeparator + 'jpn' + DirectorySeparator,
+      'scores' + DirectorySeparator + 'marathon' + DirectorySeparator + 'jpn extended' + DirectorySeparator,
+      'scores' + DirectorySeparator + 'marathon' + DirectorySeparator + 'pal' + DirectorySeparator,
+      'scores' + DirectorySeparator + 'marathon' + DirectorySeparator + 'pal extended' + DirectorySeparator,
+      'scores' + DirectorySeparator + 'marathon' + DirectorySeparator + 'eur' + DirectorySeparator,
+      'scores' + DirectorySeparator + 'marathon' + DirectorySeparator + 'eur extended' + DirectorySeparator
     ),
     (
-      'scores\speedrun\ntsc\',
-      'scores\speedrun\ntsc extended\',
-      'scores\speedrun\jpn\',
-      'scores\speedrun\jpn extended\',
-      'scores\speedrun\pal\',
-      'scores\speedrun\pal extended\',
-      'scores\speedrun\eur\',
-      'scores\speedrun\eur extended\'
+      'scores' + DirectorySeparator + 'speedrun' + DirectorySeparator + 'ntsc' + DirectorySeparator,
+      'scores' + DirectorySeparator + 'speedrun' + DirectorySeparator + 'ntsc extended' + DirectorySeparator,
+      'scores' + DirectorySeparator + 'speedrun' + DirectorySeparator + 'jpn' + DirectorySeparator,
+      'scores' + DirectorySeparator + 'speedrun' + DirectorySeparator + 'jpn extended' + DirectorySeparator,
+      'scores' + DirectorySeparator + 'speedrun' + DirectorySeparator + 'pal' + DirectorySeparator,
+      'scores' + DirectorySeparator + 'speedrun' + DirectorySeparator + 'pal extended' + DirectorySeparator,
+      'scores' + DirectorySeparator + 'speedrun' + DirectorySeparator + 'eur' + DirectorySeparator,
+      'scores' + DirectorySeparator + 'speedrun' + DirectorySeparator + 'eur extended' + DirectorySeparator
     )
   );
 

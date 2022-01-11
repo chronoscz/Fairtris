@@ -63,6 +63,9 @@ type
     procedure InitFrameRate();
     procedure InitTicks();
   private
+    {$IFDEF Windows}
+    PerformanceFrequency: Int64;
+    {$ENDIF}
     procedure UpdateFrameRate();
     procedure UpdateFrameLoad();
   public
@@ -92,7 +95,8 @@ implementation
 
 uses
   SDL2,
-  Windows,
+  {$IFDEF WINDOWS}Windows,{$ENDIF}
+  {$IFDEF LINUX}BaseUnix, UnixUtil, Unix,{$ENDIF}
   Math,
   SysUtils,
   DateUtils,
@@ -106,6 +110,9 @@ begin
   InitCounters();
   InitFrameRate();
   InitTicks();
+  {$IFDEF Windows}
+  QueryPerformanceFrequency(PerformanceFrequency);
+  {$ENDIF}
 end;
 
 
@@ -132,14 +139,30 @@ end;
 function TClock.GetCounterFrequency(): Int64;
 begin
   Result := 0;
+  {$IFDEF WINDOWS}
   QueryPerformanceFrequency(Result);
+  {$ENDIF}
+  {$IFDEF LINUX}
+  Result := 1000000;
+  {$ENDIF}
 end;
 
 
 function TClock.GetCounterValue(): Int64;
+{$IFDEF Linux}
+var
+  T: TimeVal;
+{$ENDIF}
 begin
   Result := 0;
+  {$IFDEF Windows}
   QueryPerformanceCounter(Result);
+  {$ENDIF}
+  {$IFDEF Linux}
+  fpgettimeofday(@t, nil);
+   // Build a 64 bit microsecond tick from the seconds and microsecond longints
+  Result := t.tv_sec * 1000000 + t.tv_usec;
+  {$ENDIF}
 end;
 
 

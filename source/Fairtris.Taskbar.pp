@@ -21,14 +21,17 @@ unit Fairtris.Taskbar;
 
 interface
 
+{$IFDEF WINDOWS}
 uses
   ShlObj;
-
+{$ENDIF}
 
 type
   TTaskbar = class(TObject)
   private
+    {$IFDEF WINDOWS}
     FButton: ITaskBarList3;
+    {$ENDIF}
     FSupported: Boolean;
   public
     procedure Initialize();
@@ -44,7 +47,7 @@ implementation
 
 uses
   SDL2,
-  ComObj,
+  {$IFDEF WINDOWS}ComObj,{$ENDIF}
   Math,
   SysUtils,
   Fairtris.Window,
@@ -55,14 +58,18 @@ procedure TTaskbar.Initialize();
 var
   Instance: IInterface;
 begin
+  {$IFDEF WINDOWS}
   Instance := CreateComObject(CLSID_TASKBARLIST);
   FSupported := Supports(Instance, ITaskBarList3, FButton);
+  {$ENDIF}
 end;
 
 
 procedure TTaskbar.Update();
 var
+  {$IFDEF WINDOWS}
   ButtonState: Integer = TBPF_ERROR;
+  {$ENDIF}
   ButtonTotal: Integer = 100;
   ButtonValue: Integer;
 begin
@@ -73,6 +80,7 @@ begin
   begin
     ButtonValue := Max(1, Min(Clock.FrameLoad.Current, ButtonTotal));
 
+    {$IFDEF WINDOWS}
     case ButtonValue of
       00 .. 60: ButtonState := TBPF_NORMAL;
       61 .. 85: ButtonState := TBPF_PAUSED;
@@ -80,6 +88,7 @@ begin
 
     FButton.SetProgressState(Window.Handle, ButtonState);
     FButton.SetProgressValue(Window.Handle, ButtonValue, ButtonTotal);
+    {$ENDIF}
   end;
 end;
 
