@@ -173,7 +173,8 @@ implementation
 uses
   Math,
   SysUtils,
-  Fairtris.Arrays;
+  Fairtris.Arrays,
+  Fairtris.Directories;
 
 
 procedure TScoreEntry.Validate();
@@ -441,7 +442,7 @@ begin
   FIsSpeedrun := AIsSpeedrun;
 
   for Index := Low(FRegions) to High(FRegions) do
-    FRegions[Index] := TRegionEntries.Create(BEST_SCORES_PATH[FIsSpeedrun, Index], FIsSpeedrun, Index);
+    FRegions[Index] := TRegionEntries.Create(GetConfigDir(BEST_SCORES_PATH[FIsSpeedrun, Index]), FIsSpeedrun, Index);
 end;
 
 

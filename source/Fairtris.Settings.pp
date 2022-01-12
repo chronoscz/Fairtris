@@ -158,7 +158,8 @@ uses
   Fairtris.Input,
   Fairtris.Memory,
   Fairtris.Placement,
-  Fairtris.Arrays;
+  Fairtris.Arrays,
+  Fairtris.Directories;
 
 
 function TCustomSettings.CorrectRange(AValue, AFirst, ALast, ADefault: Integer): Integer;
@@ -354,7 +355,7 @@ var
 begin
   for Index := DEVICE_FIRST to DEVICE_LAST do
   begin
-    ScanCode := AFile.ReadInteger(ASection, SETTINGS_KEY_MAPPING[Index], KEYBOARD_SCANCODE_KEY_NOT_MAPPED);
+    ScanCode := AFile.ReadInteger(ASection, SETTINGS_KEY_MAPPING[Index], SETTINGS_VALUE_KEYBOARD[Index]);
     ScanCodes[Index] := CorrectRange(
       ScanCode,
       KEYBOARD_SCANCODE_KEY_FIRST,
@@ -371,7 +372,7 @@ var
 begin
   for Index := DEVICE_FIRST to DEVICE_LAST do
   begin
-    ScanCode := AFile.ReadInteger(ASection, SETTINGS_KEY_MAPPING[Index], CONTROLLER_SCANCODE_BUTTON_NOT_MAPPED);
+    ScanCode := AFile.ReadInteger(ASection, SETTINGS_KEY_MAPPING[Index], SETTINGS_VALUE_CONTROLLER[Index]);
     ScanCodes[Index] := CorrectRange(
       ScanCode,
       CONTROLLER_SCANCODE_BUTTON_FIRST,
@@ -384,7 +385,7 @@ end;
 
 constructor TSettings.Create();
 begin
-  FSettingsFile := TMemIniFile.Create(SETTINGS_FILENAME);
+  FSettingsFile := TMemIniFile.Create(GetConfigDir(SETTINGS_FILENAME));
 
   FVideo := TVideoSettings.Create();
   FGeneral := TGeneralSettings.Create();

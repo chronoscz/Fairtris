@@ -60,7 +60,8 @@ uses
   SysUtils,
   Fairtris.Window,
   Fairtris.Classes,
-  Fairtris.Arrays;
+  Fairtris.Arrays,
+  Fairtris.Directories;
 
 
 destructor TSprites.Destroy();
@@ -86,13 +87,13 @@ var
 begin
   for Index := Low(FCollections) to High(FCollections) do
   begin
-    FCollections[Index] := Img_LoadTexture(Window.Renderer, PChar(SPRITE_PATH + SPRITE_FILENAME[Index]));
+    FCollections[Index] := Img_LoadTexture(Window.Renderer, PChar(GetDataDir(SPRITE_PATH) + SPRITE_FILENAME[Index]));
 
     if FCollections[Index] = nil then
       raise SDLException.CreateFmt(
         ERROR_MESSAGE_SDL,
         [
-          ERROR_MESSAGE[ERROR_SDL_LOAD_SPRITE].Format([SPRITE_PATH + SPRITE_FILENAME[Index]]),
+          ERROR_MESSAGE[ERROR_SDL_LOAD_SPRITE].Format([GetDataDir(SPRITE_PATH) + SPRITE_FILENAME[Index]]),
           Img_GetError()
         ]
       );

@@ -74,7 +74,8 @@ uses
   SysUtils,
   Fairtris.Window,
   Fairtris.Classes,
-  Fairtris.Arrays;
+  Fairtris.Arrays,
+  Fairtris.Directories;
 
 
 constructor TThemeGrounds.Create(const APath: String);
@@ -125,7 +126,7 @@ var
   Index: Integer;
 begin
   for Index := Low(FThemes) to High(FThemes) do
-    FThemes[Index] := TThemeGrounds.Create(GROUND_PATH[Index]);
+    FThemes[Index] := TThemeGrounds.Create(GetDataDir(GROUND_PATH[Index]));
 end;
 
 

@@ -1,5 +1,6 @@
 source/lib/
 bin/*.exe
+bin/fairtris
 
 *.exe
 *.dbg

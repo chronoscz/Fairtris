@@ -76,7 +76,8 @@ uses
   Fairtris.Classes,
   Fairtris.Memory,
   Fairtris.Settings,
-  Fairtris.Arrays;
+  Fairtris.Arrays,
+  Fairtris.Directories;
 
 
 constructor TRegionSounds.Create(const APath: String);
@@ -127,7 +128,7 @@ var
   Index: Integer;
 begin
   for Index := Low(FRegions) to High(FRegions) do
-    FRegions[Index] := TRegionSounds.Create(SOUND_PATH[Index]);
+    FRegions[Index] := TRegionSounds.Create(GetDataDir(SOUND_PATH[Index]));
 end;
 
 
