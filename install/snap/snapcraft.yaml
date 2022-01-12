@@ -1,7 +1,7 @@
 name: fairtris
 title: Fairtris
 version: '3.0.0.2'
-summary: A Tetris® video game clone.
+summary: A fair implementation of Classic Tetris® video game.
 description: |
   Fairtris is a video game, a clone of the 32-year-old Tetris® game produced by Nintendo for the Famicom and NES consoles, designed for modern Windows systems. Fairtris is not an emulator — it is a full-fledged game, created from scratch in Free Pascal language (using the Lazarus IDE) and with OpenGL support via the SDL library. Thanks to this combination, it is super-fast and ultra-light.
   
@@ -52,16 +52,13 @@ parts:
       install -d -m 755 $SNAPCRAFT_PART_INSTALL/usr/bin
       install -s -m 755 ../bin/fairtris $SNAPCRAFT_PART_INSTALL/usr/bin/fairtris
       install -d -m 755 $SNAPCRAFT_PART_INSTALL/usr/share/fairtris      
-      install -m 644 ../bin/settings.ini $SNAPCRAFT_PART_INSTALL/usr/share/fairtris
       cp -r ../bin/grounds $SNAPCRAFT_PART_INSTALL/usr/share/fairtris
       cp -r ../bin/sprites $SNAPCRAFT_PART_INSTALL/usr/share/fairtris
       cp -r ../bin/sounds $SNAPCRAFT_PART_INSTALL/usr/share/fairtris
-      cp -r ../bin/scores $SNAPCRAFT_PART_INSTALL/usr/share/fairtris
       install -d -m 755 $SNAPCRAFT_PART_INSTALL/usr/share/applications
       install -m 755 ../install/snap/local/fairtris.desktop $SNAPCRAFT_PART_INSTALL/usr/share/applications
       install -d -m 755 $SNAPCRAFT_PART_INSTALL/usr/share/pixmaps
-      install -m 644 ../graphics/application/64.png $SNAPCRAFT_PART_INSTALL/usr/share/pixmaps/fairtris.png
-      
+      install -m 644 ../graphics/application/64.png $SNAPCRAFT_PART_INSTALL/usr/share/pixmaps/fairtris.png      
     stage:
     - etc
     - usr
@@ -126,6 +123,8 @@ parts:
     - libxkbcommon0
     - libxss1
     - libxxf86vm1
+    - libglu1-mesa
+    - libgl1-mesa-dri
   
 apps:
   fairtris:
@@ -136,13 +135,13 @@ apps:
     - x11
     - home
     - audio-playback
+    - opengl
 
 environment:
-  LD_LIBRARY_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio
+  LD_LIBRARY_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri
+  LIBGL_DRIVERS_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri
   PULSE_SERVER: unix:/run/user/1000/pulse/native
   
 layout:
   /usr/share/fairtris:
     bind: $SNAP/usr/share/fairtris
-  /usr/lib/$SNAPCRAFT_ARCH_TRIPLET/sox:
-    bind: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/sox

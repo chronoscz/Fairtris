@@ -32,6 +32,9 @@ uses
 
   procedure HandleErrorSDL(const AMessage: String);
   begin
+    {$IFDEF LINUX}
+    WriteLn(AMessage);
+    {$ENDIF}
     SDL_ShowSimpleMessageBox(
       SDL_MESSAGEBOX_ERROR,
       PChar(ERROR_TITLE),
@@ -43,6 +46,9 @@ uses
 
   procedure HandleErrorUnknown(const AMessage: String);
   begin
+    {$IFDEF LINUX}
+    WriteLn(AMessage);
+    {$ENDIF}
     SDL_ShowSimpleMessageBox(
       SDL_MESSAGEBOX_ERROR,
       PChar(ERROR_TITLE),

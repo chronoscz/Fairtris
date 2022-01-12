@@ -96,7 +96,7 @@ implementation
 uses
   SDL2,
   {$IFDEF WINDOWS}Windows,{$ENDIF}
-  {$IFDEF LINUX}BaseUnix, UnixUtil, Unix,{$ENDIF}
+  {$IFDEF LINUX}Unix,{$ENDIF}
   Math,
   SysUtils,
   DateUtils,

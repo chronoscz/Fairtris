@@ -3,10 +3,10 @@ Maintainer: Chronos <robie@centrum.cz>
 Section: games
 Priority: optional
 Standards-Version: 3.0.0.2
-#Build-Depends: fpc, lazarus, lcl, lcl-utils, debhelper (>= 8)
+Build-Depends: fpc, lazarus, lcl, lcl-utils, libsdl2-dev, libsdl2-mixer-dev, libsdl2-image-dev, debhelper (>= 8)
 
 Package: fairtris
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
-Description: A Tetris® video game clone.
+Description: A fair implementation of Classic Tetris® video game.
 HomePage: https://github.com/furious-programming/Fairtris
