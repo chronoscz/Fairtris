@@ -30,13 +30,17 @@ function GetConfigDir(RelativePath: string): string;
 implementation
 
 function GetDataDir(RelativePath: string): string;
+{$IFDEF UNIX}
 const
-  LinuxBaseDir = '/usr/share/fairtris/';
+  UnixBaseDir = '/usr/share/fairtris/';
+{$ENDIF}
 begin
   if DirectoryExists(RelativePath) or FileExists(RelativePath) then Result := RelativePath
+{$IFDEF UNIX}
   else
-  if DirectoryExists(LinuxBaseDir + RelativePath) or
-    FileExists(LinuxBaseDir + RelativePath) then Result := LinuxBaseDir + RelativePath
+  if DirectoryExists(UnixBaseDir + RelativePath) or
+    FileExists(UnixBaseDir + RelativePath) then Result := UnixBaseDir + RelativePath
+{$ENDIF}
   else Result := RelativePath;
 end;
 

@@ -32,7 +32,7 @@ uses
 
   procedure HandleErrorSDL(const AMessage: String);
   begin
-    {$IFDEF LINUX}
+    {$IFDEF UNIX}
     WriteLn(AMessage);
     {$ENDIF}
     SDL_ShowSimpleMessageBox(
@@ -46,7 +46,7 @@ uses
 
   procedure HandleErrorUnknown(const AMessage: String);
   begin
-    {$IFDEF LINUX}
+    {$IFDEF UNIX}
     WriteLn(AMessage);
     {$ENDIF}
     SDL_ShowSimpleMessageBox(

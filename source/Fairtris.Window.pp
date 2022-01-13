@@ -87,11 +87,12 @@ begin
   SDL_Version(SysInfo.Version);
 
   if SDL_GetWindowWMInfo(FWindow, @SysInfo) = SDL_TRUE then
-    {$IFDEF WINDOWS}
+    {$IF defined(WINDOWS)}
     FHandle := SysInfo.Win.Window
-    {$ENDIF}
-    {$IFDEF LINUX}
+    {$ELSEIF defined(UNIX)}
     FHandle := SysInfo.x11.Window
+    {$ELSE}
+    {$ERROR Unsupported platform}
     {$ENDIF}
   else
     raise SDLException.CreateFmt(ERROR_MESSAGE_SDL, [ERROR_MESSAGE[ERROR_SDL_CREATE_HANDLE], SDL_GetError()]);

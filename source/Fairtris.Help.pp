@@ -83,8 +83,13 @@ begin
     SCENE_TOP_OUT:         Address += IfThen(Memory.GameModes.IsMarathon, '/marathon-summary', '/speedrun-summary');
   end;
 
-  {$IFDEF WINDOWS}ShellExecute(0, 'open', PChar(Address), nil, nil, SW_SHOWNORMAL);{$ENDIF}
-  {$IFDEF LINUX}ExecuteProgram('/usr/bin/xdg-open', [Address]);{$ENDIF}
+  {$IF defined(WINDOWS)}
+  ShellExecute(0, 'open', PChar(Address), nil, nil, SW_SHOWNORMAL);
+  {$ELSEIF defined(UNIX)}
+  ExecuteProgram('/usr/bin/xdg-open', [Address]);
+  {$ELSE}
+  {$ERROR Unsupported platform}
+  {$ENDIF}
   Terminate();
 end;
 
