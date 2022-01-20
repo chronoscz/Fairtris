@@ -67,9 +67,6 @@ This project was initially created as a tool to test various RNG algorithms, but
     * [Marathon match](https://github.com/furious-programming/Fairtris/wiki/marathon-match)
     * [Speedrun qualifications](https://github.com/furious-programming/Fairtris/wiki/speedrun-qualifications)
     * [Speedrun match](https://github.com/furious-programming/Fairtris/wiki/speedrun-match)
-* **Game specifics:**
-    * [Game regions](https://github.com/furious-programming/Fairtris/wiki/game-regions)
-    * [RNG algorithms](https://github.com/furious-programming/Fairtris/wiki/rng-algorithms)
 * **Gameplay:**
     * [Marathon](https://github.com/furious-programming/Fairtris/wiki/marathon)
     * [Speedrun](https://github.com/furious-programming/Fairtris/wiki/speedrun)
@@ -80,6 +77,10 @@ This project was initially created as a tool to test various RNG algorithms, but
 * [Game options:](https://github.com/furious-programming/Fairtris/wiki/game-options)
     * [Set up keyboard](https://github.com/furious-programming/Fairtris/wiki/set-up-keyboard)
     * [Set up controller](https://github.com/furious-programming/Fairtris/wiki/set-up-controller)
+
+**Game specifics:**
+* [Game regions](https://github.com/furious-programming/Fairtris/wiki/game-regions)
+* [RNG algorithms](https://github.com/furious-programming/Fairtris/wiki/rng-algorithms)
 
 **More help:**
 * [FAQ](https://github.com/furious-programming/Fairtris/wiki/faq)
