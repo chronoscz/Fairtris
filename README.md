@@ -98,9 +98,10 @@ Information on the license can be found in the **[LICENSE](LICENSE)** file. In g
 
 # Bindings
 
-This project is designed for 64-bit **Windows** platforms only. If someone decides to port the code and release a version to other platforms, such as **Linux**, **FreeBSD** or **macOS**, the repository links will be added to this section.
+**Fairtris** mainly targets 64-bit **Windows** systems, versions `Vista`, `7`, `8`, `8.1`, `10` and `11`. In the future, its clones for other platforms may appear — if someone decides to fork this repository and modify the game source code. Currently available releases:
 
-* **[Fairtris for Linux](https://github.com/chronoscz/Fairtris)** by **[chronoscz](https://github.com/chronoscz)** (see also the **[snapcraft](https://snapcraft.io/fairtris)** release).
+* **[Fairtris for Windows](https://github.com/furious-programming/fairtris)** by **[furious programming](https://github.com/furious-programming)**
+* **[Fairtris for Linux](https://github.com/chronoscz/fairtris)** by **[chronoscz](https://github.com/chronoscz)** (see also the **[snapcraft](https://snapcraft.io/fairtris)** release)
 
 </br>
 
