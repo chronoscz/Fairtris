@@ -220,6 +220,8 @@ begin
 
   Memory.Game.PieceX := PIECE_SPAWN_X;
   Memory.Game.PieceY := PIECE_SPAWN_Y;
+
+  Memory.Game.AutorepeatY := 0;
 end;
 
 
@@ -306,13 +308,23 @@ begin
   if Input.Device.Left.Pressed or Input.Device.Right.Pressed then
     UpdatePieceControlDropLookupSpeed()
   else
-    if Input.Device.Down.JustPressed and (Input.Device.Left.Pressed or Input.Device.Right.Pressed) then
-      UpdatePieceControlDropLookupSpeed()
-    else
+  case Memory.Options.Controls of
+    CONTROLS_MODERN:
+      if Input.Device.Down.JustPressed and (Input.Device.Left.Pressed or Input.Device.Right.Pressed) then
+        UpdatePieceControlDropLookupSpeed()
+      else
+      begin
+        Memory.Game.AutorepeatY := 1;
+        UpdatePieceControlDropLookupSpeed();
+      end;
+    CONTROLS_CLASSIC:
     begin
-      Memory.Game.AutorepeatY := 1;
+      if Input.Device.Down.JustPressed and Input.Device.Left.Released and Input.Device.Right.Released then
+        Memory.Game.AutorepeatY := 1;
+
       UpdatePieceControlDropLookupSpeed();
     end;
+  end;
 end;
 
 
