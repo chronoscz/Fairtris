@@ -516,11 +516,12 @@ end;
 procedure TCore.UpdatePieceControlDrop();
 begin
   if Memory.Options.Controls = CONTROLS_MODERN then
-    if Input.Device.Up.JustPressed and Input.Device.Left.Released and Input.Device.Right.Released then
-    begin
-      UpdatePieceControlDropUpPressed();
-      Exit;
-    end;
+    if Input.Device.Left.Released and Input.Device.Right.Released then
+      if Input.Device.Up.JustPressed or (Input.Device.Up.Pressed and (Input.Device.Left.JustReleased or Input.Device.Right.JustReleased)) then
+      begin
+        UpdatePieceControlDropUpPressed();
+        Exit;
+      end;
 
   if Memory.Game.AutorepeatY > 0 then
     UpdatePieceControlDropAutorepeat()
