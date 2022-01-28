@@ -541,11 +541,6 @@ end;
 
 procedure TCore.UpdatePieceControlDelay();
 begin
-  if Input.Device.Up.Pressed or Input.Device.Down.Pressed then Exit;
-
-  if Input.Device.Left.Pressed and Input.Device.Right.Pressed then Exit;
-  if Input.Device.Left.Released and Input.Device.Right.Released then Exit;
-
   Memory.Game.AutorepeatX := AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region];
 end;
 
