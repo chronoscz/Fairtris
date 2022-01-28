@@ -26,7 +26,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="3"/>
-      <BuildNr Value="2"/>
+      <BuildNr Value="3"/>
       <StringTable CompanyName="furious programming" FileDescription="Fair implementation of Classic Tetris®" InternalName="fairtris" LegalCopyright="Copyleft 2021-2022 furious programming. All rights reversed." OriginalFilename="fairtris.exe" ProductName="Fairtris" ProductVersion="3"/>
     </VersionInfo>
     <BuildModes Count="2">
@@ -223,7 +223,7 @@
     </CodeGeneration>
     <Linking>
       <Debugging>
-        <DebugInfoType Value="dsDwarf2Set"/>
+        <DebugInfoType Value="dsDwarf3"/>
         <UseHeaptrc Value="True"/>
         <TrashVariables Value="True"/>
         <UseExternalDbgSyms Value="True"/>

@@ -5,9 +5,9 @@ Copyleft 2021-2022 furious programming. All rights reversed.
 
 </br>
 
-PC version of the official classic **[Nintendo Tetris®](https://en.wikipedia.org/wiki/Tetris_(NES_video_game))** game for the **[NES](https://en.wikipedia.org/wiki/Nintendo_Entertainment_System)** console, intended for Windows systems. It implements and slightly extends the original mechanics, supports two themes and includes many regional versions and several random piece generators. All in one native executable file!
+PC clone of the official classic **[Nintendo Tetris®](https://en.wikipedia.org/wiki/Tetris_(NES_video_game))** game for the **[NES](https://en.wikipedia.org/wiki/Nintendo_Entertainment_System)** console, intended for Windows systems. It implements and slightly extends the original mechanics, supports two themes and includes many regional versions and several random piece generators. All in one native executable file!
 
-Ready to play like a true master? **[Download the game](https://github.com/furious-programming/Fairtris/releases/download/v3.0.0.2-beta/fairtris_3.0_beta_release.zip)** and show off!
+Ready to play like a true master? **[Download the game](https://github.com/furious-programming/Fairtris/releases/download/v3.0.0.3-beta.2/fairtris_3.0_beta_2_release.zip)** and show off!
 
 </br></br>
 
@@ -67,9 +67,6 @@ This project was initially created as a tool to test various RNG algorithms, but
     * [Marathon match](https://github.com/furious-programming/Fairtris/wiki/marathon-match)
     * [Speedrun qualifications](https://github.com/furious-programming/Fairtris/wiki/speedrun-qualifications)
     * [Speedrun match](https://github.com/furious-programming/Fairtris/wiki/speedrun-match)
-* **Game specifics:**
-    * [Game regions](https://github.com/furious-programming/Fairtris/wiki/game-regions)
-    * [RNG algorithms](https://github.com/furious-programming/Fairtris/wiki/rng-algorithms)
 * **Gameplay:**
     * [Marathon](https://github.com/furious-programming/Fairtris/wiki/marathon)
     * [Speedrun](https://github.com/furious-programming/Fairtris/wiki/speedrun)
@@ -81,6 +78,10 @@ This project was initially created as a tool to test various RNG algorithms, but
     * [Set up keyboard](https://github.com/furious-programming/Fairtris/wiki/set-up-keyboard)
     * [Set up controller](https://github.com/furious-programming/Fairtris/wiki/set-up-controller)
 
+**Game specifics:**
+* [Game regions](https://github.com/furious-programming/Fairtris/wiki/game-regions)
+* [RNG algorithms](https://github.com/furious-programming/Fairtris/wiki/rng-algorithms)
+
 **More help:**
 * [FAQ](https://github.com/furious-programming/Fairtris/wiki/faq)
 * [Acknowledgments and links](https://github.com/furious-programming/Fairtris/wiki/acknowledgments-and-links)
@@ -91,13 +92,16 @@ Click on one of the links above to go to the **[project wiki](https://github.com
 
 # License
 
-Information on the license can be found in the **[LICENSE](LICENSE)** file. In general, this project is completely free, you can use it for whatever purpose you want, both the entire game and parts of it. So play, share, fork, modify, sell — do what you want, I don't give a shit about it.
+Information on the license can be found in the **[LICENSE](LICENSE)** file. In general, this project is completely free, you can use it for whatever purpose you want, both the entire game and parts of it. So play, share, fork, modify — do what you want, I don't give a shit about it.
 
 </br>
 
 # Bindings
 
-This project is designed for 64-bit **Windows** platforms only. If someone decides to port the code and release a version to other platforms, such as **Linux**, **FreeBSD** or **macOS**, the repository links will be added to this section.
+**Fairtris** mainly targets 64-bit **Windows** systems, versions `Vista`, `7`, `8`, `8.1`, `10` and `11`. In the future, its clones for other platforms may appear — if someone decides to fork this repository and modify the game source code. Currently available releases:
+
+* **[Fairtris for Windows](https://github.com/furious-programming/fairtris)** by **[furious programming](https://github.com/furious-programming)**
+* **[Fairtris for Linux](https://github.com/chronoscz/fairtris)** by **[chronoscz](https://github.com/chronoscz)** (see also the **[snapcraft](https://snapcraft.io/fairtris)** release)
 
 </br>
 

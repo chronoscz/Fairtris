@@ -220,6 +220,8 @@ begin
 
   Memory.Game.PieceX := PIECE_SPAWN_X;
   Memory.Game.PieceY := PIECE_SPAWN_Y;
+
+  Memory.Game.AutorepeatY := 0;
 end;
 
 
@@ -306,19 +308,20 @@ begin
   if Input.Device.Left.Pressed or Input.Device.Right.Pressed then
     UpdatePieceControlDropLookupSpeed()
   else
-    if Input.Device.Down.JustPressed and (Input.Device.Left.Pressed or Input.Device.Right.Pressed) then
-      UpdatePieceControlDropLookupSpeed()
-    else
-    begin
-      Memory.Game.AutorepeatY := 1;
-      UpdatePieceControlDropLookupSpeed();
+  begin
+    case Memory.Options.Controls of
+      CONTROLS_MODERN:  if Input.Device.Down.Pressed     then Memory.Game.AutorepeatY := 1;
+      CONTROLS_CLASSIC: if Input.Device.Down.JustPressed then Memory.Game.AutorepeatY := 1;
     end;
+
+    UpdatePieceControlDropLookupSpeed();
+  end;
 end;
 
 
 procedure TCore.UpdatePieceControlDropAutorepeat();
 begin
-  if Input.Device.Down.Pressed and (not Input.Device.Left.Pressed and not Input.Device.Right.Pressed) then
+  if Input.Device.Down.Pressed and Input.Device.Left.Released and Input.Device.Right.Released then
     UpdatePieceControlDropDownPressed()
   else
   begin
@@ -467,7 +470,7 @@ begin
   if Input.Device.Down.Pressed then Exit;
 
   if Input.Device.Left.Pressed and Input.Device.Right.Pressed then Exit;
-  if not Input.Device.Left.Pressed and not Input.Device.Right.Pressed then Exit;
+  if Input.Device.Left.Released and Input.Device.Right.Released then Exit;
 
   if Input.Device.Left.JustPressed or Input.Device.Right.JustPressed then
     Memory.Game.AutorepeatX := 0
@@ -513,11 +516,12 @@ end;
 procedure TCore.UpdatePieceControlDrop();
 begin
   if Memory.Options.Controls = CONTROLS_MODERN then
-    if Input.Device.Up.JustPressed and (not Input.Device.Left.Pressed and not Input.Device.Right.Pressed) then
-    begin
-      UpdatePieceControlDropUpPressed();
-      Exit;
-    end;
+    if Input.Device.Left.Released and Input.Device.Right.Released then
+      if Input.Device.Up.JustPressed or (Input.Device.Up.Pressed and (Input.Device.Left.JustReleased or Input.Device.Right.JustReleased)) then
+      begin
+        UpdatePieceControlDropUpPressed();
+        Exit;
+      end;
 
   if Memory.Game.AutorepeatY > 0 then
     UpdatePieceControlDropAutorepeat()
@@ -540,7 +544,7 @@ begin
   if Input.Device.Up.Pressed or Input.Device.Down.Pressed then Exit;
 
   if Input.Device.Left.Pressed and Input.Device.Right.Pressed then Exit;
-  if not Input.Device.Left.Pressed and not Input.Device.Right.Pressed then Exit;
+  if Input.Device.Left.Released and Input.Device.Right.Released then Exit;
 
   Memory.Game.AutorepeatX := AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region];
 end;

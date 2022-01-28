@@ -58,11 +58,14 @@ type
 type
   TSwitch = class(specialize TCustomState<Boolean>)
   private
+    function GetPressed(): Boolean;
+    function GetReleased(): Boolean;
+  private
     function GetJustPressed(): Boolean;
     function GetJustReleased(): Boolean;
   public
-    property Pressed: Boolean read FCurrent write SetCurrent;
-    property Released: Boolean read FCurrent;
+    property Pressed: Boolean read GetPressed write SetCurrent;
+    property Released: Boolean read GetReleased;
   public
     property JustPressed: Boolean read GetJustPressed;
     property JustReleased: Boolean read GetJustReleased;
@@ -113,6 +116,18 @@ end;
 procedure TCustomState.Invalidate();
 begin
   FChanged := True;
+end;
+
+
+function TSwitch.GetPressed(): Boolean;
+begin
+  Result := FCurrent;
+end;
+
+
+function TSwitch.GetReleased(): Boolean;
+begin
+  Result := not FCurrent;
 end;
 
 
