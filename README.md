@@ -5,7 +5,7 @@ Copyleft 2021-2022 furious programming. All rights reversed.
 
 </br>
 
-PC clone of the official classic **[Nintendo Tetris®](https://en.wikipedia.org/wiki/Tetris_(NES_video_game))** game for the **[NES](https://en.wikipedia.org/wiki/Nintendo_Entertainment_System)** console, intended for Windows systems. It implements and slightly extends the original mechanics, supports two themes and includes many regional versions and several random piece generators. All in one native executable file!
+PC clone of the official classic **[Nintendo Tetris®](https://en.wikipedia.org/wiki/Tetris_(NES_video_game))** game for the **[NES](https://en.wikipedia.org/wiki/Nintendo_Entertainment_System)** console, intended for Windows systems. It implements and slightly extends the original mechanics, supports two themes and includes many regional versions and several random piece generators. All in one native executable.
 
 Ready to play like a true master? **[Download the game](https://github.com/furious-programming/Fairtris/releases/download/v3.0.0.3-beta.2/fairtris_3.0_beta_2_release.zip)** and show off!
 
