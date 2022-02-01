@@ -102,6 +102,7 @@ Information on the license can be found in the **[LICENSE](LICENSE)** file. In g
 
 * **[Fairtris for Windows](https://github.com/furious-programming/fairtris)** by **[furious programming](https://github.com/furious-programming)**
 * **[Fairtris for Linux](https://github.com/chronoscz/fairtris)** by **[chronoscz](https://github.com/chronoscz)** (see also the **[snapcraft](https://snapcraft.io/fairtris)** release)
+* **[Fairtris for ArchLinux](https://aur.archlinux.org/packages/fairtris-git/)** by **[loooph](https://github.com/loooph)**
 
 </br>
 
