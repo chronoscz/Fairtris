@@ -5,9 +5,9 @@ Copyleft 2021-2022 furious programming. All rights reversed.
 
 </br>
 
-PC clone of the official classic **[Nintendo Tetris®](https://en.wikipedia.org/wiki/Tetris_(NES_video_game))** game for the **[NES](https://en.wikipedia.org/wiki/Nintendo_Entertainment_System)** console, intended for Windows systems. It implements and slightly extends the original mechanics, supports two themes and includes many regional versions and several random piece generators. All in one native executable file!
+PC clone of the official classic **[Nintendo Tetris®](https://en.wikipedia.org/wiki/Tetris_(NES_video_game))** game for the **[NES](https://en.wikipedia.org/wiki/Nintendo_Entertainment_System)** console, intended for Windows systems. It implements and slightly extends the original mechanics, supports two themes and includes many regional versions and several random piece generators. All in one native executable.
 
-Ready to play like a true master? **[Download the game](https://github.com/furious-programming/Fairtris/releases/download/v3.0.0.3-beta.2/fairtris_3.0_beta_2_release.zip)** and show off!
+Ready to play like a true master? **[Download the game](https://github.com/furious-programming/Fairtris/releases/download/v3.0.0.4/Fairtris_3.0_release.zip)** and show off!
 
 </br></br>
 
@@ -86,7 +86,7 @@ This project was initially created as a tool to test various RNG algorithms, but
 * [FAQ](https://github.com/furious-programming/Fairtris/wiki/faq)
 * [Acknowledgments and links](https://github.com/furious-programming/Fairtris/wiki/acknowledgments-and-links)
 
-Click on one of the links above to go to the **[project wiki](https://github.com/furious-programming/fairtris/wiki)**. If you want, you can also check out the **[FAQ](https://github.com/furious-programming/Fairtris/wiki/faq)** page where you will find answers to basic questions. If you want to help develop the game, please visit the **[Discord server](https://discord.gg/qQRfEDcTrY)** and write what you think about it.
+Click on one of the links above to go to the **[project wiki](https://github.com/furious-programming/fairtris/wiki)**. If you want, you can also check out the **[FAQ](https://github.com/furious-programming/Fairtris/wiki/faq)** page where you will find answers to basic questions.
 
 </br>
 
@@ -102,6 +102,7 @@ Information on the license can be found in the **[LICENSE](LICENSE)** file. In g
 
 * **[Fairtris for Windows](https://github.com/furious-programming/fairtris)** by **[furious programming](https://github.com/furious-programming)**
 * **[Fairtris for Linux](https://github.com/chronoscz/fairtris)** by **[chronoscz](https://github.com/chronoscz)** (see also the **[snapcraft](https://snapcraft.io/fairtris)** release)
+* **[Fairtris for ArchLinux](https://aur.archlinux.org/packages/fairtris-git/)** by **[loooph](https://github.com/loooph)**
 
 </br>
 

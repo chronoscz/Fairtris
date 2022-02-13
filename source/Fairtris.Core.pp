@@ -58,7 +58,6 @@ type
     procedure UpdatePieceControlShift();
     procedure UpdatePieceControlRotate();
     procedure UpdatePieceControlDrop();
-    procedure UpdatePieceControlDelay();
   private
     procedure UpdateCommonGain();
     procedure UpdateCommonNext();
@@ -539,17 +538,6 @@ begin
 end;
 
 
-procedure TCore.UpdatePieceControlDelay();
-begin
-  if Input.Device.Up.Pressed or Input.Device.Down.Pressed then Exit;
-
-  if Input.Device.Left.Pressed and Input.Device.Right.Pressed then Exit;
-  if Input.Device.Left.Released and Input.Device.Right.Released then Exit;
-
-  Memory.Game.AutorepeatX := AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region];
-end;
-
-
 procedure TCore.UpdateCommonGain();
 begin
   if Memory.Game.GainTimer > 0 then
@@ -631,6 +619,9 @@ begin
 
   Memory.Game.AutospinCharged := False;
   Memory.Game.FallPoints := 0;
+
+  if Memory.Options.Controls = CONTROLS_MODERN then
+    Memory.Game.AutorepeatX := AUTOSHIFT_FRAMES_CHARGE[Memory.GameModes.Region];
 
   if CanPlacePiece() then
     Memory.Game.State := STATE_PIECE_CONTROL
@@ -899,10 +890,6 @@ begin
     STATE_UPDATE_COUNTERS: UpdateCounters();
     STATE_UPDATE_TOP_OUT:  UpdateTopOut();
   end;
-
-  if Memory.Options.Controls = CONTROLS_MODERN then
-    if not (Memory.Game.State in [STATE_PIECE_CONTROL, STATE_UPDATE_TOP_OUT]) then
-      UpdatePieceControlDelay();
 end;
 
 

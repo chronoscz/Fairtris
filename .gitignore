@@ -1,4 +1,5 @@
 source/lib/
+releases/
 bin/*.exe
 bin/fairtris
 
