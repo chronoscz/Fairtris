@@ -2,7 +2,7 @@ Source: fairtris
 Maintainer: Chronos <robie@centrum.cz>
 Section: games
 Priority: optional
-Standards-Version: 3.0.0.2
+Standards-Version: 3.0.0.4
 Build-Depends: fpc, lazarus, lcl, lcl-utils, libsdl2-dev, libsdl2-mixer-dev, libsdl2-image-dev, debhelper (>= 8)
 
 Package: fairtris

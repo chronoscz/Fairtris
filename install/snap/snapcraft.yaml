@@ -1,6 +1,6 @@
 name: fairtris
 title: Fairtris
-version: '3.0.0.3'
+version: '3.0.0.4'
 summary: A fair implementation of Classic Tetris® video game.
 description: |
   Fairtris is a video game, a clone of the 32-year-old Tetris® game produced by Nintendo for the Famicom and NES consoles, designed for modern Windows systems. Fairtris is not an emulator — it is a full-fledged game, created from scratch in Free Pascal language (using the Lazarus IDE) and with OpenGL support via the SDL library. Thanks to this combination, it is super-fast and ultra-light.
