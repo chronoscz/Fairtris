@@ -1,3 +1,8 @@
+This is Linux port of this game https://github.com/furious-programming/Fairtris.
+It is released as Ubuntu snap https://snapcraft.io/fairtris
+
+</br>
+
 <img align="left" src="blob/readme/logo.png">
 
 **Fair implementation of Classic Tetris®**</br>
